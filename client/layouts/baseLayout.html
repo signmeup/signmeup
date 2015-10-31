@@ -1,0 +1,11 @@
+<template name="baseLayout">
+  <div id="baseLayout" class="container">
+    {{> nav }}
+
+    <div id="content">
+      {{> Template.dynamic template=content }}
+    </div>
+    
+    {{> footer }}
+  </div>
+</template>
