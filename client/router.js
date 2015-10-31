@@ -1,7 +1,13 @@
 FlowRouter.route("/", {
   name: "index",
-  action: function(params, queryParams) {
-    console.log("Rendering index.html");
+  action: function() {
+    BlazeLayout.render("baseLayout", {content: "index"});
+  }
+});
 
+FlowRouter.route("/ta", {
+  name: "ta",
+  action: function() {
+    BlazeLayout.render("baseLayout", {content: "ta"});
   }
 });
