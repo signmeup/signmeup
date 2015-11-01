@@ -3,8 +3,9 @@
  *
  * Course: {
  *    name: STRING,
- *    active: BOOLEAN
+ *    description: STRING,
  *    listserv: STRING,
+ *    active: BOOLEAN,
  *
  *    htas: [userId],
  *    tas: [userId],
@@ -21,8 +22,9 @@ var testCourse = Courses.findOne({name: "cs00"});
 if(!testCourse) {
   Courses.insert({
     name: "cs00",
-    active: true,
+    description: "Test Course",
     listserv: "cs00tas@cs.brown.edu",
+    active: true,
 
     htas: [],
     tas: [],
