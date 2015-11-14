@@ -1,39 +1,23 @@
 <template name="index">
-  <div class="ui link cards">
-    <a href="/course/cs015" class="red card">
-      <div class="content">
-        <div class="header">CS015</div>
-        <div class="meta">Introduction to Object Oriented Programming</div>
-        <div class="description">
-          CIT 227 <br>
-          15 students in line <br>
-          15 minute waiting time
-        </div>
-      </div>
-    </a>
+  {{#if noActiveQueues }}
+    No courses holding hours right now.
 
-    <a href="/course/cs017" class="blue card">
-      <div class="content">
-        <div class="header">CS017</div>
-        <div class="meta">Functional Programming</div>
-        <div class="description">
-          CIT 227 <br>
-          15 students in line <br>
-          15 minute waiting time
-        </div>
-      </div>
-    </a>
-
-    <a href="/course/cs033" class="brown card">
-      <div class="content">
-        <div class="header">CS033</div>
-        <div class="meta">Computer Systems</div>
-        <div class="description">
-          CIT 227 <br>
-          15 students in line <br>
-          15 minute waiting time
-        </div>
-      </div>
-    </a>
-  </div>
+    TA? Sign in to hold hours.
+  {{else}}
+    <div class="ui link cards">
+      {{#each activeQueues }}
+        <a href="/course/{{course}}" class="red card">
+          <div class="content">
+            <div class="header">{{course}}</div>
+            <div class="meta">Introduction to Object Oriented Programming</div>
+            <div class="description">
+              {{room}} <br>
+              15 students in line <br>
+              15 minute waiting time
+            </div>
+          </div>
+        </a>
+      {{/each}}
+    </div>
+  {{/if}}
 </template>

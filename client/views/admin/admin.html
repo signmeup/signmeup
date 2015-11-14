@@ -1,45 +1,127 @@
 <template name="admin">
-  <h1>Admin Dashboard</h1>
-
-  <div id="manage-courses" class="four columns wide">
-    <h2>Manage Courses</h2>
-
-    <div id="list-courses">
-    {{#each courses}}
-      {{name}}
-      {{description}}
-      {{listserv}}
-      {{active}}
-
-      {{createdAt}}
-    {{/each}}
+  <div class="row">
+    <div class="column">
+      <h1 class="ui header">Admin Dashboard</h1>
     </div>
+  </div>
 
-    <form id="add-course" class="ui form">
-      <h3>Add Course</h3>
-      <div class="field">
-        <label>Name</label>
-        <input type="text" name="name">
-      </div>
+  <div id="manage-courses" class="row">
+    <div class="column">
+      <h2 class="ui dividing header">Manage Courses</h2>
 
-      <div class="field">
-        <label>Description</label>
-        <input type="text" name="description">
-      </div>
-
-      <div class="field">
-        <label>Listserv</label>
-        <input type="email" name="listserv">
-      </div>
-
-      <div class="inline field">
-        <div class="ui toggle checkbox">
-          <input type="checkbox" name="active" tabindex="0" class="hidden">
-          <label>Active</label>
+      <div class="ui two column grid">
+        <div id="list-courses" class="ten wide column">
+          <h3>Courses</h3>
+          <table class="ui celled table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Listserv</th>
+                <th>Active</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each courses}}
+                <tr>
+                  <td>{{name}}</td>
+                  <td>{{description}}</td>
+                  <td>{{listserv}}</td>
+                  <td>{{active}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
         </div>
-      </div>
 
-      <button class="ui button" type="submit">Submit</button>
-    </form>
+        <form id="add-course" class="ui form six wide column">
+          <h3>Add Course</h3>
+          <div class="field">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="e.g. cs00">
+          </div>
+
+          <div class="field">
+            <label>Description</label>
+            <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming">
+          </div>
+
+          <div class="field">
+            <label>Listserv</label>
+            <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu">
+          </div>
+
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" name="active" tabindex="0" class="hidden">
+              <label>Active</label>
+            </div>
+          </div>
+
+          <button class="ui button" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="manage-queues" class="row">
+    <div class="column">
+      <h2 class="ui dividing header">Manage Queues</h2>
+
+      <div class="ui two column grid">
+        <div id="list-queues" class="ten wide column">
+          <h3>Queues</h3>
+          <table class="ui celled table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Room</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each queues}}
+                <tr>
+                  <td>{{name}}</td>
+                  <td>{{course}}</td>
+                  <td>{{room}}</td>
+                  <td>{{status}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div>
+
+        <form id="add-queue" class="ui form six wide column">
+        <h3>Add Queue</h3>
+          <div class="field">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="e.g. Main Queue">
+          </div>
+
+          <select class="ui dropdown">
+            <option value="">Course</option>
+            {{#each courses}}
+              <option value="{{name}}">{{name}}</option>
+            {{/each}}
+          </select>
+
+          <div class="field">
+            <label>Listserv</label>
+            <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu">
+          </div>
+
+          <div class="inline field">
+            <div class="ui toggle checkbox">
+              <input type="checkbox" name="active" tabindex="0" class="hidden">
+              <label>Active</label>
+            </div>
+          </div>
+
+          <button class="ui button" type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>

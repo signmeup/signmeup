@@ -5,6 +5,10 @@ Template.admin.rendered = function() {
 Template.admin.helpers({
   "courses": function() {
     return Courses.find({});
+  },
+
+  "queues": function() {
+    return Queues.find({});
   }
 });
 
@@ -18,7 +22,6 @@ Template.admin.events({
         listserv = event.target.listserv.value,
         active = $(".ui.toggle.checkbox").hasClass("checked");
 
-    console.log(name, description, listserv, active);
     Courses.insert({
       name: name,
       description: description,
@@ -31,5 +34,7 @@ Template.admin.events({
       settings: {},
       createdAt: Date.now()
     });
+
+    $("#add-course");
   }
 });

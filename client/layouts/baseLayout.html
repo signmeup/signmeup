@@ -1,9 +1,11 @@
 <template name="baseLayout">
-  <div id="baseLayout" class="ui container">
+  <div id="baseLayout" class="ui grid container">
     {{> nav }}
 
-    <div id="content">
-      {{> Template.dynamic template=content }}
+    <div id="content" class="row">
+      <div class="column">
+        {{> Template.dynamic template=content }}
+      </div>
     </div>
     
     {{> footer }}
