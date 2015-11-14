@@ -19,6 +19,13 @@ FlowRouter.route("/ta", {
   }
 });
 
+FlowRouter.route("/admin", {
+  name: "admin",
+  action: function() {
+    BlazeLayout.render("baseLayout", {content: "admin"});
+  }
+});
+
 FlowRouter.notFound = {
   action: function() {
     BlazeLayout.render("baseLayout", {content: "notFound"})

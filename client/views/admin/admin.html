@@ -1,0 +1,45 @@
+<template name="admin">
+  <h1>Admin Dashboard</h1>
+
+  <div id="manage-courses" class="four columns wide">
+    <h2>Manage Courses</h2>
+
+    <div id="list-courses">
+    {{#each courses}}
+      {{name}}
+      {{description}}
+      {{listserv}}
+      {{active}}
+
+      {{createdAt}}
+    {{/each}}
+    </div>
+
+    <form id="add-course" class="ui form">
+      <h3>Add Course</h3>
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="name">
+      </div>
+
+      <div class="field">
+        <label>Description</label>
+        <input type="text" name="description">
+      </div>
+
+      <div class="field">
+        <label>Listserv</label>
+        <input type="email" name="listserv">
+      </div>
+
+      <div class="inline field">
+        <div class="ui toggle checkbox">
+          <input type="checkbox" name="active" tabindex="0" class="hidden">
+          <label>Active</label>
+        </div>
+      </div>
+
+      <button class="ui button" type="submit">Submit</button>
+    </form>
+  </div>
+</template>
