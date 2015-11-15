@@ -13,6 +13,16 @@ main {
   flex: 1;
 }
 
+nav {
+  padding-top: 1rem;
+  padding-bottom: 2rem;
+}
+
+footer {
+  padding-top: 2rem;
+  padding-bottom: 1.5rem;
+}
+
 td.is-table-empty {
   height: 12rem;
   text-align: center !important; // TODO: Figure out how to override properly.
