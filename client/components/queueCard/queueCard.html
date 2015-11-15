@@ -1,12 +1,12 @@
 <template name="queueCard">
-  <a href="/course/{{course}}" class="red card">
+  <a href="/course/{{course.name}}/{{_id}}" class="red card">
     <div class="content">
-      <div class="header">{{course}}</div>
-      <div class="meta">{{courseDescription}}</div>
+      <div class="header">{{course.name}}{{#if name}} &middot; {{name}}{{/if}}</div>
+      <div class="meta">{{course.description}}</div>
       <div class="description">
         {{location}} <br>
-        {{ticketCount}} students in line <br>
-        {{waitTime}} minute waiting time
+        {{activeTicketCount}} students in line <br>
+        {{waitTimeInMinutes}} minute waiting time
       </div>
     </div>
   </a>

@@ -27,7 +27,7 @@ function initializeCollections() {
     Queues.insert({
       name: "Test Queue",
       course: "cs00",
-      room: "CIT 227",
+      location: "CIT 227",
 
       status: "active",
 

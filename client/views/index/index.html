@@ -5,18 +5,8 @@
     TA? Sign in to hold hours.
   {{else}}
     <div class="ui link cards">
-      {{#each activeQueues }}
-        <a href="/course/{{course}}" class="red card">
-          <div class="content">
-            <div class="header">{{course}}</div>
-            <div class="meta">Introduction to Object Oriented Programming</div>
-            <div class="description">
-              {{room}} <br>
-              15 students in line <br>
-              15 minute waiting time
-            </div>
-          </div>
-        </a>
+      {{#each queue in activeQueues }}
+        {{> queueCard queue}}
       {{/each}}
     </div>
   {{/if}}

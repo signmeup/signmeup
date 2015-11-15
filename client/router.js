@@ -1,3 +1,9 @@
+/**
+ * BlazeLayout renders layouts into a new div.
+ * This setting makes it render directly into body.
+ */
+BlazeLayout.setRoot('body');
+
 FlowRouter.route("/", {
   name: "index",
   action: function() {
