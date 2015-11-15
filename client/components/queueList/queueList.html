@@ -1,25 +1,33 @@
 <template name="queueList">
   <table class="ui celled table">
     <thead>
-      <th>No.</th>
-      <th>Name</th>
-      <th>Estimated Wait Time</th>
+      <th class="two wide">No.</th>
+      <th class="six wide">Name</th>
+      <th class="eight wide">Estimated Wait Time</th>
     </thead>
     <tbody>
-      {{#each ticket in activeTickets}}
+      {{#if activeTickets}}
+        {{#each ticket in activeTickets}}
+          <tr>
+            <td>{{position}}</td>
+            <td>{{owner.name}}</td>
+            <td>5 minutes</td>
+          </tr>
+        {{/each}}
+      {{else}}
         <tr>
-          <td>{{position}}</td>
-          <td>{{owner.name}}</td>
-          <td>5 minutes</td>
+          <td class=".is-table-empty" colspan="3">
+            No one has signed up for this queue yet.
+          </td>
         </tr>
-      {{/each}}
+      {{/if}}
     </tbody>
     <tfoot>
       <tr>
         <th colspan="3">
-          <div class="ui right floated small primary labeled icon button">
+          <button class="ui right floated small primary labeled icon button js-join-queue-btn">
             <i class="plus icon"></i> Join Queue
-          </div>
+          </button>
         </th>
       </tr>
     </tfoot>

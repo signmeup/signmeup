@@ -12,3 +12,8 @@
 main {
   flex: 1;
 }
+
+td.is-table-empty {
+  height: 12rem;
+  text-align: center !important; // TODO: Figure out how to override properly.
+}

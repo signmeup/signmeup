@@ -20,7 +20,7 @@ Template.admin.events({
     var name = event.target.name.value,
         description = event.target.description.value,
         listserv = event.target.listserv.value,
-        active = $(".ui.toggle.checkbox").hasClass("checked");
+        active = $(".ui.toggle.checkbox").hasClass("checked"); // BAD
 
     Courses.insert({
       name: name,
@@ -35,6 +35,6 @@ Template.admin.events({
       createdAt: Date.now()
     });
 
-    $("#add-course");
+    $("#add-course"); // TODO: Reset form
   }
 });
