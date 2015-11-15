@@ -11,7 +11,7 @@ Template.queueCardContent.helpers({
 
   activeTicketCount: function() {
     var activeTickets = this.tickets.filter(function(e) {
-      return e.status == "active";
+      return e.status != "done";
     });
 
     return activeTickets.length;
