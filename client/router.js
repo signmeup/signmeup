@@ -1,5 +1,5 @@
 /**
- * BlazeLayout renders layouts into a new div.
+ * BlazeLayout normally renders layouts into a new div.
  * This setting makes it render directly into body.
  */
 BlazeLayout.setRoot('body');
@@ -11,10 +11,11 @@ FlowRouter.route("/", {
   }
 });
 
-FlowRouter.route("/course/:courseId", {
-  name: "course",
+FlowRouter.route("/:courseId/:queueId", {
+  name: "queue",
   action: function(params, queryParams) {
-    BlazeLayout.render("baseLayout", {content: "course"});
+    console.log(params);
+    BlazeLayout.render("baseLayout", {content: "queue"});
   }
 });
 

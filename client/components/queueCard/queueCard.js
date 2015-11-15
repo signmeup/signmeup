@@ -1,4 +1,10 @@
-Template.queueCard.helpers({
+Template.queueCardLink.helpers({
+  queueLink: function() {
+    return FlowRouter.path("queue", {courseId: this.course, queueId: this._id}, {});
+  }
+});
+
+Template.queueCardContent.helpers({
   course: function() {
     return Courses.findOne({name: this.course});
   },

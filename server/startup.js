@@ -40,7 +40,7 @@ function initializeCollections() {
       announcements: [],
 
       tickets: [],
-      waitTime: 0
+      averageWaitTime: 0
     });
   }
 }

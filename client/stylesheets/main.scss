@@ -1,0 +1,14 @@
+/**
+ * Sticky Footer
+ * http://philipwalton.github.io/solved-by-flexbox/demos/sticky-footer/
+ */
+
+#baseLayout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}

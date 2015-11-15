@@ -1,13 +1,15 @@
 <template name="index">
-  {{#if noActiveQueues }}
-    No courses holding hours right now.
+  <div class="sixteen column wide">
+    {{#if noActiveQueues }}
+      No courses holding hours right now.
 
-    TA? Sign in to hold hours.
-  {{else}}
-    <div class="ui link cards">
-      {{#each queue in activeQueues }}
-        {{> queueCard queue}}
-      {{/each}}
-    </div>
-  {{/if}}
+      TA? Sign in to hold hours.
+    {{else}}
+      <div class="ui link stackable cards">
+        {{#each queue in activeQueues }}
+          {{> queueCardLink queue}}
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
 </template>
