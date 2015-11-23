@@ -14,7 +14,6 @@ FlowRouter.route("/", {
 FlowRouter.route("/:courseId/:queueId", {
   name: "queue",
   action: function(params, queryParams) {
-    console.log(params);
     BlazeLayout.render("baseLayout", {content: "queue"});
   }
 });

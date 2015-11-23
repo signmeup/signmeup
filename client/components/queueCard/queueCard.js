@@ -10,8 +10,8 @@ Template.queueCardContent.helpers({
   },
 
   activeTicketCount: function() {
-    console.log(this);
-    console.log("tickets", this.tickets);
+    /* TODO: Wait for tickets to load */
+
     var activeTickets = this.tickets.filter(function(e) {
       return e.status != "done";
     });

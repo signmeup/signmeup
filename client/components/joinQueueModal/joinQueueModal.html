@@ -1,13 +1,62 @@
 <template name="joinQueueModal">
-  <div class="ui modal js-join-queue-modal">
+  <div class="ui small modal join-queue-modal js-join-queue-modal">
     <div class="header">
       Join Queue
     </div>
+
     <div class="content">
+      <form class="ui form js-join-queue-form">
+        <!-- Name -->
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="name" required>
+        </div>
 
+        <!-- Question -->
+        <div class="field">
+          <label>Question</label>
+          <textarea name="question" rows="3" placeholder="Enter a short summary of your question." required></textarea>
+        </div>
+
+        <!-- Notification -->
+        <div class="grouped fields">
+          <label>Notification</label>
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="announce">
+              <label>Announce my name</label>
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="email" data-helper="notify-email-helper">
+              <label>Email me</label>
+            </div>
+          </div>
+          <div class="field indent notify-email-helper hidden">
+            <div class="ui input">
+              <input type="email" name="emailAddress" placeholder="Email Address">
+            </div>
+          </div>
+
+          <div class="field">
+            <div class="ui checkbox">
+              <input type="checkbox" name="text" data-helper="notify-text-helper">
+              <label>Text me</label>
+            </div>
+          </div>
+          <div class="field indent notify-text-helper hidden">
+            <div class="ui input">
+              <input type="tel" name="phoneNumber" placeholder="Phone Number">
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
-    <div class="actions">
 
+    <div class="actions">
+      <button class="ui primary button js-submit-join-queue-form">Join Queue</button>
     </div>
   </div>
 </template>

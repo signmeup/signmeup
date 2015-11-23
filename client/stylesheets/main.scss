@@ -27,3 +27,14 @@ td.is-table-empty {
   height: 12rem;
   text-align: center !important; // TODO: Figure out how to override properly.
 }
+
+/* joinQueueModal */
+.join-queue-modal {
+  .indent {
+    padding-left: 1.8rem !important;
+  }
+
+  .field.hidden {
+    display: none !important;
+  }
+}
