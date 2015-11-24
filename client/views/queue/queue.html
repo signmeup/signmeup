@@ -1,10 +1,12 @@
 <template name="queue">
-  <div class="six wide column"> 
-    {{> queueCard queue}}
-  </div>
-  <div class="ten wide column">
-    {{> queueList queue}}
-  </div>
+  {{#if Template.subscriptionsReady}}
+    <div class="six wide column"> 
+      {{> queueCard queue}}
+    </div>
+    <div class="ten wide column">
+      {{> queueList queue}}
+    </div>
 
-  {{> joinQueueModal queue}}
+    {{> joinQueueModal queue}}
+  {{/if}}
 </template>

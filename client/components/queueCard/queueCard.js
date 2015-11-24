@@ -8,10 +8,8 @@ Template.queueCardContent.helpers({
   course: function() {
     return Courses.findOne({name: this.course});
   },
-
+  
   activeTicketCount: function() {
-    /* TODO: Wait for tickets to load */
-
     var activeTickets = this.tickets.filter(function(e) {
       return e.status != "done";
     });
