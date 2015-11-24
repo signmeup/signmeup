@@ -38,3 +38,11 @@ td.is-table-empty {
     display: none !important;
   }
 }
+
+.notFound {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
