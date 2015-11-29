@@ -1,0 +1,14 @@
+<template name="courseMenu">
+  <div class="ui pointing menu">
+    {{../courses}}
+    {{#each course in ../courses}}
+      <!-- TODO: Active Items -->
+      <a class="item">
+        {{course.name}}
+      </a>
+    {{/each}}
+    <a class="item">
+      <i class="plus icon"></i>
+    </a>
+  </div>
+</template>
