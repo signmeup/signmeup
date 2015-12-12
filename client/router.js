@@ -4,6 +4,13 @@
  */
 BlazeLayout.setRoot('body');
 
+FlowRouter.route("/passwordLogin", {
+  name: "passwordLogin",
+  action: function() {
+    BlazeLayout.render("baseLayout", {content: "passwordLogin"});
+  }
+});
+
 FlowRouter.route("/", {
   name: "index",
   action: function() {

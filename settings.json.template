@@ -1,0 +1,16 @@
+{
+  "private": {
+    "admin": {
+      "email": "admin@signmeup.cs.brown.edu",
+      "password": "insert-password-here"
+    },
+    "ta": {
+      "email": "ta@signmeup.cs.brown.edu",
+      "password": "insert-password-here"
+    },
+    "student": {
+      "email": "student@signmeup.cs.brown.edu",
+      "password": "insert-password-here"
+    }
+  }
+}

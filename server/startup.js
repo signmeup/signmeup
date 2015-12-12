@@ -1,7 +1,57 @@
 Meteor.startup(function() {
   /* Startup Code */
+  createTestUsers();
   initializeCollections();
 });
+
+function createTestUsers() {
+  var settings = Meteor.settings.private;
+  createUser("Admin", settings.admin.email, settings.admin.password, true);
+  createUser("Test TA", settings.ta.email, settings.ta.password, false, true, "cs00");
+  createUser("Test Student", settings.student.email, settings.student.password);
+}
+
+function createUser(name, email, password, admin, ta, course) {
+  var user = Meteor.users.findOne({
+    "emails.address": email
+  });
+
+  if(!user) {
+    console.log("Creating account...");
+    Accounts.createUser({
+      email: email,
+      password: password,
+      profile: {
+        name: name
+      }
+    });
+  } else {
+    console.log(email + " already exists, skipping...");
+  }
+
+  /* Set admin */
+  if(admin) {
+    Meteor.users.update({
+      "emails.address": email
+    }, {
+      $set: {
+        "profile.admin": true
+      }
+    });
+  }
+
+  /* Set TA */
+  if(ta) {
+    Meteor.users.update({
+      "emails.address": email
+    }, {
+      $set: {
+        "profile.ta": true,
+        "profile.taCourses": [course]
+      }
+    });
+  }
+}
 
 function initializeCollections() {
   /* Courses */

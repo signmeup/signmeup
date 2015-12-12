@@ -2,11 +2,33 @@
   <nav>
     <div class="ui secondary menu">
       <a href="/" class="item">SignMeUp</a>
+
       <div class="right menu">
-        <a href="/admin" class="item">Admin</a>
-        <a href="/hta" class="item">HTA</a>
-        <a href="http://brown.edu" class="item">Sign In</a>
+        {{#if userIs 'admin'}}
+          <a class="item" href="/admin">Admin</a>
+        {{/if}}
+
+        {{#if userIs 'hta'}}
+          <a class="item" href="/hta">HTA</a>
+        {{/if}}
+
+        {{#if currentUser }}
+          {{> navAccount}}
+        {{else}}
+          <a href="/passwordLogin" class="item">Sign In</a>
+        {{/if}}
+
       </div>
     </div>
   </nav>
+</template>
+
+<template name="navAccount">
+  <div class="ui dropdown item">
+    {{name}}<i class="dropdown icon"></i>
+    <div class="menu">
+      <a class="item" href="/profile">Your Profile</a>
+      <a class="item" id="logout">Logout</a>
+    </div>
+  </div>
 </template>
