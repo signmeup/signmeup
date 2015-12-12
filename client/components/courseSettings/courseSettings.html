@@ -1,4 +1,46 @@
 <template name="courseSettings">
-  courseSettings for {{name}}
+  <div class="ui grid courseSettings" data-course="{{name}}">
+    <div class="four wide column">
+      <div class="ui fluid vertical pointing menu">
+        <a class="active item">
+          General
+        </a>
+        <a class="item">
+          HTAs and TAs
+        </a>
+        <a class="item">
+          Metrics
+        </a>
+      </div>
+    </div>
 
+    <div class="ten wide column">
+    <form class="ui form">
+        <h3>General</h3>
+        <div class="field">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="e.g. cs00" value="{{name}}">
+        </div>
+
+        <div class="field">
+          <label>Description</label>
+          <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming" value="{{description}}">
+        </div>
+
+        <div class="field">
+          <label>Listserv</label>
+          <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu" value="{{listserv}}">
+        </div>
+
+        <div class="inline field">
+          <div class="ui toggle checkbox">
+            <input type="checkbox" name="active" tabindex="0" class="hidden" checked={{active}}>
+            <label>Active</label>
+          </div>
+        </div>
+
+        <button class="ui button" type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
 </template>

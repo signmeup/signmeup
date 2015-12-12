@@ -1,10 +1,10 @@
+<!-- Pass courses as a context variable when including this tempalte -->
 <template name="courseMenu">
-  <div class="ui pointing menu">
-    {{../courses}}
-    {{#each course in ../courses}}
+  <div class="ui pointing menu courseMenu">
+    {{#each courses}}
       <!-- TODO: Active Items -->
-      <a class="item">
-        {{course.name}}
+      <a class="item" data-course="{{name}}">
+        {{name}}
       </a>
     {{/each}}
     <a class="item">

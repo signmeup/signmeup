@@ -8,6 +8,11 @@ Template.admin.onCreated(function() {
   });
 });
 
+Template.admin.onRendered(function() {
+  $(".courseMenu .item").eq(0).addClass("active");
+  $(".courseSettings").eq(0).addClass("active");
+});
+
 Template.admin.helpers({
   "courses": function() {
     return Courses.find({});
