@@ -1,5 +1,4 @@
 Template.navAccount.onRendered(function() {
-  console.log("hello!");
   $(this.findAll(".ui.dropdown")).dropdown();
 });
 

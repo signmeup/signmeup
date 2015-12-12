@@ -30,6 +30,6 @@ window.authorized = {
   }
 };
 
-UI.registerHelper('userIs', function(role){
-  return authorized[role]();
+UI.registerHelper('userIs', function(role, course){
+  return authorized[role](course);
 });
