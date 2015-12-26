@@ -1,16 +1,33 @@
-{
-  "private": {
-    "admin": {
-      "email": "admin@signmeup.cs.brown.edu",
-      "password": "insert-password-here"
-    },
-    "ta": {
-      "email": "ta@signmeup.cs.brown.edu",
-      "password": "insert-password-here"
-    },
-    "student": {
-      "email": "student@signmeup.cs.brown.edu",
-      "password": "insert-password-here"
-    }
+ {
+  "admin": {
+    "email": "admin@signmeup.cs.brown.edu",
+    "password": "INSERT-PASSWORD-HERE"
+  },
+
+  "ta": {
+    "email": "ta@signmeup.cs.brown.edu",
+    "password": "INSERT-PASSWORD-HERE"
+  },
+
+  "student": {
+    "email": "student@signmeup.cs.brown.edu",
+    "password": "INSERT-PASSWORD-HERE"
+  },
+
+  "saml": {
+    "loginUrl": "/login",
+    "protocol": "https",
+    "host": "local.cis-dev.brown.edu:3000",
+    "path": "/login/callback",
+    "entryPoint": "https://sso.brown.edu/idp/profile/SAML2/Redirect/SSO",
+    "issuer": "https://local.cis-dev.brown.edu/shibboleth-sp",
+    "cert": "INSERT-IDP-CERT-HERE",
+    "identifierFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
+    "disableRequestedAuthnContext": true
+  },
+
+  "ssl": {
+    "absolutePathToKey": "INSERT-ABSOLUTE-PATH-TO-KEY",
+    "absolutePathToCert": "INSERT-ABSOLUTE-PATH-TO-CERT"
   }
 }

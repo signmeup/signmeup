@@ -1,11 +1,15 @@
 Meteor.startup(function() {
-  /* Startup Code */
+  // Setup SSL
+  var keyPath = Meteor.settings.ssl.absolutePathToKey;
+  var certPath = Meteor.settings.ssl.absolutePathToCert;
+  SSL(keyPath, certPath, 3000);
+
   createTestUsers();
   initializeCollections();
 });
 
 function createTestUsers() {
-  var settings = Meteor.settings.private;
+  var settings = Meteor.settings;
   createUser("Admin", settings.admin.email, settings.admin.password, true);
   createUser("Test TA", settings.ta.email, settings.ta.password, false, true, "cs00");
   createUser("Test Student", settings.student.email, settings.student.password);
@@ -25,8 +29,6 @@ function createUser(name, email, password, admin, ta, course) {
         name: name
       }
     });
-  } else {
-    console.log(email + " already exists, skipping...");
   }
 
   /* Set admin */
