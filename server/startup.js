@@ -1,3 +1,5 @@
+// Startup
+
 Meteor.startup(function() {
   // Setup SSL
   var keyPath = Meteor.settings.ssl.absolutePathToKey;
@@ -7,6 +9,9 @@ Meteor.startup(function() {
   createTestUsers();
   initializeCollections();
 });
+
+
+// Test Data
 
 function createTestUsers() {
   var settings = Meteor.settings;
@@ -31,7 +36,7 @@ function createUser(name, email, password, admin, ta, course) {
     });
   }
 
-  /* Set admin */
+  // Set admin
   if(admin) {
     Meteor.users.update({
       "emails.address": email
@@ -42,7 +47,7 @@ function createUser(name, email, password, admin, ta, course) {
     });
   }
 
-  /* Set TA */
+  // Set TA
   if(ta) {
     Meteor.users.update({
       "emails.address": email
@@ -56,7 +61,7 @@ function createUser(name, email, password, admin, ta, course) {
 }
 
 function initializeCollections() {
-  /* Courses */
+  // Courses
   var testCourse = Courses.findOne({name: "cs00"});
   if(!testCourse) {
     Courses.insert({
@@ -73,7 +78,19 @@ function initializeCollections() {
     });
   }
 
-  /* Queues */
+  // Locations
+  var testLocation = Locations.findOne({name: "Test Location"});
+  if(!testLocation) {
+    Locations.insert({
+      name: "Test Location",
+      active: true,
+
+      ips: [],
+      geo: {}
+    });
+  }
+
+  // Queues
   var testQueue = Queues.findOne({name: "Test Queue", course: "cs00"});
   if(!testQueue) {
     Queues.insert({
