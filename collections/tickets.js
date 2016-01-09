@@ -5,7 +5,7 @@
  *    createdAt: Number (Milliseconds),
  *    owner: {
  *      id: userId,
- *      name: STRING
+ *      email: STRING
  *    },
  *    status: ("open", "missing", "done", "expired", "cancelled")
  *
@@ -19,14 +19,17 @@
  *
  *    ta: {
  *      id: userId,
- *      name: STRING,
+ *      email: STRING,
  *      time: Number (Milliseconds)
  *    }
  *    
  *    flag: {
  *      flagged: Boolean,
  *      message: STRING,
- *      owner: STRING
+ *      ta: {
+ *        id: userId,
+ *        email: STRING
+ *      }
  *    }
  *  }
  */

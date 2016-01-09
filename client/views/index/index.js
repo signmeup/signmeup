@@ -12,7 +12,8 @@ Template.index.helpers({
   },
 
   "activeQueues": function() {
-    var activeQueues = Queues.find({status: {$ne: "done"}});
+    // TODO: abstract out the logic to get activeQueues
+    var activeQueues = Queues.find({"status": {$nin: ["done", "cancelled"]}});
     if(activeQueues.count() == 0) {
       return false;
     } else {
