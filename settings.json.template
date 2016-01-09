@@ -9,6 +9,11 @@
     "password": "INSERT-PASSWORD-HERE"
   },
 
+  "hta": {
+    "email": "hta@signmeup.cs.brown.edu",
+    "password": "INSERT-PASSWORD-HERE"
+  }
+
   "student": {
     "email": "student@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE"

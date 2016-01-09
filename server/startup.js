@@ -15,12 +15,13 @@ Meteor.startup(function() {
 
 function createTestUsers() {
   var settings = Meteor.settings;
-  createUser("Admin", settings.admin.email, settings.admin.password, true);
-  createUser("Test TA", settings.ta.email, settings.ta.password, false, true, "cs00");
+  createUser("Admin", settings.admin.email, settings.admin.password, "admin");
+  createUser("Test HTA", settings.hta.email, settings.hta.password, "hta", "cs00");
+  createUser("Test TA", settings.ta.email, settings.ta.password, "ta", "cs00");
   createUser("Test Student", settings.student.email, settings.student.password);
 }
 
-function createUser(name, email, password, admin, ta, course) {
+function createUser(name, email, password, type, course) {
   var user = Meteor.users.findOne({
     "emails.address": email
   });
@@ -37,7 +38,7 @@ function createUser(name, email, password, admin, ta, course) {
   }
 
   // Set admin
-  if(admin) {
+  if(type === "admin") {
     Meteor.users.update({
       "emails.address": email
     }, {
@@ -47,13 +48,23 @@ function createUser(name, email, password, admin, ta, course) {
     });
   }
 
-  // Set TA
-  if(ta) {
+  // Set HTA
+  if(type === "hta") {
     Meteor.users.update({
       "emails.address": email
     }, {
       $set: {
-        "profile.ta": true,
+        "profile.htaCourses": [course]
+      }
+    });
+  }
+
+  // Set TA
+  if(type === "ta") {
+    Meteor.users.update({
+      "emails.address": email
+    }, {
+      $set: {
         "profile.taCourses": [course]
       }
     });
@@ -61,6 +72,9 @@ function createUser(name, email, password, admin, ta, course) {
 }
 
 function initializeCollections() {
+  var testHTA = Meteor.users.findOne({"emails.address": Meteor.settings.hta.email});
+  var testTA = Meteor.users.findOne({"emails.address": Meteor.settings.ta.email});
+
   // Courses
   var testCourse = Courses.findOne({name: "cs00"});
   if(!testCourse) {
@@ -70,8 +84,8 @@ function initializeCollections() {
       listserv: "cs00tas@cs.brown.edu",
       active: true,
 
-      htas: [],
-      tas: [],
+      htas: [testHTA._id],
+      tas: [testTA._id],
 
       settings: {},
       createdAt: Date.now()
@@ -97,19 +111,22 @@ function initializeCollections() {
       name: "Test Queue",
       course: "cs00",
       location: "CIT 227",
+      mode: "universal",
 
       status: "active",
-
-      owner: {},
+      owner: {
+        id: testTA._id,
+        email: testTA.emails[0].address
+      },
 
       startTime: Date.now(),
       endTime: null,
+      averageWaitTime: 0,
 
       localSettings: {},
-      announcements: [],
 
+      announcements: [],
       tickets: [],
-      averageWaitTime: 0
     });
   }
 }
