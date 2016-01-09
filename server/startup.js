@@ -6,8 +6,14 @@ Meteor.startup(function() {
   var certPath = Meteor.settings.ssl.absolutePathToCert;
   SSL(keyPath, certPath, 3000);
 
+  // Initialize Data
   createTestUsers();
   initializeCollections();
+
+  // Config Packages
+  Accounts.config({
+    forbidClientAccountCreation: true
+  });
 });
 
 

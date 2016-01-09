@@ -25,13 +25,6 @@ FlowRouter.route("/:courseId/:queueId", {
   }
 });
 
-FlowRouter.route("/ta", {
-  name: "ta",
-  action: function() {
-    BlazeLayout.render("baseLayout", {content: "ta"});
-  }
-});
-
 FlowRouter.route("/admin", {
   name: "admin",
   action: function() {
