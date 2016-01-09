@@ -1,11 +1,13 @@
 <template name="admin">
   {{#if Template.subscriptionsReady}}
-    <div class="sixteen wide column">
+    <div class="four wide column">
       {{> courseMenu courses=courses}}
+    </div>
+
+    <div class="twelve wide column">
       {{#each course in courses}}
         {{> courseSettings course}}
       {{/each}}
     </div>
-    {{log}}
   {{/if}}
 </template>

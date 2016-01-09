@@ -4,13 +4,8 @@ Template.admin.onCreated(function() {
     self.subscribe("courses");
     self.subscribe("locations");
     self.subscribe("queues");
-    self.subscribe("users");
+    self.subscribe("allUsers");
   });
-});
-
-Template.admin.onRendered(function() {
-  $(".courseMenu .item").eq(0).addClass("active");
-  $(".courseSettings").eq(0).addClass("active");
 });
 
 Template.admin.helpers({

@@ -1,46 +1,95 @@
-<template name="courseSettings">
-  <div class="ui grid courseSettings" data-course="{{name}}">
-    <div class="four wide column">
-      <div class="ui fluid vertical pointing menu">
-        <a class="active item">
-          General
-        </a>
-        <a class="item">
-          HTAs and TAs
-        </a>
-        <a class="item">
-          Metrics
-        </a>
+  <template name="courseSettings">
+  <div class="ui fluid card courseSettings" data-course="{{name}}">
+    <div class="content">
+      <div class="ui right floated toggle checkbox">
+        <input type="checkbox" name="active" tabindex="0" class="hidden" form="{{name}}-general">
+        <label>{{#if active}}Active{{else}}Inactive{{/if}}</label>
       </div>
+      <div class="header">{{name}}</div>
     </div>
 
-    <div class="ten wide column">
-    <form class="ui form">
-        <h3>General</h3>
-        <div class="field">
-          <label>Name</label>
-          <input type="text" name="name" placeholder="e.g. cs00" value="{{name}}">
-        </div>
+    {{> courseSettingsGeneral}}
+    {{> courseSettingsTAs}}
 
-        <div class="field">
-          <label>Description</label>
-          <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming" value="{{description}}">
-        </div>
+    <div class="content">
+      <a class="ui right floated link">Delete</a>
+    </div>
+  </div>
+</template>
 
-        <div class="field">
-          <label>Listserv</label>
-          <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu" value="{{listserv}}">
-        </div>
+<template name="courseSettingsGeneral">
+  <div class="content">
+    <form id="{{name}}-general" class="ui form">
+      <h4>General</h4>
+      <div class="field">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="e.g. cs00" value="{{name}}">
+      </div>
 
-        <div class="inline field">
-          <div class="ui toggle checkbox">
-            <input type="checkbox" name="active" tabindex="0" class="hidden" checked={{active}}>
-            <label>Active</label>
+      <div class="field">
+        <label>Description</label>
+        <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming" value="{{description}}">
+      </div>
+
+      <div class="field">
+        <label>Listserv</label>
+        <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu" value="{{listserv}}">
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="courseSettingsTAs">
+  <div class="content">
+    <h4>HTAs and TAs</h4>
+
+    <form class="ui form js-ta-input">
+      <div class="ui fluid large action input">
+        <input type="email" placeholder="Email Address">
+        <button class="ui button" role="submit">Add</button>
+      </div>
+    </form>
+
+    {{#if tasExist}}
+      <div class="ui relaxed list">
+        {{#each email in htas}}
+          {{> taItem email=email hta=true}}
+        {{/each}}
+        <div class="ui divider"></div>
+        {{#each email in tas}}
+          {{> taItem email=email hta=false}}
+        {{/each}}
+      </div>
+    {{else}}
+      <div class="no-tas">
+        Add TAs by entering their email address above.
+      </div>
+    {{/if}}
+  </div>
+</template>
+
+<template name="taItem">
+  <div class="item">
+    <div class="content">
+      <div class="ui right floated icon top left pointing dropdown basic button">
+        <i class="dropdown icon"></i>
+        <div class="menu">
+          <div class="item js-change-role">
+            {{#if hta}}Make TA{{else}}Make HTA{{/if}}
           </div>
+          <div class="item js-delete">Delete</div>
         </div>
+      </div>
+      <div class="header">
+        {{#if isUser email}}
+          {{nameFromEmail email}}
+        {{else}}
+          Unknown User     
+        {{/if}}
 
-        <button class="ui button" type="submit">Submit</button>
-      </form>
+        {{#if hta}}<div class="ui horizontal label">HTA</div>{{/if}}
+      </div>
+      {{email}}
     </div>
   </div>
 </template>

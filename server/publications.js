@@ -19,3 +19,12 @@ Meteor.publish("queue", function(id) {
 Meteor.publish("activeQueues", function() {
   return Queues.find({"status": {$ne: "done"}});
 });
+
+/**
+ * Users Publications
+ */
+Meteor.publish("allUsers", function() {
+  if(authorized.admin(this.userId)) {
+    return Meteor.users.find({});
+  }
+});

@@ -30,6 +30,13 @@ window.authorized = {
   }
 };
 
-UI.registerHelper('userIs', function(role, course){
+UI.registerHelper("userIs", function(role, course){
   return authorized[role](course);
+});
+
+UI.registerHelper("isUser", function(email) {
+  console.log("checking isUser " + email);
+  var result = Meteor.users.find({email: email}).count();
+  console.log(result);
+  return result;
 });
