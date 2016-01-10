@@ -21,10 +21,3 @@ Template.courseSettingsTAs.helpers({
     return this.htas.length + this.tas.length > 0;
   }
 });
-
-Template.taItem.helpers({
-  "nameFromEmail": function(email) {
-    var user = Meteor.users.findOne({email: email});
-    return user.profile.displayName || user.profile.name;
-  }
-});

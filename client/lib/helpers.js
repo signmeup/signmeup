@@ -29,6 +29,10 @@ _timeInMinutes = function (milliseconds) {
   return Math.floor(d.asMinutes());
 }
 
+_getUserFromEmail = function(email) {
+  return Meteor.users.findOne({email: email});
+}
+
 _getUserEmail = function() {
   if (Meteor.user()) {
     var user = Meteor.user();
@@ -60,5 +64,6 @@ _getUserName = function() {
 
 UI.registerHelper("activeQueues", _activeQueues);
 UI.registerHelper("activeTickets", _activeTickets);
+UI.registerHelper("userFromEmail", _getUserFromEmail);
 UI.registerHelper("userName", _getUserName);
 UI.registerHelper("userEmail", _getUserEmail);

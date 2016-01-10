@@ -81,8 +81,8 @@
         </div>
       </div>
       <div class="header">
-        {{#if isUser email}}
-          {{nameFromEmail email}}
+        {{#if userFromEmail email}}
+          {{userName userFromEmail email}}
         {{else}}
           Unknown User     
         {{/if}}
