@@ -4,6 +4,7 @@ window.authorized = {
   },
 
   ta: function(course){
+    // TODO: Fix so that HTAs and above are allowed
     var user = Meteor.user();
     var value = user && user.profile.ta;
 

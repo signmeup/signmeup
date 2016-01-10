@@ -4,6 +4,16 @@
  * Semantic. In the process, the Blaze event handlers get lost.
  */
 
+showModal = function() {
+ $(".js-join-queue-modal")
+   .modal({
+     "transition": "fade up",
+     "duration": 200,
+     "detachable": false // Needed to maintain Blaze events
+   })
+   .modal("show");
+}
+
 Template.joinQueueModal.events({
   /* TODO: Validate form inputs on blur */
 
@@ -21,14 +31,17 @@ Template.joinQueueModal.events({
   },
 
   "submit .js-join-queue-form": function(event) {
-    event.preventDefault();    
+    event.preventDefault();
     var $form = $(event.target);
 
-    /* Validate form */
-    var valid = validateForm();
-    if(!valid) return false;
+    // Validate form
+    var isValid = validateJoinForm();
+    if (!isValid) return false;
 
-    /* Parse notification types */
+    var name = event.target.name.value;
+    var question = event.target.question.value;
+
+    // Parse notification types
     var notify = {}
     var types = [];
 
@@ -46,30 +59,16 @@ Template.joinQueueModal.events({
 
     notify["types"] = types;
 
-    /* Create ticket */
-    var ticket = {
-      /* TODO: Check safety? */
-      createdAt: Date.now(),
-      owner: {
-        name: event.target.name.value,
-      },
-      status: "default",
-
-      question: event.target.question.value,
-
-      notify: notify,
-      flag: {
-        flagged: false
-      }
-    }
-
-    Queues.update({_id: this._id}, {$push: {tickets: ticket}});
-    $(".js-join-queue-modal").modal("hide");
-    // return false;
+    // Create ticket
+    Meteor.call("addTicket", this._id, name, question, notify, function(err, res) {
+      if (err)
+        console.log(err);
+      else
+        $(".js-join-queue-modal").modal("hide");
+    });
   }
 });
 
-function validateForm() {
-  /* TODO: Validate form */
+function validateJoinForm() {
   return true;
 }

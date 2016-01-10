@@ -3,9 +3,11 @@
  *
  * Ticket: {
  *    createdAt: Number (Milliseconds),
+ *    queueId: STRING,
+ *    course: STRING,
  *    owner: {
  *      id: userId,
- *      email: STRING
+ *      name: STRING,
  *    },
  *    status: ("open", "missing", "done", "expired", "cancelled")
  *

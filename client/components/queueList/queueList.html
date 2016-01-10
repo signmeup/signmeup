@@ -6,13 +6,33 @@
       <th class="eight wide">Estimated Wait Time</th>
     </thead>
     <tbody>
-      {{#if activeTickets}}
-        {{#each ticket in activeTickets}}
-          <tr>
-            <td>{{ticket.position}}</td>
-            <td>{{ticket.owner.name}}</td>
-            <td>5 minutes</td>
-          </tr>
+      {{#if activeTickets tickets}}
+        {{#each ticket in activeTickets tickets}}
+          {{#with ticket}}
+            {{#if isOwner}}
+              <tr class="owner warning">
+                <td>{{ticket.position}}</td>
+                <td>{{ticket.owner.name}}</td>
+                <td>
+                  {{ticket.waitTime}} minutes
+                  <div class="ui right floated basic mini buttons">
+                    <button class="ui icon button js-edit-ticket">
+                      <i class="write icon"></i>
+                    </button>
+                    <button class="ui icon button js-cancel-ticket">
+                      <i class="trash icon"></i>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            {{else}}
+              <tr>
+                <td>{{ticket.position}}</td>
+                <td>{{ticket.owner.name}}</td>
+                <td>{{ticket.waitTime}} minutes</td>
+              </tr>
+            {{/if}}
+          {{/with}}
         {{/each}}
       {{else}}
         <tr>

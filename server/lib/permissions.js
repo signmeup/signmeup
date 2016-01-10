@@ -5,6 +5,7 @@ authorized = {
   },
 
   ta: function(userId, course) {
+    // TODO: Fix so that HTAs and above are allowed
     var user = _getUser(userId);
     var value = user && user.profile.ta;
 

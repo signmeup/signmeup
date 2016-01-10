@@ -9,11 +9,6 @@ Meteor.startup(function() {
   // Initialize Data
   createTestUsers();
   initializeCollections();
-
-  // Config Packages
-  Accounts.config({
-    forbidClientAccountCreation: true
-  });
 });
 
 

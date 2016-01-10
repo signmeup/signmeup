@@ -9,16 +9,14 @@ Template.queueCardContent.helpers({
     return Courses.findOne({name: this.course});
   },
   
-  activeTicketCount: function() {
-    var activeTickets = this.tickets.filter(function(e) {
-      return e.status != "done";
-    });
-
-    return activeTickets.length;
+  activeTicketCountText: function() {
+    var count = _activeTickets(this.tickets).length;
+    return (count === 1) ? 
+      count + " student in line" :
+      count + " students in line";
   },
 
   waitTimeInMinutes: function() {
-    var d = moment.duration(this.waitTime, "milliseconds");
-    return Math.floor(d.asMinutes());
+    return _timeInMinutes(this.averageWaitTime);
   }
 });
