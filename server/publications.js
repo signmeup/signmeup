@@ -66,7 +66,21 @@ Meteor.publish("activeTickets", function(queueId) {
   });
 });
 
+
 // Users Publications
+
+Meteor.publish("userData", function() {
+  if(this.userId) {
+    return Meteor.users.find({
+      _id: this.userId
+    }, {
+      email: true,
+      admin: true,
+      htaCourses: true,
+      taCourses: true
+    });
+  }
+});
 
 Meteor.publish("allUsers", function() {
   if(authorized.admin(this.userId)) {

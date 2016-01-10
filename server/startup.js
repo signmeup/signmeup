@@ -44,7 +44,7 @@ function createUser(name, email, password, type, course) {
       "emails.address": email
     }, {
       $set: {
-        "profile.admin": true
+        "admin": true
       }
     });
   }
@@ -55,7 +55,7 @@ function createUser(name, email, password, type, course) {
       "emails.address": email
     }, {
       $set: {
-        "profile.htaCourses": [course]
+        "htaCourses": [course]
       }
     });
   }
@@ -66,7 +66,7 @@ function createUser(name, email, password, type, course) {
       "emails.address": email
     }, {
       $set: {
-        "profile.taCourses": [course]
+        "taCourses": [course]
       }
     });
   }
