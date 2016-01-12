@@ -4,19 +4,16 @@ Template.index.onCreated(function() {
     self.subscribe("courses");
     self.subscribe("activeQueues");
     self.subscribe("allActiveTickets");
-    self.subscribe("locations");
   });
 });
 
 Template.taIndex.helpers({
   "taQueues": function() {
-    var taCourses = Meteor.user().taCourses;
-    return Queues.find({course: {$in: taCourses}}).fetch();
+    return Queues.find({course: {$in: _getUserCourses()}}).fetch();
   },
 
   "otherQueues": function() {
-    var taCourses = Meteor.user().taCourses;
-    return Queues.find({course: {$nin: taCourses}}).fetch();
+    return Queues.find({course: {$nin: _getUserCourses()}}).fetch();
   }
 });
 

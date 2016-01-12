@@ -3,7 +3,6 @@
  *
  * Location:  {
  *    name: STRING,
- *    active: BOOLEAN,
  *    
  *    ips: [STRING],
  *    geo: {

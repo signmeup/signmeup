@@ -8,9 +8,11 @@
       <th class="four wide">Actions</th>
     </thead>
     <tbody>
-      {{#if tickets}}
-        {{#each tickets}}
-          {{> taQueueTicket}}
+      {{#if activeTickets tickets}}
+        {{#each ticket in activeTickets tickets}}
+          {{#with ticket}}
+            {{> taQueueTicket}}
+          {{/with}}
         {{/each}}
       {{else}}
         <tr>
@@ -23,7 +25,17 @@
     <tfoot>
       <tr>
         <th colspan="5">
-            
+          <button class="ui right floated labeled icon button">
+            <i class="plus icon"></i> Add Ticket
+          </button>
+
+          <button class="ui labeled red icon button" {{disabledState}}>
+            <i class="erase icon"></i> Clear All
+          </button>
+
+          <button class="ui labeled icon button js-shuffle-queue" {{disabledState}}>
+            <i class="random icon"></i> Shuffle
+          </button>
         </th>
       </tr>
     </tfoot>

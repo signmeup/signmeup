@@ -72,6 +72,7 @@ reactive-var@1.0.6
 reload@1.1.4
 retry@1.0.4
 routepolicy@1.0.6
+sarasate:semantic-ui-datetimepicker@0.0.2
 semantic:ui@2.1.7
 semantic:ui-data@2.1.7
 service-configuration@1.0.5

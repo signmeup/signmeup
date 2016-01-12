@@ -17,9 +17,25 @@
     </div>
     <div class="meta">{{course.description}}</div>
     <div class="description">
-      {{location}} <br>
+      {{#if location}}
+        {{locationName}} <br>
+      {{/if}}
       {{activeTicketCountText}} <br>
       {{waitTimeInMinutes}} minute waiting time
     </div>
   </div>
+
+  <div class="content">
+    <span class="{{statusColor}}">{{readableStatus}}</span>
+  </div>
+
+  {{#if endTime}}
+    <div class="extra content">
+      <span class="right floated">
+        {{readableEndTime}}
+      </span>
+
+      Ending at
+    </div>
+  {{/if}}
 </template>

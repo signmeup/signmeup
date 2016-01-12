@@ -58,19 +58,22 @@ Meteor.publish("activeTickets", function(queueId) {
   var queue = Queues.findOne({_id: queueId});
   if(!queue) return;
 
+  // Hide fields for non-TAs
+  var projection = {};
   var isTA = authorized.ta(this.userId, queue.course);
+  if(!isTA) {
+    projection["fields"] = {
+      question: false,
+      notify: false,
+      ta: false,
+      flag: false
+    }
+  }
 
   return Tickets.find({
     queueId: queueId,
     status: {$in: ["open", "missing"]}
-  }, {
-    fields: {
-      question: isTA,
-      notify: isTA,
-      ta: isTA,
-      flag: isTA
-    }
-  });
+  }, projection);
 });
 
 

@@ -28,7 +28,7 @@ function createUser(name, email, password, type, course) {
   });
 
   if(!user) {
-    console.log("Creating account...");
+    console.log("Creating " + email + "...");
     Accounts.createUser({
       email: email,
       password: password,
@@ -94,15 +94,17 @@ function initializeCollections() {
   }
 
   // Locations
+  var testLocationId;
   var testLocation = Locations.findOne({name: "Test Location"});
   if(!testLocation) {
-    Locations.insert({
+    testLocationId = Locations.insert({
       name: "Test Location",
-      active: true,
 
       ips: [],
       geo: {}
     });
+  } else {
+    testLocationId = testLocation._id;
   }
 
   // Queues
@@ -111,7 +113,7 @@ function initializeCollections() {
     Queues.insert({
       name: "Test Queue",
       course: "cs00",
-      location: "CIT 227",
+      location: testLocationId,
       mode: "universal",
 
       status: "active",

@@ -8,6 +8,10 @@ Template.queueCardContent.helpers({
   course: function() {
     return Courses.findOne({name: this.course});
   },
+
+  locationName: function() {
+    return Locations.findOne({_id: this.location}).name;
+  },
   
   activeTicketCountText: function() {
     var count = _activeTickets(this.tickets).length;
@@ -18,5 +22,30 @@ Template.queueCardContent.helpers({
 
   waitTimeInMinutes: function() {
     return _timeInMinutes(this.averageWaitTime);
+  },
+
+  readableStatus: function() {
+    statuses = {
+      "active": "Active",
+      "cutoff": "Cut-off",
+      "done": "Ended"
+    };
+
+    return statuses[this.status];
+  },
+
+  statusColor: function() {
+    colors = {
+      "active": "blue",
+      "cutoff": "yellow",
+      "done": "red"
+    };
+
+    return colors[this.status];
+  },
+
+  readableEndTime: function() {
+    var mTime = moment(this.endTime);
+    return mTime.format("h:mm A");
   }
 });

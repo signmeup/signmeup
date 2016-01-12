@@ -43,42 +43,8 @@ _timeInMinutes = function(milliseconds) {
   return Math.floor(d.asMinutes());
 }
 
-_getUserFromEmail = function(email) {
-  return Meteor.users.findOne({email: email});
-}
-
-_getUserEmail = function() {
-  if (Meteor.user()) {
-    var user = Meteor.user();
-    if (user.email) {
-      return user.email
-    } else if (user.emails) {
-      return user.emails[0].address;
-    } else if (user.profile.email) {
-      return user.profile.email;
-    } else {
-      return null;
-    }
-  } else {
-    return null;
-  }
-}
-
-_getUserName = function() {
-  if(Meteor.user()) {
-    var p = Meteor.user().profile;
-    var emailName = _getUserEmail().split("@")[0];
-    return (p.displayName || p.name) || emailName;
-  } else {
-    return null;
-  }
-}
-
 // UI Helpers
 
 UI.registerHelper("activeQueues", _activeQueues);
 UI.registerHelper("activeTickets", _activeTickets);
 UI.registerHelper("locations", _getLocations);
-UI.registerHelper("userFromEmail", _getUserFromEmail);
-UI.registerHelper("userName", _getUserName);
-UI.registerHelper("userEmail", _getUserEmail);

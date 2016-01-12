@@ -4,6 +4,24 @@
  * Semantic. In the process, the Blaze event handlers get lost.
  */
 
+Template.createQueueModal.onRendered(function() {
+  // Initialize location
+  $('.js-location-dropdown')
+    .dropdown({
+      allowAdditions: true
+    });
+
+  // Initialize end time
+  var now = moment();
+  var defaultDate = now.startOf("hour").add(4, "hours");
+  this.$('.datetimepicker').datetimepicker({
+    format: 'h:mm A, MMMM DD',
+    defaultDate: defaultDate,
+    sideBySide: true,
+    stepping: 5
+  });
+});
+
 Template.createQueueModal.events({
   /* TODO: Validate form inputs on blur */
 
@@ -16,36 +34,22 @@ Template.createQueueModal.events({
     var $form = $(event.target);
 
     // Validate form
-    var isValid = validateJoinForm();
+    var isValid = validateCreateQueueForm();
     if (!isValid) return false;
 
+    var course = event.target.course.value;
     var name = event.target.name.value;
-    var question = event.target.question.value;
+    var location = event.target.location.value;
 
-    // Parse notification types
-    var notify = {}
-    var types = [];
+    var mTime = $(event.target.endTime).data("DateTimePicker").date();
+    var time = mTime.valueOf();
 
-    var $checkboxes = $form.find("input[type='checkbox']");
-    $checkboxes.each(function() {
-      if (this.checked) {
-        types.push(this.name);
-        if(this.name === "email") {
-          notify["email"] = event.target.emailAddress.value;
-        } else if(this.name === "phone") {
-          notify["phone"] = event.target.phoneNumber.value;
-        }
-      }
-    });
-
-    notify["types"] = types;
-
-    // Create ticket
-    Meteor.call("addTicket", this._id, name, question, notify, function(err, res) {
+    // Create queue
+    Meteor.call("createQueue", course, name, location, time, function(err) {
       if (err)
         console.log(err);
       else
-        $(".js-join-queue-modal").modal("hide");
+        $(".js-create-queue-modal").modal("hide");
     });
   }
 });
