@@ -1,0 +1,50 @@
+<template name="createQueueModal">
+  <div class="ui small modal create-queue-modal js-create-queue-modal">
+    <div class="header">
+      Create Queue
+    </div>
+
+    <div class="content">
+      <form class="ui form js-join-queue-form">
+        <div class="two fields">
+          <!-- Course -->
+          <div class="field">
+            <label>Course</label>
+            <select name="course" class="ui fluid dropdown">
+              {{#each course in currentUser.taCourses}}
+                <option value="{{course}}">{{course}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <!-- Name -->
+          <div class="field">
+            <label>Name</label>
+            <input type="text" name="name" value="TA Hours">
+          </div>
+        </div>
+
+        <div class="two fields">
+          <div class="field">
+            <label>Location</label>
+            <select name="location" class="ui fluid search dropdown">
+              <option value="">Select Location</option>
+              {{#each loc in locations}}
+                <option value="loc.name">{{loc.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="field">
+            <label>End Time</label>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="actions">
+      <button class="ui primary button js-submit-create-queue-form">Create Queue</button>
+    </div>
+  </div>
+</template>

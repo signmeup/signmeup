@@ -1,19 +1,54 @@
 <template name="index">
   {{#if Template.subscriptionsReady}}
-    <div class="sixteen wide column">
-      {{#if activeQueues }}
-        <div class="ui link stackable cards">
-          {{#each queue in activeQueues }}
-            {{> queueCardLink queue}}
-          {{/each}}
-        </div>
-      {{else}}
-        No courses holding hours right now.
-
-        TA? Sign in to hold hours.
-      {{/if}}
-    </div>
+    {{#if userIs "ta" }}
+      {{> taIndex}}
+    {{else}}
+      {{> studentIndex}}
+    {{/if}}
   {{else}}
     Loading...
   {{/if}}
+</template>
+
+<template name="studentIndex">
+  <div class="sixteen wide column">
+    {{#if activeQueues }}
+      <div class="ui four stackable cards">
+        {{#each queue in activeQueues }}
+          {{> queueCardLink queue}}
+        {{/each}}
+      </div>
+    {{else}}
+      No courses holding hours right now.
+
+      {{#unless currentUser}}
+        TA? Sign in to hold hours.
+      {{/unless}}
+    {{/if}}
+  </div>
+</template>
+
+<template name="taIndex">
+  <div class="sixteen wide column">
+    <div class="ui medium header">Your Queues</div>
+    <div class="ui four stackable cards">
+      {{#each queue in taQueues }}
+        {{> queueCardLink queue}}
+      {{/each}}
+      <div class="ui link card js-show-create-modal">
+        Create Queue
+      </div>
+    </div>
+
+    {{#if otherQueues}}
+      <div class="ui medium header">Other Queues</div>
+      <div class="ui four stackable cards">
+        {{#each queue in otherQueues }}
+          {{> queueCardLink queue}}
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+
+  {{> createQueueModal}}
 </template>

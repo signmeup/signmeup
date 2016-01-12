@@ -7,17 +7,18 @@ Template.queueList.helpers({
 Template.queueList.events({
   "click .js-show-join-queue": function(event) {
     if(Meteor.user()) {
-      showModal();
+      _showModal(".js-join-queue-modal");
     } else {
       Meteor.loginWithSaml(function() {
         if(Meteor.user())
-          showModal();
+          _showModal(".js-join-queue-modal");
       });
     }
   },
 
   "click .js-edit-ticket": function(event) {
-
+    // TODO: Implement edit functionality
+    return;
   },
 
   "click .js-cancel-ticket": function(event) {

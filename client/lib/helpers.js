@@ -1,5 +1,15 @@
 // Functions
 
+_showModal = function(selector) {
+  $(selector)
+    .modal({
+      "transition": "fade up",
+      "duration": 200,
+      "detachable": false // Needed to maintain Blaze events
+    })
+    .modal("show");
+}
+
 _activeQueues = function() {
   return Queues.find({"status": {$nin: ["done", "cancelled"]}}).fetch();
 }
@@ -18,13 +28,17 @@ _activeTickets = function(ticketIds) {
   return activeTickets;
 }
 
-_filterActiveTickets = function (allTickets) {
+_filterActiveTickets = function(allTickets) {
   return _.filter(allTickets, function(e) {
     return (["done", "expired", "cancelled"].indexOf(e.status) == -1);
   });
 }
 
-_timeInMinutes = function (milliseconds) {
+_getLocations = function () {
+  return Locations.find({});
+}
+
+_timeInMinutes = function(milliseconds) {
   var d = moment.duration(milliseconds, "milliseconds");
   return Math.floor(d.asMinutes());
 }
@@ -64,6 +78,7 @@ _getUserName = function() {
 
 UI.registerHelper("activeQueues", _activeQueues);
 UI.registerHelper("activeTickets", _activeTickets);
+UI.registerHelper("locations", _getLocations);
 UI.registerHelper("userFromEmail", _getUserFromEmail);
 UI.registerHelper("userName", _getUserName);
 UI.registerHelper("userEmail", _getUserEmail);

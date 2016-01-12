@@ -4,33 +4,14 @@
  * Semantic. In the process, the Blaze event handlers get lost.
  */
 
-showModal = function() {
- $(".js-join-queue-modal")
-   .modal({
-     "transition": "fade up",
-     "duration": 200,
-     "detachable": false // Needed to maintain Blaze events
-   })
-   .modal("show");
-}
-
-Template.joinQueueModal.events({
+Template.createQueueModal.events({
   /* TODO: Validate form inputs on blur */
 
-  "change .js-join-queue-form input[type=checkbox]": function(event) {
-    var $helper = $("." + $(event.target).data("helper"));
-    $helper.toggleClass("hidden");
-
-    if(!$helper.hasClass("hidden")) {
-      $helper.find("input").focus();
-    }
+  "click .js-submit-create-queue-form": function(event) {
+    $(".js-create-queue-form").submit();
   },
 
-  "click .js-submit-join-queue-form": function(event) {
-    $(".js-join-queue-form").submit();
-  },
-
-  "submit .js-join-queue-form": function(event) {
+  "submit .js-create-queue-form": function(event) {
     event.preventDefault();
     var $form = $(event.target);
 
@@ -69,6 +50,6 @@ Template.joinQueueModal.events({
   }
 });
 
-function validateJoinForm() {
+function validateCreateQueueForm() {
   return true;
 }

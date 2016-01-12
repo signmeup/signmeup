@@ -9,6 +9,13 @@ Meteor.publish("course", function(name) {
 });
 
 
+// Locations Publications
+
+Meteor.publish("locations", function() {
+  return Locations.find({});
+});
+
+
 // Queues Publications
 
 Meteor.publish("queue", function(queueId) {
