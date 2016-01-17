@@ -59,3 +59,22 @@ td.is-table-empty {
     opacity: 0.9;
   }
 }
+
+/* queueCard */
+.queueCard {
+  .queue-status {
+    color: white;
+
+    &.blue {
+      background-color: #1683D3 !important;
+    }
+
+    &.yellow {
+      background-color: yellow !important;
+    }
+
+    &.red {
+      background-color: red !important;
+    }
+  }
+}

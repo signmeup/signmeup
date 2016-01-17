@@ -1,11 +1,11 @@
 <template name="queueCard">
-  <div class="ui fluid card">
+  <div class="ui fluid card queueCard">
     {{> queueCardContent}}
   </div>
 </template>
 
 <template name="queueCardLink">
-  <a href="{{queueLink}}" class="ui card">
+  <a href="{{queueLink}}" class="ui card queueCard">
     {{> queueCardContent}}
   </a>
 </template>
@@ -25,10 +25,6 @@
     </div>
   </div>
 
-  <div class="content">
-    <span class="{{statusColor}}">{{readableStatus}}</span>
-  </div>
-
   {{#if endTime}}
     <div class="extra content">
       <span class="right floated">
@@ -38,4 +34,17 @@
       Ending at
     </div>
   {{/if}}
+
+  <div class="content {{statusColor}} queue-status">
+    <div class="ui mini right floated icon top left pointing dropdown basic button js-status-dropdown">
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item js-cutoff">
+          Cutoff
+        </div>
+        <div class="item js-end-now">End Now</div>
+      </div>
+    </div>
+    <span class="{{statusColor}}">{{readableStatus}}</span>
+  </div>
 </template>
