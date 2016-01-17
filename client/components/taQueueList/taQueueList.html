@@ -1,9 +1,9 @@
 <template name="taQueueList">
-  <table class="ui celled table">
+  <table class="ui table">
     <thead>
       <th class="one wide">No.</th>
-      <th class="four wide">Name</th>
-      <th class="four wide">Question</th>
+      <th class="three wide">Name</th>
+      <th class="five wide">Question</th>
       <th class="three wide">Notification</th>
       <th class="four wide">Actions</th>
     </thead>
@@ -49,7 +49,7 @@
     <td>{{question}}</td>
     <td>{{notify.types}}</td>
     <td>
-      <div class="ui basic buttons">
+      <div class="ui basic fluid buttons">
         <div class="ui button js-mark-as-done"><i class="checkmark icon"></i>Mark as Done</div>
         <div class="ui floating dropdown icon button js-ticket-actions">
           <i class="dropdown icon"></i>
