@@ -87,23 +87,20 @@ Meteor.methods({
 
     var course = Courses.findOne({name: course});
     if(!course)
-      throw new Metoer.Error("invalid-course-name");
+      throw new Meteor.Error("invalid-course-name");
 
     var htas = course.htas;
     var tas = course.tas;
 
-    console.log(htas);
-    console.log(tas);
-
     _.each(htas, function(hta) {
       Meteor.users.update(hta, {
-        $pull: {htaCourses: course}
+        $pull: {htaCourses: course.name}
       });
     });
 
     _.each(tas, function(ta) {
       Meteor.users.update(ta, {
-        $pull: {taCourses: ta}
+        $pull: {taCourses: course.name}
       });
     });
 

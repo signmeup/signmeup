@@ -1,3 +1,5 @@
+// TODO: Block access to non-admins.
+
 Template.admin.onCreated(function() {
   var self = this;
   self.autorun(function() {
