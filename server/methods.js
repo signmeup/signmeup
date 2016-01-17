@@ -1,11 +1,25 @@
 // TODO: Replace input error checks with check()
-
+// TODO: Replace "not-allowed" errors with 403's
 
 // Courses Methods
 
 Meteor.methods({
-  updateCourse: function() {
-    // Update name, description, or listserv
+  updateCourse: function(course, options) {
+    // Update name, description, listserv, or active
+    if(!authorized.admin(Meteor.userId))
+      throw new Meteor.Error("not-allowed");
+
+    var validFields = ["name", "description", "listserv", "active"];
+    _.each(validFields, function(field) {
+      if(options[field]) {
+        var setObject = {};
+        setObject[field] = options[field];
+
+        Courses.update({name: course}, {
+          $set: setObject
+        });
+      }
+    });
   },
 
   addTA: function(course, email) {
