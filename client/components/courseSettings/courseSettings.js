@@ -47,6 +47,13 @@ Template.taItem.onRendered(function() {
 });
 
 Template.taItem.events({
+  "click .js-change-role": function() {
+    var methodName = this.hta ? "switchToTA" : "switchToHTA";
+    Meteor.call(methodName, this.course, this.userId, function(err) {
+      if(err) console.log(err);
+    })
+  },
+
   "click .js-delete": function() {
     Meteor.call("deleteTA", this.course, this.userId, function(err) {
       if(err)

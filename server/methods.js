@@ -42,23 +42,43 @@ Meteor.methods({
     if(!authorized.admin(Meteor.userId))
       throw new Meteor.Error("not-allowed");
 
-    console.log(course, userId);
-
     Courses.update({name: course}, {
       $pull: {tas: userId, htas: userId}
-    }, {multi: true});
+    });
 
     Meteor.users.update(userId, {
       $pull: {taCourses: course, htaCourses: course}
-    }, {multi: true});
+    });
   },
 
   switchToTA: function(course, userId) {
+    if(!authorized.admin(Meteor.userId))
+      throw new Meteor.Error("not-allowed");
 
+    Courses.update({name: course}, {
+      $pull: {htas: userId},
+      $push: {tas: userId}
+    });
+
+    Meteor.users.update(userId, {
+      $pull: {htaCourses: course},
+      $push: {taCourses: course}
+    });
   },
 
   switchToHTA: function(course, userId) {
+    if(!authorized.admin(Meteor.userId))
+      throw new Meteor.Error("not-allowed");
 
+    Courses.update({name: course}, {
+      $pull: {tas: userId},
+      $push: {htas: userId}
+    });
+
+    Meteor.users.update(userId, {
+      $pull: {taCourses: course},
+      $push: {htaCourses: course}
+    });
   }
 });
 
