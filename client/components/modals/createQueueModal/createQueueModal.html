@@ -11,7 +11,7 @@
           <div class="ten wide field">
             <label>Course</label>
             <select name="course" class="ui fluid dropdown">
-              {{#each course in userCourses}}
+              {{#each course in activeUserCourses}}
                 <option value="{{course}}">{{course}}</option>
               {{/each}}
             </select>
