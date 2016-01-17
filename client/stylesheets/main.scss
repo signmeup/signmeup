@@ -16,6 +16,10 @@ main {
 nav {
   padding-top: 1rem;
   padding-bottom: 2rem;
+
+  i.icon {
+    margin-right: 0 !important;
+  }
 }
 
 footer {
