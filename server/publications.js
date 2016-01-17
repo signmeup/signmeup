@@ -34,7 +34,9 @@ Meteor.publish("allActiveTickets", function() {
 
   _.each(activeQueues, function(queue) {
     var queueId = queue._id;
-    var isTA = authorized.ta(this.userId, queue.course);
+    var isTA = false;
+    if(this.userId)
+      isTA = authorized.ta(this.userId, queue.course);
 
     var tickets = Tickets.find({
       queueId: queueId,
@@ -60,7 +62,12 @@ Meteor.publish("activeTickets", function(queueId) {
 
   // Hide fields for non-TAs
   var projection = {};
-  var isTA = authorized.ta(this.userId, queue.course);
+
+  var isTA = false;
+  if(this.userId) {
+    isTA = authorized.ta(this.userId, queue.course);
+  }
+
   if(!isTA) {
     projection["fields"] = {
       question: false,
@@ -93,7 +100,11 @@ Meteor.publish("userData", function() {
 });
 
 Meteor.publish("allUsers", function() {
-  if(authorized.admin(this.userId)) {
-    return Meteor.users.find({});
-  }
+  if(!this.userId)
+    throw new Meteor.Error("no-user");
+
+  if(!authorized.admin(this.userId))
+    throw new Meteor.Error("not-allowed");
+
+  return Meteor.users.find({});
 });

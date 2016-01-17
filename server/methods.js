@@ -79,6 +79,35 @@ Meteor.methods({
       $pull: {taCourses: course},
       $push: {htaCourses: course}
     });
+  },
+
+  deleteCourse: function(course) {
+    if(!authorized.admin(Meteor.userId))
+      throw new Meteor.Error("not-allowed");
+
+    var course = Courses.findOne({name: course});
+    if(!course)
+      throw new Metoer.Error("invalid-course-name");
+
+    var htas = course.htas;
+    var tas = course.tas;
+
+    console.log(htas);
+    console.log(tas);
+
+    _.each(htas, function(hta) {
+      Meteor.users.update(hta, {
+        $pull: {htaCourses: course}
+      });
+    });
+
+    _.each(tas, function(ta) {
+      Meteor.users.update(ta, {
+        $pull: {taCourses: ta}
+      });
+    });
+
+    Courses.remove(course._id);
   }
 });
 

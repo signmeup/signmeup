@@ -31,6 +31,16 @@ Template.courseSettings.events({
     });
 
     return false;
+  },
+
+  "click .js-delete-course": function() {
+    var sure = confirm("Are you sure you want to delete " 
+      + this.name + "?\nTHIS IS IRREVERSIBLE.");
+    if(sure) {
+      Meteor.call("deleteCourse", this.name, function(err) {
+        if(err) console.log(err);
+      });
+    }
   }
 });
 
