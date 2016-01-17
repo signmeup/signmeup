@@ -1,5 +1,68 @@
 // TODO: Replace input error checks with check()
 
+
+// Courses Methods
+
+Meteor.methods({
+  updateCourse: function() {
+    // Update name, description, or listserv
+  },
+
+  addTA: function(course, email) {
+    if(!authorized.admin(Meteor.userId))
+      throw new Meteor.Error("not-allowed");
+
+    var userId;
+    var user = _getUserFromEmail(email);
+    if(user) {
+      // Find the TA
+      userId = user._id;
+    } else {
+      // Or, create a new user for the TA
+      userId = Meteor.users.insert({
+        email: email,
+      });
+    }
+
+    if (authorized.ta(userId, course))
+      throw new Meteor.Error("already-a-ta");
+
+    // Update the course
+    Courses.update({name: course}, {
+      $push: {tas: userId}
+    });
+
+    // Update the user
+    Meteor.users.update(userId, {
+      $push: {taCourses: course}
+    });
+  },
+
+  deleteTA: function(course, userId) {
+    if(!authorized.admin(Meteor.userId))
+      throw new Meteor.Error("not-allowed");
+
+    console.log(course, userId);
+
+    Courses.update({name: course}, {
+      $pull: {tas: userId, htas: userId}
+    }, {multi: true});
+
+    Meteor.users.update(userId, {
+      $pull: {taCourses: course, htaCourses: course}
+    }, {multi: true});
+  },
+
+  switchToTA: function(course, userId) {
+
+  },
+
+  switchToHTA: function(course, userId) {
+
+  }
+});
+
+
 // Queue Methods
 
 Meteor.methods({

@@ -1,4 +1,4 @@
-  <template name="courseSettings">
+<template name="courseSettings">
   <div class="ui fluid card courseSettings" data-course="{{name}}">
     <div class="content">
       <div class="ui right floated toggle checkbox">
@@ -20,20 +20,21 @@
 <template name="courseSettingsGeneral">
   <div class="content">
     <form id="{{name}}-general" class="ui form">
-      <h4>General</h4>
-      <div class="field">
-        <label>Name</label>
-        <input type="text" name="name" placeholder="e.g. cs00" value="{{name}}">
-      </div>
+      <div class="fields">
+        <div class="four wide field">
+          <label>Name</label>
+          <input type="text" name="name" placeholder="e.g. cs00" value="{{name}}">
+        </div>
 
-      <div class="field">
-        <label>Description</label>
-        <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming" value="{{description}}">
-      </div>
+        <div class="six wide field">
+          <label>Description</label>
+          <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming" value="{{description}}">
+        </div>
 
-      <div class="field">
-        <label>Listserv</label>
-        <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu" value="{{listserv}}">
+        <div class="six wide field">
+          <label>Listserv</label>
+          <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu" value="{{listserv}}">
+        </div>
       </div>
     </form>
   </div>
@@ -42,22 +43,21 @@
 <template name="courseSettingsTAs">
   <div class="content">
     <h4>HTAs and TAs</h4>
-
     <form class="ui form js-ta-input">
       <div class="ui fluid large action input">
-        <input type="email" placeholder="Email Address">
+        <input type="email" placeholder="Email Address" required>
         <button class="ui button" role="submit">Add</button>
       </div>
     </form>
 
     {{#if tasExist}}
       <div class="ui relaxed list">
-        {{#each email in htas}}
-          {{> taItem email=email hta=true}}
+        {{#each userId in htas}}
+          {{> taItem userId=userId course=name hta=true}}
         {{/each}}
         <div class="ui divider"></div>
-        {{#each email in tas}}
-          {{> taItem email=email hta=false}}
+        {{#each userId in tas}}
+          {{> taItem userId=userId course=name hta=false}}
         {{/each}}
       </div>
     {{else}}
@@ -71,7 +71,7 @@
 <template name="taItem">
   <div class="item">
     <div class="content">
-      <div class="ui right floated icon top left pointing dropdown basic button">
+      <div class="ui right floated icon top left pointing dropdown basic button js-ta-dropdown">
         <i class="dropdown icon"></i>
         <div class="menu">
           <div class="item js-change-role">
@@ -81,15 +81,10 @@
         </div>
       </div>
       <div class="header">
-        {{#if userFromEmail email}}
-          {{userName userFromEmail email}}
-        {{else}}
-          Unknown User     
-        {{/if}}
-
+        {{userName userId}}
         {{#if hta}}<div class="ui horizontal label">HTA</div>{{/if}}
       </div>
-      {{email}}
+      {{userEmail userId}}
     </div>
   </div>
 </template>
