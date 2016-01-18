@@ -4,6 +4,10 @@ Template.queueCardLink.helpers({
   }
 });
 
+Template.queueCardContent.onRendered(function() {
+  $(this.findAll(".js-status-dropdown")).dropdown();
+});
+
 Template.queueCardContent.helpers({
   course: function() {
     return Courses.findOne({name: this.course});
@@ -44,8 +48,40 @@ Template.queueCardContent.helpers({
     return colors[this.status];
   },
 
+  showQueueStatusDropdown: function() {
+    return (authorized.ta(this.course) && this.status !== "done");
+  },
+
+  isActive: function() {
+    return this.status === "active";
+  },
+
   readableEndTime: function() {
     var mTime = moment(this.endTime);
     return mTime.format("h:mm A");
+  }
+});
+
+Template.queueCardContent.events({
+  "click .js-edit-queue": function() {
+    
+  },
+
+  "click .js-activate": function() {
+    Meteor.call("activateQueue", this._id, function(err) {
+      if(err) console.log(err);
+    });
+  },
+
+  "click .js-cutoff": function() {
+    Meteor.call("cutoffQueue", this._id, function(err) {
+      if(err) console.log(err);
+    });
+  },
+
+  "click .js-end-now": function() {
+    Meteor.call("endQueue", this._id, function(err) {
+      if(err) console.log(err);
+    });
   }
 });

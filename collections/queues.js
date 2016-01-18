@@ -7,13 +7,14 @@
  *    location: ObjectId,
  *    mode: ("universal", "location", "device") // TODO: Expand this
  *
- *    status: STRING ("active", "cutoff", "done", "cancelled"),
+ *    status: STRING ("active", "cutoff", "done"),
  *    owner: {
  *      id: userId,
  *      email: STRING
  *    },
  *    
  *    startTime: Number (Milliseconds),
+ *    cutoffTime: Number (Milliseconds),
  *    endTime: Number (Milliseconds),
  *    averageWaitTime: Number (Milliseconds),
  *

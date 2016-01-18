@@ -180,11 +180,67 @@ Meteor.methods({
     if(!authorized.ta(Meteor.userId, queue.course))
       throw new Meteor.Error("not-allowed");
 
+    // TODO: Shuffle only active tickets
     var shuffledTickets = _.shuffle(queue.tickets);
     Queues.update({_id: queueId}, {
       $set: {tickets: shuffledTickets}
     });
     console.log("Shuffled tickets for " + queueId);
+  },
+
+  "activateQueue": function(queueId) {
+    // Make a cutoff queue active again
+    var queue = Queues.findOne({_id: queueId});
+    if(!queue)
+      throw new Meteor.Error("invalid-queue-id");
+
+    if(!authorized.ta(Meteor.userId, queue.course))
+      throw new Meteor.Error("not-allowed");
+
+    Queues.update(queueId, {
+      $set: {status: "active"},
+      $unset: {cutoffTime: ""}
+    });
+  },
+
+  "cutoffQueue": function(queueId) {
+    var queue = Queues.findOne({_id: queueId});
+    if(!queue)
+      throw new Meteor.Error("invalid-queue-id");
+
+    if(!authorized.ta(Meteor.userId, queue.course))
+      throw new Meteor.Error("not-allowed");
+
+    console.log("Cutting off " + queueId);
+
+    Queues.update(queueId, {
+      $set: {
+        status: "cutoff",
+        cutoffTime: Date.now()
+      }
+    });
+  },
+
+  "endQueue": function(queueId) {
+    var queue = Queues.findOne({_id: queueId});
+    if(!queue)
+      throw new Meteor.Error("invalid-queue-id");
+
+    if(!authorized.ta(Meteor.userId, queue.course))
+      throw new Meteor.Error("not-allowed");
+
+    console.log("Ending queue " + queueId);
+
+    // TODO: Cancel active tickets
+
+    Queues.update(queueId, {
+      $set: {
+        status: "done",
+        endTime: Date.now()
+      }
+    });
+
+    // TODO: Cancel the queue-ender cron job
   }
 });
 
