@@ -49,7 +49,7 @@ Template.queueCardContent.helpers({
   },
 
   showQueueStatusDropdown: function() {
-    return (authorized.ta(this.course) && this.status !== "done");
+    return (authorized.ta(Meteor.userId, this.course) && this.status !== "done");
   },
 
   isActive: function() {
