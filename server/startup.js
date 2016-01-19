@@ -123,7 +123,7 @@ function initializeCollections() {
       },
 
       startTime: Date.now(),
-      endTime: null,
+      endTime: Date.now() + 3 * (60 * 60 * 1000), // Add 3 hours
       averageWaitTime: 0,
 
       localSettings: {},
