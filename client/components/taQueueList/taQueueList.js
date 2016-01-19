@@ -2,7 +2,7 @@
 
 Template.taQueueList.helpers({
   disableActions: function() {
-    var ended = (this.status === "done");
+    var ended = (this.status === "ended");
     var activeTicketsExist = _activeTickets(this.tickets).length;
     return (!ended && activeTicketsExist) ? "" : "disabled";
   }

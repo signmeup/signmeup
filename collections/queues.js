@@ -7,7 +7,7 @@
  *    location: ObjectId,
  *    mode: ("universal", "location", "device") // TODO: Expand this
  *
- *    status: STRING ("active", "cutoff", "done"),
+ *    status: STRING ("active", "cutoff", "ended"),
  *    owner: {
  *      id: userId,
  *      email: STRING

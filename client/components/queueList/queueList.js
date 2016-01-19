@@ -2,7 +2,7 @@
 
 Template.queueList.helpers({
   disableJoin: function() {
-    var ended = (this.status === "done");
+    var ended = (this.status === "ended");
 
     var activeTickets = _activeTickets(this.tickets);
     var ownerIds = _.map(activeTickets, function(t) {

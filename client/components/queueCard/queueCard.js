@@ -31,7 +31,7 @@ Template.queueCardContent.helpers({
 
   // End Time
   showEndTime: function() {
-    return (this.endTime && this.status !== "done");
+    return (this.endTime && this.status !== "ended");
   },
 
   readableEndTime: function() {
@@ -43,7 +43,7 @@ Template.queueCardContent.helpers({
     statuses = {
       "active": "Active",
       "cutoff": "Cut-off",
-      "done": "Ended at " + _formatTime(this.endTime, "h:mm A on MMMM DD")
+      "ended": "Ended at " + _formatTime(this.endTime, "h:mm A on MMMM DD")
     };
 
     return statuses[this.status];
@@ -53,14 +53,14 @@ Template.queueCardContent.helpers({
     colors = {
       "active": "blue",
       "cutoff": "yellow",
-      "done": "red"
+      "ended": "red"
     };
 
     return colors[this.status];
   },
 
   showQueueStatusDropdown: function() {
-    return (authorized.ta(Meteor.userId, this.course) && this.status !== "done");
+    return (authorized.ta(Meteor.userId, this.course) && this.status !== "ended");
   },
 
   isActive: function() {

@@ -1,5 +1,5 @@
 // TODO: Replace input error checks with check()
-// TODO: Replace "not-allowed" errors with 403's
+// TODO: Replace "not-allowed" errors with 403 errors
 
 // Courses Methods
 
@@ -177,7 +177,7 @@ Meteor.methods({
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
 
-    if(queue.status === "done")
+    if(queue.status === "ended")
       throw new Meteor.Error("queue-ended")
 
     if(!authorized.ta(Meteor.userId, queue.course))
@@ -197,7 +197,7 @@ Meteor.methods({
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
 
-    if(queue.status === "done")
+    if(queue.status === "ended")
       throw new Meteor.Error("queue-ended")
 
     if(!authorized.ta(Meteor.userId, queue.course))
@@ -214,7 +214,7 @@ Meteor.methods({
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
 
-    if(queue.status === "done")
+    if(queue.status === "ended")
       throw new Meteor.Error("queue-ended")
 
     if(!authorized.ta(Meteor.userId, queue.course))
@@ -245,7 +245,7 @@ Meteor.methods({
 
     Queues.update(queueId, {
       $set: {
-        status: "done",
+        status: "ended",
         endTime: Date.now()
       }
     });
@@ -264,7 +264,7 @@ Meteor.methods({
     var queue = Queues.findOne({_id: queueId});
     if (!queue)
       throw new Meteor.Error("invalid-queue-id");
-    if (queue.status === "done")
+    if (queue.status === "ended")
       throw new Meteor.Error("queue-ended");
     if (!name)
       throw new Meteor.Error("invalid-name");

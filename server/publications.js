@@ -23,7 +23,7 @@ Meteor.publish("queue", function(queueId) {
 });
 
 Meteor.publish("activeQueues", function() {
-  return Queues.find({"status": {$nin: ["done", "cancelled"]}});
+  return Queues.find({"status": {$nin: ["ended", "cancelled"]}});
 });
 
 // Tickets Publications

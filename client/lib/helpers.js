@@ -16,7 +16,7 @@ _showModal = function(selector) {
 }
 
 _activeQueues = function() {
-  return Queues.find({"status": {$nin: ["done", "cancelled"]}}).fetch();
+  return Queues.find({"status": {$nin: ["ended", "cancelled"]}}).fetch();
 }
 
 _activeTickets = function(ticketIds) {
@@ -35,7 +35,7 @@ _activeTickets = function(ticketIds) {
 
 _filterActiveTickets = function(allTickets) {
   return _.filter(allTickets, function(e) {
-    return !(_.contains(["done", "expired", "cancelled"], e.status));
+    return !(_.contains(["done", "cancelled"], e.status));
   });
 }
 

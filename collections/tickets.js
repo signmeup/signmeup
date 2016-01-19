@@ -9,7 +9,7 @@
  *      id: userId,
  *      name: STRING,
  *    },
- *    status: ("open", "missing", "done", "expired", "cancelled")
+ *    status: ("open", "missing", "done", "cancelled")
  *
  *    question: STRING,
  *      
