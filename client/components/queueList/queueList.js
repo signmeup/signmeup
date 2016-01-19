@@ -1,6 +1,16 @@
+// queueList
+
 Template.queueList.helpers({
-  isOwner: function() {
-    return this.owner.id === Meteor.userId();
+  disableJoin: function() {
+    var ended = (this.status === "done");
+
+    var activeTickets = _activeTickets(this.tickets);
+    var ownerIds = _.map(activeTickets, function(t) {
+      return t.owner.id;
+    })
+    var alreadySignedUp = _.contains(ownerIds, Meteor.userId());
+
+    return (ended || alreadySignedUp) ? "disabled" : "";
   }
 });
 
@@ -15,7 +25,17 @@ Template.queueList.events({
       });
     }
   },
+});
 
+// queueTicket
+
+Template.queueTicket.helpers({
+  isOwner: function() {
+    return this.owner.id === Meteor.userId();
+  }
+});
+
+Template.queueTicket.events({
   "click .js-edit-ticket": function(event) {
     // TODO: Implement edit functionality
     return;

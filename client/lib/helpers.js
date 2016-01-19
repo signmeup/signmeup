@@ -35,7 +35,7 @@ _activeTickets = function(ticketIds) {
 
 _filterActiveTickets = function(allTickets) {
   return _.filter(allTickets, function(e) {
-    return (["done", "expired", "cancelled"].indexOf(e.status) == -1);
+    return !(_.contains(["done", "expired", "cancelled"], e.status));
   });
 }
 

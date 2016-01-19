@@ -1,8 +1,10 @@
 /* taQueueList */
 
 Template.taQueueList.helpers({
-  disabledState: function() {
-    return _activeTickets(this.tickets).length ? "": "disabled";
+  disableActions: function() {
+    var ended = (this.status === "done");
+    var activeTicketsExist = _activeTickets(this.tickets).length;
+    return (!ended && activeTicketsExist) ? "" : "disabled";
   }
 });
 

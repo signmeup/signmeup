@@ -266,12 +266,14 @@ Meteor.methods({
       throw new Meteor.Error("invalid-queue-id");
     if (queue.status === "done")
       throw new Meteor.Error("queue-ended");
-    if (!name || name.length <= 3)
+    if (!name)
       throw new Meteor.Error("invalid-name");
-    if (!question || question.length <= 3) 
+    if (!question) 
       // TODO: Handle optional question case
       throw new Meteor.Error("invalid-question");
     // TODO: Validate notify object
+    
+    // TODO: Disable adding when user already has ticket
 
     var ticket = {
       createdAt: Date.now(),

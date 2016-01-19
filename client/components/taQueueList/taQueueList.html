@@ -25,15 +25,11 @@
     <tfoot>
       <tr>
         <th colspan="5">
-          <button class="ui right floated labeled icon button">
-            <i class="plus icon"></i> Add Ticket
-          </button>
-
-          <button class="ui labeled red icon button" {{disabledState}}>
+          <button class="ui labeled red icon button" {{disableActions}}>
             <i class="erase icon"></i> Clear All
           </button>
 
-          <button class="ui labeled icon button js-shuffle-queue" {{disabledState}}>
+          <button class="ui labeled icon button js-shuffle-queue" {{disableActions}}>
             <i class="random icon"></i> Shuffle
           </button>
         </th>
@@ -55,7 +51,6 @@
           <i class="dropdown icon"></i>
           <div class="menu">
             <div class="item"><i class="help icon"></i>Mark as Missing</div>
-            <div class="item"><i class="flag icon"></i>Flag</div>
             <div class="item"><i class="trash icon"></i>Delete</div>
           </div>
         </div>
