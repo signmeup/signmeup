@@ -1,5 +1,10 @@
 // Functions
 
+_formatTime = function(milliseconds, format) {
+  if(!format) format = "h:mm A, MMMM DD";
+  return moment(milliseconds).format(format);
+}
+
 _showModal = function(selector) {
   $(selector)
     .modal({

@@ -177,6 +177,9 @@ Meteor.methods({
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
 
+    if(queue.status === "done")
+      throw new Meteor.Error("queue-ended")
+
     if(!authorized.ta(Meteor.userId, queue.course))
       throw new Meteor.Error("not-allowed");
 
@@ -194,6 +197,9 @@ Meteor.methods({
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
 
+    if(queue.status === "done")
+      throw new Meteor.Error("queue-ended")
+
     if(!authorized.ta(Meteor.userId, queue.course))
       throw new Meteor.Error("not-allowed");
 
@@ -207,6 +213,9 @@ Meteor.methods({
     var queue = Queues.findOne({_id: queueId});
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
+
+    if(queue.status === "done")
+      throw new Meteor.Error("queue-ended")
 
     if(!authorized.ta(Meteor.userId, queue.course))
       throw new Meteor.Error("not-allowed");
@@ -232,6 +241,7 @@ Meteor.methods({
     console.log("Ending queue " + queueId);
 
     // TODO: Cancel active tickets
+    // TODO: Cancel the queue-ender cron job
 
     Queues.update(queueId, {
       $set: {
@@ -239,8 +249,6 @@ Meteor.methods({
         endTime: Date.now()
       }
     });
-
-    // TODO: Cancel the queue-ender cron job
   }
 });
 
@@ -256,6 +264,8 @@ Meteor.methods({
     var queue = Queues.findOne({_id: queueId});
     if (!queue)
       throw new Meteor.Error("invalid-queue-id");
+    if (queue.status === "done")
+      throw new Meteor.Error("queue-ended");
     if (!name || name.length <= 3)
       throw new Meteor.Error("invalid-name");
     if (!question || question.length <= 3) 

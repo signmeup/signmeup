@@ -9,6 +9,7 @@ Template.queueCardContent.onRendered(function() {
 });
 
 Template.queueCardContent.helpers({
+  // Basic Helpers
   course: function() {
     return Courses.findOne({name: this.course});
   },
@@ -28,11 +29,21 @@ Template.queueCardContent.helpers({
     return _timeInMinutes(this.averageWaitTime);
   },
 
+  // End Time
+  showEndTime: function() {
+    return (this.endTime && this.status !== "done");
+  },
+
+  readableEndTime: function() {
+    return _formatTime(this.endTime, "h:mm A");
+  },
+
+  // Status
   readableStatus: function() {
     statuses = {
       "active": "Active",
       "cutoff": "Cut-off",
-      "done": "Ended"
+      "done": "Ended at " + _formatTime(this.endTime, "h:mm A on MMMM DD")
     };
 
     return statuses[this.status];
@@ -54,11 +65,6 @@ Template.queueCardContent.helpers({
 
   isActive: function() {
     return this.status === "active";
-  },
-
-  readableEndTime: function() {
-    var mTime = moment(this.endTime);
-    return mTime.format("h:mm A");
   }
 });
 
