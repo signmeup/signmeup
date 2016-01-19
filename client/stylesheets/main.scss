@@ -63,10 +63,9 @@ td.is-table-empty {
 /* queueCard */
 .queueCard {
   .queue-status {
-    color: white;
-
     &.blue {
       background-color: #1683D3 !important;
+      color: white;
     }
 
     &.yellow {
@@ -75,6 +74,13 @@ td.is-table-empty {
 
     &.red {
       background-color: red !important;
+      color: white;
     }
   }
+}
+
+/* queueList */
+.cutoff-marker {
+  text-align: center;
+  background-color: yellow;
 }

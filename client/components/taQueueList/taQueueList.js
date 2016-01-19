@@ -1,5 +1,15 @@
 /* taQueueList */
 
+Template.taQueueList.onRendered(function() {
+  var self = this;
+
+  // Reactively update the cutoff marker.
+  // Function defined in queueList.js.
+  this.autorun(function() {
+    _setCutoffMarker(self, Template.currentData(), 6);
+  });
+});
+
 Template.taQueueList.helpers({
   disableActions: function() {
     var ended = (this.status === "ended");
