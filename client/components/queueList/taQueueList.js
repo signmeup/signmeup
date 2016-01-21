@@ -1,4 +1,20 @@
-/* taQueueList */
+// taQueueList
+
+Template.taQueueList.onCreated(function() {
+  var self = this;
+  this.timeRemaining = new ReactiveVar(0);
+
+  this.autorun(function() {
+    if(this.interval)
+      Meteor.clearInterval(this.interval);
+
+    var endTime = Template.currentData().endTime;
+
+    this.interval = Meteor.setInterval(function() {
+      self.timeRemaining.set(endTime - Date.now());
+    }, 1000);
+  });
+});
 
 Template.taQueueList.onRendered(function() {
   var self = this;
@@ -27,7 +43,7 @@ Template.taQueueList.events({
   }
 });
 
-/* taQueueTicket */
+// taQueueTicket
 
 Template.taQueueTicket.onRendered(function() {
   $(this.findAll(".js-ticket-actions")).dropdown();
