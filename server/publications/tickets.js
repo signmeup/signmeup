@@ -1,31 +1,3 @@
-// Courses Publications
-
-Meteor.publish("courses", function(name) {
-  return Courses.find({});
-});
-
-Meteor.publish("course", function(name) {
-  return Courses.find({name: name});
-});
-
-
-// Locations Publications
-
-Meteor.publish("locations", function() {
-  return Locations.find({});
-});
-
-
-// Queues Publications
-
-Meteor.publish("queue", function(queueId) {
-  return Queues.find({_id: queueId});
-});
-
-Meteor.publish("activeQueues", function() {
-  return Queues.find({"status": {$nin: ["ended", "cancelled"]}});
-});
-
 // Tickets Publications
 
 Meteor.smartPublish("allActiveTickets", function() {
@@ -83,30 +55,4 @@ Meteor.publish("activeTickets", function(queueId) {
     queueId: queueId,
     status: {$in: ["open", "missing"]}
   }, projection);
-});
-
-
-// Users Publications
-
-Meteor.publish("userData", function() {
-  if(this.userId) {
-    return Meteor.users.find({
-      _id: this.userId
-    }, {
-      email: true,
-      admin: true,
-      htaCourses: true,
-      taCourses: true
-    });
-  }
-});
-
-Meteor.publish("allUsers", function() {
-  if(!this.userId)
-    throw new Meteor.Error("no-user");
-
-  if(!authorized.admin(this.userId))
-    throw new Meteor.Error("not-allowed");
-
-  return Meteor.users.find({});
 });

@@ -1,15 +1,18 @@
-/**
- * BlazeLayout normally renders layouts into a new div.
- * This setting makes it render directly into body.
- */
+// BlazeLayout normally renders layouts into a new div.
+// This setting makes it render directly into body.
 BlazeLayout.setRoot('body');
 
-FlowRouter.route("/passwordLogin", {
-  name: "passwordLogin",
+// Authentication
+
+FlowRouter.route("/login-password", {
+  name: "loginPassword",
   action: function() {
-    BlazeLayout.render("baseLayout", {content: "passwordLogin"});
+    BlazeLayout.render("baseLayout", {content: "loginPassword"});
   }
 });
+
+
+// Pages
 
 FlowRouter.route("/", {
   name: "index",
@@ -32,8 +35,11 @@ FlowRouter.route("/admin", {
   }
 });
 
+
+// Errors
+
 FlowRouter.notFound = {
   action: function() {
-    BlazeLayout.render("baseLayout", {content: "notFound"})
+    BlazeLayout.render("baseLayout", {content: "404"})
   }
 };
