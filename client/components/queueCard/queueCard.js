@@ -73,19 +73,22 @@ Template.queueCardContent.events({
     
   },
 
-  "click .js-activate": function() {
+  "click .js-activate": function(e) {
+    e.preventDefault();
     Meteor.call("activateQueue", this._id, function(err) {
       if(err) console.log(err);
     });
   },
 
-  "click .js-cutoff": function() {
+  "click .js-cutoff": function(e) {
+    e.preventDefault();
     Meteor.call("cutoffQueue", this._id, function(err) {
       if(err) console.log(err);
     });
   },
 
-  "click .js-end-now": function() {
+  "click .js-end-now": function(e) {
+    e.preventDefault();
     Meteor.call("endQueue", this._id, function(err) {
       if(err) console.log(err);
     });

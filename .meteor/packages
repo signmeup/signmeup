@@ -32,3 +32,4 @@ nourharidy:ssl
 reactive-var
 sarasate:semantic-ui-datetimepicker
 mrt:smart-publish
+percolate:synced-cron

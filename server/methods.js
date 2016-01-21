@@ -147,6 +147,7 @@ Meteor.methods({
     if(endTime <= Date.now())
       throw new Meteor.Error("invalid-end-time");
 
+    // Create queue
     var queue = {
       name: name,
       course: course,
@@ -170,6 +171,20 @@ Meteor.methods({
 
     var queueId = Queues.insert(queue);
     console.log("Created queue " + queueId);
+
+    // Create ender cron job
+    console.log("Creating cron job");
+    SyncedCron.add({
+      name: queueId + "-ender",
+      schedule: function(parser) {
+        var date = new Date(endTime);
+        return parser.recur().on(date).fullDate();
+      },
+      job: function() {
+        var queueId = this.name.split("-")[0];
+        Meteor.call("endQueue", queueId);
+      }
+    });
   },
 
   shuffleQueue: function(queueId) {
