@@ -24,18 +24,17 @@ _activeTickets = function(ticketIds) {
   var allTickets = Tickets.find({_id: {$in: ticketIds}}).fetch();
   var activeTickets = _filterActiveTickets(allTickets);
 
-  // Extend tickets with position and waiting time
+  // Extend tickets with position
   for(var i = 0; i < activeTickets.length; i++) {
     activeTickets[i]["position"] = i + 1;
-    activeTickets[i]["waitTime"] = (i + 1) * _timeInMinutes(this.averageWaitTime);
   }
 
   return activeTickets;
 }
 
 _filterActiveTickets = function(allTickets) {
-  return _.filter(allTickets, function(e) {
-    return !(_.contains(["done", "cancelled"], e.status));
+  return _.filter(allTickets, function(t) {
+    return !(_.contains(["done", "cancelled"], t.status));
   });
 }
 

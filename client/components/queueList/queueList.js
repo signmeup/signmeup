@@ -82,6 +82,19 @@ _setCutoffMarker = function(instance, data, colspan) {
 Template.queueTicket.helpers({
   isOwner: function() {
     return this.owner.id === Meteor.userId();
+  },
+
+  waitTime: function() {
+    var queue = Queues.findOne(this.queueId);
+    var timeSoFar = Date.now() - this.createdAt;
+    var timeRemaining = queue.averageWaitTime - timeSoFar;
+
+    if (timeRemaining < 0) {
+      // Student has waited longer than average
+      return "—";
+    } else {
+      return Math.ceil(timeRemaining / (60 * 1000)) + " minutes";
+    }
   }
 });
 

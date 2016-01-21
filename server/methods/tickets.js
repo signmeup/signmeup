@@ -49,15 +49,17 @@ Meteor.methods({
     var ticket = Tickets.findOne({_id: ticketId});
     if(!ticket)
       throw new Meteor.Error("invalid-ticket-id");
+    if(!authorized.ta(this.userId, ticket.course))
+      throw new Meteor.Error("not-allowed");
 
-    if(authorized.ta(this.userId, ticket.course)) {
-      Tickets.update({
-        _id: ticketId
-      }, {
-        $set: {status: "done"}
-      });
-      console.log("Marked ticket " + ticketId + " as done");
-    }
+    Tickets.update({
+      _id: ticketId
+    }, {
+      $set: {status: "done", doneAt: Date.now()}
+    });
+
+    updateWaitTime(ticketId);
+    console.log("Marked ticket " + ticketId + " as done");
   },
 
   cancelTicket: function(ticketId) {
