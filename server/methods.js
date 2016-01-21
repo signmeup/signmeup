@@ -321,7 +321,7 @@ Meteor.methods({
       Tickets.update({
         _id: ticketId
       }, {
-        $set: {status: "cancelled"}
+        $set: {status: "cancelled", cancelledAt: Date.now()}
       });
     }
   }

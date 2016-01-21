@@ -2,14 +2,18 @@
  * Tickets
  *
  * Ticket: {
- *    createdAt: Number (Milliseconds),
  *    queueId: STRING,
  *    course: STRING,
  *    owner: {
  *      id: userId,
  *      name: STRING,
  *    },
- *    status: ("open", "missing", "done", "cancelled")
+ *    status: ("open", "missing", "done", "cancelled"),
+ *
+ *    createdAt: Number (Milliseconds),
+ *    missedAt: Number (Milliseconds),
+ *    doneAt: Number (Milliseconds),
+ *    cancelledAt: Number (Milliseconds),
  *
  *    question: STRING,
  *      
@@ -20,9 +24,8 @@
  *    },
  *
  *    ta: {
- *      id: userId,
- *      email: STRING,
- *      time: Number (Milliseconds)
+ *      id: userId, // The TA who set the last status
+ *      email: STRING
  *    }
  *    
  *    flag: {
