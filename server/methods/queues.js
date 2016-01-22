@@ -128,7 +128,8 @@ Meteor.methods({
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
 
-    if(!authorized.ta(Meteor.userId, queue.course))
+    var clientCall = !!(this.connection);
+    if(clientCall && !authorized.ta(Meteor.userId, queue.course))
       throw new Meteor.Error("not-allowed");
 
     console.log("Ending queue " + queueId);

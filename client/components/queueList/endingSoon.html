@@ -2,7 +2,11 @@
   {{#if showMessage}}
     <div class="ui warning message">
       <div class="header">Ending Soon</div>
-      This queue is ending in {{timeRemaining}}. <a href="#" class="js-edit-end-time">Change the end time</a>, or <a href="#" class="js-end-now">end it now</a>.
+      This queue is ending in {{timeRemaining}}. 
+
+      {{#if userIs "ta" course}}
+        <a href="#" class="js-edit-end-time">Change the end time</a>, or <a href="#" class="js-end-now">end it now</a>.
+      {{/if}}
     </div>
   {{/if}}
 </template>
