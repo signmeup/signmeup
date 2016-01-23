@@ -1,4 +1,4 @@
-.PHONY: dev dev-build dev-build-all prod prod-build prod-build-all
+.PHONY: dev dev-all dev-build dev-build-all prod prod-all prod-build prod-build-all
 
 # Dev
 
@@ -31,6 +31,10 @@ dev-build-all:
 
 # Runs the built image with prod settings.
 prod:
+	@export METEOR_SETTINGS='$(shell cat settings.json)'; \
+	docker-compose -f docker-compose.yml -f docker-compose.prd.yml up --no-deps -d app
+
+prod-all:
 	@export METEOR_SETTINGS='$(shell cat settings.json)'; \
 	docker-compose -f docker-compose.yml -f docker-compose.prd.yml up --no-deps -d app
 
