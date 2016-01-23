@@ -60,7 +60,6 @@ mongo@1.1.3
 mongo-id@1.0.1
 mrt:smart-publish@0.2.1
 msavin:mongol@1.6.2
-nourharidy:ssl@0.2.2
 npm-bcrypt@0.7.8_2
 npm-mongo@1.4.39_1
 observe-sequence@1.0.7
