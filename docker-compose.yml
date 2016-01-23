@@ -1,19 +1,10 @@
 app:
-  build: .
   links:
    - db
    - proxy
-  environment:
-   - ROOT_URL=https://local.cis-dev.brown.edu
-   - MONGO_URL=mongodb://db:27017/signmeup
-   - VIRTUAL_HOST=local.cis-dev.brown.edu
-   - METEOR_SETTINGS=${METEOR_SETTINGS}
-   - MAIL_URL=smtp://mx.cs.brown.edu:25
 
 db:
-  image: mongo:latest 
-  # mongo exposes 27017 by default
-  # to all linked containers
+  image: mongo:latest # EXPOSEs 27017
 
 proxy:
   image: jwilder/nginx-proxy:latest

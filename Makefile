@@ -34,6 +34,7 @@ prod:
 	@export METEOR_SETTINGS='$(shell cat settings.json)'; \
 	docker-compose -f docker-compose.yml -f docker-compose.prd.yml up --no-deps -d app
 
+# Runs all built services with prod settings.
 prod-all:
 	@export METEOR_SETTINGS='$(shell cat settings.json)'; \
 	docker-compose -f docker-compose.yml -f docker-compose.prd.yml up --no-deps -d app

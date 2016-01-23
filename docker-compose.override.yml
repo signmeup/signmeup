@@ -1,9 +1,14 @@
 app:
   build: . # EXPOSEs 80
+  ports:
+   - 8080:80
   environment:
-   - ROOT_URL=https://signmeup.cs.brown.edu
+   - ROOT_URL=https://local.cis-dev.brown.edu
    - MONGO_URL=mongodb://db:27017/signmeup
-   - VIRTUAL_HOST=signmeup.cs.brown.edu
+   - VIRTUAL_HOST=local.cis-dev.brown.edu
    - METEOR_SETTINGS=${METEOR_SETTINGS}
    - MAIL_URL=smtp://mx.cs.brown.edu:25
-   - PRODUCTION="true"
+
+db:
+  ports:
+   - 27071:27071
