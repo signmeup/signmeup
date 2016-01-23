@@ -1,5 +1,5 @@
 app:
-  build: . # EXPOSEs 80
+  build: ./app # EXPOSEs 80
   ports:
    - 8080:80
   environment:
