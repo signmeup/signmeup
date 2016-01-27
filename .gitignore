@@ -1,4 +1,8 @@
 venv
+
+mongodb/data/*
+!mongodb/data/.gitkeep
+
 .meteor/local
 .DS_Store
 
