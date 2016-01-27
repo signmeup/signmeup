@@ -1,1 +1,2 @@
-FROM meteorhacks/meteord:devbuild
+FROM athyuttamre/meteord:volbuild
+MAINTAINER Athyuttam Eleti

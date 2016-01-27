@@ -1,0 +1,2 @@
+FROM meteorhacks/meteord:devbuild
+MAINTAINER Athyuttam Eleti

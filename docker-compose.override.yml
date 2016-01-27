@@ -2,11 +2,13 @@ app:
   build: ./app # EXPOSEs 80
   ports:
    - 8080:80
+  volumes:
+   - ./app:/app # Relative to Compose file
   environment:
    - ROOT_URL=https://local.cis-dev.brown.edu
    - MONGO_URL=mongodb://db:27017/signmeup
    - VIRTUAL_HOST=local.cis-dev.brown.edu
-   - METEOR_SETTINGS=${METEOR_SETTINGS}
+   - ARGS=--settings ./settings.json --port 80 # Relative to project directory
    - MAIL_URL=smtp://mx.cs.brown.edu:25
 
 db:

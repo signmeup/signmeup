@@ -18,7 +18,3 @@ Dhruv Rawat, Anamta Farook, and Mohsan Elahi for the original version. Athyuttam
 For support, please email signmeup-dev@lists.cs.brown.edu.
 
 Copyright &copy; Brown Computer Science, 2015
-
-- Install DotENV for sublime
-- Flush hosts after changing
-- Use www.selfsignedcertificate.com
