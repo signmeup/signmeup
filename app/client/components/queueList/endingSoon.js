@@ -29,7 +29,7 @@ Template.endingSoon.helpers({
     if (s < 60) {
       return Math.floor(s) + " seconds";
     } else {
-      return Math.floor(s / 60) + " minutes";
+      return Math.ceil(s / 60) + " minutes";
     }
   }
 });
