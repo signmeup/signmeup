@@ -29,10 +29,5 @@
     "cert": "INSERT-IDP-CERT-HERE",
     "identifierFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
     "disableRequestedAuthnContext": true
-  },
-
-  "ssl": {
-    "absolutePathToKey": "INSERT-ABSOLUTE-PATH-TO-KEY",
-    "absolutePathToCert": "INSERT-ABSOLUTE-PATH-TO-CERT"
   }
 }

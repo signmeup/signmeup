@@ -1,9 +1,15 @@
 app:
   build: ./app # EXPOSEs 80
   dockerfile: Dockerfile-bundle
+  ports:
+   - 8080:80
   environment:
    - ROOT_URL=https://local.cis-dev.brown.edu
    - MONGO_URL=mongodb://db:27017/signmeup
    - VIRTUAL_HOST=local.cis-dev.brown.edu
    - METEOR_SETTINGS=${METEOR_SETTINGS}
    - MAIL_URL=smtp://mx.cs.brown.edu:25
+
+db:
+  ports:
+   - 27071:27071
