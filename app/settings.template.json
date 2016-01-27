@@ -22,7 +22,7 @@
   "saml": {
     "loginUrl": "/login",
     "protocol": "https",
-    "host": "local.cis-dev.brown.edu:3000",
+    "host": "local.cis-dev.brown.edu",
     "path": "/login/callback",
     "entryPoint": "https://sso.brown.edu/idp/profile/SAML2/Redirect/SSO",
     "issuer": "https://local.cis-dev.brown.edu/shibboleth-sp",

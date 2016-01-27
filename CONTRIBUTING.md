@@ -78,7 +78,7 @@ follow these steps:
 
   Because `docker-compose` isn't packaged for Debian yet 
   (see [#2235](https://github.com/docker/compose/issues/2235)), we must run it in 
-  a Python `virtualenv`. Run `./venv/bin/activate` to start the virtual environment.
+  a Python `virtualenv`. Run `source venv/bin/activate` to start the virtual environment.
   Type `docker-compose` to make sure it's available.
 
    To deploy, run `make prod`.
