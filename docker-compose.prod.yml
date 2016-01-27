@@ -1,0 +1,14 @@
+app:
+  build: ./app # EXPOSEs 80
+  dockerfile: Dockerfile-prod
+  environment:
+   - ROOT_URL=https://signmeup.cs.brown.edu
+   - MONGO_URL=mongodb://db:27017/signmeup
+   - VIRTUAL_HOST=signmeup.cs.brown.edu
+   - METEOR_SETTINGS=${METEOR_SETTINGS}
+   - MAIL_URL=smtp://mx.cs.brown.edu:25
+   - PRODUCTION="true"
+
+db:
+  volumes:
+   - ./mongodb/data:/data/db

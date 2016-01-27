@@ -27,9 +27,8 @@ accounts-password
 momentjs:moment
 fourseven:scss
 msavin:mongol
-athyuttamre:accounts-saml2
-nourharidy:ssl
 reactive-var
 sarasate:semantic-ui-datetimepicker
 mrt:smart-publish
 percolate:synced-cron
+athyuttamre:accounts-saml2

@@ -1,0 +1,16 @@
+app:
+  links:
+   - db
+   - proxy
+
+db:
+  image: mongo:latest # EXPOSEs 27017
+
+proxy:
+  image: jwilder/nginx-proxy:latest
+  ports:
+   - 80:80
+   - 443:443
+  volumes:
+   - ./nginx/ssl:/etc/nginx/certs
+   - /var/run/docker.sock:/tmp/docker.sock:ro

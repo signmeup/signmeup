@@ -1,5 +1,9 @@
+venv
 .meteor/local
-.meteor/meteorite
 .DS_Store
-private
+
+*.key
+*.crt
+*.pem
+
 settings.json
