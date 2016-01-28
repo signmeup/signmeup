@@ -53,6 +53,12 @@ td.is-table-empty {
 
 /* Course Settings */
 .courseSettings {
+  display: none !important;
+
+  &.active {
+    display: block !important;
+  }
+
   .no-tas {
     padding: 5em 0;
     text-align: center;

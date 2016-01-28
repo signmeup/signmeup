@@ -4,6 +4,21 @@
 // TODO: Replace "not-allowed" errors with 403 errors
 
 Meteor.methods({
+  createCourse: function(name, description, listserv) {
+    if(!authorized.admin(Meteor.userId))
+      throw new Meteor.Error("not-allowed");
+
+    if(Courses.findOne({name: name}))
+      throw new Meteor.Error("course-exists");
+
+    Courses.insert({
+      name: name,
+      description: description,
+      listserv: listserv,
+      active: false
+    });
+  },
+
   updateCourse: function(course, options) {
     // Update name, description, listserv, or active
     if(!authorized.admin(Meteor.userId))
