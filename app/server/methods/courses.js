@@ -10,15 +10,11 @@ Meteor.methods({
       throw new Meteor.Error("not-allowed");
 
     var validFields = ["name", "description", "listserv", "active"];
-    _.each(validFields, function(field) {
-      if(options[field]) {
-        var setObject = {};
-        setObject[field] = options[field];
+    var validOptions = _.pick(options, validFields);
 
-        Courses.update({name: course}, {
-          $set: setObject
-        });
-      }
+    console.log("Updating " + course + " with " + JSON.stringify(validOptions));
+    Courses.update({name: course}, {
+      $set: validOptions
     });
   },
 

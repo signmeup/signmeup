@@ -9,10 +9,10 @@ Template.courseSettings.onRendered(function() {
 Template.courseSettings.events({
   "change .ui.checkbox": function(event) {
     var checked = event.target.checked;
+    var active = this.active;
 
-    // TODO: Change this to a method call, and avoid this firing
-    // off when the 'set' statement in onRendered is called.
-    Courses.update({_id: this._id}, {$set: {active: checked}});
+    if(active !== checked)
+      Meteor.call("updateCourse", this.name, {"active": checked});
   },
 
   "submit .js-ta-input": function(event) {

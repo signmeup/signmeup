@@ -1,13 +1,20 @@
-Template.courseMenu.events({
-  "click .item": function(event) {
-    /* Make menu item active */
-    $(".courseMenu .item").removeClass("active");
-    $(event.target).addClass("active");
+Template.courseMenu.onRendered(function() {
+  var firstCourse = Template.currentData().courses.fetch()[0].name;
+  setCourse(firstCourse);
+});
 
-    /* Make course settings active */
-    var course = event.target.dataset.course;
-    var courseSettings = $(".courseSettings[data-course='" + course + "']");
-    $(".courseSettings").removeClass("active");
-    courseSettings.addClass("active");
+Template.courseMenu.events({
+  "click .item:not(.header)": function(event) {
+    setCourse(event.target.dataset.course);
   }
 });
+
+function setCourse(name) {
+  // Make menu item active
+  $(".courseMenu .item").removeClass("active");
+  $(".courseMenu .item[data-course='" + name + "']").addClass("active");
+
+  // Make course settings active
+  $(".courseSettings").removeClass("active");
+  $(".courseSettings[data-course='" + name + "']").addClass("active");
+}

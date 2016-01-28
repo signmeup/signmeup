@@ -23,19 +23,20 @@
       <div class="fields">
         <div class="four wide field">
           <label>Name</label>
-          <input type="text" name="name" placeholder="e.g. cs00" value="{{name}}">
+          <input type="text" name="name" placeholder="e.g. cs00" value="{{name}}" disabled>
         </div>
 
         <div class="six wide field">
           <label>Description</label>
-          <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming" value="{{description}}">
+          <input type="text" name="description" placeholder="e.g. Intro to Object Oriented Programming" value="{{description}}" disabled>
         </div>
 
         <div class="six wide field">
           <label>Listserv</label>
-          <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu" value="{{listserv}}">
+          <input type="email" name="listserv" placeholder="e.g. cs00tas@lists.cs.brown.edu" value="{{listserv}}" disabled>
         </div>
       </div>
+      <p>Editing functionality coming soon.</p>
     </form>
   </div>
 </template>
@@ -45,7 +46,7 @@
     <h4>HTAs and TAs</h4>
     <form class="ui form js-ta-input">
       <div class="ui fluid large action input">
-        <input type="email" placeholder="Email Address" required>
+        <input type="email" placeholder="ta_email@brown.edu" required>
         <button class="ui button" role="submit">Add</button>
       </div>
     </form>
