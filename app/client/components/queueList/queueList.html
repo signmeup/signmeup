@@ -35,23 +35,18 @@
 
 <template name="queueTicket">
   {{#if isOwner}}
-    <tr class="owner warning" data-id="{{_id}}">
+    <tr class="owner warning queueTicket" data-id="{{_id}}">
       <td>{{position}}</td>
       <td>{{owner.name}}</td>
       <td>
         {{waitTime}}
-        <div class="ui right floated basic mini buttons">
-          <button class="ui icon button js-edit-ticket">
-            <i class="write icon"></i>
-          </button>
-          <button class="ui icon button js-cancel-ticket">
-            <i class="trash icon"></i>
-          </button>
-        </div>
+        <button class="ui right floated basic mini icon button cancel-ticket-button js-cancel-ticket">
+          <i class="trash icon"></i>
+        </button>
       </td>
     </tr>
   {{else}}
-    <tr>
+    <tr class="queueTicket">
       <td>{{position}}</td>
       <td>{{owner.name}}</td>
       <td>{{waitTime}}</td>

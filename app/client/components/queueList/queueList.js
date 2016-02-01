@@ -105,6 +105,8 @@ Template.queueTicket.events({
   },
 
   "click .js-cancel-ticket": function(event) {
-    Meteor.call("cancelTicket", this._id);
+    var ok = confirm("Are you sure you want to cancel your signup?");
+    if (ok)
+      Meteor.call("cancelTicket", this._id);
   }
 });

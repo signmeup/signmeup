@@ -2,13 +2,12 @@
 <template name="courseMenu">
   <div class="ui fluid vertical menu courseMenu">
     <div class="header item">
-      <button class="ui right floated mini icon button js-add-course">
+      <button class="ui right floated mini icon button add-course-button js-add-course">
         <i class="plus icon"></i>
       </button>
       Courses
     </div>
     {{#each courses}}
-      <!-- TODO: Active Items -->
       <a class="item" data-course="{{name}}">
         {{name}}
       </a>

@@ -40,6 +40,16 @@ Template.taQueueList.events({
       if(err)
         console.log(err);
     });
+  },
+
+  "click .js-clear-all": function() {
+    var ok = confirm("Are you sure you want to cancel all active tickets?");
+    if (ok) {
+      Meteor.call("clearQueue", this._id, function(err) {
+        if(err)
+          console.error(err);
+      });
+    }
   }
 });
 

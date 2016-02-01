@@ -22,12 +22,30 @@
   "saml": {
     "loginUrl": "/login",
     "protocol": "https",
-    "host": "local.cis-dev.brown.edu",
+    "host": "local.cis-dev.brown.edu:3000",
     "path": "/login/callback",
     "entryPoint": "https://sso.brown.edu/idp/profile/SAML2/Redirect/SSO",
     "issuer": "https://local.cis-dev.brown.edu/shibboleth-sp",
     "cert": "INSERT-IDP-CERT-HERE",
+    "serviceProviderCert": "INSERT-SELF-SIGNED-CERT-HERE",
+    "decryptionPvk": "INSERT-SELF-SIGNED-KEY-HERE",
     "identifierFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified",
-    "disableRequestedAuthnContext": true
+    "disableRequestedAuthnContext": true,
+    "metadataUrl": "/metadata",
+    "attributeMap": {
+      "urn:oid:1.3.6.1.4.1.6537.1.68": "brownAdvanceId",
+      "https://www.brown.edu/shibboleth/attributes/brownAuthenticationProfiles": "brownAuthenticationProfiles",
+      "urn:oid:1.3.6.1.4.1.6537.1.16": "brownBannerID",
+      "urn:oid:1.3.6.1.4.1.6537.1.13": "brownBruID",
+      "urn:oid:1.3.6.1.4.1.6537.1.14": "brownNetID",
+      "urn:oid:1.3.6.1.4.1.6537.1.15": "brownShortID",
+      "urn:oid:1.3.6.1.4.1.6537.1.25": "brownStatus",
+      "urn:oid:1.3.6.1.4.1.6537.1.28": "brownType",
+      "urn:oid:1.3.6.1.4.1.6537.1.19": "brownUUID",
+      "urn:oid:1.3.6.1.4.1.5923.1.1.1.7": "eduPersonEntitlement",
+      "urn:oid:1.3.6.1.4.1.5923.1.1.1.9": "eduPersonScopedAffiliation",
+      "urn:oid:1.3.6.1.4.1.5923.1.5.1.1": "isMemberOf",
+      "urn:oid:1.3.6.1.4.1.6537.1.63": "machineID"
+    }
   }
 }

@@ -27,6 +27,25 @@ footer {
   padding-bottom: 1.5rem;
 }
 
+.create-queue-button {
+  min-height: 200px !important;
+  box-shadow: none !important;
+  border: 10px dashed #eee !important;
+
+  .plus.icon {
+    margin: auto;
+    padding-top: 10px;
+
+    font-size: 3rem;
+    color: #eee;
+  }
+
+  &:hover {
+    border-color: #ddd;
+    color: #ddd;
+  }
+}
+
 td.is-table-empty {
   height: 12rem;
   text-align: center !important; // TODO: Figure out how to override properly.
@@ -49,6 +68,14 @@ td.is-table-empty {
   justify-content: center;
 
   text-align: center;
+}
+
+.courseMenu {
+  .add-course-button {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+  }
 }
 
 /* Course Settings */
@@ -89,4 +116,16 @@ td.is-table-empty {
 .cutoff-marker {
   text-align: center;
   background-color: yellow;
+}
+
+.queueTicket {
+  td {
+    position: relative;
+  }
+
+  .cancel-ticket-button {
+    position: absolute;
+    top: 6px;
+    right: 12px;
+  }
 }

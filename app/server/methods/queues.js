@@ -65,6 +65,28 @@ Meteor.methods({
     });
   },
 
+  clearQueue: function(queueId) {
+    var queue = Queues.findOne({_id: queueId});
+    if(!queue)
+      throw new Meteor.Error("invalid-queue-id");
+
+    if(queue.status === "ended")
+      throw new Meteor.Error("queue-ended")
+
+    if(!authorized.ta(Meteor.userId, queue.course))
+      throw new Meteor.Error("not-allowed");
+
+    var activeTicketIds = _.map(_activeTickets(queue.tickets), function(t) {
+      return t._id;
+    });
+
+    console.log(activeTicketIds);
+
+    Tickets.update({_id: {$in: activeTicketIds}}, {
+      $set: {status: "cancelled"}
+    });
+  },
+
   shuffleQueue: function(queueId) {
     var queue = Queues.findOne({_id: queueId});
     if(!queue)
@@ -77,6 +99,11 @@ Meteor.methods({
       throw new Meteor.Error("not-allowed");
 
     // TODO: Shuffle only active tickets
+    var activeTicketIds = _.map(_activeTickets(queue.tickets), function(t) {
+      return t._id;
+    });
+    var startingIndex = queue.tickets.indexOf(activeTicketIds[0]);
+    
     var shuffledTickets = _.shuffle(queue.tickets);
     Queues.update({_id: queueId}, {
       $set: {tickets: shuffledTickets}
@@ -84,7 +111,7 @@ Meteor.methods({
     console.log("Shuffled tickets for " + queueId);
   },
 
-  "activateQueue": function(queueId) {
+  activateQueue: function(queueId) {
     // Make a cutoff queue active again
     var queue = Queues.findOne({_id: queueId});
     if(!queue)
@@ -102,7 +129,7 @@ Meteor.methods({
     });
   },
 
-  "cutoffQueue": function(queueId) {
+  cutoffQueue: function(queueId) {
     var queue = Queues.findOne({_id: queueId});
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
@@ -123,7 +150,7 @@ Meteor.methods({
     });
   },
 
-  "endQueue": function(queueId) {
+  endQueue: function(queueId) {
     var queue = Queues.findOne({_id: queueId});
     if(!queue)
       throw new Meteor.Error("invalid-queue-id");
