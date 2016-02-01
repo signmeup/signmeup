@@ -12,3 +12,8 @@ app:
 db:
   volumes:
    - ./mongodb/data:/data/db
+
+proxy:
+  ports:
+   - 80:80
+   - 443:443
