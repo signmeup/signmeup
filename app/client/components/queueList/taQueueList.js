@@ -63,10 +63,16 @@ Template.taQueueTicket.onRendered(function() {
 });
 
 Template.taQueueTicket.events({
-  "click .js-mark-as-done": function(event) {
+  "click .js-mark-as-done": function() {
     Meteor.call("markTicketAsDone", this._id, function(err) {
       if(err)
         console.log(err);
     })
   },
+
+  "click .js-cancel-ticket": function() {
+    var ok = confirm("Are you sure you want to cancel this signup?");
+    if (ok)
+      Meteor.call("cancelTicket", this._id);
+  }
 });

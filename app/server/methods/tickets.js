@@ -21,7 +21,13 @@ Meteor.methods({
       throw new Meteor.Error("invalid-question");
     // TODO: Validate notify object
     
-    // TODO: Disable adding when user already has ticket
+    // Disable signing up again if an active ticket exists
+    var activeTicketIds = _filterActiveTicketIds(queue.tickets);
+    _.each(activeTicketIds, function(id) {
+      var ticket = Tickets.findOne(ticketId);
+      if (ticket.owner.id === this.userId)
+        throw new Meteor.Error("already-signed-up");
+    })
 
     var ticket = {
       createdAt: Date.now(),
