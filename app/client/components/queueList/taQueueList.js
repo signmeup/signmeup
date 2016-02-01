@@ -36,10 +36,23 @@ Template.taQueueList.helpers({
 
 Template.taQueueList.events({
   "click .js-shuffle-queue": function() {
-    Meteor.call("shuffleQueue", this._id, function(err) {
-      if(err)
-        console.log(err);
-    });
+    var ok = confirm("Are you sure you want to shuffle all active tickets?");
+    if (ok) {
+      Meteor.call("shuffleQueue", this._id, function(err) {
+        if(err)
+          console.log(err);
+      });
+    }
+  },
+
+  "click .js-clear-all": function() {
+    var ok = confirm("Are you sure you want to cancel all active tickets?");
+    if (ok) {
+      Meteor.call("clearQueue", this._id, function(err) {
+        if(err)
+          console.error(err);
+      });
+    }
   }
 });
 
@@ -50,10 +63,16 @@ Template.taQueueTicket.onRendered(function() {
 });
 
 Template.taQueueTicket.events({
-  "click .js-mark-as-done": function(event) {
+  "click .js-mark-as-done": function() {
     Meteor.call("markTicketAsDone", this._id, function(err) {
       if(err)
         console.log(err);
     })
   },
+
+  "click .js-cancel-ticket": function() {
+    var ok = confirm("Are you sure you want to cancel this signup?");
+    if (ok)
+      Meteor.call("cancelTicket", this._id);
+  }
 });

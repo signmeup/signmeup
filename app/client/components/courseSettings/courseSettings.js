@@ -46,7 +46,9 @@ Template.courseSettings.events({
 
 Template.courseSettingsTAs.helpers({
   "tasExist": function() {
-    return this.htas.length + this.tas.length > 0;
+    var htas = this.htas ? this.htas.length : 0;
+    var tas = this.tas ? this.tas.length : 0;
+    return htas + tas > 0;
   }
 });
 

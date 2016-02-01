@@ -6,6 +6,10 @@ Template.courseMenu.onRendered(function() {
 Template.courseMenu.events({
   "click .item:not(.header)": function(event) {
     setCourse(event.target.dataset.course);
+  },
+
+  "click .js-add-course": function() {
+    _showModal(".js-create-course-modal");
   }
 });
 

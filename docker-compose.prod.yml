@@ -1,6 +1,7 @@
 app:
   build: ./app # EXPOSEs 80
   dockerfile: Dockerfile-prod
+  restart: always
   environment:
    - ROOT_URL=https://signmeup.cs.brown.edu
    - MONGO_URL=mongodb://db:27017/signmeup
@@ -10,5 +11,12 @@ app:
    - PRODUCTION="true"
 
 db:
+  restart: always
   volumes:
    - ./mongodb/data:/data/db
+
+proxy:
+  restart: always
+  ports:
+   - 80:80
+   - 443:443

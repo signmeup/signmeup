@@ -41,8 +41,6 @@ Template.queueList.events({
 // Call from within a this.autorun within the onRendered
 // function of a template.
 _setCutoffMarker = function(instance, data, colspan) {
-  console.log("Status changed to " + data.status);
-
   // Remove any existing markers
   instance.$(".cutoff-marker").remove();
 
@@ -63,7 +61,6 @@ _setCutoffMarker = function(instance, data, colspan) {
 
     // Calculate where to insert the cutoff marker
     var cutoffIndex = activeTimes.indexOf(data.cutoffTime);
-    console.log("Adding cutoff marker at index " + cutoffIndex);
 
     var cutoffMarker = $("<tr class='cutoff-marker'><td colspan='" + colspan + "'>Cutoff</td></tr>")
 
@@ -105,6 +102,8 @@ Template.queueTicket.events({
   },
 
   "click .js-cancel-ticket": function(event) {
-    Meteor.call("cancelTicket", this._id);
+    var ok = confirm("Are you sure you want to cancel your signup?");
+    if (ok)
+      Meteor.call("cancelTicket", this._id);
   }
 });

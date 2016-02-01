@@ -37,14 +37,17 @@ Template.endingSoon.helpers({
 Template.endingSoon.events({
   "click .js-edit-end-time": function(e) {
     e.preventDefault();
-    return;
+    _showModal(".js-edit-queue-modal");
   },
 
   "click .js-end-now": function(e) {
     e.preventDefault();
-    Meteor.call("endQueue", this._id, function(err) {
-      if(err) console.log(err);
-    });
+    var ok = confirm("Are you sure you want to end this queue?");
+    if (ok) {
+      Meteor.call("endQueue", this._id, function(err) {
+        if(err) console.log(err);
+      });
+    }
   }
 });
 
