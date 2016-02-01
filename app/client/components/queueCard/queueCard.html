@@ -12,9 +12,11 @@
 
 <template name="queueCardContent">
   <div class="content">
-    <div class="right floated meta">
-      <a href="#" class="js-edit-queue"><i class="pencil icon"></i></a>
-    </div>
+    {{#if showActions}}
+      <div class="right floated meta">
+        <button class="ui mini icon button js-edit-queue"><i class="pencil icon"></i></button>
+      </div>
+    {{/if}}
     <div class="header">
       {{course.name}}{{#if name}} &middot; {{name}}{{/if}}
     </div>
@@ -39,7 +41,7 @@
   {{/if}}
 
   <div class="content {{statusColor}} queue-status">
-    {{#if showQueueStatusDropdown}}
+    {{#if showActions}}
       <div class="ui right floated mini white floating dropdown icon button js-status-dropdown">
         <i class="dropdown icon"></i>
         <div class="menu">

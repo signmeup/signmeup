@@ -42,7 +42,7 @@ Template.queueCardContent.helpers({
   readableStatus: function() {
     statuses = {
       "active": "Active",
-      "cutoff": "Cut-off",
+      "cutoff": "Cutoff",
       "ended": "Ended at " + _formatTime(this.endTime, "h:mm A on MMMM DD")
     };
 
@@ -59,7 +59,7 @@ Template.queueCardContent.helpers({
     return colors[this.status];
   },
 
-  showQueueStatusDropdown: function() {
+  showActions: function() {
     return (authorized.ta(Meteor.userId, this.course) && this.status !== "ended");
   },
 
@@ -69,8 +69,9 @@ Template.queueCardContent.helpers({
 });
 
 Template.queueCardContent.events({
-  "click .js-edit-queue": function() {
-    
+  "click .js-edit-queue": function(e) {
+    e.preventDefault();
+    _showModal(".js-edit-queue-modal");
   },
 
   "click .js-activate": function(e) {
@@ -89,8 +90,11 @@ Template.queueCardContent.events({
 
   "click .js-end-now": function(e) {
     e.preventDefault();
-    Meteor.call("endQueue", this._id, function(err) {
-      if(err) console.log(err);
-    });
+    var ok = confirm("Are you sure you want to end this queue?");
+    if (ok) {
+      Meteor.call("endQueue", this._id, function(err) {
+        if(err) console.log(err);
+      });
+    }
   }
 });

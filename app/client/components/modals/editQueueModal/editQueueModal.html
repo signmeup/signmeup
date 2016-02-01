@@ -1,0 +1,46 @@
+<template name="editQueueModal">
+  <div class="ui small modal edit-queue-modal js-edit-queue-modal">
+    <div class="header">
+      Edit Queue
+    </div>
+
+    <div class="content">
+      <form class="ui form js-edit-queue-form">
+        <div class="fields">
+          <!-- Course -->
+          <div class="ten wide field">
+            <label>Course</label>
+            <input type="text" name="course" value="{{course}}" disabled>
+          </div>
+
+          <!-- Name -->
+          <div class="six wide field">
+            <label>Name</label>
+            <input type="text" name="name" value="{{name}}">
+          </div>
+        </div>
+
+        <div class="two fields">
+          <div class="field">
+            <label>Location</label>
+            <select name="location" class="ui fluid search dropdown js-location-dropdown">
+              <option value="">Select Location</option>
+              {{#each loc in locations}}
+                <option value="{{loc.name}}">{{loc.name}}</option>
+              {{/each}}
+            </select>
+          </div>
+
+          <div class="field">
+            <label>End Time</label>
+            <input name="endTime" class="ui dropdown datetimepicker" type="text"/>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="actions">
+      <button class="ui primary button js-submit-edit-queue-form">Save</button>
+    </div>
+  </div>
+</template>

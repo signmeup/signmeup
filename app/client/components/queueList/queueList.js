@@ -61,7 +61,6 @@ _setCutoffMarker = function(instance, data, colspan) {
 
     // Calculate where to insert the cutoff marker
     var cutoffIndex = activeTimes.indexOf(data.cutoffTime);
-    console.log("Adding cutoff marker at index " + cutoffIndex);
 
     var cutoffMarker = $("<tr class='cutoff-marker'><td colspan='" + colspan + "'>Cutoff</td></tr>")
 

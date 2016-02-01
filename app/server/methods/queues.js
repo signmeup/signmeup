@@ -5,8 +5,6 @@
 
 Meteor.methods({
   createQueue: function(course, name, location, endTime) {
-    if(!Meteor.user())
-      throw new Meteor.Error("no-user");
     if(!authorized.ta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
@@ -65,6 +63,49 @@ Meteor.methods({
     });
   },
 
+  updateQueue: function(queueId, name, location, endTime) {
+    var queue = Queues.findOne({_id: queueId});
+    if(!queue)
+      throw new Meteor.Error("invalid-queue-id");
+    if(!authorized.ta(Meteor.userId, queue.course))
+      throw new Meteor.Error("not-allowed");
+
+    var locationId;
+    var locationObject = Locations.findOne({name: location});
+    if(locationObject)
+      locationId = locationObject._id;
+    else
+      locationId = Locations.insert({
+        name: location
+      });
+
+    if(endTime <= Date.now())
+      throw new Meteor.Error("invalid-end-time");
+
+    Queues.update(queueId, {
+      $set: {
+        name: name, 
+        location: locationId,
+        endTime: endTime
+      }
+    });
+
+    // Remove old cron job, create new one
+    SyncedCron.remove(queueId + "-ender");
+    console.log("Creating cron job");
+    SyncedCron.add({
+      name: queueId + "-ender",
+      schedule: function(parser) {
+        var date = new Date(endTime);
+        return parser.recur().on(date).fullDate();
+      },
+      job: function() {
+        var queueId = this.name.split("-")[0];
+        Meteor.call("endQueue", queueId);
+      }
+    });
+  },
+
   clearQueue: function(queueId) {
     var queue = Queues.findOne({_id: queueId});
     if(!queue)
@@ -79,8 +120,6 @@ Meteor.methods({
     var activeTicketIds = _.map(_activeTickets(queue.tickets), function(t) {
       return t._id;
     });
-
-    console.log(activeTicketIds);
 
     Tickets.update({_id: {$in: activeTicketIds}}, {
       $set: {status: "cancelled"}
@@ -158,8 +197,9 @@ Meteor.methods({
 
     console.log("Ending queue " + queueId);
 
-    // TODO: Cancel active tickets
-    // TODO: Cancel the queue-ender cron job
+    // TODO: Cancel active tickets?
+    
+    SyncedCron.remove(queueId + "-ender");
 
     Queues.update(queueId, {
       $set: {

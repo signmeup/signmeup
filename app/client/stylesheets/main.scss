@@ -102,11 +102,11 @@ td.is-table-empty {
     }
 
     &.yellow {
-      background-color: yellow !important;
+      background-color: #FFFAF3 !important;
     }
 
     &.red {
-      background-color: red !important;
+      background-color: #DD251E !important;
       color: white;
     }
   }
@@ -115,7 +115,7 @@ td.is-table-empty {
 /* queueList */
 .cutoff-marker {
   text-align: center;
-  background-color: yellow;
+  background-color: #FFFAF3;
 }
 
 .queueTicket {

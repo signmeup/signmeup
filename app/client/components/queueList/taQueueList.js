@@ -36,10 +36,13 @@ Template.taQueueList.helpers({
 
 Template.taQueueList.events({
   "click .js-shuffle-queue": function() {
-    Meteor.call("shuffleQueue", this._id, function(err) {
-      if(err)
-        console.log(err);
-    });
+    var ok = confirm("Are you sure you want to shuffle all active tickets?");
+    if (ok) {
+      Meteor.call("shuffleQueue", this._id, function(err) {
+        if(err)
+          console.log(err);
+      });
+    }
   },
 
   "click .js-clear-all": function() {
