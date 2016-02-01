@@ -98,15 +98,12 @@ Meteor.methods({
     if(!authorized.ta(Meteor.userId, queue.course))
       throw new Meteor.Error("not-allowed");
 
-    // TODO: Shuffle only active tickets
-    var activeTicketIds = _.map(_activeTickets(queue.tickets), function(t) {
-      return t._id;
-    });
+    var activeTicketIds = _filterActiveTicketIds(queue.tickets);
     var startingIndex = queue.tickets.indexOf(activeTicketIds[0]);
-    
-    var shuffledTickets = _.shuffle(queue.tickets);
+    var newTickets = queue.tickets.slice(0, startingIndex).concat(_.shuffle(activeTicketIds));
+
     Queues.update({_id: queueId}, {
-      $set: {tickets: shuffledTickets}
+      $set: {tickets: newTickets}
     });
     console.log("Shuffled tickets for " + queueId);
   },

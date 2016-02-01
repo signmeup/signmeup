@@ -41,8 +41,6 @@ Template.queueList.events({
 // Call from within a this.autorun within the onRendered
 // function of a template.
 _setCutoffMarker = function(instance, data, colspan) {
-  console.log("Status changed to " + data.status);
-
   // Remove any existing markers
   instance.$(".cutoff-marker").remove();
 
