@@ -33,3 +33,5 @@ mrt:smart-publish
 percolate:synced-cron
 athyuttamre:accounts-saml2
 email
+kadira:debug
+meteorhacks:kadira
