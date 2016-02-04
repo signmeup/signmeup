@@ -24,8 +24,8 @@ Meteor.startup(function() {
   // SSL(keyPath, certPath, 3000);
 
   // Initialize Data
-  _createTestUsers();
-  _initializeCollections();
+  createTestUsers();
+  initializeCollections();
 
   // Run cron jobs
   SyncedCron.start();

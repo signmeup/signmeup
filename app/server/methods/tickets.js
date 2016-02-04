@@ -24,10 +24,10 @@ Meteor.methods({
     // Disable signing up again if an active ticket exists
     var activeTicketIds = _filterActiveTicketIds(queue.tickets);
     _.each(activeTicketIds, function(id) {
-      var ticket = Tickets.findOne(ticketId);
-      if (ticket.owner.id === this.userId)
+      var ticket = Tickets.findOne(id);
+      if (ticket.owner.id === Meteor.userId())
         throw new Meteor.Error("already-signed-up");
-    })
+    });
 
     var ticket = {
       createdAt: Date.now(),
@@ -49,6 +49,25 @@ Meteor.methods({
     var ticketId = Tickets.insert(ticket);
     Queues.update({_id: queueId}, {$push: {tickets: ticketId}});
     console.log("Inserted ticket " + ticketId + " to queue " + queueId);
+  },
+
+  notifyTicketOwner: function(ticketId, type) {
+    console.log(ticketId, type);
+    var ticket = Tickets.findOne(ticketId);
+    if(!ticket) throw new Meteor.Error("invalid-ticket-id");
+
+    if (!authorized.ta(this.userId, ticket.course))
+      throw new Meteor.Error("not-allowed");
+
+    if (ticket.notify && ticket.notify.types && _.contains(ticket.notify.types, type)) {
+      this.unblock();
+      
+      if (type === "email") {
+        sendEmailNotification(ticketId);
+      } else if (type === "text") {
+        sendTextNotification(ticketId);
+      }
+    }
   },
 
   markTicketAsDone: function(ticketId) {

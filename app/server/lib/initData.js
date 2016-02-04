@@ -1,14 +1,14 @@
 // Functions to initialize collections
 
-_createTestUsers = function() {
+createTestUsers = function() {
   var settings = Meteor.settings;
-  _createUser("Admin", settings.admin.email, settings.admin.password, "admin");
-  _createUser("Test HTA", settings.hta.email, settings.hta.password, "hta", "cs00");
-  _createUser("Test TA", settings.ta.email, settings.ta.password, "ta", "cs00");
-  _createUser("Test Student", settings.student.email, settings.student.password);
+  createUser("Admin", settings.admin.email, settings.admin.password, "admin");
+  createUser("Test HTA", settings.hta.email, settings.hta.password, "hta", "cs00");
+  createUser("Test TA", settings.ta.email, settings.ta.password, "ta", "cs00");
+  createUser("Test Student", settings.student.email, settings.student.password);
 }
 
-_createUser = function(name, email, password, type, course) {
+function createUser(name, email, password, type, course) {
   var user = Meteor.users.findOne({
     "emails.address": email
   });
@@ -58,7 +58,7 @@ _createUser = function(name, email, password, type, course) {
   }
 }
 
-_initializeCollections = function() {
+initializeCollections = function() {
   var testHTA = Meteor.users.findOne({"emails.address": Meteor.settings.hta.email});
   var testTA = Meteor.users.findOne({"emails.address": Meteor.settings.ta.email});
 

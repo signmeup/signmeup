@@ -7,13 +7,13 @@
     <div class="content">
       <form class="ui form js-join-queue-form">
         <!-- Name -->
-        <div class="field">
+        <div class="required field">
           <label>Name</label>
           <input type="text" name="name" value={{userName}} required>
         </div>
 
         <!-- Question -->
-        <div class="field">
+        <div class="required field">
           <label>Question</label>
           <textarea name="question" rows="3" placeholder="Enter a short summary of your question." required></textarea>
         </div>
@@ -46,9 +46,19 @@
               <label>Text me</label>
             </div>
           </div>
-          <div class="field indent notify-text-helper hidden">
-            <div class="ui input">
-              <input type="tel" name="phoneNumber" placeholder="Phone Number">
+          <div class="two fields indent notify-text-helper hidden">
+            <div class="field">
+              <div class="ui input">
+                <input type="tel" name="phone" placeholder="Phone Number">
+              </div>
+            </div>
+            <div class="field">
+              <select name="carrier" class="ui fluid search dropdown js-carrier-dropdown">
+                <option value="">Select Carrier</option>
+                {{#each carrier in carriers}}
+                  <option value="{{carrier.domain}}">{{carrier.name}}</option>
+                {{/each}}
+              </select>
             </div>
           </div>
         </div>

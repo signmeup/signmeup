@@ -4,6 +4,11 @@
  * Semantic. In the process, the Blaze event handlers get lost.
  */
 
+Template.joinQueueModal.onRendered(function() {
+  // Initialize carriers
+  $('.js-carrier-dropdown').dropdown();
+});
+
 Template.joinQueueModal.events({
   /* TODO: Validate form inputs on blur */
 
@@ -12,7 +17,7 @@ Template.joinQueueModal.events({
     $helper.toggleClass("hidden");
 
     if(!$helper.hasClass("hidden")) {
-      $helper.find("input").focus();
+      $helper.find(".ui.input input").focus();
     }
   },
 
@@ -41,8 +46,9 @@ Template.joinQueueModal.events({
         types.push(this.name);
         if(this.name === "email") {
           notify["email"] = event.target.emailAddress.value;
-        } else if(this.name === "phone") {
-          notify["phone"] = event.target.phoneNumber.value;
+        } else if(this.name === "text") {
+          notify["phone"] = event.target.phone.value.replace(/\D/g,''); // Strip non-numeric characters
+          notify["carrier"] = event.target.carrier.value;
         }
       }
     });

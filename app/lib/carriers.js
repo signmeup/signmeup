@@ -1,4 +1,4 @@
-carrierEmails = {
+carriers = {
   "3 River Wireless": "sms.3rivers.net",
   "ACS Wireless": "paging.acswireless.com",
   "Alltel": "message.alltel.com",
@@ -187,4 +187,12 @@ carrierEmails = {
   "Verizon PCS": "myvzw.com",
   "VoiceStream": "voicestream.net",
   "WebLink Wireless": "pagemart.net"
+}
+
+if (Meteor.isClient) {
+  UI.registerHelper("carriers", function() {
+    return _.map(Object.keys(carriers), function(k) {
+      return {name: k, domain: carriers[k]};
+    })
+  });
 }
