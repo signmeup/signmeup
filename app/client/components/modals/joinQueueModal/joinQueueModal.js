@@ -6,7 +6,7 @@
 
 Template.joinQueueModal.onRendered(function() {
   // Initialize carriers
-  $('.js-carrier-dropdown').dropdown();
+  this.$(".js-carrier-dropdown").dropdown();
 });
 
 Template.joinQueueModal.events({
@@ -30,7 +30,7 @@ Template.joinQueueModal.events({
     var $form = $(event.target);
 
     // Validate form
-    var isValid = validateJoinForm();
+    var isValid = validateJoinForm(event);
     if (!isValid) return false;
 
     var name = event.target.name.value;
@@ -65,6 +65,32 @@ Template.joinQueueModal.events({
   }
 });
 
-function validateJoinForm() {
-  return true;
+function validateJoinForm(event) {
+  var $form = $(event.target);
+  var $error = $form.find(".ui.error.message");
+  var $fields = $form.find(".field");
+
+  $error.find(".list").empty();
+  $fields.removeClass("error");
+
+  var name = event.target.name.value;
+  var question = event.target.question.value;
+
+  var errors = [];
+
+  if (name.length == 0) {
+    $form.find("input[name='name']").parent(".field").addClass("error");
+    errors.push("Please enter your name");
+  }
+
+  if (errors) {
+    $error.show()
+    _.each(errors, function(e) {
+      $form.find(".ui.error.message .list").append("<li>" + e + "</li>");      
+    });
+
+    return false;
+  } else {
+    return true;
+  }
 }
