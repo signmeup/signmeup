@@ -21,7 +21,7 @@ Meteor.methods({
 
   updateCourse: function(course, options) {
     // Update name, description, listserv, or active
-    if(!authorized.admin(Meteor.userId))
+    if(!authorized.hta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
     var validFields = ["name", "description", "listserv", "active"];
@@ -34,7 +34,7 @@ Meteor.methods({
   },
 
   addTA: function(course, email) {
-    if(!authorized.admin(Meteor.userId))
+    if(!authorized.hta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
     var userId;
@@ -64,7 +64,7 @@ Meteor.methods({
   },
 
   deleteTA: function(course, userId) {
-    if(!authorized.admin(Meteor.userId))
+    if(!authorized.hta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
     Courses.update({name: course}, {
@@ -77,7 +77,7 @@ Meteor.methods({
   },
 
   switchToTA: function(course, userId) {
-    if(!authorized.admin(Meteor.userId))
+    if(!authorized.hta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
     Courses.update({name: course}, {
@@ -92,7 +92,7 @@ Meteor.methods({
   },
 
   switchToHTA: function(course, userId) {
-    if(!authorized.admin(Meteor.userId))
+    if(!authorized.hta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
     Courses.update({name: course}, {
@@ -107,7 +107,7 @@ Meteor.methods({
   },
 
   deleteCourse: function(course) {
-    if(!authorized.admin(Meteor.userId))
+    if(!authorized.hta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
     var course = Courses.findOne({name: course});

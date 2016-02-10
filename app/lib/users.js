@@ -58,7 +58,7 @@ _getUserShortName = function(userId) {
   }
 }
 
-_getUserCourses = function(userId) {
+_getUserCourseNames = function(userId) {
   var user = _getUser(userId);
 
   if(user) {
@@ -80,8 +80,8 @@ _getUserCourses = function(userId) {
   }
 }
 
-_getActiveUserCourses = function(userId) {
-  var userCourses = _getUserCourses(userId);
+_getActiveUserCourseNames = function(userId) {
+  var userCourses = _getUserCourseNames(userId);
   if(!userCourses) return;
 
   return _.filter(userCourses, function(c) {
@@ -89,10 +89,26 @@ _getActiveUserCourses = function(userId) {
   });
 }
 
+_getUserCourses = function(userId) {
+  var userCourses = _getUserCourseNames(userId);
+  if(!userCourses) return;
+
+  return Courses.find({name: {$in: userCourses}});
+}
+
+_getActiveUserCourses = function(userId) {
+  var userCourses = _getActiveUserCourseNames(userId);
+  if(!userCourses) return;
+
+  return Courses.find({name: {$in: userCourses}});
+}
+
 UI.registerHelper("getUser", _getUser);
 UI.registerHelper("userFromEmail", _getUserFromEmail);
 UI.registerHelper("userName", _getUserName);
 UI.registerHelper("userShortName", _getUserShortName);
 UI.registerHelper("userEmail", _getUserEmail);
+UI.registerHelper("userCourseNames", _getUserCourseNames);
+UI.registerHelper("activeUserCourseNames", _getActiveUserCourseNames);
 UI.registerHelper("userCourses", _getUserCourses);
 UI.registerHelper("activeUserCourses", _getActiveUserCourses);

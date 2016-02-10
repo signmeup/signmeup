@@ -2,9 +2,11 @@
 <template name="courseMenu">
   <div class="ui fluid vertical menu courseMenu">
     <div class="header item">
-      <button class="ui right floated mini icon button add-course-button js-add-course">
-        <i class="plus icon"></i>
-      </button>
+      {{#if userIs "admin"}}
+        <button class="ui right floated mini icon button add-course-button js-add-course">
+          <i class="plus icon"></i>
+        </button>
+      {{/if}}
       Courses
     </div>
     {{#each courses}}

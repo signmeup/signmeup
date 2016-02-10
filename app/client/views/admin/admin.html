@@ -1,15 +1,23 @@
 <template name="admin">
-  {{#if Template.subscriptionsReady}}
-    <div class="four wide column">
-      {{> courseMenu courses=courses}}
-    </div>
+  {{#if showAdmin}}
+    {{#if Template.subscriptionsReady}}
+      <div class="four wide column">
+        {{> courseMenu courses=userCourses}}
+      </div>
 
-    <div class="twelve wide column">
-      {{#each course in courses}}
-        {{> courseSettings course}}
-      {{/each}}
-    </div>
+      <div class="twelve wide column">
+        {{#each course in userCourses}}
+          {{> courseSettings course}}
+        {{/each}}
+      </div>
 
-    {{> createCourseModal }}
+      {{#if userIs "admin"}}
+        {{> createCourseModal }}
+      {{/if}}
+    {{/if}}
+  {{else}}
+    <div class="sixteen wide column">
+      You're not an admin or HTA!
+    </div>
   {{/if}}
 </template>
