@@ -29,14 +29,9 @@ Template.joinQueueModal.events({
     event.preventDefault();
     var $form = $(event.target);
 
-    // Validate form
-    var isValid = validateJoinForm(event);
-    if (!isValid) return false;
-
+    // Parse inputs
     var name = event.target.name.value;
     var question = event.target.question.value;
-
-    // Parse notification types
     var notify = {}
     var types = [];
 
@@ -55,6 +50,21 @@ Template.joinQueueModal.events({
 
     notify["types"] = types;
 
+    // Validate form
+    $form.find(".ui.error.message .list").empty();
+    $form.find(".field").removeClass("error");
+
+    var errors = validateJoinForm(this, name, question, notify);
+    if (!_.isEmpty(errors)) {
+      $form.find(".ui.error.message").show()
+      _.each(errors, function(v, k) {
+        $form.find("input[name='" + k + "']").parent(".field").addClass("error");
+        $form.find(".ui.error.message .list").append("<li>" + v + "</li>");      
+      });
+
+      return false;
+    }
+
     // Create ticket
     Meteor.call("addTicket", this._id, name, question, notify, function(err, res) {
       if (err)
@@ -65,32 +75,36 @@ Template.joinQueueModal.events({
   }
 });
 
-function validateJoinForm(event) {
-  var $form = $(event.target);
-  var $error = $form.find(".ui.error.message");
-  var $fields = $form.find(".field");
+function validateJoinForm(queue, name, question, notify) {
+  var errors = {};
+  var courseSettings = Courses.findOne({name: queue.course}).settings;
 
-  $error.find(".list").empty();
-  $fields.removeClass("error");
-
-  var name = event.target.name.value;
-  var question = event.target.question.value;
-
-  var errors = [];
-
+  // 1. Name
   if (name.length == 0) {
-    $form.find("input[name='name']").parent(".field").addClass("error");
-    errors.push("Please enter your name");
+    errors["name"] = "Please enter your name";
   }
 
-  if (errors) {
-    $error.show()
-    _.each(errors, function(e) {
-      $form.find(".ui.error.message .list").append("<li>" + e + "</li>");      
-    });
+  // 2. Question
+  if ((courseSettings && courseSettings.questionRequired) && question.length < 1) {
+    errors["question"] = "Please specify a question";
+  }
 
-    return false;
+  // 3. Notifications
+  if (notify.types.length == 0) {
+    // Pick a checkbox
   } else {
-    return true;
+    if (_.contains(notify.types, "email") && !validEmail(notify.email)) {
+      // Enter valid email
+    }
+
+    if (_.contains(notify.types, "text") && !validPhoneNumber(notify.phone)) {
+      // Enter valid phone
+    }
+
+    if (_.contains(notify.types, "text") && !notify.carrier) {
+      // Select a carrier
+    }
   }
+
+  return errors;
 }
