@@ -5,19 +5,45 @@
  */
 
 Template.joinQueueModal.onRendered(function() {
+  // Initialize phone number
+  $("input[name='phone']").mask('(000) 000-0000');
+
+  // Check Announce option
+  
+
   // Initialize carriers
   this.$(".js-carrier-dropdown").dropdown();
+
+  // Validation
+  this.$(".js-join-queue-form").form({
+    fields: {
+      name: "empty",
+      question: "empty",
+      emailAddress: ["email", "emptyGiven[email]"],
+      phone: ["phoneNumber", "emptyGiven[text]"],
+      carrier: ["emptyGiven[text]"]
+    }
+  });
 });
 
 Template.joinQueueModal.events({
   /* TODO: Validate form inputs on blur */
 
   "change .js-join-queue-form input[type=checkbox]": function(event) {
+    // Show helper
     var $helper = $("." + $(event.target).data("helper"));
     $helper.toggleClass("hidden");
 
     if(!$helper.hasClass("hidden")) {
       $helper.find(".ui.input input").focus();
+    }
+
+    // Revalidate form if a checkbox has been unchecked
+    // This helps remove errors if a user first caused an
+    // error and now chooses not to use that notification option.
+    var checked = $(event.target).is(":checked");
+    if (!checked) {
+      $(".js-join-queue-form").form("validate form");
     }
   },
 
@@ -51,19 +77,19 @@ Template.joinQueueModal.events({
     notify["types"] = types;
 
     // Validate form
-    $form.find(".ui.error.message .list").empty();
-    $form.find(".field").removeClass("error");
+    // $form.find(".ui.error.message .list").empty();
+    // $form.find(".field").removeClass("error");
 
-    var errors = validateJoinForm(this, name, question, notify);
-    if (!_.isEmpty(errors)) {
-      $form.find(".ui.error.message").show()
-      _.each(errors, function(v, k) {
-        $form.find("input[name='" + k + "']").parent(".field").addClass("error");
-        $form.find(".ui.error.message .list").append("<li>" + v + "</li>");      
-      });
+    // var errors = validateJoinForm(this, name, question, notify);
+    // if (!_.isEmpty(errors)) {
+    //   $form.find(".ui.error.message").show()
+    //   _.each(errors, function(v, k) {
+    //     $form.find("input[name='" + k + "']").parent(".field").addClass("error");
+    //     $form.find(".ui.error.message .list").append("<li>" + v + "</li>");      
+    //   });
 
-      return false;
-    }
+    //   return false;
+    // }
 
     // Create ticket
     Meteor.call("addTicket", this._id, name, question, notify, function(err, res) {
