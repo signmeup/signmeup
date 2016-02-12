@@ -8,26 +8,57 @@ Template.joinQueueModal.onRendered(function() {
   // Initialize phone number
   $("input[name='phone']").mask('(000) 000-0000');
 
-  // Check Announce option
-  
-
   // Initialize carriers
   this.$(".js-carrier-dropdown").dropdown();
 
   // Validation
   this.$(".js-join-queue-form").form({
     fields: {
-      name: "empty",
-      question: "empty",
-      emailAddress: ["email", "emptyGiven[email]"],
-      phone: ["phoneNumber", "emptyGiven[text]"],
-      carrier: ["emptyGiven[text]"]
+      name: {
+        rules: [{
+          type: "empty",
+          prompt: "Please enter a name"
+        }]
+      },
+
+      question: {
+        rules: [{
+          type: "empty",
+          prompt: "Please enter a question"
+        }]
+      },
+
+      emailAddress: {
+        rules: [{
+          type: "email",
+          prompt: "Please enter valid email address"
+        }, {
+          type: "emptyGiven[email]",
+          prompt: "Email address cannot be empty"
+        }]
+      },
+
+      phone: {
+        rules: [{
+          type: "phoneNumber",
+          prompt: "Please enter valid phone number"
+        }, {
+          type: "emptyGiven[text]",
+          prompt: "Phone number cannot be empty"
+        }]
+      },
+
+      carrier: {
+        rules: [{
+          type: "emptyGiven[text]",
+          prompt: "Please select a carrier"
+        }]
+      }
     }
   });
 });
 
 Template.joinQueueModal.events({
-  /* TODO: Validate form inputs on blur */
 
   "change .js-join-queue-form input[type=checkbox]": function(event) {
     // Show helper
@@ -76,61 +107,14 @@ Template.joinQueueModal.events({
 
     notify["types"] = types;
 
-    // Validate form
-    // $form.find(".ui.error.message .list").empty();
-    // $form.find(".field").removeClass("error");
-
-    // var errors = validateJoinForm(this, name, question, notify);
-    // if (!_.isEmpty(errors)) {
-    //   $form.find(".ui.error.message").show()
-    //   _.each(errors, function(v, k) {
-    //     $form.find("input[name='" + k + "']").parent(".field").addClass("error");
-    //     $form.find(".ui.error.message .list").append("<li>" + v + "</li>");      
-    //   });
-
-    //   return false;
-    // }
-
     // Create ticket
     Meteor.call("addTicket", this._id, name, question, notify, function(err, res) {
-      if (err)
+      if (err) {
         console.log(err);
-      else
+      } else {
         $(".js-join-queue-modal").modal("hide");
+        $form.find("textarea[name='question']").val("");
+      }
     });
   }
 });
-
-function validateJoinForm(queue, name, question, notify) {
-  var errors = {};
-  var courseSettings = Courses.findOne({name: queue.course}).settings;
-
-  // 1. Name
-  if (name.length == 0) {
-    errors["name"] = "Please enter your name";
-  }
-
-  // 2. Question
-  if ((courseSettings && courseSettings.questionRequired) && question.length < 1) {
-    errors["question"] = "Please specify a question";
-  }
-
-  // 3. Notifications
-  if (notify.types.length == 0) {
-    // Pick a checkbox
-  } else {
-    if (_.contains(notify.types, "email") && !validEmail(notify.email)) {
-      // Enter valid email
-    }
-
-    if (_.contains(notify.types, "text") && !validPhoneNumber(notify.phone)) {
-      // Enter valid phone
-    }
-
-    if (_.contains(notify.types, "text") && !notify.carrier) {
-      // Select a carrier
-    }
-  }
-
-  return errors;
-}
