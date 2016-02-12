@@ -1,23 +1,37 @@
 {
-  "admin": {
+  "users": [{
+    "name": "Admin",
     "email": "admin@signmeup.cs.brown.edu",
-    "password": "INSERT-PASSWORD-HERE"
-  },
-
-  "ta": {
-    "email": "ta@signmeup.cs.brown.edu",
-    "password": "INSERT-PASSWORD-HERE"
-  },
-
-  "hta": {
+    "password": "INSERT-PASSWORD-HERE",
+    "type": "admin"
+  }, {
+    "email": "athyuttam_eleti@brown.edu",
+    "saml": true,
+    "type": "admin"
+  }, {
+    "email": "emma_herold@brown.edu",
+    "saml": true,
+    "type": "admin"
+  }, {
+    "email": "eli_rosenthal@brown.edu",
+    "saml": true,
+    "type": "admin"
+  }, {
+    "name": "Test HTA",
     "email": "hta@signmeup.cs.brown.edu",
-    "password": "INSERT-PASSWORD-HERE"
-  },
-
-  "student": {
+    "password": "INSERT-PASSWORD-HERE",
+    "type": "hta"
+  }, {
+    "name": "Test TA",
+    "email": "ta@signmeup.cs.brown.edu",
+    "password": "INSERT-PASSWORD-HERE",
+    "type": "ta"
+  }, {
+    "name": "Test Student",
     "email": "student@signmeup.cs.brown.edu",
-    "password": "INSERT-PASSWORD-HERE"
-  },
+    "password": "INSERT-PASSWORD-HERE",
+    "type": "student"
+  }],
 
   "saml": {
     "loginUrl": "/login",

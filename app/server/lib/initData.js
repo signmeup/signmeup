@@ -1,21 +1,37 @@
 // Functions to initialize collections
 
+var testAdminId, testHTAId, testTAId;
+
 createTestUsers = function() {
-  var settings = Meteor.settings;
-  createUser("Admin", settings.admin.email, settings.admin.password, "admin");
-  createUser("Test HTA", settings.hta.email, settings.hta.password, "hta", "cs00");
-  createUser("Test TA", settings.ta.email, settings.ta.password, "ta", "cs00");
-  createUser("Test Student", settings.student.email, settings.student.password);
+  var users = Meteor.settings.users;
+  _.each(users, function(u) {
+    if (u.saml) {
+      var user = Meteor.users.findOne({email: u.email});
+      if (!user) {
+        var userId = Meteor.users.insert({email: u.email, profile: {}});
+        if (u.type === "admin") {
+          Meteor.users.update(userId, {$set: {admin: true}});
+        }
+
+        // TODO: Support other types of SAML users,
+        // by simply merging this logic into createTestUser()
+      }
+    } else {
+      createTestUser(u.name, u.email, u.password, u.type, "cs00");
+    }
+  });
 }
 
-function createUser(name, email, password, type, course) {
-  var user = Meteor.users.findOne({
+function createTestUser(name, email, password, type, course) {
+  var user, userId;
+
+  user = Meteor.users.findOne({
     "emails.address": email
   });
 
   if(!user) {
     console.log("Creating " + email + "...");
-    Accounts.createUser({
+    userId = Accounts.createUser({
       email: email,
       password: password,
       profile: {
@@ -26,6 +42,7 @@ function createUser(name, email, password, type, course) {
 
   // Set admin
   if(type === "admin") {
+    testAdminId = userId;
     Meteor.users.update({
       "emails.address": email
     }, {
@@ -37,6 +54,7 @@ function createUser(name, email, password, type, course) {
 
   // Set HTA
   if(type === "hta") {
+    testHTAId = userId;
     Meteor.users.update({
       "emails.address": email
     }, {
@@ -48,6 +66,7 @@ function createUser(name, email, password, type, course) {
 
   // Set TA
   if(type === "ta") {
+    testTAId = userId;
     Meteor.users.update({
       "emails.address": email
     }, {
@@ -59,9 +78,6 @@ function createUser(name, email, password, type, course) {
 }
 
 initializeCollections = function() {
-  var testHTA = Meteor.users.findOne({"emails.address": Meteor.settings.hta.email});
-  var testTA = Meteor.users.findOne({"emails.address": Meteor.settings.ta.email});
-
   // Courses
   var testCourse = Courses.findOne({name: "cs00"});
   if(!testCourse) {
@@ -71,8 +87,8 @@ initializeCollections = function() {
       listserv: "cs00tas@cs.brown.edu",
       active: true,
 
-      htas: [testHTA._id],
-      tas: [testTA._id],
+      htas: [testHTAId],
+      tas: [testTAId],
 
       settings: {},
       createdAt: Date.now()
@@ -96,26 +112,7 @@ initializeCollections = function() {
   // Queues
   var testQueue = Queues.findOne({name: "Test Queue", course: "cs00"});
   if(!testQueue) {
-    Queues.insert({
-      name: "Test Queue",
-      course: "cs00",
-      location: testLocationId,
-      mode: "universal",
-
-      status: "active",
-      owner: {
-        id: testTA._id,
-        email: testTA.emails[0].address
-      },
-
-      startTime: Date.now(),
-      endTime: Date.now() + 3 * (60 * 60 * 1000), // Add 3 hours
-      averageWaitTime: 0,
-
-      localSettings: {},
-
-      announcements: [],
-      tickets: [],
-    });
+    var endTime = Date.now() + 3 * (60 * 60 * 1000);
+    Meteor.call("createQueue", "cs00", "Test Queue", testLocationId, endTime, testTAId);
   }
 }
