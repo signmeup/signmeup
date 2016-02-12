@@ -113,6 +113,6 @@ initializeCollections = function() {
   var testQueue = Queues.findOne({name: "Test Queue", course: "cs00"});
   if(!testQueue) {
     var endTime = Date.now() + 3 * (60 * 60 * 1000);
-    Meteor.call("createQueue", "cs00", "Test Queue", testLocationId, endTime, testTAId);
+    Meteor.call("createQueue", "cs00", "Test Queue", "Test Location", endTime, testTAId);
   }
 }
