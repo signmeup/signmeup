@@ -20,7 +20,8 @@
  *    notify: {
  *      types: ["announce", "email", "text"],
  *      email: STRING,
- *      phone: STRING
+ *      phone: STRING,
+ *      carrier: STRING
  *    },
  *
  *    ta: {

@@ -2,7 +2,7 @@
 
 Template.courseSettings.onRendered(function() {
   // Active State
-  var activeCheckbox = $(".ui.checkbox").checkbox();
+  var activeCheckbox = this.$(".js-active-checkbox").checkbox();
   activeCheckbox.checkbox("set " + (Template.currentData().active ? "checked" : "unchecked"));
 });
 

@@ -1,7 +1,7 @@
 <template name="courseSettings">
   <div class="ui fluid card courseSettings" data-course="{{name}}">
     <div class="content">
-      <div class="ui right floated toggle checkbox">
+      <div class="ui right floated toggle checkbox js-active-checkbox">
         <input type="checkbox" name="active" tabindex="0" class="hidden" form="{{name}}-general">
         <label>{{#if active}}Active{{else}}Inactive{{/if}}</label>
       </div>

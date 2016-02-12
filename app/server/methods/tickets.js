@@ -19,15 +19,17 @@ Meteor.methods({
     if (!question) 
       // TODO: Handle optional question case
       throw new Meteor.Error("invalid-question");
-    // TODO: Validate notify object
+    if (!validateNotify(notify)) {
+      throw new Meteor.Error("invalid-notify-options");
+    }
     
     // Disable signing up again if an active ticket exists
     var activeTicketIds = _filterActiveTicketIds(queue.tickets);
     _.each(activeTicketIds, function(id) {
-      var ticket = Tickets.findOne(ticketId);
-      if (ticket.owner.id === this.userId)
+      var ticket = Tickets.findOne(id);
+      if (ticket.owner.id === Meteor.userId())
         throw new Meteor.Error("already-signed-up");
-    })
+    });
 
     var ticket = {
       createdAt: Date.now(),
@@ -49,6 +51,25 @@ Meteor.methods({
     var ticketId = Tickets.insert(ticket);
     Queues.update({_id: queueId}, {$push: {tickets: ticketId}});
     console.log("Inserted ticket " + ticketId + " to queue " + queueId);
+  },
+
+  notifyTicketOwner: function(ticketId, type) {
+    console.log(ticketId, type);
+    var ticket = Tickets.findOne(ticketId);
+    if(!ticket) throw new Meteor.Error("invalid-ticket-id");
+
+    if (!authorized.ta(this.userId, ticket.course))
+      throw new Meteor.Error("not-allowed");
+
+    if (ticket.notify && ticket.notify.types && _.contains(ticket.notify.types, type)) {
+      this.unblock();
+      
+      if (type === "email") {
+        sendEmailNotification(ticketId);
+      } else if (type === "text") {
+        sendTextNotification(ticketId);
+      }
+    }
   },
 
   markTicketAsDone: function(ticketId) {
@@ -82,3 +103,33 @@ Meteor.methods({
     }
   }
 });
+
+function validateNotify(notify) {
+  if(!notify)
+    return false;
+
+  var isValid = true;
+
+  if(notify.types) {
+    isValid = isValid && (Array.isArray(notify.types) && _.filter(notify.types, function(t) {
+      return !(_.contains(["announce", "email", "text"], t));
+    }).length == 0);
+  }
+
+  if(_.contains(notify.types, "email") && !notify.email) return false;
+  if(_.contains(notify.types, "text") && !notify.phone && !notify.carrier) return false;
+
+  if(notify.email) {
+    // Ensure email is valid
+    // http://stackoverflow.com/questions/27680544/meteorjs-email-form-validation
+    return /^[A-Z0-9'.1234z_%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(notify.email);
+  }
+
+  if(notify.phone && notify.carrier) {
+    isValid = isValid
+      && (notify.phone.replace(/\D/g,'') === notify.phone) && notify.phone.length == 10
+      && _.contains(_.values(carriers), notify.carrier);
+  }
+
+  return isValid;
+}

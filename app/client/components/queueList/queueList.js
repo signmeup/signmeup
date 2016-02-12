@@ -27,11 +27,11 @@ Template.queueList.helpers({
 Template.queueList.events({
   "click .js-show-join-queue": function(event) {
     if(Meteor.user()) {
-      _showModal(".js-join-queue-modal");
+      _showModal(".js-join-queue-modal", "textarea[name='question']");
     } else {
       Meteor.loginWithSaml(function() {
         if(Meteor.user())
-          _showModal(".js-join-queue-modal");
+          _showModal(".js-join-queue-modal", "textarea[name='question']");
       });
     }
   },

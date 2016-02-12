@@ -45,7 +45,27 @@
     <td>{{position}}</td>
     <td>{{owner.name}}</td>
     <td>{{question}}</td>
-    <td>{{notify.types}}</td>
+    <td>
+      <div class="ui icon basic buttons">
+        {{#if showNotifyButton "announce"}}<button class="ui button disabled">Announce</button>{{/if}}
+        {{#if showNotifyButton "email"}}
+          <button class="ui button js-email-student" data-type="email">
+            <i class="icons">
+              <i class="{{notifyButtonColor 'email'}} mail icon"></i>
+              {{#if notificationSent "email"}}<i class="corner checkmark icon"></i>{{/if}}
+            </i>
+          </button>
+        {{/if}}
+        {{#if showNotifyButton "text"}}
+          <button class="ui button js-text-student" data-type="text">
+            <i class="icons">
+              <i class="{{notifyButtonColor 'text'}} comment icon"></i>
+              {{#if notificationSent "text"}}<i class="corner checkmark icon"></i>{{/if}}
+            </i>
+          </button>
+        {{/if}}
+      </div>
+    </td>
     <td>
       <div class="ui basic fluid buttons">
         <div class="ui button js-mark-as-done"><i class="checkmark icon"></i>Mark as Done</div>

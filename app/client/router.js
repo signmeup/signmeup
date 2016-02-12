@@ -35,6 +35,13 @@ FlowRouter.route("/admin", {
   }
 });
 
+FlowRouter.route("/hta", {
+  name: "hta",
+  action: function() {
+    BlazeLayout.render("baseLayout", {content: "admin"});
+  }
+});
+
 
 // Errors
 

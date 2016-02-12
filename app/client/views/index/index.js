@@ -9,11 +9,13 @@ Template.index.onCreated(function() {
 
 Template.taIndex.helpers({
   "taQueues": function() {
-    return Queues.find({course: {$in: _getUserCourses()}}).fetch();
+    // Note: Queues only has activeQueues, based on the subscription above
+    return Queues.find({course: {$in: _getUserCourseNames()}}).fetch();
   },
 
   "otherQueues": function() {
-    return Queues.find({course: {$nin: _getUserCourses()}}).fetch();
+    // Note: Queues only has activeQueues, based on the subscription above
+    return Queues.find({course: {$nin: _getUserCourseNames()}}).fetch();
   }
 });
 

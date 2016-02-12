@@ -11,6 +11,10 @@ Template.admin.onCreated(function() {
 });
 
 Template.admin.helpers({
+  showAdmin: function() {
+    return (authorized.admin(Meteor.userId) || authorized.hta(Meteor.userId));
+  },
+
   "courses": function() {
     return Courses.find({});
   }

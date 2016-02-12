@@ -4,8 +4,9 @@
 // TODO: Replace "not-allowed" errors with 403 errors
 
 Meteor.methods({
-  createQueue: function(course, name, location, endTime) {
-    if(!authorized.ta(Meteor.userId, course))
+  createQueue: function(course, name, location, endTime, ownerId) {
+    var clientCall = !!(this.connection);
+    if(clientCall && !authorized.ta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");
 
     if(!Courses.find({name: course}).fetch())
@@ -23,6 +24,9 @@ Meteor.methods({
     if(endTime <= Date.now())
       throw new Meteor.Error("invalid-end-time");
 
+    if(clientCall)
+      ownerId = Meteor.userId;
+
     // Create queue
     var queue = {
       name: name,
@@ -32,8 +36,8 @@ Meteor.methods({
 
       status: "active",
       owner: {
-        id: Meteor.userId,
-        email: _getUserEmail(Meteor.userId)
+        id: ownerId,
+        email: _getUserEmail(ownerId)
       },
 
       startTime: Date.now(),

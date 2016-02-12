@@ -62,7 +62,47 @@ Template.taQueueTicket.onRendered(function() {
   $(this.findAll(".js-ticket-actions")).dropdown();
 });
 
+Template.taQueueTicket.helpers({
+  showNotifyButton: function(type) {
+    return (this.notify && this.notify.types && _.contains(this.notify.types, type));
+  },
+
+  notifyButtonColor: function(type) {
+    return notificationSent(this, type) ? "green" : "";
+  },
+
+  notificationSent: function(type) {
+    return notificationSent(this, type);
+  },
+});
+
 Template.taQueueTicket.events({
+  "click .js-email-student": function() {
+    var $icon = $(".js-email-student .mail.icon");
+    var iconClasses = $icon.attr("class");
+
+    $icon.removeClass().addClass("notched circle loading icon");
+
+    Meteor.call("notifyTicketOwner", this._id, "email", function(err) {
+      if(err)
+        console.log(err);
+      $icon.removeClass().addClass(iconClasses);
+    })
+  },
+
+  "click .js-text-student": function() {
+    var $icon = $(".js-text-student .comment.icon");
+    var iconClasses = $icon.attr("class");
+
+    $icon.removeClass().addClass("notched circle loading icon");
+
+    Meteor.call("notifyTicketOwner", this._id, "text", function(err) {
+      if(err)
+        console.log(err);
+      $icon.removeClass().addClass(iconClasses);
+    })
+  },
+
   "click .js-mark-as-done": function() {
     Meteor.call("markTicketAsDone", this._id, function(err) {
       if(err)
@@ -76,3 +116,7 @@ Template.taQueueTicket.events({
       Meteor.call("cancelTicket", this._id);
   }
 });
+
+function notificationSent(ticket, type) {
+  return (ticket.notify && ticket.notify.sent && _.contains(ticket.notify.sent, type));
+}

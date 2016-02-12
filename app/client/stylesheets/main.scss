@@ -57,8 +57,18 @@ td.is-table-empty {
     padding-left: 1.8rem !important;
   }
 
-  .field.hidden {
+  .hidden {
     display: none !important;
+  }
+
+  .notify-text-helper .field {
+    &:first-child {
+      padding-right: 0.5em !important;
+    }
+
+    &:last-child {
+      padding-left: 0.5em !important;
+    }
   }
 }
 
