@@ -56,3 +56,23 @@ Meteor.publish("activeTickets", function(queueId) {
     status: {$in: ["open", "missing"]}
   }, projection);
 });
+
+Meteor.publish("allTicketsInRange", function(course, startTime, endTime) {
+  var startTime = startTime || 0,
+      endTime = endTime || Date.now();
+
+  var courseObject = Courses.findOne({name: course});
+  if(!courseObject) return;
+
+  if(!authorized.hta(this.userId, course))
+    throw new Meteor.Error("not-allowed");
+
+  return Tickets.find({
+    course: course,
+    createdAt: {$gte: startTime, $lte: endTime}
+  }, {
+    "notify.email": false,
+    "notify.phone": false,
+    "notify.carrier": false
+  });
+})

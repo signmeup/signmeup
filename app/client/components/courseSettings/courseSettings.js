@@ -73,3 +73,78 @@ Template.taItem.events({
     })
   }
 });
+
+// courseSettingsLogs
+
+Template.courseSettingsLogs.onRendered(function() {
+  var startTime = moment().subtract(7, "days").startOf("day");
+  var endTime = moment().startOf("day");
+
+  this.$(".js-start-time-picker").datetimepicker({
+    format: "MM/DD/YYYY",
+    defaultDate: startTime,
+    maxDate: endTime,
+    viewMode: "days"
+  }).on("dp.change", function(e) {
+    $(".js-end-time-picker").data("DateTimePicker").minDate(e.date)
+  });
+
+  this.$(".js-end-time-picker").datetimepicker({
+    format: "MM/DD/YYYY",
+    useCurrent: false, // See issue #1075
+    defaultDate: endTime,
+    minDate: startTime,
+    maxDate: endTime,
+    viewMode: "days"
+  }).on("dp.change", function(e) {
+    $(".js-start-time-picker").data("DateTimePicker").maxDate(e.date)
+  });
+});
+
+Template.courseSettingsLogs.events({
+  "submit .js-logs-form": function(e) {
+    e.preventDefault();
+
+    var course = this.name;
+    var type = event.target.type.value;
+
+    var startMoment = $(event.target.startTime).data("DateTimePicker").date();
+    var startTime = startMoment.valueOf();
+    var endMoment = $(event.target.endTime).data("DateTimePicker").date().endOf("day");
+    var endTime = endMoment.valueOf();
+
+    if (type === "queues") {
+      Meteor.subscribe("allQueuesInRange", course, startTime, endTime, function() {
+        var queues = Queues.find({
+          course: course,
+          startTime: {$gte: startTime, $lte: endTime}
+        }).fetch();
+        var jsonString = JSON.stringify(queues, null, 2);
+        downloadLogFile(jsonString, course, startMoment, endMoment, "queues");
+      });
+    } else if (type === "tickets") {
+      Meteor.subscribe("allTicketsInRange", course, startTime, endTime, function() {
+        var tickets = Tickets.find({
+          course: course,
+          createdAt: {$gte: startTime, $lte: endTime}
+        }, {
+          "notify.email": false,
+          "notify.phone": false,
+          "notify.carrier": false
+        }).fetch();
+        var jsonString = JSON.stringify(tickets, null, 2);
+        downloadLogFile(jsonString, course, startMoment, endMoment, "tickets");
+      });
+    }
+
+    return false;
+  }
+});
+
+function downloadLogFile(contents, course, startMoment, endMoment, type) {
+  var blob = new Blob([contents], {type: "application/json;charset=utf-8"});
+  var startString = startMoment.format("YYYY-MM-DD");
+  var endString = endMoment.format("YYYY-MM-DD");
+
+  saveAs(blob, course + "-" + startString + "-to-" + endString + "-" + type + ".json");
+}
