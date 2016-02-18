@@ -82,7 +82,14 @@ Meteor.methods({
     Tickets.update({
       _id: ticketId
     }, {
-      $set: {status: "done", doneAt: Date.now()}
+      $set: {
+        status: "done", 
+        doneAt: Date.now(),
+        ta: {
+          id: this.userId,
+          email: _getUserEmail(this.userId)
+        }
+      }
     });
 
     updateWaitTime(ticketId);
@@ -95,10 +102,21 @@ Meteor.methods({
       throw new Meteor.Error("invalid-ticket-id");
 
     if(authorized.ta(this.userId, ticket.course) || this.userId === ticket.owner.id) {
+      var taObject = ticket.ta || {};
+      if (authorized.ta(this.userId, ticket.course)) {
+        taObject = {
+          id: this.userId,
+          email: _getUserEmail(this.userId)
+        }
+      }
       Tickets.update({
         _id: ticketId
       }, {
-        $set: {status: "cancelled", cancelledAt: Date.now()}
+        $set: {
+          status: "cancelled", 
+          cancelledAt: Date.now(),
+          ta: taObject
+        }
       });
     }
   }
