@@ -20,7 +20,10 @@ Meteor.smartPublish("allActiveTickets", function() {
         question: isTA,
         notify: isTA,
         ta: isTA,
-        flag: isTA
+        flag: isTA,
+        "notify.email": false,
+        "notify.phone": false,
+        "notify.carrier": false
       }
     });
 
@@ -35,7 +38,13 @@ Meteor.publish("activeTickets", function(queueId) {
   if(!queue) return;
 
   // Hide fields for non-TAs
-  var projection = {};
+  var projection = {
+    "fields": {
+      "notify.email": false,
+      "notify.phone": false,
+      "notify.carrier": false
+    }
+  };
 
   var isTA = false;
   if(this.userId) {
@@ -43,12 +52,12 @@ Meteor.publish("activeTickets", function(queueId) {
   }
 
   if(!isTA) {
-    projection["fields"] = {
+    _.extend(projection["fields"], {
       question: false,
       notify: false,
       ta: false,
       flag: false
-    }
+    });
   }
 
   return Tickets.find({
