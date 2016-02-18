@@ -10,6 +10,7 @@
 
     {{> courseSettingsGeneral}}
     {{> courseSettingsTAs}}
+    {{> courseSettingsLogs}}
 
     <div class="content">
       <a class="ui right floated link js-delete-course">Delete</a>
@@ -87,5 +88,40 @@
       </div>
       {{userEmail userId}}
     </div>
+  </div>
+</template>
+
+<template name="courseSettingsLogs">
+  <div class="content">
+    <h4>Logs</h4>
+    <form class="ui form js-logs-form">
+      <div class="fields">
+        <div class="five wide field">
+          <label>Type</label>
+          <select name="type" class="ui fluid dropdown">
+            <option value="tickets">Tickets</option>
+            <option value="queues">Queues</option>
+          </select>
+        </div>
+
+        <div class="four wide field">
+          <label>Start Date</label>
+          <input name="startTime" class="ui dropdown datetimepicker js-start-time-picker" type="text"/>
+        </div>
+
+        <div class="four wide field">
+          <label>End Date</label>
+          <input name="endTime" class="ui dropdown datetimepicker js-end-time-picker" type="text"/>
+        </div>
+
+        <div class="three wide field">
+          <label>&nbsp;</label> <!-- Empty label for spacing -->
+          <button class="ui fluid labeled icon primary button" type="submit">
+            <i class="download icon"></i>
+            Download
+          </button>
+        </div>
+      </div>
+    </form>
   </div>
 </template>

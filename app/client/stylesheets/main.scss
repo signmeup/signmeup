@@ -139,3 +139,22 @@ td.is-table-empty {
     right: 12px;
   }
 }
+
+.js-logs-form {
+  .field {
+    position: relative;
+  }
+
+  // Hackiest code ever.
+  // Get rid of Semantic UI.
+  .datetimepicker-widget {
+    position: absolute;
+    top: 60px !important;
+    min-height: 180px !important;
+    width: 200px !important;
+
+    &:before {
+      display: none !important;
+    }
+  }
+}

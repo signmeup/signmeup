@@ -1,4 +1,8 @@
 {
+  "public": {
+    "version": "INSERT-VERSION-NO-HERE"
+  },
+
   "users": [{
     "name": "Admin",
     "email": "admin@signmeup.cs.brown.edu",
