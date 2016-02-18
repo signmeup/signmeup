@@ -34,7 +34,7 @@ bundle-all:
 # Builds and runs the app with prod settings.
 # Does not affect other running services. Use when you've changed just the app.
 prod:
-	git pull; \
+	git pull && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build app && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --no-deps -d app
