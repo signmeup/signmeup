@@ -17,16 +17,16 @@
 # Builds and runs the app with bundle settings.
 # Does not affect other running services. Use when you've changed just the app.
 bundle:
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)'; \
-	docker-compose -f docker-compose.yml -f docker-compose.bundle.yml build app; \
-	docker-compose -f docker-compose.yml -f docker-compose.bundle.yml up --no-deps -d app
+	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
+	docker-compose -f docker-compose.bundle.yml build bundle && \
+	docker-compose -f docker-compose.bundle.yml up --no-deps -d bundle
 
 # Builds and runs all services with bundle settings.
 # Use when you've updated the nginx or mongo configuration too.
 bundle-all:
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)'; \
-	docker-compose -f docker-compose.yml -f docker-compose.bundle.yml build; \
-	docker-compose -f docker-compose.yml -f docker-compose.bundle.yml up -d
+	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
+	docker-compose -f docker-compose.bundle.yml build && \
+	docker-compose -f docker-compose.bundle.yml up -d
 
 
 ## Production
@@ -35,26 +35,26 @@ bundle-all:
 # Does not affect other running services. Use when you've changed just the app.
 prod:
 	git pull; \
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)'; \
-	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build app; \
+	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build app && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --no-deps -d app
 
 # Builds and runs all services with prod settings.
 # Use when you've updated the nginx or mongo configuration too.
 prod-all:
-	git pull; \
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)'; \
-	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build; \
+	git pull && \
+	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
+	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
 # Runs the built image with prod settings.
 # Use if you manually stopped the app container, but haven't changed anything.
 prod-run:
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)'; \
+	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --no-deps -d app
 
 # Runs all built services with prod settings.
 # Use if you manually stopped the containers, but haven't changed anything.
 prod-run-all:
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)'; \
+	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d

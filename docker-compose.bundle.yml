@@ -1,6 +1,9 @@
-app:
+bundle:
   build: ./app # EXPOSEs 80
   dockerfile: Dockerfile-bundle
+  links:
+    - db
+    - proxy
   ports:
    - 8080:80
   environment:
@@ -10,10 +13,16 @@ app:
    - METEOR_SETTINGS=${METEOR_SETTINGS}
 
 db:
+  image: mongo:latest # EXPOSEs 27017
   ports:
    - 27071:27071
 
 proxy:
+  image: jwilder/nginx-proxy:latest
+  volumes:
+   - ./nginx/ssl:/etc/nginx/certs
+   - /var/run/docker.sock:/tmp/docker.sock:ro
   ports:
    - 80:80    # HTTP on 80
    - 3000:443 # HTTPS on 3000 to allow SAML to work
+     
