@@ -15,7 +15,8 @@ Meteor.methods({
       name: name,
       description: description,
       listserv: listserv,
-      active: false
+      active: false,
+      createdAt: (new Date()).toJSON()
     });
   },
 
