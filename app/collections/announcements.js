@@ -1,19 +1,33 @@
-/**
- * Announcements
- *
- * Announcement: {
- *    owner: {
- *      id: userId,
- *      name: STRING,
- *    },
- *    type: ("info", "success", "warning", "danger"),
- *    header: STRING,
- *    content: STRING,
- *    createdAt: Number (Milliseconds)
- *  }
- */
-
 Announcements = new Mongo.Collection("announcements");
+
+Announcements.schema = new SimpleSchema({
+  "owner.id": {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  "owner.email": {
+    type: String,
+    regEx: SimpleSchema.RegEx.Email
+  },
+  type: {
+    type: String,
+    allowedValues: ["info", "success", "warning", "danger"]
+  },
+
+  header: {
+    type: String,
+    optional: true
+  },
+  content: {
+    type: String
+  },
+
+  createdAt: {
+    type: Date
+  }
+});
+
+Announcements.attachSchema(Announcements.schema);
 
 Announcements.allow({
   insert: function() { return false; },
