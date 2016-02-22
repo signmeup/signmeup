@@ -24,8 +24,9 @@ Meteor.methods({
     if(endTime <= Date.now())
       throw new Meteor.Error("invalid-end-time");
 
-    if(clientCall)
-      ownerId = Meteor.userId;
+    if(clientCall) {
+      ownerId = Meteor.userId();
+    }
 
     // Create queue
     var queue = {
