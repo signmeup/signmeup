@@ -3,7 +3,7 @@
 Meteor.smartPublish("allActiveTickets", function() {
   // Note the smartPublish: we use this to return multiple
   // cursors of the same collection.
-  var activeQueues = Queues.find({"status": {$nin: ["done", "cancelled"]}}).fetch();
+  var activeQueues = Queues.find({"status": {$nin: ["ended", "cancelled"]}}).fetch();
   var activeTickets = [];
 
   _.each(activeQueues, function(queue) {
