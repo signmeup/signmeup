@@ -48,7 +48,7 @@ Queues.schema = new SimpleSchema({
   location: {
     type: Object,
     optional: true
-  }
+  },
   "location.id": {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
