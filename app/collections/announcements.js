@@ -3,7 +3,7 @@ Announcements = new Mongo.Collection("announcements");
 Announcements.schema = new SimpleSchema({
   owner: {
     type: Object
-  }
+  },
   "owner.id": {
     type: String,
     regEx: SimpleSchema.RegEx.Id
