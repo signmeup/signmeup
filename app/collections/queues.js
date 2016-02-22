@@ -33,14 +33,32 @@ Queues.schema = new SimpleSchema({
   name: {
     type: String
   },
+
   course: {
+    type: Object
+  },
+  "course.id": {
+    type: String,
+    regEx: SimpleSchema.RegEx.Id
+  },
+  "course.name": {
     type: String
   },
+
   location: {
+    type: Object,
+    optional: true
+  }
+  "location.id": {
     type: String,
     regEx: SimpleSchema.RegEx.Id,
     optional: true
   },
+  "location.name": {
+    type: String,
+    optional: true
+  },
+
   mode: {
     type: String,
     allowedValues: ["universal", "location", "device"]
@@ -59,22 +77,6 @@ Queues.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Email
   },
 
-  startedAt: {
-    type: Date
-  },
-  cutoffAt: {
-    type: Date,
-    optional: true
-  },
-  endedAt: {
-    type: Date,
-    optional: true
-  },
-  averageWaitTime: {
-    type: Number,
-    defaultValue: 0
-  },
-
   announcements: {
     type: [String],
     regEx: SimpleSchema.RegEx.Id,
@@ -84,6 +86,27 @@ Queues.schema = new SimpleSchema({
     type: [String],
     regEx: SimpleSchema.RegEx.Id,
     defaultValue: []
+  },
+
+  averageWaitTime: {
+    type: Number,
+    defaultValue: 0
+  },
+
+  startTime: {
+    type: Date
+  },
+  cutoffTime: {
+    type: Date,
+    optional: true
+  },
+  scheduledEndTime: {
+    type: Date,
+    optional: true
+  },
+  endTime: {
+    type: Date,
+    optional: true
   }
 });
 
