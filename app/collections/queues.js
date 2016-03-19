@@ -1,32 +1,3 @@
-/**
- * Queues
- *
- * Queue: {
- *    name: STRING,
- *    course: STRING,
- *    location: ObjectId,
- *    mode: ("universal", "location", "device") // TODO: Expand this
- *
- *    status: STRING ("active", "cutoff", "ended"),
- *    owner: {
- *      id: userId,
- *      email: STRING
- *    },
- *    
- *    startTime: Number (Milliseconds),
- *    cutoffTime: Number (Milliseconds),
- *    endTime: Number (Milliseconds),
- *    averageWaitTime: Number (Milliseconds),
- *
- *    localSettings: {
- *      property: value (Overrides from Course)
- *    },
- *    
- *    announcements: [],
- *    tickets: []
- * }
- */
-
 Queues = new Mongo.Collection("queues");
 
 Queues.schema = new SimpleSchema({
