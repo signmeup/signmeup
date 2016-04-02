@@ -55,7 +55,7 @@ Note that we only support development on Linux and OS X right now, since
      certificate/key pair from http://selfsignedcertificate.com. Skip the header
      and footer (The `---BEGIN...` and `---END...` parts). Also remove any newlines
      to make sure the values are in a single line.
-   - You can skip the Kadira part (remove it). It's only meant for production.
+   - Replace `appID` and `appSecret` with the correct values from kadira.io.
 
 7. Finally, from the `signmeup` directory, run `docker-compose up`. The first
    time will take a long time since it'll pull all the dependent images along
