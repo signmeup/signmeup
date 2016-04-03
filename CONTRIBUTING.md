@@ -17,7 +17,7 @@ Note that we only support development on Linux and OS X right now, since
    ```
 
 3. Generate self-signed certificates for `local.cis-dev.brown.edu` using
-   http://selfsignedcertificate.com, and add the two files to the `nginx` folder. Change the certificate's extension from `.cert` to `.crt`.
+   http://selfsignedcertificate.com, and add the two files to the `nginx/ssl` folder. Change the certificate's extension from `.cert` to `.crt`.
 
 4. In your terminal, run:
 
@@ -55,7 +55,7 @@ Note that we only support development on Linux and OS X right now, since
      certificate/key pair from http://selfsignedcertificate.com. Skip the header
      and footer (The `---BEGIN...` and `---END...` parts). Also remove any newlines
      to make sure the values are in a single line.
-   - You can skip the Kadira part (remove it). It's only meant for production.
+   - Replace `appID` and `appSecret` with the correct values from kadira.io.
 
 7. Finally, from the `signmeup` directory, run `docker-compose up`. The first
    time will take a long time since it'll pull all the dependent images along
@@ -76,6 +76,10 @@ Note that we only support development on Linux and OS X right now, since
 When running the local version of the app, you might notice that starting the
 app container is slow, and sometimes takes a long time at `=> Starting proxy`.
 This is normal, just wait it out.
+
+If everything went well so far, you should see something like this when running `docker-compose logs app`:
+
+![Successful setup.](img/successful-setup.png)
 
 ## Development
 

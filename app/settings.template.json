@@ -68,7 +68,7 @@
   },
 
   "kadira": { 
-    "appId": "INSERT-APP-ID-HERE", 
-    "appSecret": "INSERT-APP-SECRET-HERE" 
-   }
+    "appId": "INSERT-APP-ID-HERE",
+    "appSecret": "INSERT-APP-SECRET-HERE"
+  }
 }
