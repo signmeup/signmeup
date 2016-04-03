@@ -20,9 +20,20 @@ Template.signupGap.helpers({
     var timeRemaining = Template.instance().timeRemaining.get();
     var signupGap = Courses.findOne({name: this.course}).settings.signupGap || (10 * 60 * 1000);
 
-    return (this.status !== "ended"
+    var show = (this.status !== "ended"
       && timeRemaining < signupGap
       && timeRemaining > 0);
+
+    // TODO: Come up with a cleaner way to do this?
+    // Perhaps with a reactive variable that lives within the scope of queueList?
+    var $joinButton = $(".js-show-join-queue");
+    if (show) {
+      $joinButton.addClass("disabled");
+    } else {
+      $joinButton.removeClass("disabled");
+    }
+
+    return show;
   },
 
   timeRemaining: function() {
@@ -31,7 +42,8 @@ Template.signupGap.helpers({
     if (s < 60) {
       return Math.floor(s) + " seconds";
     } else {
-      return Math.ceil(s / 60) + " minutes";
+      var mins = Math.floor(s / 60);
+      return mins + " minutes, " + Math.floor(s - mins * 60) + " seconds";
     }
   }
 });

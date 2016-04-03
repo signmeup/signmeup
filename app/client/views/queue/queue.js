@@ -3,7 +3,7 @@ Template.queue.onCreated(function() {
   self.autorun(function() {
     var queueId = FlowRouter.getParam("queueId");
     self.subscribe("queue", queueId);
-    self.subscribe("activeTickets", queueId);
+    self.subscribe("allQueueTickets", queueId);
     self.subscribe("courses");
   });
 });

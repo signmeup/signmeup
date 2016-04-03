@@ -33,7 +33,7 @@ Meteor.smartPublish("allActiveTickets", function() {
   return activeTickets;
 });
 
-Meteor.publish("activeTickets", function(queueId) {
+Meteor.publish("allQueueTickets", function(queueId) {
   var queue = Queues.findOne({_id: queueId});
   if(!queue) return;
 
@@ -61,8 +61,7 @@ Meteor.publish("activeTickets", function(queueId) {
   }
 
   return Tickets.find({
-    queueId: queueId,
-    status: {$in: ["open", "missing"]}
+    queueId: queueId
   }, projection);
 });
 
