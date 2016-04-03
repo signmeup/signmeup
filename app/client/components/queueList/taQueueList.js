@@ -19,6 +19,13 @@ Template.taQueueList.onCreated(function() {
 Template.taQueueList.onRendered(function() {
   var self = this;
 
+  // Reactively update the title.
+  this.autorun(function() {
+    var cd = Template.currentData();
+    var activeTickets = _activeTickets(cd.tickets).length;
+    document.title = "(" + activeTickets + ") " + cd.course + " · " + cd.name;
+  });
+
   // Reactively update the cutoff marker.
   // Function defined in queueList.js.
   this.autorun(function() {
