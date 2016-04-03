@@ -17,7 +17,7 @@ Note that we only support development on Linux and OS X right now, since
    ```
 
 3. Generate self-signed certificates for `local.cis-dev.brown.edu` using
-   http://selfsignedcertificate.com, and add the two files to the `nginx` folder. Change the certificate's extension from `.cert` to `.crt`.
+   http://selfsignedcertificate.com, and add the two files to the `nginx/ssl` folder. Change the certificate's extension from `.cert` to `.crt`.
 
 4. In your terminal, run:
 
