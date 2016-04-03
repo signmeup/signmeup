@@ -1,4 +1,4 @@
-Template.waitToJoin.onCreated(function() {
+Template.signupGap.onCreated(function() {
   var self = this;
   this.timeRemaining = new ReactiveVar(0);
 
@@ -6,22 +6,22 @@ Template.waitToJoin.onCreated(function() {
     if(this.interval)
       Meteor.clearInterval(this.interval);
 
-    var endTime = Template.currentData().endTime;
+    var nextSignupTime = _nextSignupTime(Meteor.userId(), Template.currentData()._id);
+    if (typeof nextSignupTime === "undefined") return;
 
     this.interval = Meteor.setInterval(function() {
-      self.timeRemaining.set(endTime - Date.now());
+      self.timeRemaining.set(nextSignupTime - Date.now());
     }, 1000);
   });
 });
 
-Template.waitToJoin.helpers({
+Template.signupGap.helpers({
   showMessage: function() {
-    return true;
-    
     var timeRemaining = Template.instance().timeRemaining.get();
-    var tenMinutes = 10 * 60 * 1000;
+    var signupGap = Courses.findOne({name: this.course}).settings.signupGap || (10 * 60 * 1000);
+
     return (this.status !== "ended"
-      && timeRemaining < tenMinutes
+      && timeRemaining < signupGap
       && timeRemaining > 0);
   },
 
@@ -36,6 +36,6 @@ Template.waitToJoin.helpers({
   }
 });
 
-Template.waitToJoin.onDestroyed(function() {
+Template.signupGap.onDestroyed(function() {
   Meteor.clearInterval(this.interval);
 });
