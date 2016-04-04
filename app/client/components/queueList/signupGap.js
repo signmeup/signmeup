@@ -7,7 +7,7 @@ Template.signupGap.onCreated(function() {
       Meteor.clearInterval(this.interval);
 
     var nextSignupTime = _nextSignupTime(Meteor.userId(), Template.currentData()._id);
-    if (typeof nextSignupTime === "undefined") return;
+    if (nextSignupTime === null) return;
 
     this.interval = Meteor.setInterval(function() {
       self.timeRemaining.set(nextSignupTime - Date.now());
@@ -18,7 +18,7 @@ Template.signupGap.onCreated(function() {
 Template.signupGap.helpers({
   showMessage: function() {
     var timeRemaining = Template.instance().timeRemaining.get();
-    var signupGap = Courses.findOne({name: this.course}).settings.signupGap || (10 * 60 * 1000);
+    var signupGap = Courses.findOne({name: this.course}).settings.signupGap || 0;
 
     var show = (this.status !== "ended"
       && timeRemaining < signupGap

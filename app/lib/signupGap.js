@@ -6,8 +6,6 @@
 _nextSignupTime = function(userId, queueId) {
   var queue = Queues.findOne(queueId);
   var tickets = _.map(queue.tickets, function(id) {
-    // TODO: Issue is that not all tickets are published to client. Only
-    // active tickets are.
     return Tickets.findOne(id);
   });
 
@@ -17,7 +15,7 @@ _nextSignupTime = function(userId, queueId) {
 
   // If no tickets by the user, return undefined.
   if (userTickets.length == 0)
-    return undefined;
+    return null;
 
   var lastUsedTicket; // The last ticket that's open, missing, or done.
   for (var i = userTickets.length - 1; i >= 0; i--) {
@@ -28,14 +26,14 @@ _nextSignupTime = function(userId, queueId) {
     }
   }
 
-  // If only cancelled tickets exist, return undefined.
-  if (typeof lastUsedTicket === "undefined") return undefined;
+  // If only cancelled tickets exist, return null.
+  if (typeof lastUsedTicket === "undefined") return null;
 
-  // If an open / missing ticket exists, return undefined.
+  // If an open / missing ticket exists, return null.
   if (_.contains(["open", "missing"], lastUsedTicket.status))
-    return undefined;
+    return null;
 
   // Otherwise, calculate the next possible signup time.
-  var signupGap = Courses.findOne({name: queue.course}).settings.signupGap || (10 * 60 * 1000);
+  var signupGap = Courses.findOne({name: queue.course}).settings.signupGap || 0;
   return lastUsedTicket.doneAt + signupGap;
 }
