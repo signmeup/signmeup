@@ -151,6 +151,13 @@ function downloadLogFile(contents, course, startMoment, endMoment, type) {
 
 // courseSettingsSettings
 
+Template.courseSettingsSettings.helpers({
+  isCurrentGap: function(minutes) {
+    var signupGapMinutes = parseInt(this.settings.signupGap / (60 * 1000)) || 0;
+    return (minutes == signupGapMinutes) ? "selected" : "";
+  }
+});
+
 Template.courseSettingsSettings.events({
   "change .js-signup-gap-select": function() {
     var ms = event.target.value * 60 * 1000;

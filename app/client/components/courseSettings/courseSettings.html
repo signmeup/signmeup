@@ -137,13 +137,13 @@
           <p>Minimum time a student must wait between signups for a queue.</p>
         </div>
         <select name="signup-gap" class="ui right floated fluid dropdown js-signup-gap-select">
-          <option value="0">No gap</option>
-          <option value="5">5 minutes</option>
-          <option value="10">10 minutes</option>
-          <option value="20">20 minutes</option>
-          <option value="30">30 minutes</option>
-          <option value="45">45 minutes</option>
-          <option value="60">1 hour</option>
+          <option value="0" {{isCurrentGap 0}}>No gap</option>
+          <option value="5" {{isCurrentGap 5}}>5 minutes</option>
+          <option value="10" {{isCurrentGap 10}}>10 minutes</option>
+          <option value="20" {{isCurrentGap 20}}>20 minutes</option>
+          <option value="30" {{isCurrentGap 30}}>30 minutes</option>
+          <option value="45" {{isCurrentGap 45}}>45 minutes</option>
+          <option value="60" {{isCurrentGap 60}}>1 hour</option>
         </select>
       </div>
     </form>
