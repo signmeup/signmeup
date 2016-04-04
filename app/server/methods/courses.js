@@ -106,6 +106,24 @@ Meteor.methods({
     });
   },
 
+  updateCourseSettings: function(courseName, settings) {
+    // Update signupGap and other (future) settings
+    if(!authorized.hta(Meteor.userId, courseName))
+      throw new Meteor.Error("not-allowed");
+
+    var validFields = ["signupGap"];
+    var validSettings = _.pick(settings, validFields);
+
+    var course = Courses.findOne({name: courseName});
+    var currentSettings = course.settings;
+    var newSettings = _.extend(currentSettings, validSettings);
+
+    console.log("Updating " + courseName + " settings with " + JSON.stringify(validSettings));
+    Courses.update({name: courseName}, {
+      $set: {"settings": newSettings}
+    });
+  },
+
   deleteCourse: function(course) {
     if(!authorized.hta(Meteor.userId, course))
       throw new Meteor.Error("not-allowed");

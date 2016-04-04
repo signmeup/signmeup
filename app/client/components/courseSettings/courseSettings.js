@@ -34,7 +34,7 @@ Template.courseSettings.events({
   },
 
   "click .js-delete-course": function() {
-    var sure = confirm("Are you sure you want to delete " 
+    var sure = confirm("Are you sure you want to delete "
       + this.name + "?\nTHIS IS IRREVERSIBLE.");
     if(sure) {
       Meteor.call("deleteCourse", this.name, function(err) {
@@ -148,3 +148,12 @@ function downloadLogFile(contents, course, startMoment, endMoment, type) {
 
   saveAs(blob, course + "-" + startString + "-to-" + endString + "-" + type + ".json");
 }
+
+// courseSettingsSettings
+
+Template.courseSettingsSettings.events({
+  "change .js-signup-gap-select": function() {
+    var ms = event.target.value * 60 * 1000;
+    Meteor.call("updateCourseSettings", this.name, {"signupGap": ms});
+  }
+});
