@@ -16,13 +16,13 @@ Meteor.methods({
       throw new Meteor.Error("queue-ended");
     if (!name)
       throw new Meteor.Error("invalid-name");
-    if (!question) 
+    if (!question)
       // TODO: Handle optional question case
       throw new Meteor.Error("invalid-question");
     if (!validateNotify(notify)) {
       throw new Meteor.Error("invalid-notify-options");
     }
-    
+
     // Disable signing up again if an active ticket exists
     var activeTicketIds = _filterActiveTicketIds(queue.tickets);
     _.each(activeTicketIds, function(id) {
@@ -30,6 +30,11 @@ Meteor.methods({
       if (ticket.owner.id === Meteor.userId())
         throw new Meteor.Error("already-signed-up");
     });
+
+    // Make sure student has waited for signupGap
+    var nextSignupTime = _nextSignupTime(user._id, queueId);
+    if (nextSignupTime !== null && Date.now() < nextSignupTime)
+      throw new Meteor.Error("wait-for-signup-gap");
 
     var ticket = {
       createdAt: Date.now(),
@@ -63,7 +68,7 @@ Meteor.methods({
 
     if (ticket.notify && ticket.notify.types && _.contains(ticket.notify.types, type)) {
       this.unblock();
-      
+
       if (type === "email") {
         sendEmailNotification(ticketId);
       } else if (type === "text") {
@@ -83,7 +88,7 @@ Meteor.methods({
       _id: ticketId
     }, {
       $set: {
-        status: "done", 
+        status: "done",
         doneAt: Date.now(),
         ta: {
           id: this.userId,
@@ -113,7 +118,7 @@ Meteor.methods({
         _id: ticketId
       }, {
         $set: {
-          status: "cancelled", 
+          status: "cancelled",
           cancelledAt: Date.now(),
           ta: taObject
         }
