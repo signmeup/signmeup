@@ -115,7 +115,7 @@ Meteor.methods({
     var validSettings = _.pick(settings, validFields);
 
     var course = Courses.findOne({name: courseName});
-    var currentSettings = course.settings;
+    var currentSettings = course.settings || {};
     var newSettings = _.extend(currentSettings, validSettings);
 
     console.log("Updating " + courseName + " settings with " + JSON.stringify(validSettings));
