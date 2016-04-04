@@ -16,7 +16,7 @@ Meteor.smartPublish("allActiveTickets", function() {
       queueId: queueId,
       status: {$in: ["open", "missing"]}
     }, {
-      fields: {
+      "fields": {
         question: isTA,
         notify: isTA,
         ta: isTA,
@@ -79,8 +79,10 @@ Meteor.publish("allTicketsInRange", function(course, startTime, endTime) {
     course: course,
     createdAt: {$gte: startTime, $lte: endTime}
   }, {
-    "notify.email": false,
-    "notify.phone": false,
-    "notify.carrier": false
+    "fields": {
+      "notify.email": false,
+      "notify.phone": false,
+      "notify.carrier": false
+    }
   });
 })

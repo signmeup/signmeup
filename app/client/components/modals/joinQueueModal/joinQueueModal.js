@@ -1,4 +1,4 @@
-/** 
+/**
  * NOTE: Always render the modal with detachable: false, otherwise it gets
  * rendered, then removed from the DOM, then re-rendered within the dimmer by
  * Semantic. In the process, the Blaze event handlers get lost.
@@ -13,7 +13,7 @@ Template.joinQueueModal.onRendered(function() {
 
   // Validation
   this.$(".js-join-queue-form").form({
-    fields: {
+    "fields": {
       name: {
         rules: [{
           type: "empty",

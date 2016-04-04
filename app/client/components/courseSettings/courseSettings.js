@@ -128,9 +128,11 @@ Template.courseSettingsLogs.events({
           course: course,
           createdAt: {$gte: startTime, $lte: endTime}
         }, {
-          "notify.email": false,
-          "notify.phone": false,
-          "notify.carrier": false
+          "fields": {
+            "notify.email": false,
+            "notify.phone": false,
+            "notify.carrier": false
+          }
         }).fetch();
         var jsonString = JSON.stringify(tickets, null, 2);
         downloadLogFile(jsonString, course, startMoment, endMoment, "tickets");
