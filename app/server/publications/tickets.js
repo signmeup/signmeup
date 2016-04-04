@@ -16,7 +16,7 @@ Meteor.smartPublish("allActiveTickets", function() {
       queueId: queueId,
       status: {$in: ["open", "missing"]}
     }, {
-      fields: {
+      "fields": {
         question: isTA,
         notify: isTA,
         ta: isTA,
@@ -33,7 +33,7 @@ Meteor.smartPublish("allActiveTickets", function() {
   return activeTickets;
 });
 
-Meteor.publish("activeTickets", function(queueId) {
+Meteor.publish("allQueueTickets", function(queueId) {
   var queue = Queues.findOne({_id: queueId});
   if(!queue) return;
 
@@ -61,8 +61,7 @@ Meteor.publish("activeTickets", function(queueId) {
   }
 
   return Tickets.find({
-    queueId: queueId,
-    status: {$in: ["open", "missing"]}
+    queueId: queueId
   }, projection);
 });
 
@@ -80,8 +79,10 @@ Meteor.publish("allTicketsInRange", function(course, startTime, endTime) {
     course: course,
     createdAt: {$gte: startTime, $lte: endTime}
   }, {
-    "notify.email": false,
-    "notify.phone": false,
-    "notify.carrier": false
+    "fields": {
+      "notify.email": false,
+      "notify.phone": false,
+      "notify.carrier": false
+    }
   });
 })

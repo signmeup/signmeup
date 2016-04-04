@@ -34,7 +34,7 @@ Template.courseSettings.events({
   },
 
   "click .js-delete-course": function() {
-    var sure = confirm("Are you sure you want to delete " 
+    var sure = confirm("Are you sure you want to delete "
       + this.name + "?\nTHIS IS IRREVERSIBLE.");
     if(sure) {
       Meteor.call("deleteCourse", this.name, function(err) {
@@ -128,9 +128,11 @@ Template.courseSettingsLogs.events({
           course: course,
           createdAt: {$gte: startTime, $lte: endTime}
         }, {
-          "notify.email": false,
-          "notify.phone": false,
-          "notify.carrier": false
+          "fields": {
+            "notify.email": false,
+            "notify.phone": false,
+            "notify.carrier": false
+          }
         }).fetch();
         var jsonString = JSON.stringify(tickets, null, 2);
         downloadLogFile(jsonString, course, startMoment, endMoment, "tickets");
@@ -148,3 +150,19 @@ function downloadLogFile(contents, course, startMoment, endMoment, type) {
 
   saveAs(blob, course + "-" + startString + "-to-" + endString + "-" + type + ".json");
 }
+
+// courseSettingsSettings
+
+Template.courseSettingsSettings.helpers({
+  isCurrentGap: function(minutes) {
+    var signupGapMinutes = parseInt(this.settings.signupGap / (60 * 1000)) || 0;
+    return (minutes == signupGapMinutes) ? "selected" : "";
+  }
+});
+
+Template.courseSettingsSettings.events({
+  "change .js-signup-gap-select": function() {
+    var ms = event.target.value * 60 * 1000;
+    Meteor.call("updateCourseSettings", this.name, {"signupGap": ms});
+  }
+});
