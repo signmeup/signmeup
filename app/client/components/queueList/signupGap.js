@@ -5,7 +5,9 @@ Template.signupGap.onCreated(function() {
 
   self.autorun(function() {
     // Reactively update signupGap
-    var signupGap = Courses.findOne({name: Template.currentData().course}).settings.signupGap || 0
+    debugger;
+    var courseSettings = Courses.findOne({name: Template.currentData().course}).settings || {};
+    var signupGap = courseSettings.signupGap || 0
     self.signupGap.set(signupGap);
 
     // Reactively update the timeRemaining for user to sign up again

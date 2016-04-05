@@ -34,6 +34,7 @@ _nextSignupTime = function(userId, queueId) {
     return null;
 
   // Otherwise, calculate the next possible signup time.
-  var signupGap = Courses.findOne({name: queue.course}).settings.signupGap || 0;
+  var courseSettings = Courses.findOne({name: queue.course}).settings || {};
+  var signupGap = courseSettings.signupGap || 0;
   return lastUsedTicket.doneAt + signupGap;
 }
