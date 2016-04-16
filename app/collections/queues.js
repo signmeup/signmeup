@@ -1,88 +1,22 @@
 Queues = new Mongo.Collection("queues");
 
 Queues.schema = new SimpleSchema({
-  name: {
-    type: String
-  },
+  name: {type: String},
+  course: {type: String},
+  location: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+  status: {type: String, allowedValues: ["active", "cutoff", "ended"]},
 
-  course: {
-    type: Object
-  },
-  "course.id": {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  },
-  "course.name": {
-    type: String
-  },
+  owner: {type: Object},
+  "owner.id": {type: String, regEx: SimpleSchema.RegEx.Id},
+  "owner.email": {type: String, regEx: SimpleSchema.RegEx.Email},
 
-  location: {
-    type: Object,
-    optional: true
-  },
-  "location.id": {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id,
-    optional: true
-  },
-  "location.name": {
-    type: String,
-    optional: true
-  },
+  announcements: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
+  tickets: {type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: []},
 
-  mode: {
-    type: String,
-    allowedValues: ["universal", "location", "device"]
-  },
-
-  status: {
-    type: String,
-    allowedValues: ["active", "cutoff", "ended"]
-  },
-
-  owner: {
-    type: Object
-  },
-  "owner.id": {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  },
-  "owner.email": {
-    type: String,
-    regEx: SimpleSchema.RegEx.Email
-  },
-
-  announcements: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    optional: true
-  },
-  tickets: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    defaultValue: []
-  },
-
-  averageWaitTime: {
-    type: Number,
-    defaultValue: 0
-  },
-
-  startTime: {
-    type: Date
-  },
-  cutoffTime: {
-    type: Date,
-    optional: true
-  },
-  scheduledEndTime: {
-    type: Date,
-    optional: true
-  },
-  endTime: {
-    type: Date,
-    optional: true
-  }
+  startTime: {type: Number},
+  cutoffTime: {type: Number, optional: true},
+  endTime: {type: Number, optional: true},
+  averageWaitTime: {type: Number, defaultValue: 0}
 });
 
 Queues.attachSchema(Queues.schema);
