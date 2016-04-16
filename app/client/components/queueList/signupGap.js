@@ -5,7 +5,6 @@ Template.signupGap.onCreated(function() {
 
   self.autorun(function() {
     // Reactively update signupGap
-    debugger;
     var courseSettings = Courses.findOne({name: Template.currentData().course}).settings || {};
     var signupGap = courseSettings.signupGap || 0
     self.signupGap.set(signupGap);

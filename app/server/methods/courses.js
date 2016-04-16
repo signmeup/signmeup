@@ -16,7 +16,7 @@ Meteor.methods({
       description: description,
       listserv: listserv,
       active: false,
-      createdAt: (new Date()).toJSON()
+      createdAt: Date.now()
     });
   },
 
