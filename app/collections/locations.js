@@ -1,15 +1,7 @@
 Locations = new Mongo.Collection("locations");
 
 Locations.schema = new SimpleSchema({
-  name: {
-    type: String
-  },
-
-  ips: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.IP,
-    optional: true
-  }
+  name: {type: String}
 });
 
 Locations.allow({
