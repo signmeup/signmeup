@@ -155,7 +155,8 @@ function downloadLogFile(contents, course, startMoment, endMoment, type) {
 
 Template.courseSettingsSettings.helpers({
   isCurrentGap: function(minutes) {
-    var signupGapMinutes = parseInt(this.settings.signupGap / (60 * 1000)) || 0;
+    var signupGap = this.settings ? (this.settings.signupGap || 0) : 0;
+    var signupGapMinutes = parseInt(signupGap / (60 * 1000)) || 0;
     return (minutes == signupGapMinutes) ? "selected" : "";
   }
 });
