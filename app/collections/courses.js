@@ -1,36 +1,15 @@
 Courses = new Mongo.Collection("courses");
 
 Courses.schema = new SimpleSchema({
-  name: {
-    type: String
-  },
-  description: {
-    type: String,
-    optional: true
-  },
-  listserv: {
-    type: String,
-    regEx: SimpleSchema.RegEx.Email,
-    optional: true
-  },
-  active: {
-    type: Boolean
-  },
+  name: {type: String},
+  description: {type: String, optional: true},
+  listserv: {type: String, regEx: SimpleSchema.RegEx.Email, optional: true},
+  active: {type: Boolean},
 
-  htas: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    optional: true
-  },
-  tas: {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    optional: true
-  },
+  htas: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
+  tas: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
 
-  createdAt: {
-    type: Date
-  }
+  createdAt: {type: Number}
 });
 
 Courses.attachSchema(Courses.schema);
