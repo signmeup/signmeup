@@ -8,7 +8,7 @@ Tickets.schema = new SimpleSchema({
   "owner.id": {type: String, regEx: SimpleSchema.RegEx.Id},
   "owner.name": {type: String},
 
-  status: {type: String, allowedValues: ["open", "missing", "done", "cancelled"]},
+  status: {type: String, allowedValues: ["open", "done", "cancelled"]},
   question: {type: String},
 
   notify: {type: Object, optional: true},

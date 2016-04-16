@@ -75,6 +75,7 @@ npm-bcrypt@0.7.8_2
 npm-mongo@1.4.39_1
 observe-sequence@1.0.7
 ordered-dict@1.0.4
+percolate:migrations@0.9.8
 percolate:synced-cron@1.3.0
 pfafman:filesaver@0.2.2
 promise@0.5.1

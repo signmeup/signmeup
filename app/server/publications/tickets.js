@@ -14,7 +14,7 @@ Meteor.smartPublish("allActiveTickets", function() {
 
     var tickets = Tickets.find({
       queueId: queueId,
-      status: {$in: ["open", "missing"]}
+      status: "open"
     }, {
       "fields": {
         question: isTA,
