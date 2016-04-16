@@ -39,6 +39,10 @@ Queues.schema = new SimpleSchema({
     type: String,
     allowedValues: ["active", "cutoff", "ended"]
   },
+
+  owner: {
+    type: Object
+  },
   "owner.id": {
     type: String,
     regEx: SimpleSchema.RegEx.Id
