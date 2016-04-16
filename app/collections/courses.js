@@ -9,6 +9,9 @@ Courses.schema = new SimpleSchema({
   htas: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
   tas: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
 
+  settings: {type: Object, optional: true},
+  "settings.signupGap": {type: Number, defaultValue: 0, optional: true},
+
   createdAt: {type: Number}
 });
 
