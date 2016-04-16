@@ -1,46 +1,33 @@
-/**
- * Tickets
- *
- * Ticket: {
- *    queueId: STRING,
- *    course: STRING,
- *    owner: {
- *      id: userId,
- *      name: STRING,
- *    },
- *    status: ("open", "missing", "done", "cancelled"),
- *
- *    createdAt: Number (Milliseconds),
- *    missedAt: Number (Milliseconds),
- *    doneAt: Number (Milliseconds),
- *    cancelledAt: Number (Milliseconds),
- *
- *    question: STRING,
- *      
- *    notify: {
- *      types: ["announce", "email", "text"],
- *      email: STRING,
- *      phone: STRING,
- *      carrier: STRING
- *    },
- *
- *    ta: {
- *      id: userId, // The TA who set the last status
- *      email: STRING
- *    }
- *    
- *    flag: {
- *      flagged: Boolean,
- *      message: STRING,
- *      ta: {
- *        id: userId,
- *        email: STRING
- *      }
- *    }
- *  }
- */
-
 Tickets = new Mongo.Collection("tickets");
+
+Tickets.schema = new SimpleSchema({
+  queueId: {type: String, regEx: SimpleSchema.RegEx.Id},
+  course: {type: String},
+
+  owner: {type: Object},
+  "owner.id": {type: String, regEx: SimpleSchema.RegEx.Id},
+  "owner.name": {type: String},
+
+  status: {type: String, allowedValues: ["open", "done", "cancelled"]},
+  question: {type: String},
+
+  notify: {type: Object, optional: true},
+  "notify.types": {type: [String], allowedValues: ["announce", "email", "text"], minCount: 1},
+  "notify.email": {type: String, regEx: SimpleSchema.RegEx.Email, optional: true},
+  "notify.phone": {type: String, optional: true},
+  "notify.carrier": {type: String, regEx: SimpleSchema.RegEx.Domain, optional: true},
+  "notify.sent": {type: [String], allowedValues: ["email", "text"], optional: true},
+
+  ta: {type: Object, optional: true},
+  "ta.id": {type: String, regEx: SimpleSchema.RegEx.Id},
+  "ta.email": {type: String, regEx: SimpleSchema.RegEx.Email},
+
+  createdAt: {type: Number},
+  doneAt: {type: Number, optional: true},
+  cancelledAt: {type: Number, optional: true}
+});
+
+Tickets.attachSchema(Tickets.schema);
 
 Tickets.allow({
   insert: function() { return false; },

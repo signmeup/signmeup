@@ -47,10 +47,7 @@ Meteor.methods({
       status: "open",
 
       question: question,
-      notify: notify,
-
-      ta: {},
-      flag: {}
+      notify: notify
     }
 
     var ticketId = Tickets.insert(ticket);
@@ -114,14 +111,18 @@ Meteor.methods({
           email: _getUserEmail(this.userId)
         }
       }
+
+      var setObject = {
+        status: "cancelled",
+        cancelledAt: Date.now()
+      };
+      if(!_.isEmpty(taObject))
+        _.extend(setObject, taObject);
+
       Tickets.update({
         _id: ticketId
       }, {
-        $set: {
-          status: "cancelled",
-          cancelledAt: Date.now(),
-          ta: taObject
-        }
+        $set: setObject
       });
     }
   }

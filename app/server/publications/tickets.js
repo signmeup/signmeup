@@ -14,13 +14,12 @@ Meteor.smartPublish("allActiveTickets", function() {
 
     var tickets = Tickets.find({
       queueId: queueId,
-      status: {$in: ["open", "missing"]}
+      status: "open"
     }, {
       "fields": {
         question: isTA,
         notify: isTA,
         ta: isTA,
-        flag: isTA,
         "notify.email": false,
         "notify.phone": false,
         "notify.carrier": false
@@ -55,8 +54,7 @@ Meteor.publish("allQueueTickets", function(queueId) {
     _.extend(projection["fields"], {
       question: false,
       notify: false,
-      ta: false,
-      flag: false
+      ta: false
     });
   }
 

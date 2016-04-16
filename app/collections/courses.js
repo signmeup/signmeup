@@ -1,23 +1,21 @@
-/**
- * Courses
- *
- * Course: {
- *    name: STRING,
- *    description: STRING,
- *    listserv: STRING,
- *    active: BOOLEAN,
- *
- *    htas: [userId],
- *    tas: [userId],
- *
- *    settings: {
- *      
- *    },
- *    createdAt: Number (Milliseconds)
- * }
- */
-
 Courses = new Mongo.Collection("courses");
+
+Courses.schema = new SimpleSchema({
+  name: {type: String},
+  description: {type: String, optional: true},
+  listserv: {type: String, regEx: SimpleSchema.RegEx.Email, optional: true},
+  active: {type: Boolean},
+
+  htas: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
+  tas: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
+
+  settings: {type: Object, optional: true},
+  "settings.signupGap": {type: Number, defaultValue: 0, optional: true},
+
+  createdAt: {type: Number}
+});
+
+Courses.attachSchema(Courses.schema);
 
 Courses.allow({
   insert: function() { return false; },

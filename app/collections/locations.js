@@ -1,18 +1,8 @@
-/**
- * Locations
- *
- * Location:  {
- *    name: STRING,
- *    
- *    ips: [STRING],
- *    geo: {
- *      root: GeoJSON,
- *      radius: Number (Meters)
- *    }
- * }
- */
-
 Locations = new Mongo.Collection("locations");
+
+Locations.schema = new SimpleSchema({
+  name: {type: String}
+});
 
 Locations.allow({
   insert: function() { return false; },
