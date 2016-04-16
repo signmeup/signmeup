@@ -20,7 +20,6 @@ Meteor.smartPublish("allActiveTickets", function() {
         question: isTA,
         notify: isTA,
         ta: isTA,
-        flag: isTA,
         "notify.email": false,
         "notify.phone": false,
         "notify.carrier": false
@@ -55,8 +54,7 @@ Meteor.publish("allQueueTickets", function(queueId) {
     _.extend(projection["fields"], {
       question: false,
       notify: false,
-      ta: false,
-      flag: false
+      ta: false
     });
   }
 
