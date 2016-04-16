@@ -16,7 +16,7 @@ Tickets.schema = new SimpleSchema({
   "notify.email": {type: String, regEx: SimpleSchema.RegEx.Email, optional: true},
   "notify.phone": {type: String, optional: true},
   "notify.carrier": {type: String, regEx: SimpleSchema.RegEx.Domain, optional: true},
-  "notify.sent": {type: [String], allowedValues: ["email", "text"], optional: true}
+  "notify.sent": {type: [String], allowedValues: ["email", "text"], optional: true},
 
   ta: {type: Object, optional: true},
   "ta.id": {type: String, regEx: SimpleSchema.RegEx.Id},
