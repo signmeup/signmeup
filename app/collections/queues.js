@@ -1,33 +1,25 @@
-/**
- * Queues
- *
- * Queue: {
- *    name: STRING,
- *    course: STRING,
- *    location: ObjectId,
- *    mode: ("universal", "location", "device") // TODO: Expand this
- *
- *    status: STRING ("active", "cutoff", "ended"),
- *    owner: {
- *      id: userId,
- *      email: STRING
- *    },
- *    
- *    startTime: Number (Milliseconds),
- *    cutoffTime: Number (Milliseconds),
- *    endTime: Number (Milliseconds),
- *    averageWaitTime: Number (Milliseconds),
- *
- *    localSettings: {
- *      property: value (Overrides from Course)
- *    },
- *    
- *    announcements: [],
- *    tickets: []
- * }
- */
-
 Queues = new Mongo.Collection("queues");
+
+Queues.schema = new SimpleSchema({
+  name: {type: String},
+  course: {type: String},
+  location: {type: String, regEx: SimpleSchema.RegEx.Id, optional: true},
+  status: {type: String, allowedValues: ["active", "cutoff", "ended"]},
+
+  owner: {type: Object},
+  "owner.id": {type: String, regEx: SimpleSchema.RegEx.Id},
+  "owner.email": {type: String, regEx: SimpleSchema.RegEx.Email},
+
+  announcements: {type: [String], regEx: SimpleSchema.RegEx.Id, optional: true},
+  tickets: {type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: []},
+
+  startTime: {type: Number},
+  cutoffTime: {type: Number, optional: true},
+  endTime: {type: Number, optional: true},
+  averageWaitTime: {type: Number, defaultValue: 0}
+});
+
+Queues.attachSchema(Queues.schema);
 
 Queues.allow({
   insert: function() { return false; },

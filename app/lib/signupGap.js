@@ -17,7 +17,7 @@ _nextSignupTime = function(userId, queueId) {
   if (userTickets.length == 0)
     return null;
 
-  var lastUsedTicket; // The last ticket that's open, missing, or done.
+  var lastUsedTicket; // The last ticket that's open or done.
   for (var i = userTickets.length - 1; i >= 0; i--) {
     var ticket = userTickets[i];
     if (ticket.status !== "cancelled") {
@@ -29,8 +29,8 @@ _nextSignupTime = function(userId, queueId) {
   // If only cancelled tickets exist, return null.
   if (typeof lastUsedTicket === "undefined") return null;
 
-  // If an open / missing ticket exists, return null.
-  if (_.contains(["open", "missing"], lastUsedTicket.status))
+  // If an open ticket exists, return null.
+  if (lastUsedTicket.status == "open")
     return null;
 
   // Otherwise, calculate the next possible signup time.

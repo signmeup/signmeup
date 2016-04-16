@@ -24,15 +24,15 @@ Meteor.methods({
     if(endTime <= Date.now())
       throw new Meteor.Error("invalid-end-time");
 
-    if(clientCall)
-      ownerId = Meteor.userId;
+    if(clientCall) {
+      ownerId = Meteor.userId();
+    }
 
     // Create queue
     var queue = {
       name: name,
       course: course,
       location: locationId,
-      mode: "universal",
 
       status: "active",
       owner: {
@@ -44,7 +44,6 @@ Meteor.methods({
       endTime: endTime,
       averageWaitTime: 0,
 
-      localSettings: {},
       announcements: [],
       tickets: []
     }
@@ -88,7 +87,7 @@ Meteor.methods({
 
     Queues.update(queueId, {
       $set: {
-        name: name, 
+        name: name,
         location: locationId,
         endTime: endTime
       }
@@ -202,7 +201,7 @@ Meteor.methods({
     console.log("Ending queue " + queueId);
 
     // TODO: Cancel active tickets?
-    
+
     SyncedCron.remove(queueId + "-ender");
 
     Queues.update(queueId, {
