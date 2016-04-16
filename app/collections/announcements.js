@@ -1,34 +1,15 @@
 Announcements = new Mongo.Collection("announcements");
 
 Announcements.schema = new SimpleSchema({
-  owner: {
-    type: Object
-  },
-  "owner.id": {
-    type: String,
-    regEx: SimpleSchema.RegEx.Id
-  },
-  "owner.email": {
-    type: String,
-    regEx: SimpleSchema.RegEx.Email
-  },
+  owner: {type: Object},
+  "owner.id": {type: String, regEx: SimpleSchema.RegEx.Id},
+  "owner.email": {type: String, regEx: SimpleSchema.RegEx.Email},
 
-  type: {
-    type: String,
-    allowedValues: ["info", "success", "warning", "danger"]
-  },
+  type: {type: String, allowedValues: ["info", "success", "warning", "danger"]},
+  header: {type: String, optional: true},
+  content: {type: String},
 
-  header: {
-    type: String,
-    optional: true
-  },
-  content: {
-    type: String
-  },
-
-  createdAt: {
-    type: Date
-  }
+  createdAt: {type: Date}
 });
 
 Announcements.attachSchema(Announcements.schema);
