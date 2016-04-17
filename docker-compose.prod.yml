@@ -3,6 +3,7 @@ app:
   dockerfile: Dockerfile-prod
   restart: always
   environment:
+   - VERSION=${VERSION}
    - ROOT_URL=https://signmeup.cs.brown.edu
    - MONGO_URL=mongodb://db:27017/signmeup
    - VIRTUAL_HOST=signmeup.cs.brown.edu
