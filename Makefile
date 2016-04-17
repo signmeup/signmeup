@@ -13,7 +13,10 @@
 # Builds and runs the app with prod settings.
 # Does not affect other running services. Use when you've changed just the app.
 prod:
-	git pull && \
+	git fetch --tags && \
+	git checkout master && \
+	export VERSION='$(shell git describe --tags)' && \
+	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build app && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --no-deps -d app
@@ -21,7 +24,10 @@ prod:
 # Builds and runs all services with prod settings.
 # Use when you've updated the nginx or mongo configuration too.
 prod-all:
-	git pull && \
+	git fetch --tags && \
+	git checkout master && \
+	export VERSION='$(shell git describe --tags)' && \
+	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d

@@ -146,7 +146,8 @@ Once you've merged a bunch of features into `dev`, and are ready to deploy to pr
    To deploy, run `make prod`.
 
    This will:
-    - Pull the latest version of `master` from the Git repo
+    - Pull the latest release on `master` from GitHub
+    - Load the release version into an environment variable
     - Load `settings.json` into an environment variable
     - Build an image for the new codebase
     - Run it with production settings
