@@ -1,12 +1,15 @@
 // Startup
 
 Meteor.startup(function() {
-  console.log("Running SignMeUp");
+  // Set version so client-side app can access it
+  var version = process.env.VERSION || "";
+  Meteor.settings.public.version = version
+  console.log("Running SignMeUp " + version);
 
   // Update schemas
   Migrations.migrateTo("latest");
 
-  // Initialize Data
+  // Initialize data
   createTestUsers();
   initializeCollections();
 
