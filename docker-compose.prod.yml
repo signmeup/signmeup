@@ -8,6 +8,7 @@ app:
    - VIRTUAL_HOST=signmeup.cs.brown.edu
    - METEOR_SETTINGS=${METEOR_SETTINGS}
    - MAIL_URL=smtp://mx.cs.brown.edu:25
+   - HTTP_FORWARDED_COUNT=1
    - PRODUCTION="true"
 
 db:
