@@ -15,9 +15,8 @@
 prod:
 	git fetch --tags && \
 	git checkout master && \
-	version=$(git describe --tags) && \
-	git checkout ${version} && \
-	export VERSION=${version} && \
+	export VERSION='$(shell git describe --tags)' && \
+	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build app && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --no-deps -d app
@@ -27,9 +26,8 @@ prod:
 prod-all:
 	git fetch --tags && \
 	git checkout master && \
-	version=$(git describe --tags) && \
-	git checkout ${version} && \
-	export VERSION=${version} && \
+	export VERSION='$(shell git describe --tags)' && \
+	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d
