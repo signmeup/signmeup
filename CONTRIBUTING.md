@@ -4,11 +4,8 @@ Here's a quick guide to developing SignMeUp and deploying it to production.
 
 ## Setup
 
-Note that we only support development on Linux and OS X right now, since
-`docker-compose` only works on those platforms.
-
-1. Install Docker Toolbox (this should include `docker-machine` and `docker`),
-   as well as `docker-compose`.
+1. Install the Docker engine on your machine. For Mac or Windows, use the app.
+   For Linux, use `docker-toolbox`.
 
 2. Clone this repository:
 
@@ -22,24 +19,17 @@ Note that we only support development on Linux and OS X right now, since
 4. In your terminal, run:
 
    ```shell
-   $ sudo echo "$(docker-machine ip) local.cis-dev.brown.edu" | sudo tee -a /etc/hosts > /dev/null
+   $ sudo printf "127.0.0.1\tlocal.cis-dev.brown.edu" | sudo tee -a /etc/hosts > /dev/null
    ```
 
-   This adds a reference to your Docker Machine's IP address in your hosts file, allowing you
-   to point your browser to `local.cis-dev.brown.edu` and load containers running on the Docker Machine.
+   This adds an entry matching `local.cis-dev.brown.edu` to `localhost`. The
+   Docker container usually runs on `localhost:3000`, but this lets you load it
+   when pointing to `local.cis-dev.brown.edu:3000`.
 
    To check if the append worked, run `$ cat /etc/hosts` and make sure the line was added to the end.
 
-   On Mac, to make sure your settings are applied, flush your DNS cache:
-
-   ```shell
-   $ dscacheutil -flushcache
-   ```
-
-   There are similar ways to flush the cache on Linux distributions.
-
-5. `cd` into the `signmeup` directory, and proceed to create a `settings.json` file
-   from `settings.template.json`:
+5. `cd` into the `signmeup` directory, and proceed to create a `settings.json`
+   file from `settings.template.json`:
 
     ```shell
     $ cp app/settings.template.json app/settings.json
