@@ -6,7 +6,6 @@
 
 kadira:flow-router
 kadira:blaze-layout
-standard-minifiers
 meteor-base
 mobile-experience
 mongo
@@ -38,3 +37,5 @@ meteorhacks:kadira
 pfafman:filesaver
 aldeed:collection2
 percolate:migrations
+standard-minifier-css
+standard-minifier-js
