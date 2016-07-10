@@ -37,5 +37,6 @@ meteorhacks:kadira
 pfafman:filesaver
 aldeed:collection2
 percolate:migrations
-standard-minifier-css
 standard-minifier-js
+juliancwirko:postcss
+less

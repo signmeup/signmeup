@@ -1,4 +1,6 @@
 // App-wide subscriptions
 
-Meteor.subscribe("userData");
-Meteor.subscribe("locations");
+import { Meteor } from 'meteor/meteor';
+
+Meteor.subscribe('userData');
+Meteor.subscribe('locations');

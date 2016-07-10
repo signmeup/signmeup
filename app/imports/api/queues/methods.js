@@ -49,7 +49,7 @@ Meteor.methods({
     }
 
     if (clientCall) {
-      ownerId = Meteor.userId(); // eslint-disable-line no-param-reassign
+      ownerId = Meteor.userId();
     }
 
     // Create queue

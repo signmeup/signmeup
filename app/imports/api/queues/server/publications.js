@@ -25,8 +25,8 @@ Meteor.publish('allQueuesInRange', (course, startTime, endTime) => {
     throw new Meteor.Error('not-allowed');
   }
 
-  startTime = startTime || 0; // eslint-disable-line no-param-reassign
-  endTime = endTime || Date.now(); // eslint-disable-line no-param-reassign
+  startTime = startTime || 0;
+  endTime = endTime || Date.now();
 
   return Queues.find({
     course,

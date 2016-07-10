@@ -9,6 +9,7 @@
     "meteor-node-stubs": "~0.2.0"
   },
   "devDependencies": {
+    "autoprefixer": "^6.3.1",
     "eslint": "^3.0.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-import-resolver-meteor": "^0.2.4",
@@ -16,6 +17,11 @@
     "eslint-plugin-jsx-a11y": "^1.5.5",
     "eslint-plugin-meteor": "^3.6.0",
     "eslint-plugin-react": "^5.2.2"
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {"browsers": ["last 2 versions"]}
+    }
   },
   "eslintConfig": {
     "plugins": [
@@ -29,9 +35,10 @@
       "import/resolver": "meteor"
     },
     "rules": {
-      "no-underscore-dangle": 0,
       "arrow-body-style": ["error", "always"],
-      "no-shadow": 1
+      "no-param-reassign": 1,
+      "no-shadow": 1,
+      "no-underscore-dangle": 0
     }
   }
 }

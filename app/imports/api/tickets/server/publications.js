@@ -83,8 +83,8 @@ Meteor.publish('allTicketsInRange', (course, startTime, endTime) => {
   check(startTime, Number);
   check(endTime, Number);
 
-  startTime = startTime || 0; // eslint-disable-line no-param-reassign
-  endTime = endTime || Date.now(); // eslint-disable-line no-param-reassign
+  startTime = startTime || 0;
+  endTime = endTime || Date.now();
 
   const courseObject = Courses.findOne({ name: course });
   if (!courseObject) {
