@@ -1,26 +1,36 @@
-Template.index.onCreated(function() {
-  var self = this;
-  self.autorun(function() {
-    self.subscribe("courses");
-    self.subscribe("activeQueues");
-    self.subscribe("allActiveTickets");
+import { Template } from 'meteor/templating';
+
+import Queues from '/imports/api/queues/queues';
+
+import { _getUserCourseNames } from '/imports/lib/both/users';
+
+import { _showModal } from '/imports/lib/client/helpers';
+
+import './index.html';
+
+Template.index.onCreated(() => {
+  const self = this;
+  self.autorun(() => {
+    self.subscribe('courses');
+    self.subscribe('activeQueues');
+    self.subscribe('allActiveTickets');
   });
 });
 
 Template.taIndex.helpers({
-  "taQueues": function() {
+  taQueues() {
     // Note: Queues only has activeQueues, based on the subscription above
-    return Queues.find({course: {$in: _getUserCourseNames()}}).fetch();
+    return Queues.find({ course: { $in: _getUserCourseNames() } }).fetch();
   },
 
-  "otherQueues": function() {
+  otherQueues() {
     // Note: Queues only has activeQueues, based on the subscription above
-    return Queues.find({course: {$nin: _getUserCourseNames()}}).fetch();
-  }
+    return Queues.find({ course: { $nin: _getUserCourseNames() } }).fetch();
+  },
 });
 
 Template.taIndex.events({
-  "click .js-show-create-modal": function() {
-    _showModal(".js-create-queue-modal");
-  }
+  'click .js-show-create-modal': () => {
+    _showModal('.js-create-queue-modal');
+  },
 });

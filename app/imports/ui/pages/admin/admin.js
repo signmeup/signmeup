@@ -1,21 +1,30 @@
 // TODO: Block access to non-admins.
 
-Template.admin.onCreated(function() {
-  var self = this;
-  self.autorun(function() {
-    self.subscribe("courses");
-    self.subscribe("locations");
-    self.subscribe("queues");
-    self.subscribe("allUsers");
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+
+import Courses from '/imports/api/courses/courses';
+
+import { authorized } from '/imports/lib/both/auth';
+
+import './admin.html';
+
+Template.admin.onCreated(() => {
+  const self = this;
+  self.autorun(() => {
+    self.subscribe('courses');
+    self.subscribe('locations');
+    self.subscribe('queues');
+    self.subscribe('allUsers');
   });
 });
 
 Template.admin.helpers({
-  showAdmin: function() {
+  showAdmin() {
     return (authorized.admin(Meteor.userId) || authorized.hta(Meteor.userId));
   },
 
-  "courses": function() {
+  courses() {
     return Courses.find({});
-  }
+  },
 });
