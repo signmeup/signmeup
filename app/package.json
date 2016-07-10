@@ -28,6 +28,10 @@
     "settings": {
       "import/resolver": "meteor"
     },
-    "rules": {}
+    "rules": {
+      "no-underscore-dangle": 0,
+      "arrow-body-style": ["error", "always"],
+      "no-shadow": 1
+    }
   }
 }
