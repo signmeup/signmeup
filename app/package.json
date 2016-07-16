@@ -36,9 +36,11 @@
     },
     "rules": {
       "arrow-body-style": ["error", "always"],
+      "newline-per-chained-call": 0,
       "no-param-reassign": 1,
       "no-shadow": 1,
-      "no-underscore-dangle": 0
+      "no-underscore-dangle": 0,
+      "radix": 0
     }
   }
 }

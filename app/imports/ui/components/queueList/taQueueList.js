@@ -1,129 +1,132 @@
 // taQueueList
 
-Template.taQueueList.onCreated(function() {
-  var self = this;
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { ReactiveVar } from 'meteor/reactive-var';
+import { $ } from 'meteor/jquery';
+import { _ } from 'meteor/underscore';
+
+import { _activeTickets } from '/imports/lib/both/filters';
+
+import { _setCutoffMarker } from '/imports/ui/components/queueList/queueList';
+
+Template.taQueueList.onCreated(() => {
+  const self = this;
   this.timeRemaining = new ReactiveVar(0);
 
-  this.autorun(function() {
-    if(this.interval)
-      Meteor.clearInterval(this.interval);
+  this.autorun(() => {
+    if (this.interval) Meteor.clearInterval(this.interval);
 
-    var endTime = Template.currentData().endTime;
+    const endTime = Template.currentData().endTime;
 
-    this.interval = Meteor.setInterval(function() {
+    this.interval = Meteor.setInterval(() => {
       self.timeRemaining.set(endTime - Date.now());
     }, 1000);
   });
 });
 
-Template.taQueueList.onRendered(function() {
-  var self = this;
+Template.taQueueList.onRendered(() => {
+  const self = this;
 
   // Reactively update the title.
-  this.autorun(function() {
-    var cd = Template.currentData();
-    var activeTickets = _activeTickets(cd.tickets).length;
-    document.title = "(" + activeTickets + ") " + cd.course + " · " + cd.name;
+  this.autorun(() => {
+    const cd = Template.currentData();
+    const activeTickets = _activeTickets(cd.tickets).length;
+    document.title = `(${activeTickets}) ${cd.course} · ${cd.name}`;
   });
 
   // Reactively update the cutoff marker.
   // Function defined in queueList.js.
-  this.autorun(function() {
+  this.autorun(() => {
     _setCutoffMarker(self, Template.currentData(), 6);
   });
 });
 
 Template.taQueueList.helpers({
-  disableActions: function() {
-    var ended = (this.status === "ended");
-    var activeTicketsExist = _activeTickets(this.tickets).length;
-    return (!ended && activeTicketsExist) ? "" : "disabled";
-  }
+  disableActions: () => {
+    const ended = (this.status === 'ended');
+    const activeTicketsExist = _activeTickets(this.tickets).length;
+    return (!ended && activeTicketsExist) ? '' : 'disabled';
+  },
 });
 
 Template.taQueueList.events({
-  "click .js-shuffle-queue": function() {
-    var ok = confirm("Are you sure you want to shuffle all active tickets?");
+  'click .js-shuffle-queue': () => {
+    const ok = confirm('Are you sure you want to shuffle all active tickets?');
     if (ok) {
-      Meteor.call("shuffleQueue", this._id, function(err) {
-        if(err)
-          console.log(err);
+      Meteor.call('shuffleQueue', this._id, (err) => {
+        if (err) console.log(err);
       });
     }
   },
 
-  "click .js-clear-all": function() {
-    var ok = confirm("Are you sure you want to cancel all active tickets?");
+  'click .js-clear-all': () => {
+    const ok = confirm('Are you sure you want to cancel all active tickets?');
     if (ok) {
-      Meteor.call("clearQueue", this._id, function(err) {
-        if(err)
-          console.error(err);
+      Meteor.call('clearQueue', this._id, (err) => {
+        if (err) console.error(err);
       });
     }
-  }
+  },
 });
 
 // taQueueTicket
 
-Template.taQueueTicket.onRendered(function() {
-  $(this.findAll(".js-ticket-actions")).dropdown();
+function notificationSent(ticket, type) {
+  return (ticket.notify && ticket.notify.sent && _.contains(ticket.notify.sent, type));
+}
+
+Template.taQueueTicket.onRendered(() => {
+  $(this.findAll('.js-ticket-actions')).dropdown();
 });
 
 Template.taQueueTicket.helpers({
-  showNotifyButton: function(type) {
+  showNotifyButton(type) {
     return (this.notify && this.notify.types && _.contains(this.notify.types, type));
   },
 
-  notifyButtonColor: function(type) {
-    return notificationSent(this, type) ? "green" : "";
+  notifyButtonColor(type) {
+    return notificationSent(this, type) ? 'green' : '';
   },
 
-  notificationSent: function(type) {
+  notificationSent(type) {
     return notificationSent(this, type);
   },
 });
 
 Template.taQueueTicket.events({
-  "click .js-email-student": function() {
-    var $icon = $(".js-email-student .mail.icon");
-    var iconClasses = $icon.attr("class");
+  'click .js-email-student': () => {
+    const $icon = $('.js-email-student .mail.icon');
+    const iconClasses = $icon.attr('class');
 
-    $icon.removeClass().addClass("notched circle loading icon");
+    $icon.removeClass().addClass('notched circle loading icon');
 
-    Meteor.call("notifyTicketOwner", this._id, "email", function(err) {
-      if(err)
-        console.log(err);
+    Meteor.call('notifyTicketOwner', this._id, 'email', (err) => {
+      if (err) console.log(err);
       $icon.removeClass().addClass(iconClasses);
-    })
+    });
   },
 
-  "click .js-text-student": function() {
-    var $icon = $(".js-text-student .comment.icon");
-    var iconClasses = $icon.attr("class");
+  'click .js-text-student': () => {
+    const $icon = $('.js-text-student .comment.icon');
+    const iconClasses = $icon.attr('class');
 
-    $icon.removeClass().addClass("notched circle loading icon");
+    $icon.removeClass().addClass('notched circle loading icon');
 
-    Meteor.call("notifyTicketOwner", this._id, "text", function(err) {
-      if(err)
-        console.log(err);
+    Meteor.call('notifyTicketOwner', this._id, 'text', (err) => {
+      if (err) console.log(err);
       $icon.removeClass().addClass(iconClasses);
-    })
+    });
   },
 
-  "click .js-mark-as-done": function() {
-    Meteor.call("markTicketAsDone", this._id, function(err) {
-      if(err)
-        console.log(err);
-    })
+  'click .js-mark-as-done': () => {
+    Meteor.call('markTicketAsDone', this._id, (err) => {
+      if (err) console.log(err);
+    });
   },
 
-  "click .js-cancel-ticket": function() {
-    var ok = confirm("Are you sure you want to cancel this signup?");
-    if (ok)
-      Meteor.call("cancelTicket", this._id);
-  }
+  'click .js-cancel-ticket': () => {
+    const ok = confirm('Are you sure you want to cancel this signup?');
+    if (ok) Meteor.call('cancelTicket', this._id);
+  },
 });
-
-function notificationSent(ticket, type) {
-  return (ticket.notify && ticket.notify.sent && _.contains(ticket.notify.sent, type));
-}

@@ -7,8 +7,7 @@ import { $ } from 'meteor/jquery';
 
 import Locations from '/imports/api/locations/locations';
 
-export function _formatTime(milliseconds, format) {
-  if (!format) format = 'h:mm A, MMMM DD';
+export function _formatTime(milliseconds, format = 'h:mm A, MMMM DD') {
   return moment(milliseconds).format(format);
 }
 

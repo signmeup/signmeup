@@ -17,7 +17,9 @@ function calculateWaitTime(ticket, queue) {
     _id: { $in: queue.tickets },
   }).fetch();
 
-  const completedTickets = _.filter(allTickets, (t) => t.status === 'done');
+  const completedTickets = _.filter(allTickets, (t) => {
+    return t.status === 'done';
+  });
 
   const averageTimeSoFar = queue.averageWaitTime;
   const totalWaitTime = averageTimeSoFar * completedTickets.length;

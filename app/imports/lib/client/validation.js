@@ -14,7 +14,7 @@ _.extend($.fn.form.settings.rules, {
     // Makes sure the value is not empty
     // provided the checkbox is checked.
     const $form = this.parents('form');
-    const $checkbox = $form.find(`input[name=${checkboxName}][type='checkbox']`);
+    const $checkbox = $form.find(`input[name='${checkboxName}'][type='checkbox']`);
 
     if (!$checkbox) {
       throw new Error(`No checkbox found with name ${checkboxName}`);

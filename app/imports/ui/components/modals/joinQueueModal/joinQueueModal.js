@@ -4,117 +4,122 @@
  * Semantic. In the process, the Blaze event handlers get lost.
  */
 
-Template.joinQueueModal.onRendered(function() {
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
+Template.joinQueueModal.onRendered(() => {
   // Initialize phone number
-  $("input[name='phone']").mask('(000) 000-0000');
+  $('input[name="phone"]').mask('(000) 000-0000');
 
   // Initialize carriers
-  this.$(".js-carrier-dropdown").dropdown();
+  this.$('.js-carrier-dropdown').dropdown();
 
   // Validation
-  this.$(".js-join-queue-form").form({
-    "fields": {
+  this.$('.js-join-queue-form').form({
+    fields: {
       name: {
         rules: [{
-          type: "empty",
-          prompt: "Please enter a name"
-        }]
+          type: 'empty',
+          prompt: 'Please enter a name',
+        }],
       },
 
       question: {
         rules: [{
-          type: "empty",
-          prompt: "Please enter a question"
-        }]
+          type: 'empty',
+          prompt: 'Please enter a question',
+        }],
       },
 
       emailAddress: {
         rules: [{
-          type: "email",
-          prompt: "Please enter valid email address"
+          type: 'email',
+          prompt: 'Please enter valid email address',
         }, {
-          type: "emptyGiven[email]",
-          prompt: "Email address cannot be empty"
-        }]
+          type: 'emptyGiven[email]',
+          prompt: 'Email address cannot be empty',
+        }],
       },
 
       phone: {
         rules: [{
-          type: "phoneNumber",
-          prompt: "Please enter valid phone number"
+          type: 'phoneNumber',
+          prompt: 'Please enter valid phone number',
         }, {
-          type: "emptyGiven[text]",
-          prompt: "Phone number cannot be empty"
-        }]
+          type: 'emptyGiven[text]',
+          prompt: 'Phone number cannot be empty',
+        }],
       },
 
       carrier: {
         rules: [{
-          type: "emptyGiven[text]",
-          prompt: "Please select a carrier"
-        }]
-      }
-    }
+          type: 'emptyGiven[text]',
+          prompt: 'Please select a carrier',
+        }],
+      },
+    },
   });
 });
 
 Template.joinQueueModal.events({
 
-  "change .js-join-queue-form input[type=checkbox]": function(event) {
+  'change .js-join-queue-form input[type=checkbox]': (event) => {
     // Show helper
-    var $helper = $("." + $(event.target).data("helper"));
-    $helper.toggleClass("hidden");
+    const $helper = $(`.${$(event.target).data('helper')}`);
+    $helper.toggleClass('hidden');
 
-    if(!$helper.hasClass("hidden")) {
-      $helper.find(".ui.input input").focus();
+    if (!$helper.hasClass('hidden')) {
+      $helper.find('.ui.input input').focus();
     }
 
     // Revalidate form if a checkbox has been unchecked
     // This helps remove errors if a user first caused an
     // error and now chooses not to use that notification option.
-    var checked = $(event.target).is(":checked");
+    const checked = $(event.target).is(':checked');
     if (!checked) {
-      $(".js-join-queue-form").form("validate form");
+      $('.js-join-queue-form').form('validate form');
     }
   },
 
-  "click .js-submit-join-queue-form": function(event) {
-    $(".js-join-queue-form").submit();
+  'click .js-submit-join-queue-form': () => {
+    $('.js-join-queue-form').submit();
   },
 
-  "submit .js-join-queue-form": function(event) {
+  'submit .js-join-queue-form': (event) => {
     event.preventDefault();
-    var $form = $(event.target);
+    const $form = $(event.target);
 
     // Parse inputs
-    var name = event.target.name.value;
-    var question = event.target.question.value;
-    var notify = {}
-    var types = [];
+    const name = event.target.name.value;
+    const question = event.target.question.value;
+    const notify = {};
+    const types = [];
 
-    var $checkboxes = $form.find("input[type='checkbox']");
-    $checkboxes.each(function() {
+    const $checkboxes = $form.find('input[type="checkbox"]');
+    $checkboxes.each(() => {
       if (this.checked) {
         types.push(this.name);
-        if(this.name === "email") {
-          notify["email"] = event.target.emailAddress.value;
-        } else if(this.name === "text") {
-          notify["phone"] = event.target.phone.value.replace(/\D/g,''); // Strip non-numeric characters
-          notify["carrier"] = event.target.carrier.value;
+        if (this.name === 'email') {
+          notify.email = event.target.emailAddress.value;
+        } else if (this.name === 'text') {
+          // Strip non-numeric characters
+          notify.phone = event.target.phone.value.replace(/\D/g, '');
+          notify.carrier = event.target.carrier.value;
         }
       }
     });
 
-    notify["types"] = types;
+    notify.types = types;
 
     // Create ticket
-    Meteor.call("addTicket", this._id, name, question, notify, function(err, res) {
+    Meteor.call('addTicket', this._id, name, question, notify, (err) => {
       if (err) {
         console.log(err);
       } else {
-        $(".js-join-queue-modal").modal("hide");
-        $form.find("textarea[name='question']").val("");
+        $('.js-join-queue-modal').modal('hide');
+        $form.find('textarea[name="question"]').val('');
       }
     });
-  }
+  },
 });

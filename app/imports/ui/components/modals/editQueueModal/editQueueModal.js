@@ -1,62 +1,69 @@
-/** 
+/**
  * NOTE: Always render the modal with detachable: false, otherwise it gets
  * rendered, then removed from the DOM, then re-rendered within the dimmer by
  * Semantic. In the process, the Blaze event handlers get lost.
  */
 
-Template.editQueueModal.onRendered(function() {
-  var data = Template.currentData();
-  var locationName = Locations.findOne(data.location).name;
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
+
+import Locations from '/imports/api/locations/locations';
+
+function validateEditQueueForm() {
+  return true;
+}
+
+Template.editQueueModal.onRendered(() => {
+  const data = Template.currentData();
+  const locationName = Locations.findOne(data.location).name;
 
   // Initialize location
   $('.js-location-dropdown')
     .dropdown({
-      allowAdditions: true
+      allowAdditions: true,
     })
-    .dropdown("set selected", locationName);
+    .dropdown('set selected', locationName);
 
   // Initialize end time
-  var now = moment();
-  var defaultDate = data.endTime;
+  const defaultDate = data.endTime;
   this.$('.datetimepicker').datetimepicker({
     format: 'h:mm A, MMMM DD',
-    defaultDate: defaultDate,
+    defaultDate,
     sideBySide: true,
-    stepping: 5
+    stepping: 5,
   });
 });
 
 Template.editQueueModal.events({
   /* TODO: Validate form inputs on blur */
 
-  "click .js-submit-edit-queue-form": function(event) {
-    $(".js-edit-queue-form").submit();
+  'click .js-submit-edit-queue-form': () => {
+    $('.js-edit-queue-form').submit();
   },
 
-  "submit .js-edit-queue-form": function(event) {
+  'submit .js-edit-queue-form': (event) => {
     event.preventDefault();
-    var $form = $(event.target);
 
     // Validate form
-    var isValid = validateEditQueueForm();
+    const isValid = validateEditQueueForm();
     if (!isValid) return false;
 
-    var name = event.target.name.value;
-    var location = event.target.location.value;
+    const name = event.target.name.value;
+    const location = event.target.location.value;
 
-    var mTime = $(event.target.endTime).data("DateTimePicker").date();
-    var time = mTime.valueOf();
+    const mTime = $(event.target.endTime).data('DateTimePicker').date();
+    const time = mTime.valueOf();
 
     // Edit queue
-    Meteor.call("updateQueue", this._id, name, location, time, function(err) {
-      if (err)
+    Meteor.call('updateQueue', this._id, name, location, time, (err) => {
+      if (err) {
         console.log(err);
-      else
-        $(".js-edit-queue-modal").modal("hide");
+      } else {
+        $('.js-edit-queue-modal').modal('hide');
+      }
     });
-  }
-});
 
-function validateEditQueueForm() {
-  return true;
-}
+    return true;
+  },
+});
