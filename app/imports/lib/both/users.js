@@ -1,114 +1,118 @@
-_getUser = function(userId) {
-  if (typeof userId === "string")
-    return Meteor.users.findOne({_id: userId});
-  else
-    return Meteor.user();
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { _ } from 'meteor/underscore';
+
+import Courses from '/imports/api/courses/courses';
+
+export function _getUser(userId) {
+  if (typeof userId === 'string') {
+    return Meteor.users.findOne({ _id: userId });
+  }
+
+  return Meteor.user();
 }
 
-_getUserFromEmail = function(email) {
+export function _getUserFromEmail(email) {
   return Meteor.users.findOne({
     $or: [
-      {"email": email},
-      {"emails.address": email}
-    ]
+      { email },
+      { 'emails.address': email },
+    ],
   });
 }
 
-_getUserEmail = function(userId) {
-  var user = _getUser(userId);
+export function _getUserEmail(userId) {
+  const user = _getUser(userId);
 
   if (user) {
     if (user.email) {
-      return user.email
+      return user.email;
     } else if (user.emails) {
       return user.emails[0].address;
     } else if (user.profile.email) {
       return user.profile.email;
-    } else {
-      return null;
     }
-  } else {
-    return null;
   }
+
+  return null;
 }
 
-_getUserName = function(userId) {
-  var user = _getUser(userId);
+export function _getUserName(userId) {
+  const user = _getUser(userId);
 
-  if(user) {
-    var emailName = _getUserEmail(userId).split("@")[0];
+  if (user) {
+    const emailName = _getUserEmail(userId).split('@')[0];
+
     if (user.profile) {
-      var p = user.profile;
-      return p.displayName || p.name || emailName
-    } else {
-      return emailName;
+      const p = user.profile;
+      return p.displayName || p.name || emailName;
     }
-  } else {
-    return null;
+
+    return emailName;
   }
+
+  return null;
 }
 
-_getUserShortName = function(userId) {
-  var user = _getUser(userId);
+export function _getUserShortName(userId) {
+  const user = _getUser(userId);
 
-  if(user && user.profile && user.profile.givenName) {
+  if (user && user.profile && user.profile.givenName) {
     return user.profile.givenName;
-  } else {
-    return _getUserName(userId);
   }
+
+  return _getUserName(userId);
 }
 
-_getUserCourseNames = function(userId) {
-  var user = _getUser(userId);
+export function _getUserCourseNames(userId) {
+  const user = _getUser(userId);
 
-  if(user) {
-    if(user.admin) {
-      return _.map(Courses.find({}).fetch(), function(c) {
+  if (user) {
+    if (user.admin) {
+      return _.map(Courses.find({}).fetch(), (c) => {
         return c.name;
       });
-    } else {
-      var courses = [];
-      if(user.htaCourses)
-        courses = _.union(courses, user.htaCourses)
-      if(user.taCourses)
-        courses = _.union(courses, user.taCourses)
-
-      return courses;
     }
-  } else {
-    return null;
+
+    let courses = [];
+    if (user.htaCourses) courses = _.union(courses, user.htaCourses);
+    if (user.taCourses) courses = _.union(courses, user.taCourses);
+
+    return courses;
   }
+
+  return null;
 }
 
-_getActiveUserCourseNames = function(userId) {
-  var userCourses = _getUserCourseNames(userId);
-  if(!userCourses) return;
+export function _getActiveUserCourseNames(userId) {
+  const userCourses = _getUserCourseNames(userId);
+  if (!userCourses) return null;
 
-  return _.filter(userCourses, function(c) {
-    return Courses.findOne({name: c}).active;
+  return _.filter(userCourses, (c) => {
+    return Courses.findOne({ name: c }).active;
   });
 }
 
-_getUserCourses = function(userId) {
-  var userCourses = _getUserCourseNames(userId);
-  if(!userCourses) return;
+export function _getUserCourses(userId) {
+  const userCourses = _getUserCourseNames(userId);
+  if (!userCourses) return null;
 
-  return Courses.find({name: {$in: userCourses}});
+  return Courses.find({ name: { $in: userCourses } });
 }
 
-_getActiveUserCourses = function(userId) {
-  var userCourses = _getActiveUserCourseNames(userId);
-  if(!userCourses) return;
+export function _getActiveUserCourses(userId) {
+  const userCourses = _getActiveUserCourseNames(userId);
+  if (!userCourses) return null;
 
-  return Courses.find({name: {$in: userCourses}});
+  return Courses.find({ name: { $in: userCourses } });
 }
 
-UI.registerHelper("getUser", _getUser);
-UI.registerHelper("userFromEmail", _getUserFromEmail);
-UI.registerHelper("userName", _getUserName);
-UI.registerHelper("userShortName", _getUserShortName);
-UI.registerHelper("userEmail", _getUserEmail);
-UI.registerHelper("userCourseNames", _getUserCourseNames);
-UI.registerHelper("activeUserCourseNames", _getActiveUserCourseNames);
-UI.registerHelper("userCourses", _getUserCourses);
-UI.registerHelper("activeUserCourses", _getActiveUserCourses);
+Template.registerHelper('getUser', _getUser);
+Template.registerHelper('userFromEmail', _getUserFromEmail);
+Template.registerHelper('userName', _getUserName);
+Template.registerHelper('userShortName', _getUserShortName);
+Template.registerHelper('userEmail', _getUserEmail);
+Template.registerHelper('userCourseNames', _getUserCourseNames);
+Template.registerHelper('activeUserCourseNames', _getActiveUserCourseNames);
+Template.registerHelper('userCourses', _getUserCourses);
+Template.registerHelper('activeUserCourses', _getActiveUserCourses);
