@@ -1,59 +1,63 @@
 // Authorization Functions and Helpers
 
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+
+import { _getUser } from '/imports/lib/both/users';
+
 export const authorized = {
-  student: function(userId) {
-    var user = _getUser(userId);
+  student(userId) {
+    const user = _getUser(userId);
     return !!(user);
   },
 
-  ta: function(userId, course) {
+  ta(userId, course) {
     // Always pass userId, won't work otherwise
-    if(authorized.admin(userId) ||
+    if (authorized.admin(userId) ||
       authorized.hta(userId, course)) {
       return true;
     }
 
-    var user = _getUser(userId);
-    if(!user) return false;
-    if(!user.taCourses) return false;
+    const user = _getUser(userId);
+    if (!user) return false;
+    if (!user.taCourses) return false;
 
-    if(!course) {
+    if (!course) {
       // TODO: This breaks lots of UIs if user is
       // TA for an inactive course.
       return user.taCourses.length > 0;
-    } else {
-      return user.taCourses.indexOf(course) != -1;
     }
+
+    return (user.taCourses.indexOf(course) !== -1);
   },
 
-  hta: function(userId, course) {
+  hta(userId, course) {
     // Always pass userId, won't work otherwise
-    if(authorized.admin(userId)) return true;
+    if (authorized.admin(userId)) return true;
 
-    var user = _getUser(userId);
-    if(!user) return false;
-    if(!user.htaCourses) return false;
+    const user = _getUser(userId);
+    if (!user) return false;
+    if (!user.htaCourses) return false;
 
-    if(!course) {
+    if (!course) {
       // TODO: This breaks lots of UIs if user is
       // TA for an inactive course.
       return user.htaCourses.length > 0;
-    } else {
-      return user.htaCourses.indexOf(course) != -1;
     }
+
+    return (user.htaCourses.indexOf(course) !== -1);
   },
 
-  admin: function(userId){
-    var user = _getUser(userId);
-    if(!user) return false;
+  admin(userId) {
+    const user = _getUser(userId);
+    if (!user) return false;
 
     return user.admin;
-  }
+  },
 };
 
-if(Meteor.isClient) {
-  UI.registerHelper("userIs", function(role, course) {
-    if (!(typeof course === "string")) course = null;
+if (Meteor.isClient) {
+  Template.registerHelper('userIs', (role, course = null) => {
     return authorized[role](Meteor.userId(), course);
   });
 }
