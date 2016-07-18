@@ -107,12 +107,14 @@ export function _getActiveUserCourses(userId) {
   return Courses.find({ name: { $in: userCourses } });
 }
 
-Template.registerHelper('getUser', _getUser);
-Template.registerHelper('userFromEmail', _getUserFromEmail);
-Template.registerHelper('userName', _getUserName);
-Template.registerHelper('userShortName', _getUserShortName);
-Template.registerHelper('userEmail', _getUserEmail);
-Template.registerHelper('userCourseNames', _getUserCourseNames);
-Template.registerHelper('activeUserCourseNames', _getActiveUserCourseNames);
-Template.registerHelper('userCourses', _getUserCourses);
-Template.registerHelper('activeUserCourses', _getActiveUserCourses);
+if (Meteor.isClient) {
+  Template.registerHelper('getUser', _getUser);
+  Template.registerHelper('userFromEmail', _getUserFromEmail);
+  Template.registerHelper('userName', _getUserName);
+  Template.registerHelper('userShortName', _getUserShortName);
+  Template.registerHelper('userEmail', _getUserEmail);
+  Template.registerHelper('userCourseNames', _getUserCourseNames);
+  Template.registerHelper('activeUserCourseNames', _getActiveUserCourseNames);
+  Template.registerHelper('userCourses', _getUserCourses);
+  Template.registerHelper('activeUserCourses', _getActiveUserCourses);
+}

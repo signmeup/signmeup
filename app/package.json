@@ -36,6 +36,8 @@
     },
     "rules": {
       "arrow-body-style": ["error", "always"],
+      "import/no-unresolved": 1,
+      "new-cap": 0,
       "newline-per-chained-call": 0,
       "no-param-reassign": 1,
       "no-shadow": 1,

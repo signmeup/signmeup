@@ -6,10 +6,10 @@ Meteor.settings.public.version = version;
 console.log(`Running SignMeUp ${version}`); // eslint-disable-line no-console
 
 // Run migrations
-import './migrations.js';
+import './migrations/migrations';
 
 // Initialize test data
-import './fixtures.js';
+import './fixtures';
 
 // Run cron jobs
-import './cron-jobs.js';
+import './cron-jobs';

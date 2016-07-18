@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:collection2';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-export const Tickets = new Mongo.Collection('tickets');
+const Tickets = new Mongo.Collection('tickets');
 
 Tickets.schema = new SimpleSchema({
   queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
@@ -43,3 +43,5 @@ Tickets.deny({
   update() { return true; },
   remove() { return true; },
 });
+
+export default Tickets;

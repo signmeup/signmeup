@@ -20,12 +20,10 @@ ejson
 spacebars
 check
 semantic:ui
-flemay:less-autoprefixer
 accounts-ui
 accounts-password
 momentjs:moment
 fourseven:scss
-msavin:mongol
 reactive-var
 sarasate:semantic-ui-datetimepicker
 mrt:smart-publish
@@ -40,3 +38,5 @@ percolate:migrations
 standard-minifier-js
 juliancwirko:postcss
 less
+meteortoys:allthings
+ecmascript

@@ -4,7 +4,7 @@
 // TODO: Replace 'not-allowed' errors with 403 errors
 
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { check, Match } from 'meteor/check';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import { _ } from 'meteor/underscore';
 
@@ -18,12 +18,12 @@ import { _getUserEmail } from '/imports/lib/both/users';
 import { _filterActiveTicketIds, _activeTickets } from '/imports/lib/both/filters';
 
 Meteor.methods({
-  createQueue(course, name, location, endTime, ownerId) {
+  createQueue(course, name, location, endTime, ownerId = null) {
     check(course, String);
     check(name, String);
     check(location, String);
     check(endTime, Number);
-    check(ownerId, String);
+    check(ownerId, Match.Maybe(String));
 
     const clientCall = !!(this.connection);
     if (clientCall && !authorized.ta(Meteor.userId, course)) {
@@ -48,21 +48,13 @@ Meteor.methods({
       throw new Meteor.Error('invalid-end-time');
     }
 
-    if (clientCall) {
-      ownerId = Meteor.userId();
-    }
-
     // Create queue
-    const queue = {
+    let queue = {
       name,
       course,
       location: locationId,
 
       status: 'active',
-      owner: {
-        id: ownerId,
-        email: _getUserEmail(ownerId),
-      },
 
       startTime: Date.now(),
       endTime,
@@ -71,6 +63,15 @@ Meteor.methods({
       announcements: [],
       tickets: [],
     };
+
+    if (clientCall) {
+      queue = Object.extend(queue, {
+        owner: {
+          id: Meteor.userId(),
+          email: _getUserEmail(Meteor.userId()),
+        },
+      });
+    }
 
     let queueId = Queues.insert(queue);
     console.log(`Created queue ${queueId}`);

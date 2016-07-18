@@ -16,7 +16,7 @@ Meteor.publish('activeQueues', () => {
   return Queues.find({ status: { $nin: ['ended', 'cancelled'] } });
 });
 
-Meteor.publish('allQueuesInRange', (course, startTime, endTime) => {
+Meteor.publish('allQueuesInRange', (course, startTime = 0, endTime = Date.now()) => {
   check(course, String);
   check(startTime, Number);
   check(endTime, Number);
@@ -24,9 +24,6 @@ Meteor.publish('allQueuesInRange', (course, startTime, endTime) => {
   if (!authorized.hta(this.userId, course)) {
     throw new Meteor.Error('not-allowed');
   }
-
-  startTime = startTime || 0;
-  endTime = endTime || Date.now();
 
   return Queues.find({
     course,

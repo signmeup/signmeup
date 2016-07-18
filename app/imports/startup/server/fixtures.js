@@ -1,11 +1,14 @@
 // Functions to initialize collections
 
-import { Meteor, Accounts } from 'meteor/meteor';
+import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { _ } from 'meteor/underscore';
 
 import Courses from '/imports/api/courses/courses';
 import Locations from '/imports/api/locations/locations';
 import Queues from '/imports/api/queues/queues';
+
+import '/imports/api/queues/methods';
 
 let testHTAId;
 let testTAId;

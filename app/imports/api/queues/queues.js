@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:collection2';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-export const Queues = new Mongo.Collection('queues');
+const Queues = new Mongo.Collection('queues');
 
 Queues.schema = new SimpleSchema({
   name: { type: String },
@@ -9,7 +9,7 @@ Queues.schema = new SimpleSchema({
   location: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   status: { type: String, allowedValues: ['active', 'cutoff', 'ended'] },
 
-  owner: { type: Object },
+  owner: { type: Object, optional: true },
   'owner.id': { type: String, regEx: SimpleSchema.RegEx.Id },
   'owner.email': { type: String, regEx: SimpleSchema.RegEx.Email },
 
@@ -35,3 +35,5 @@ Queues.deny({
   update() { return true; },
   remove() { return true; },
 });
+
+export default Queues;
