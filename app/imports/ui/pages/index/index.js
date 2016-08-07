@@ -1,3 +1,5 @@
+import './index.html';
+
 import { Template } from 'meteor/templating';
 
 import Queues from '/imports/api/queues/queues';
@@ -6,14 +8,11 @@ import { _getUserCourseNames } from '/imports/lib/both/users';
 
 import { _showModal } from '/imports/lib/client/helpers';
 
-import './index.html';
-
-Template.index.onCreated(() => {
-  const self = this;
-  self.autorun(() => {
-    self.subscribe('courses');
-    self.subscribe('activeQueues');
-    self.subscribe('allActiveTickets');
+Template.index.onCreated(function indexOnCreated() {
+  this.autorun(() => {
+    this.subscribe('courses');
+    this.subscribe('activeQueues');
+    this.subscribe('allActiveTickets');
   });
 });
 
