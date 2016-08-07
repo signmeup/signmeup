@@ -8,6 +8,7 @@ import '/imports/ui/layouts/baseLayout.js';
 import '/imports/ui/pages/404/404.js';
 import '/imports/ui/pages/admin/admin.js';
 import '/imports/ui/pages/index/index.js';
+import '/imports/ui/pages/loginPassword/loginPassword.js';
 import '/imports/ui/pages/queue/queue.js';
 
 // BlazeLayout normally renders layouts into a new div.
