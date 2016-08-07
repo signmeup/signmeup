@@ -7,7 +7,7 @@ Template.nav.events({
   'click .js-sign-in': (event) => {
     event.preventDefault();
     Meteor.loginWithSaml(() => {
-      console.log(`Welcome ${Meteor.user().profile.givenName}!`);
+      console.log(`Welcome ${Meteor.user().profile.givenName}!`); // eslint-disable-line no-console
     });
   },
 
