@@ -8,8 +8,9 @@ import { _ } from 'meteor/underscore';
 import Queues from '/imports/api/queues/queues';
 
 import { _activeTickets } from '/imports/lib/both/filters';
-
 import { _showModal } from '/imports/lib/client/helpers';
+
+import './queueList.html';
 
 // Sets or removes the cutoff marker appropriately.
 // Call from within a this.autorun within the onRendered

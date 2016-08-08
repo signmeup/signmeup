@@ -8,6 +8,8 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import './joinQueueModal.html';
+
 Template.joinQueueModal.onRendered(() => {
   // Initialize phone number
   $('input[name="phone"]').mask('(000) 000-0000');

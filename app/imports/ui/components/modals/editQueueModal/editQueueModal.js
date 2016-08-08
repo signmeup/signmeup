@@ -10,6 +10,8 @@ import { $ } from 'meteor/jquery';
 
 import Locations from '/imports/api/locations/locations';
 
+import './editQueueModal.html';
+
 function validateEditQueueForm() {
   return true;
 }

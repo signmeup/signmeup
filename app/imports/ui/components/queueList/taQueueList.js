@@ -10,6 +10,8 @@ import { _activeTickets } from '/imports/lib/both/filters';
 
 import { _setCutoffMarker } from '/imports/ui/components/queueList/queueList';
 
+import './taQueueList.html';
+
 Template.taQueueList.onCreated(() => {
   const self = this;
   this.timeRemaining = new ReactiveVar(0);

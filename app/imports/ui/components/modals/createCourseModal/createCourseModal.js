@@ -2,6 +2,8 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import './createCourseModal.html';
+
 function validateCreateCourseForm() {
   return true;
 }

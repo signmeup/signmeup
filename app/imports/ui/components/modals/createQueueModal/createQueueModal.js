@@ -9,6 +9,8 @@ import { Template } from 'meteor/templating';
 import { moment } from 'meteor/momentjs:moment';
 import { $ } from 'meteor/jquery';
 
+import './createQueueModal.html';
+
 function validateCreateQueueForm() {
   return true;
 }

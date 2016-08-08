@@ -4,6 +4,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import { _showModal } from '/imports/lib/client/helpers';
 
+import './endingSoon.html';
+
 Template.endingSoon.onCreated(() => {
   const self = this;
   this.timeRemaining = new ReactiveVar(0);

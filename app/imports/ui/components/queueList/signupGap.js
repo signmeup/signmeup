@@ -7,6 +7,8 @@ import Courses from '/imports/api/courses/courses';
 
 import { _nextSignupTime } from '/imports/lib/both/signup-gap';
 
+import './signupGap.html';
+
 Template.signupGap.onCreated(() => {
   const self = this;
   self.signupGap = new ReactiveVar(0);
