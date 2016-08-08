@@ -3,6 +3,11 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 import Queues from '/imports/api/queues/queues';
 
+import '/imports/ui/components/queueCard/queueCard';
+import '/imports/ui/components/queueList/queueList';
+import '/imports/ui/components/modals/editQueueModal/editQueueModal';
+import '/imports/ui/components/modals/joinQueueModal/joinQueueModal';
+
 import './queue.html';
 
 Template.queue.onCreated(() => {

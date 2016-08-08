@@ -7,6 +7,10 @@ import Courses from '/imports/api/courses/courses';
 
 import { authorized } from '/imports/lib/both/auth';
 
+import '/imports/ui/components/courseMenu/courseMenu';
+import '/imports/ui/components/courseSettings/courseSettings';
+import '/imports/ui/components/modals/createCourseModal/createCourseModal';
+
 import './admin.html';
 
 Template.admin.onCreated(() => {

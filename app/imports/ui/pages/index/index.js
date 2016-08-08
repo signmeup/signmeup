@@ -1,12 +1,14 @@
-import './index.html';
-
 import { Template } from 'meteor/templating';
 
 import Queues from '/imports/api/queues/queues';
 
 import { _getUserCourseNames } from '/imports/lib/both/users';
-
 import { _showModal } from '/imports/lib/client/helpers';
+
+import '/imports/ui/components/queueCard/queueCard';
+import '/imports/ui/components/modals/createQueueModal/createQueueModal';
+
+import './index.html';
 
 Template.index.onCreated(function indexOnCreated() {
   this.autorun(() => {
