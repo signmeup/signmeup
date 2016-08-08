@@ -31,9 +31,6 @@ Meteor.smartPublish('allActiveTickets', () => {
         question: isTA,
         notify: isTA,
         ta: isTA,
-        'notify.email': false,
-        'notify.phone': false,
-        'notify.carrier': false,
       },
     });
 

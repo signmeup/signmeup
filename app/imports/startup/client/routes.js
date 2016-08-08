@@ -2,14 +2,14 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { BlazeLayout } from 'meteor/kadira:blaze-layout';
 
 // Import layouts
-import '/imports/ui/layouts/baseLayout.js';
+import '/imports/ui/layouts/baseLayout';
 
 // Import pages
-import '/imports/ui/pages/404/404.js';
-import '/imports/ui/pages/admin/admin.js';
-import '/imports/ui/pages/index/index.js';
-import '/imports/ui/pages/loginPassword/loginPassword.js';
-import '/imports/ui/pages/queue/queue.js';
+import '/imports/ui/pages/404/404';
+import '/imports/ui/pages/admin/admin';
+import '/imports/ui/pages/index/index';
+import '/imports/ui/pages/loginPassword/loginPassword';
+import '/imports/ui/pages/queue/queue';
 
 // BlazeLayout normally renders layouts into a new div.
 // This setting makes it render directly into body.

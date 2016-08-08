@@ -4,7 +4,7 @@ import { Meteor } from 'meteor/meteor';
 
 import { authorized } from '/imports/lib/both/auth';
 
-Meteor.publish('userData', () => {
+Meteor.publish('userData', function userData() {
   if (!this.userId) {
     throw new Meteor.Error('no-user');
   }
