@@ -75,13 +75,10 @@ Meteor.publish('allQueueTickets', (queueId) => {
   }, projection);
 });
 
-Meteor.publish('allTicketsInRange', (course, startTime, endTime) => {
+Meteor.publish('allTicketsInRange', (course, startTime = 0, endTime = Date.now()) => {
   check(course, String);
   check(startTime, Number);
   check(endTime, Number);
-
-  startTime = startTime || 0;
-  endTime = endTime || Date.now();
 
   const courseObject = Courses.findOne({ name: course });
   if (!courseObject) {
