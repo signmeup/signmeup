@@ -14,7 +14,7 @@ import { _getUserFromEmail } from '/imports/lib/both/users';
 
 import './courseSettings.html';
 
-Template.courseSettings.onRendered(() => {
+Template.courseSettings.onRendered(function courseSettingsLogsOnRendered() {
   // Active State
   const activeCheckbox = this.$('.js-active-checkbox').checkbox();
   activeCheckbox.checkbox(`set ${Template.currentData().active ? 'checked' : 'unchecked'}`);
@@ -67,7 +67,7 @@ Template.courseSettingsTAs.helpers({
 
 // taItem
 
-Template.taItem.onRendered(() => {
+Template.taItem.onRendered(function taItemOnRendered() {
   $(this.findAll('.js-ta-dropdown')).dropdown();
 });
 
@@ -88,7 +88,7 @@ Template.taItem.events({
 
 // courseSettingsLogs
 
-Template.courseSettingsLogs.onRendered(() => {
+Template.courseSettingsLogs.onRendered(function courseSettingsLogsOnRendered() {
   const startTime = moment().subtract(7, 'days').startOf('day');
   const endTime = moment().startOf('day');
 

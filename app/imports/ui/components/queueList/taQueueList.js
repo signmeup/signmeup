@@ -12,26 +12,26 @@ import { _setCutoffMarker } from '/imports/ui/components/queueList/queueList';
 
 import './taQueueList.html';
 
-Template.taQueueList.onCreated(() => {
+Template.taQueueList.onCreated(function taQueueListOnCreated() {
   const self = this;
-  this.timeRemaining = new ReactiveVar(0);
+  self.timeRemaining = new ReactiveVar(0);
 
-  this.autorun(() => {
-    if (this.interval) Meteor.clearInterval(this.interval);
+  self.autorun(() => {
+    if (self.interval) Meteor.clearInterval(self.interval);
 
     const endTime = Template.currentData().endTime;
 
-    this.interval = Meteor.setInterval(() => {
+    self.interval = Meteor.setInterval(() => {
       self.timeRemaining.set(endTime - Date.now());
     }, 1000);
   });
 });
 
-Template.taQueueList.onRendered(() => {
+Template.taQueueList.onRendered(function tqQueueListOnRendered() {
   const self = this;
 
   // Reactively update the title.
-  this.autorun(() => {
+  self.autorun(() => {
     const cd = Template.currentData();
     const activeTickets = _activeTickets(cd.tickets).length;
     document.title = `(${activeTickets}) ${cd.course} · ${cd.name}`;
@@ -39,7 +39,7 @@ Template.taQueueList.onRendered(() => {
 
   // Reactively update the cutoff marker.
   // Function defined in queueList.js.
-  this.autorun(() => {
+  self.autorun(() => {
     _setCutoffMarker(self, Template.currentData(), 6);
   });
 });
@@ -78,7 +78,7 @@ function notificationSent(ticket, type) {
   return (ticket.notify && ticket.notify.sent && _.contains(ticket.notify.sent, type));
 }
 
-Template.taQueueTicket.onRendered(() => {
+Template.taQueueTicket.onRendered(function taQueueTicketOnRendered() {
   $(this.findAll('.js-ticket-actions')).dropdown();
 });
 

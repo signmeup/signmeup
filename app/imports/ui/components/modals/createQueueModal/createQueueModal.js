@@ -15,7 +15,7 @@ function validateCreateQueueForm() {
   return true;
 }
 
-Template.createQueueModal.onRendered(() => {
+Template.createQueueModal.onRendered(function createQueueModalOnRendered() {
   // Initialize location
   $('.js-location-dropdown')
     .dropdown({

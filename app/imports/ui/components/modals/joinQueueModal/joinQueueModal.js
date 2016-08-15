@@ -10,7 +10,7 @@ import { $ } from 'meteor/jquery';
 
 import './joinQueueModal.html';
 
-Template.joinQueueModal.onRendered(() => {
+Template.joinQueueModal.onRendered(function joinQueueModalOnRendered() {
   // Initialize phone number
   $('input[name="phone"]').mask('(000) 000-0000');
 

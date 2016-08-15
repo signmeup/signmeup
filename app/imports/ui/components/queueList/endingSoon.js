@@ -6,18 +6,18 @@ import { _showModal } from '/imports/lib/client/helpers';
 
 import './endingSoon.html';
 
-Template.endingSoon.onCreated(() => {
+Template.endingSoon.onCreated(function endingSoonOnCreated() {
   const self = this;
-  this.timeRemaining = new ReactiveVar(0);
+  self.timeRemaining = new ReactiveVar(0);
 
-  this.autorun(() => {
-    if (this.interval) {
-      Meteor.clearInterval(this.interval);
+  self.autorun(() => {
+    if (self.interval) {
+      Meteor.clearInterval(self.interval);
     }
 
     const endTime = Template.currentData().endTime;
 
-    this.interval = Meteor.setInterval(() => {
+    self.interval = Meteor.setInterval(() => {
       self.timeRemaining.set(endTime - Date.now());
     }, 1000);
   });

@@ -9,7 +9,7 @@ import { _nextSignupTime } from '/imports/lib/both/signup-gap';
 
 import './signupGap.html';
 
-Template.signupGap.onCreated(() => {
+Template.signupGap.onCreated(function signupGapOnCreated() {
   const self = this;
   self.signupGap = new ReactiveVar(0);
   self.timeRemaining = new ReactiveVar(0);

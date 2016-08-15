@@ -48,12 +48,12 @@ export function _setCutoffMarker(instance, data, colspan) {
   }
 }
 
-Template.queueList.onRendered(() => {
+Template.queueList.onRendered(function queueListOnRendered() {
   const self = this;
 
   // Reactively set the cutoff marker. This runs each
   // time the status or activeTickets changes.
-  this.autorun(() => {
+  self.autorun(() => {
     _setCutoffMarker(self, Template.currentData(), 3);
   });
 });

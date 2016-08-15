@@ -16,7 +16,7 @@ function validateEditQueueForm() {
   return true;
 }
 
-Template.editQueueModal.onRendered(() => {
+Template.editQueueModal.onRendered(function editQueueModalOnRendered() {
   const data = Template.currentData();
   const locationName = Locations.findOne(data.location).name;
 

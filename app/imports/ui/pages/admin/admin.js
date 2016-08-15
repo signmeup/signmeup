@@ -13,7 +13,7 @@ import '/imports/ui/components/modals/createCourseModal/createCourseModal';
 
 import './admin.html';
 
-Template.admin.onCreated(() => {
+Template.admin.onCreated(function adminOnCreated() {
   const self = this;
   self.autorun(() => {
     self.subscribe('courses');

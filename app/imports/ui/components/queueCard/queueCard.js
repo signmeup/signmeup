@@ -19,7 +19,7 @@ Template.queueCardLink.helpers({
   },
 });
 
-Template.queueCardContent.onRendered(() => {
+Template.queueCardContent.onRendered(function queueCardContentOnRendered() {
   $(this.findAll('.js-status-dropdown')).dropdown();
 });
 

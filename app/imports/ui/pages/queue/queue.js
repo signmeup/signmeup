@@ -10,7 +10,7 @@ import '/imports/ui/components/modals/joinQueueModal/joinQueueModal';
 
 import './queue.html';
 
-Template.queue.onCreated(() => {
+Template.queue.onCreated(function queueOnCreated() {
   const self = this;
   self.autorun(() => {
     const queueId = FlowRouter.getParam('queueId');

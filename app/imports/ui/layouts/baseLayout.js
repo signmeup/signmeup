@@ -8,8 +8,9 @@ import '/imports/ui/components/footer/footer';
 import './baseLayout.html';
 
 Template.baseLayout.onCreated(function baseLayoutOnCreated() {
-  this.autorun(() => {
-    this.subscribe('userData');
-    this.subscribe('locations');
+  const self = this;
+  self.autorun(() => {
+    self.subscribe('userData');
+    self.subscribe('locations');
   });
 });

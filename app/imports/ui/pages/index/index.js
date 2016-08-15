@@ -11,10 +11,11 @@ import '/imports/ui/components/modals/createQueueModal/createQueueModal';
 import './index.html';
 
 Template.index.onCreated(function indexOnCreated() {
-  this.autorun(() => {
-    this.subscribe('courses');
-    this.subscribe('activeQueues');
-    this.subscribe('allActiveTickets');
+  const self = this;
+  self.autorun(() => {
+    self.subscribe('courses');
+    self.subscribe('activeQueues');
+    self.subscribe('allActiveTickets');
   });
 });
 
