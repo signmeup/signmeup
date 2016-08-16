@@ -3,16 +3,18 @@ import { Template } from 'meteor/templating';
 
 import './nav.html';
 
-Template.nav.events({
-  'click .js-sign-in': (event) => {
-    event.preventDefault();
+Template.Nav.events({
+  'click .js-sign-in'() {
     Meteor.loginWithSaml(() => {
-      console.log(`Welcome ${Meteor.user().profile.givenName}!`); // eslint-disable-line no-console
+      if (Meteor.user()) {
+        /* eslint-disable no-console */
+        console.log(`Welcome ${Meteor.user().profile.givenName}!`);
+        /* eslint-enable no-console */
+      }
     });
   },
 
-  'click .js-sign-out': (event) => {
-    event.preventDefault();
+  'click .js-sign-out'() {
     Meteor.logout();
   },
 });

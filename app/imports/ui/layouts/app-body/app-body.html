@@ -1,0 +1,11 @@
+<template name="AppBody">
+  <div id="app" class="app-body">
+    {{> Nav}}
+
+    <main>
+      {{> Template.dynamic template=content}}
+    </main>
+
+    {{> Footer}}
+  </div>
+</template>

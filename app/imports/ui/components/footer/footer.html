@@ -1,10 +1,36 @@
-<template name="footer">
-  <footer>
-    <div class="ui horizontal link list">
-      <a class="item disabled">SignMeUp {{version}}</a>
-      <a href="https://github.com/signmeup/signmeup/wiki" class="item">Wiki</a>
-      <a href="https://github.com/signmeup/signmeup/issues/new" class="item">Report an Issue</a>
-      <a href="mailto:signmeup-dev@lists.cs.brown.edu" class="item">Contact</a>
+<template name="Footer">
+  <footer class="navbar navbar-light p-t-1 p-b-2">
+    <div class="container">
+
+      <ul class="nav navbar-nav pull-xs-left">
+        <li class="nav-item disabled">
+          <span class="nav-link">
+            SignMeUp {{version}}
+          </span>
+        </li>
+        <li class="nav-item">
+          <iframe
+            class="github-button"
+            src="https://ghbtns.com/github-btn.html?user=signmeup&repo=signmeup&type=star&count=true"
+            frameborder="0"
+            scrolling="0"
+            width="160px"
+            height="20px">
+          </iframe>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav pull-xs-right">
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/signmeup/signmeup/wiki">Wiki</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="https://github.com/signmeup/signmeup/issues/new">Report an Issue</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="mailto:signmeup-dev@lists.cs.brown.edu">Contact</a>
+        </li>
+      </ul>
     </div>
   </footer>
 </template>

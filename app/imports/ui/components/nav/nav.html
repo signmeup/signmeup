@@ -1,28 +1,30 @@
-<template name="nav">
-  <nav>
-    <div class="ui secondary menu">
-      <a href="/" class="item">SignMeUp</a>
-
-      <div class="right icon menu">
-        {{#if currentUser }}
-          <div class="disabled item">Welcome, {{userShortName}}</div>
+<template name="Nav">
+  <nav class="nav navbar navbar-light p-t-1 p-b-1">
+    <div class="container">
+      <a class="navbar-brand" href="/">SignMeUp</a>
+      <ul class="nav navbar-nav pull-xs-right">
+        {{#if currentUser}}
+          <li class="nav-item">
+            <span class="nav-link disabled">Welcome, {{userShortName}}</span>
+          </li>
         {{/if}}
 
-        {{#if userIs 'admin'}}
-          <a class="item" href="/admin"><i class="setting icon"></i></a>
+        {{#if isInRole 'admin,hta'}}
+          <li class="nav-item">
+            <a class="nav-link" href="/dashboard">Settings</a>
+          </li>
+        {{/if}}
+
+        {{#if currentUser}}
+          <li class="nav-item">
+            <button type="button" class="btn btn-secondary js-sign-out">Sign Out</button>
+          </li>
         {{else}}
-          {{#if userIs 'hta'}}
-            <a class="item" href="/hta"><i class="setting icon"></i></a>
-          {{/if}}
+          <li class="nav-item">
+            <button type="button" class="btn btn-primary js-sign-in">Sign In</button>
+          </li>
         {{/if}}
-
-        {{#if currentUser }}
-          <a class="item js-sign-out"><i class="sign out icon"></i></a>
-        {{else}}
-          <a href="#" class="item js-sign-in">Sign In</a>
-        {{/if}}
-
-      </div>
+      </ul>
     </div>
   </nav>
 </template>
