@@ -9,7 +9,7 @@ import { authorized } from '/imports/lib/both/auth';
 
 Meteor.publish('queue', (queueId) => {
   check(queueId, String);
-  Queues.find({ _id: queueId });
+  return Queues.find({ _id: queueId });
 });
 
 Meteor.publish('activeQueues', () => {

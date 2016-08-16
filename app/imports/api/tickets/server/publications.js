@@ -49,7 +49,7 @@ Meteor.publish('allQueueTickets', (queueId) => {
   }
 
   // Hide fields for non-TAs
-  const projection = {
+  let projection = {
     fields: {
       'notify.email': false,
       'notify.phone': false,
@@ -63,11 +63,11 @@ Meteor.publish('allQueueTickets', (queueId) => {
   }
 
   if (!isTA) {
-    _.extend(projection.fields, {
+    projection = {
       question: false,
       notify: false,
       ta: false,
-    });
+    };
   }
 
   return Tickets.find({
