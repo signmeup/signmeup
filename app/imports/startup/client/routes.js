@@ -10,6 +10,7 @@ import '/imports/ui/pages/index/index.js';
 // import '/imports/ui/pages/404/404';
 // import '/imports/ui/pages/admin/admin';
 // import '/imports/ui/pages/index/index';
+import '/imports/ui/pages/login-password/login-password.js';
 // import '/imports/ui/pages/loginPassword/loginPassword';
 // import '/imports/ui/pages/queue/queue';
 
@@ -17,16 +18,16 @@ import '/imports/ui/pages/index/index.js';
 // This setting makes it render directly into body.
 BlazeLayout.setRoot('body');
 
-// // Authentication
-//
-// FlowRouter.route('/login-password', {
-//   name: 'loginPassword',
-//   action() {
-//     BlazeLayout.render('baseLayout', { content: 'loginPassword' });
-//   },
-// });
-//
-// // Pages
+// Authentication
+
+FlowRouter.route('/login-password', {
+  name: 'login-password',
+  action() {
+    BlazeLayout.render('AppBody', { content: 'LoginPassword' });
+  },
+});
+
+// Pages
 
 FlowRouter.route('/', {
   name: 'index',

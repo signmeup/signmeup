@@ -20,7 +20,6 @@ ejson
 spacebars
 check
 semantic:ui
-accounts-ui
 accounts-password
 momentjs:moment
 fourseven:scss
@@ -41,3 +40,4 @@ less
 meteortoys:allthings
 ecmascript
 alanning:roles
+useraccounts:bootstrap

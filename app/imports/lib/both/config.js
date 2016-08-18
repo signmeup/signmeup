@@ -1,7 +1,8 @@
-// Config Packages
+// Config packages
 
-import { Accounts } from 'meteor/accounts-base';
+import { AccountsTemplates } from 'meteor/useraccounts:core'; // eslint-disable-line
 
-Accounts.config({
+AccountsTemplates.configure({
+  enablePasswordChange: true,
   forbidClientAccountCreation: true,
 });

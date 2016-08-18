@@ -5,14 +5,17 @@ const version = process.env.VERSION || '';
 Meteor.settings.public.version = version;
 console.log(`Running SignMeUp ${version}`); // eslint-disable-line no-console
 
+// Set config
+import '/imports/lib/both/config.js';
+
 // Register API
-import './register-api';
+import './register-api.js';
 
 // Run migrations
-import './migrations/migrations';
+import './migrations/migrations.js';
 
 // Initialize test data
-import './fixtures';
+import './fixtures.js';
 
 // Run cron jobs
-import './cron-jobs';
+import './cron-jobs.js';
