@@ -13,8 +13,4 @@ Template.QueueCard.helpers({
   svgPatternUrl() {
     return Template.instance().svgPattern.toDataUrl();
   },
-
-  svgPatternColor() {
-    return Template.instance().svgPattern.color;
-  },
 });
