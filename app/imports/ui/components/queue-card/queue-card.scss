@@ -1,0 +1,14 @@
+.queue-card {
+  color: inherit !important;
+  text-decoration: none !important;
+
+  transition: box-shadow 0.1s ease-in-out;
+
+  @include hover-focus-active {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.05);
+  }
+}
+
+.queue-card-pattern {
+  height: $spacer-y;
+}
