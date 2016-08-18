@@ -6,6 +6,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "bootstrap": "^4.0.0-alpha.3",
+    "ionicons-npm": "^2.0.1",
     "meteor-node-stubs": "~0.2.0"
   },
   "devDependencies": {
@@ -20,7 +22,11 @@
   },
   "postcss": {
     "plugins": {
-      "autoprefixer": {"browsers": ["last 2 versions"]}
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
     }
   },
   "eslintConfig": {
@@ -35,9 +41,15 @@
       "import/resolver": "meteor"
     },
     "rules": {
-      "arrow-body-style": ["error", "always"],
+      "arrow-body-style": [
+        "error",
+        "always"
+      ],
       "import/no-unresolved": 1,
-      "meteor/template-names": [2, "pascal-case"],
+      "meteor/template-names": [
+        2,
+        "pascal-case"
+      ],
       "new-cap": 0,
       "newline-per-chained-call": 0,
       "no-param-reassign": 1,
