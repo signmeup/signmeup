@@ -1,5 +1,8 @@
+// Initialize global vendors
+import '/imports/lib/client/vendor.js';
+
 // Set config
 import '/imports/lib/both/config.js';
 
-// Setup routing
+// Initialize routing
 import './routes';

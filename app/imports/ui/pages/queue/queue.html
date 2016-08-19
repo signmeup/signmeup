@@ -1,33 +1,6 @@
-<template name="queue">
-  {{#if Template.subscriptionsReady}}
-    {{#with queue}}
-      {{#if userIs "ta" course}}
-        {{> taQueue}}
-      {{else}}
-        {{> studentQueue}}
-      {{/if}}
-    {{/with}}
-  {{/if}}
-</template>
-
-<template name="studentQueue">
-  <div class="six wide column">
-    {{> queueCard}}
+<template name="Queue">
+  <div class="queue">
+    {{> QueueHeader}}
+    {{> QueueBody}}
   </div>
-  <div class="ten wide column">
-    {{> queueList}}
-  </div>
-
-  {{> joinQueueModal}}
-</template>
-
-<template name="taQueue">
-  <div class="four wide column">
-    {{> queueCard}}
-  </div>
-  <div class="twelve wide column">
-    {{> taQueueList}}
-  </div>
-
-  {{> editQueueModal}}
 </template>

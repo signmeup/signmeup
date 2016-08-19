@@ -8,8 +8,8 @@
   "dependencies": {
     "bootstrap": "^4.0.0-alpha.3",
     "geopattern": "^1.2.3",
-    "ionicons-npm": "^2.0.1",
-    "meteor-node-stubs": "~0.2.0"
+    "meteor-node-stubs": "~0.2.0",
+    "tether": "^1.3.4"
   },
   "devDependencies": {
     "autoprefixer": "^6.3.1",
