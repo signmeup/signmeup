@@ -1,30 +1,17 @@
 <template name="QueueBody">
   <div class="queue-body container">
-    <div class="queue-actions p-t-2 p-b-2">
-      <div class="btn-group" data-toggle="buttons">
-        <label class="btn btn-primary">
-          <input type="radio" name="options" id="option1" autocomplete="off" checked> Active
-        </label>
-        <label class="btn btn-secondary">
-          <input type="radio" name="options" id="option2" autocomplete="off"> All Tickets
-        </label>
-      </div>
+    <div class="device-limit-alert">
+      <strong>Restricted signup mode.</strong>
+      Students can only sign up for this queue on the following devices:
 
-      <div class="pull-xs-right">
-        <button type="button" class="btn btn-secondary">
-          <i class="material-icons">add</i>
-          New announcement
-        </button>
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary">Edit Queue</button>
-          <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <span class="sr-only">Toggle Dropdown</span>
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Clear All</a>
-            <a class="dropdown-item" href="#">Shuffle Tickets</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-danger" href="#">End Queue</a>
+      <div class="device-cards">
+        <div class="device-card media">
+          <div class="media-left" href="#">
+            <i class="media-object material-icons">laptop_chromebook</i>
+          </div>
+          <div class="media-body">
+            <strong class="media-heading">Fishbowl Alpha</strong>
+            <p class="text-muted">Dan Ziring &middot; Chrome 53 on Debian</p>
           </div>
         </div>
       </div>
