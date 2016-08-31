@@ -1,0 +1,1 @@
+import './queue-devices.html';
