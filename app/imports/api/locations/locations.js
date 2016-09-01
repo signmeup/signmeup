@@ -7,6 +7,8 @@ Locations.schema = new SimpleSchema({
   name: { type: String },
 });
 
+Locations.attachSchema(Locations.schema);
+
 Locations.allow({
   insert() { return false; },
   update() { return false; },

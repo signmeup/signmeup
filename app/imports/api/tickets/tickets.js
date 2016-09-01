@@ -4,30 +4,35 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 const Tickets = new Mongo.Collection('tickets');
 
 Tickets.schema = new SimpleSchema({
+  courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
   queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  course: { type: String },
+  status: {
+    type: String,
+    allowedValues: ['open', 'claimed', 'markedAsDone', 'deleted'],
+    defaultValue: 'open',
+  },
 
-  owner: { type: Object },
-  'owner.id': { type: String, regEx: SimpleSchema.RegEx.Id },
-  'owner.name': { type: String },
+  studentIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
+  question: { type: String, optional: true },
 
-  status: { type: String, allowedValues: ['open', 'done', 'cancelled'] },
-  question: { type: String },
+  notifications: { type: Object, defaultValue: {} },
+  'notifications.announce': { type: Boolean, optional: true },
+  'notifications.email': { type: String, regEx: SimpleSchema.RegEx.Email, optional: true },
+  'notifications.phone': { type: Object, optional: true },
+  'notifications.phone.number': { type: String },
+  'notifications.phone.carrier': { type: String, regEx: SimpleSchema.RegEx.Domain },
 
-  notify: { type: Object, optional: true },
-  'notify.types': { type: [String], allowedValues: ['announce', 'email', 'text'], minCount: 1 },
-  'notify.email': { type: String, regEx: SimpleSchema.RegEx.Email, optional: true },
-  'notify.phone': { type: String, optional: true },
-  'notify.carrier': { type: String, regEx: SimpleSchema.RegEx.Domain, optional: true },
-  'notify.sent': { type: [String], allowedValues: ['email', 'text'], optional: true },
+  createdAt: { type: Date },
+  createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
 
-  ta: { type: Object, optional: true },
-  'ta.id': { type: String, regEx: SimpleSchema.RegEx.Id },
-  'ta.email': { type: String, regEx: SimpleSchema.RegEx.Email },
+  claimedAt: { type: Date, optional: true },
+  claimedBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
 
-  createdAt: { type: Number },
-  doneAt: { type: Number, optional: true },
-  cancelledAt: { type: Number, optional: true },
+  markedAsDoneAt: { type: Date, optional: true },
+  markedAsDoneBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+
+  deletedAt: { type: Date, optional: true },
+  deletedBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
 });
 
 Tickets.attachSchema(Tickets.schema);

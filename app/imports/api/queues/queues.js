@@ -5,21 +5,28 @@ const Queues = new Mongo.Collection('queues');
 
 Queues.schema = new SimpleSchema({
   name: { type: String },
-  course: { type: String },
-  location: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
-  status: { type: String, allowedValues: ['active', 'cutoff', 'ended'] },
+  courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  locationId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+  status: { type: String, allowedValues: ['active', 'cutoff', 'ended'], defaultValue: 'active' },
 
-  owner: { type: Object, optional: true },
-  'owner.id': { type: String, regEx: SimpleSchema.RegEx.Id },
-  'owner.email': { type: String, regEx: SimpleSchema.RegEx.Email },
+  announcementIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
+  ticketIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
 
-  announcements: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
-  tickets: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
+  settings: { type: Object },
+  'settings.restrictedSessionIds': {
+    type: [String],
+    regEx: SimpleSchema.RegEx.Id,
+    defaultValue: [],
+  },
 
-  startTime: { type: Number },
-  cutoffTime: { type: Number, optional: true },
-  endTime: { type: Number, optional: true },
-  averageWaitTime: { type: Number, defaultValue: 0 },
+  startedAt: { type: Date },
+  startedBy: { type: String, regEx: SimpleSchema.RegEx.Id },
+
+  cutoffAt: { type: Date, optional: true },
+  cutoffBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+
+  endedAt: { type: Date, optional: true },
+  endedBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
 });
 
 Queues.attachSchema(Queues.schema);

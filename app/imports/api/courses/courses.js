@@ -6,16 +6,13 @@ const Courses = new Mongo.Collection('courses');
 Courses.schema = new SimpleSchema({
   name: { type: String },
   description: { type: String, optional: true },
-  listserv: { type: String, regEx: SimpleSchema.RegEx.Email, optional: true },
   active: { type: Boolean },
 
-  htas: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
-  tas: { type: [String], regEx: SimpleSchema.RegEx.Id, optional: true },
+  settings: { type: Object },
+  'settings.signupGap': { type: Number, defaultValue: 0 },
 
-  settings: { type: Object, optional: true },
-  'settings.signupGap': { type: Number, defaultValue: 0, optional: true },
-
-  createdAt: { type: Number },
+  createdAt: { type: Date },
+  deletedAt: { type: Date, optional: true },
 });
 
 Courses.attachSchema(Courses.schema);
