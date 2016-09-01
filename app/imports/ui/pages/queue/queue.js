@@ -8,5 +8,5 @@ import '/imports/ui/components/queue-body/queue-body.js';
 import './queue.html';
 
 Template.Queue.onRendered(() => {
-  document.title = 'cs15 · TA Hours · SignMeUp';
+  document.title = '(0) cs15 · TA Hours · SignMeUp';
 });
