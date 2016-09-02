@@ -4,4 +4,4 @@
 import Tether from 'tether';
 window.Tether = Tether;
 
-import 'bootstrap/dist/js/bootstrap.min.js';
+require('bootstrap/dist/js/bootstrap.js');
