@@ -1,0 +1,64 @@
+<template name="ModalQueueCreate">
+  <div class="modal-queue-create modal">
+    <div class="modal-dialog animated fadeInUp">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <i class="material-icons">close</i>
+          </button>
+          <h4 class="modal-title">New Queue</h4>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form>
+            <div class="row">
+              <!-- Course -->
+              <div class="form-group col-md-4">
+                <label for="courseId">Course</label>
+                <select name="courseId" class="form-control">
+                  <option value="a">cs15</option>
+                  <option value="b">cs16</option>
+                  <option value="c">cs17</option>
+                </select>
+              </div>
+
+              <!-- Name -->
+              <div class="form-group col-md-8 p-l-0">
+                <label for="name">Name</label>
+                <input type="text" name="name" value="TA Hours" class="form-control">
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- Location -->
+              <div class="form-group col-md-8">
+                <label for="locationId">Location</label>
+                <select name="locationId" class="form-control">
+                  <option value="a">Fishbowl</option>
+                  <option value="b">Moonlab</option>
+                </select>
+              </div>
+
+              <!-- End Time -->
+              <div class="form-group col-md-4 p-l-0">
+                <label for="endTime">End Time</label>
+                <select name="endTime" class="form-control">
+                  <option value="a">6:30 PM</option>
+                  <option value="b">7:30 PM</option>
+                </select>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Create Queue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

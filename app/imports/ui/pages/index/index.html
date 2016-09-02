@@ -5,10 +5,12 @@
         {{> QueueCard}}
       </div>
       <div class="col-lg-4 col-md-6 m-b-2">
-        <a class="card create-queue-card" href="#">
-          <i class="material-icons">add</i> Create Queue
+        <a class="card create-queue-card js-show-modal-queue-create" href="#">
+          <i class="material-icons">add</i> New Queue
         </a>
       </div>
     </div>
   </div>
+
+  {{> ModalQueueCreate}}
 </template>
