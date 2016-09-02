@@ -16,8 +16,11 @@ import { _filterActiveTicketIds } from '/imports/lib/both/filters';
 import { _nextSignupTime } from '/imports/lib/both/signup-gap';
 import { _getUserEmail } from '/imports/lib/both/users';
 
-import { sendEmailNotification, sendTextNotification } from '/imports/lib/server/notifications';
-import { updateWaitTime } from '/imports/lib/server/wait-time';
+if (Meteor.isServer) {
+  const notifications = require('/imports/lib/server/notifications'); // eslint-disable-line
+  const waitTime = require('/imports/lib/server/wait-time'); // eslint-disable-line
+}
+
 
 function validateNotify(notify) {
   if (!notify) {
@@ -133,9 +136,9 @@ Meteor.methods({
       this.unblock();
 
       if (type === 'email') {
-        sendEmailNotification(ticketId);
+        notifications.endEmailNotification(ticketId); // eslint-disable-line no-undef
       } else if (type === 'text') {
-        sendTextNotification(ticketId);
+        notifications.sendTextNotification(ticketId); // eslint-disable-line no-undef
       }
     }
   },
@@ -165,7 +168,7 @@ Meteor.methods({
       },
     });
 
-    updateWaitTime(ticketId);
+    waitTime.updateWaitTime(ticketId); // eslint-disable-line no-undef
     console.log(`Marked ticket ${ticketId} as done`);
   },
 
