@@ -9,7 +9,7 @@ console.log(`Running SignMeUp ${version}`); // eslint-disable-line no-console
 import '/imports/lib/both/config.js';
 
 // Register API
-import './register-api.js';
+import '../both/register-api.js';
 
 // Run migrations
 // TODO: review migrations given new schemas
