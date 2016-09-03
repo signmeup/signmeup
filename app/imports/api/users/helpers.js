@@ -40,11 +40,12 @@ Meteor.users.helpers({
       return Courses.find();
     }
 
-    const courseIds = Roles.getGroupsForUser(this._id, ['hta', 'ta']);
-    return Courses.find({ _id: { $in: courseIds } });
+    const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
+    const taCourseIds = Roles.getGroupsForUser(this._id, 'ta');
+    return Courses.find({ _id: { $in: htaCourseIds.concat(taCourseIds) } });
   },
 
   activeCourses() {
-    return this.courses().find({ status: 'active' });
+    return this.courses().find({ active: true });
   },
 });

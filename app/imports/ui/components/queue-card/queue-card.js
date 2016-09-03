@@ -1,16 +1,22 @@
 import { Template } from 'meteor/templating';
+
 import GeoPattern from 'geopattern';
+import moment from 'moment';
 
 import './queue-card.html';
 
-Template.QueueCard.onCreated(function onCreated() {
-  this.autorun(() => {
-    this.svgPattern = GeoPattern.generate('cs15');
-  });
-});
-
 Template.QueueCard.helpers({
-  svgPatternUrl() {
-    return Template.instance().svgPattern.toDataUrl();
+  svgPatternUrl(queue) {
+    const svgPattern = GeoPattern.generate(queue.course().name);
+    return svgPattern.toDataUrl();
+  },
+
+  signupCount(queue) {
+    const activeTicketsCount = queue.activeTickets().count();
+    return `${activeTicketsCount} signup${activeTicketsCount !== 1 ? 's' : ''}`;
+  },
+
+  scheduledEndTime(scheduledEndTime) {
+    return moment(scheduledEndTime).format('LT');
   },
 });

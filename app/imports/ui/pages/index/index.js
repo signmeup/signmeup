@@ -1,6 +1,8 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import Queues from '/imports/api/queues/queues.js';
+
 import '/imports/ui/components/queue-card/queue-card.js';
 import '/imports/ui/components/modals/modal-queue-create/modal-queue-create.js';
 
@@ -16,6 +18,17 @@ Template.Index.onCreated(function onCreated() {
 
 Template.Index.onRendered(() => {
   document.title = 'SignMeUp';
+});
+
+Template.Index.helpers({
+  activeQueues() {
+    return Queues.find({ status: { $in: ['open', 'cutoff'] } });
+  },
+
+  showCreateQueueCard(user) {
+    if (!user) return false;
+    return user.courses().count() > 0;
+  },
 });
 
 Template.Index.events({
