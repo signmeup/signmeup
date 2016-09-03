@@ -12,7 +12,8 @@ import '/imports/lib/both/config.js';
 import './register-api.js';
 
 // Run migrations
-import './migrations/migrations.js';
+// TODO: review migrations given new schemas
+// import './migrations/migrations.js';
 
 // Initialize test data
 import './fixtures.js';

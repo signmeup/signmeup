@@ -8,7 +8,7 @@ Courses.schema = new SimpleSchema({
   description: { type: String, optional: true },
   active: { type: Boolean },
 
-  settings: { type: Object },
+  settings: { type: Object, defaultValue: {} },
   'settings.signupGap': { type: Number, defaultValue: 0 },
 
   createdAt: { type: Date },

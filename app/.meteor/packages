@@ -42,3 +42,4 @@ ecmascript
 alanning:roles
 useraccounts:bootstrap
 dburles:collection-helpers
+mdg:validated-method
