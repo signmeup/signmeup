@@ -1,15 +1,20 @@
-// Courses Publications
+/* eslint-disable prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 import Courses from '/imports/api/courses/courses';
 
-Meteor.publish('courses', () => {
-  return Courses.find({});
+Meteor.publish('courses.byId', function byId(courseId) {
+  new SimpleSchema({
+    courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validate({ courseId });
+
+  return Courses.findOne(courseId);
 });
 
-Meteor.publish('course', (name) => {
-  check(name, String);
-  return Courses.find({ name });
+Meteor.publish('courses.all', function all() {
+  return Courses.find({
+    deletedAt: { $exists: false },
+  });
 });

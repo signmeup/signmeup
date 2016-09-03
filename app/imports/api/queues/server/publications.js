@@ -1,32 +1,29 @@
-// Queues Publications
+/* eslint-disable prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
-import { check } from 'meteor/check';
+import { Roles } from 'meteor/alanning:roles';
 
 import Queues from '/imports/api/queues/queues';
 
-import { authorized } from '/imports/lib/both/auth';
-
-Meteor.publish('queue', (queueId) => {
-  check(queueId, String);
-  return Queues.find({ _id: queueId });
+Meteor.publish('queues.byId', function byId(queueId) {
+  return Queues.findOne(queueId);
 });
 
-Meteor.publish('activeQueues', () => {
-  return Queues.find({ status: { $nin: ['ended', 'cancelled'] } });
+Meteor.publish('queues.active', function active() {
+  return Queues.find({ status: { $in: ['open', 'cutoff'] } });
 });
 
-Meteor.publish('allQueuesInRange', (course, startTime = 0, endTime = Date.now()) => {
-  check(course, String);
-  check(startTime, Number);
-  check(endTime, Number);
-
-  if (!authorized.hta(this.userId, course)) {
-    throw new Meteor.Error('not-allowed');
+Meteor.publish('queues.inRange', function inRange(courseId, startTime, endTime) {
+  if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], courseId)) {
+    throw new Meteor.Error('queues.inRange.unauthorized',
+      'Only TAs and above can get queues from a specified range.');
   }
 
   return Queues.find({
-    course,
-    startTime: { $gte: startTime, $lte: endTime },
+    courseId,
+    createdAt: {
+      $gte: startTime.toISOString(),
+      $lte: endTime.toISOString(),
+    },
   });
 });

@@ -4,6 +4,7 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 const Sessions = new Mongo.Collection('sessions');
 
 Sessions.schema = new SimpleSchema({
+  secret: { type: String, regEx: SimpleSchema.RegEx.Id },
   userId: { type: String, regEx: SimpleSchema.RegEx.Id },
   userAgent: { type: String },
 });

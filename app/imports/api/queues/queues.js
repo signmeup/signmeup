@@ -7,7 +7,7 @@ Queues.schema = new SimpleSchema({
   name: { type: String },
   courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
   locationId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
-  status: { type: String, allowedValues: ['active', 'cutoff', 'ended'], defaultValue: 'active' },
+  status: { type: String, allowedValues: ['open', 'cutoff', 'ended'], defaultValue: 'open' },
 
   announcementIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
   ticketIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },

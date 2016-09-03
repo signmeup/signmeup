@@ -27,7 +27,10 @@ function createUser(options) {
     userId = Meteor.users.insert({ email: options.email, profile: {} });
   } else {
     const user = Meteor.users.findOne({ 'emails.address': options.email });
-    if (user) return;
+    if (user) {
+      if (Roles.userIsInRole(user._id, ['ta'], testCourseId)) testTAId = user._id;
+      return;
+    }
 
     userId = Accounts.createUser({
       email: options.email,

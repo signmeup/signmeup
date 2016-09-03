@@ -31,7 +31,6 @@ export const createQueue = new ValidatedMethod({
       name,
       courseId,
       locationId,
-      status: 'active',
       scheduledEndTime,
 
       createdAt: new Date(),
