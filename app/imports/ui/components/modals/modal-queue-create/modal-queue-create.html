@@ -18,9 +18,9 @@
               <div class="form-group col-md-4">
                 <label for="courseId">Course</label>
                 <select name="courseId" class="form-control">
-                  <option value="a">cs15</option>
-                  <option value="b">cs16</option>
-                  <option value="c">cs17</option>
+                  {{#each course in activeCourses}}
+                    <option value="{{course._id}}">{{course.name}}</option>
+                  {{/each}}
                 </select>
               </div>
 
@@ -36,8 +36,9 @@
               <div class="form-group col-md-8">
                 <label for="locationId">Location</label>
                 <select name="locationId" class="form-control">
-                  <option value="a">Fishbowl</option>
-                  <option value="b">Moonlab</option>
+                  {{#each location in locations}}
+                    <option value="{{location._id}}">{{location.name}}</option>
+                  {{/each}}
                 </select>
               </div>
 
@@ -45,8 +46,9 @@
               <div class="form-group col-md-4 p-l-0">
                 <label for="endTime">End Time</label>
                 <select name="endTime" class="form-control">
-                  <option value="a">6:30 PM</option>
-                  <option value="b">7:30 PM</option>
+                  {{#each time in endTimes}}
+                    <option value="{{time.ISOString}}">{{time.formattedString}}</option>
+                  {{/each}}
                 </select>
               </div>
             </div>
