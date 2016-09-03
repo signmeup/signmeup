@@ -4,11 +4,10 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 
-// import Courses from '/imports/api/courses/courses';
-// import Locations from '/imports/api/locations/locations';
-// import Queues from '/imports/api/queues/queues';
+import moment from 'moment';
 
 import { createCourse } from '/imports/api/courses/methods.js';
+import { createQueue } from '/imports/api/queues/methods.js';
 
 function createUser(options) {
   let userId = null;
@@ -96,7 +95,15 @@ function init() {
     name: 'cs00',
     description: 'Test Course',
   });
+
   createUsers(testCourseId);
+
+  createQueue.call({
+    name: 'TA Hours',
+    courseId: testCourseId,
+    locationId: testCourseId,
+    scheduledEndTime: moment().add(4, 'hours').startOf('hour').toDate(),
+  });
 }
 
 init();

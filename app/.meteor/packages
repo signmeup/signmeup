@@ -43,3 +43,4 @@ alanning:roles
 useraccounts:bootstrap
 dburles:collection-helpers
 mdg:validated-method
+aldeed:simple-schema

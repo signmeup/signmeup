@@ -1,272 +1,43 @@
-// Queue Methods
-
-// TODO: Replace input error checks with check()
-// TODO: Replace 'not-allowed' errors with 403 errors
-
 import { Meteor } from 'meteor/meteor';
-import { check, Match } from 'meteor/check';
-import { SyncedCron } from 'meteor/percolate:synced-cron';
-import { _ } from 'meteor/underscore';
+import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { Roles } from 'meteor/alanning:roles';
 
-import Courses from '/imports/api/courses/courses';
-import Locations from '/imports/api/locations/locations';
-import Queues from '/imports/api/queues/queues';
-import Tickets from '/imports/api/tickets/tickets';
+import Courses from '/imports/api/courses/courses.js';
+import Locations from '/imports/api/locations/locations.js';
+import Queues from '/imports/api/queues/queues.js';
 
-import { authorized } from '/imports/lib/both/auth';
-import { _getUserEmail } from '/imports/lib/both/users';
-import { _filterActiveTicketIds, _activeTickets } from '/imports/lib/both/filters';
-
-Meteor.methods({
-  createQueue(course, name, location, endTime, ownerId = null) {
-    check(course, String);
-    check(name, String);
-    check(location, String);
-    check(endTime, Number);
-    check(ownerId, Match.Maybe(String));
-
-    const clientCall = !!(this.connection);
-    if (clientCall && !authorized.ta(Meteor.userId, course)) {
-      throw new Meteor.Error('not-allowed');
+export const createQueue = new ValidatedMethod({
+  name: 'queues.createQueue',
+  validate: Queues.simpleSchema().pick([
+    'name', 'courseId', 'locationId', 'scheduledEndTime',
+  ]).validator(),
+  run({ name, courseId, locationId, scheduledEndTime }) {
+    if (!Courses.findOne(courseId)) {
+      throw new Meteor.Error('courses.doesNotExist',
+        `No course exists with id ${courseId}`);
     }
 
-    if (!Courses.find({ name: course }).fetch()) {
-      throw new Meteor.Error('invalid-course-name');
+    if (!Locations.findOne(locationId)) {
+      throw new Meteor.Error('locations.doesNotExist',
+        `No location exists with id ${locationId}`);
     }
 
-    let locationId;
-    const locationObject = Locations.findOne({ name: location });
-    if (locationObject) {
-      locationId = locationObject._id;
-    } else {
-      locationId = Locations.insert({
-        name: location,
-      });
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], courseId)) {
+      throw new Meteor.Error('queues.createQueue.unauthorized',
+        'Only TAs and above can create queues.');
     }
 
-    if (endTime <= Date.now()) {
-      throw new Meteor.Error('invalid-end-time');
-    }
-
-    // Create queue
-    let queue = {
+    const queueId = Queues.insert({
       name,
-      course,
-      location: locationId,
-
+      courseId,
+      locationId,
       status: 'active',
+      scheduledEndTime,
 
-      startTime: Date.now(),
-      endTime,
-      averageWaitTime: 0,
-
-      announcements: [],
-      tickets: [],
-    };
-
-    if (clientCall) {
-      queue = Object.extend(queue, {
-        owner: {
-          id: Meteor.userId(),
-          email: _getUserEmail(Meteor.userId()),
-        },
-      });
-    }
-
-    let queueId = Queues.insert(queue);
-    console.log(`Created queue ${queueId}`);
-
-    // Create ender cron job
-    console.log('Creating cron job');
-    SyncedCron.add({
-      name: `${queueId}-ender`,
-      schedule(parser) {
-        const date = new Date(endTime);
-        return parser.recur().on(date).fullDate();
-      },
-      job() {
-        queueId = this.name.split('-')[0];
-        Meteor.call('endQueue', queueId);
-      },
-    });
-  },
-
-  updateQueue(queueId, name, location, endTime) {
-    check(queueId, String);
-    check(name, String);
-    check(location, String);
-    check(endTime, Number);
-
-    const queue = Queues.findOne({ _id: queueId });
-    if (!queue) {
-      throw new Meteor.Error('invalid-queue-id');
-    }
-    if (!authorized.ta(Meteor.userId, queue.course)) {
-      throw new Meteor.Error('not-allowed');
-    }
-
-    let locationId;
-    const locationObject = Locations.findOne({ name: location });
-    if (locationObject) {
-      locationId = locationObject._id;
-    } else {
-      locationId = Locations.insert({
-        name: location,
-      });
-    }
-
-    if (endTime <= Date.now()) {
-      throw new Meteor.Error('invalid-end-time');
-    }
-
-    Queues.update(queueId, {
-      $set: {
-        name,
-        location: locationId,
-        endTime,
-      },
+      createdAt: new Date(),
+      createdBy: this.userId,
     });
 
-    // Remove old cron job, create new one
-    SyncedCron.remove(`${queueId}-ender`);
-    console.log('Creating cron job');
-    SyncedCron.add({
-      name: `${queueId}-ender`,
-      schedule(parser) {
-        const date = new Date(endTime);
-        return parser.recur().on(date).fullDate();
-      },
-      job() {
-        const queueId = this.name.split('-')[0];
-        Meteor.call('endQueue', queueId);
-      },
-    });
-  },
-
-  clearQueue(queueId) {
-    check(queueId, String);
-
-    const queue = Queues.findOne({ _id: queueId });
-    if (!queue) {
-      throw new Meteor.Error('invalid-queue-id');
-    }
-
-    if (queue.status === 'ended') {
-      throw new Meteor.Error('queue-ended');
-    }
-
-    if (!authorized.ta(Meteor.userId, queue.course)) {
-      throw new Meteor.Error('not-allowed');
-    }
-
-    const activeTicketIds = _.map(_activeTickets(queue.tickets), (t) => {
-      return t._id;
-    });
-
-    Tickets.update({ _id: { $in: activeTicketIds } }, {
-      $set: { status: 'cancelled' },
-    });
-  },
-
-  shuffleQueue(queueId) {
-    check(queueId, String);
-
-    const queue = Queues.findOne({ _id: queueId });
-    if (!queue) {
-      throw new Meteor.Error('invalid-queue-id');
-    }
-
-    if (queue.status === 'ended') {
-      throw new Meteor.Error('queue-ended');
-    }
-
-    if (!authorized.ta(Meteor.userId, queue.course)) {
-      throw new Meteor.Error('not-allowed');
-    }
-
-    const activeTicketIds = _filterActiveTicketIds(queue.tickets);
-    const startingIndex = queue.tickets.indexOf(activeTicketIds[0]);
-    const newTickets = queue.tickets.slice(0, startingIndex).concat(_.shuffle(activeTicketIds));
-
-    Queues.update({ _id: queueId }, {
-      $set: { tickets: newTickets },
-    });
-    console.log(`Shuffled tickets for ${queueId}`);
-  },
-
-  activateQueue(queueId) {
-    check(queueId, String);
-
-    // Make a cutoff queue active again
-    const queue = Queues.findOne({ _id: queueId });
-    if (!queue) {
-      throw new Meteor.Error('invalid-queue-id');
-    }
-
-    if (queue.status === 'ended') {
-      throw new Meteor.Error('queue-ended');
-    }
-
-    if (!authorized.ta(Meteor.userId, queue.course)) {
-      throw new Meteor.Error('not-allowed');
-    }
-
-    Queues.update(queueId, {
-      $set: { status: 'active' },
-      $unset: { cutoffTime: '' },
-    });
-  },
-
-  cutoffQueue(queueId) {
-    check(queueId, String);
-
-    const queue = Queues.findOne({ _id: queueId });
-    if (!queue) {
-      throw new Meteor.Error('invalid-queue-id');
-    }
-
-    if (queue.status === 'ended') {
-      throw new Meteor.Error('queue-ended');
-    }
-
-    if (!authorized.ta(Meteor.userId, queue.course)) {
-      throw new Meteor.Error('not-allowed');
-    }
-
-    console.log(`Cutting off ${queueId}`);
-
-    Queues.update(queueId, {
-      $set: {
-        status: 'cutoff',
-        cutoffTime: Date.now(),
-      },
-    });
-  },
-
-  endQueue(queueId) {
-    check(queueId, String);
-
-    const queue = Queues.findOne({ _id: queueId });
-    if (!queue) {
-      throw new Meteor.Error('invalid-queue-id');
-    }
-
-    const clientCall = !!(this.connection);
-    if (clientCall && !authorized.ta(Meteor.userId, queue.course)) {
-      throw new Meteor.Error('not-allowed');
-    }
-
-    console.log(`Ending queue ${queueId}`);
-
-    // TODO: Cancel active tickets?
-
-    SyncedCron.remove(`${queueId}-ender`);
-
-    Queues.update(queueId, {
-      $set: {
-        status: 'ended',
-        endTime: Date.now(),
-      },
-    });
+    return queueId;
   },
 });

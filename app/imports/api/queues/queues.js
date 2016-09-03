@@ -12,15 +12,17 @@ Queues.schema = new SimpleSchema({
   announcementIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
   ticketIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
 
-  settings: { type: Object },
+  settings: { type: Object, defaultValue: {} },
   'settings.restrictedSessionIds': {
     type: [String],
     regEx: SimpleSchema.RegEx.Id,
     defaultValue: [],
   },
 
-  startedAt: { type: Date },
-  startedBy: { type: String, regEx: SimpleSchema.RegEx.Id },
+  scheduledEndTime: { type: Date },
+
+  createdAt: { type: Date },
+  createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
 
   cutoffAt: { type: Date, optional: true },
   cutoffBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
