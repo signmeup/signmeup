@@ -5,11 +5,11 @@
       <ul class="nav navbar-nav pull-xs-right">
         {{#if currentUser}}
           <li class="nav-item">
-            <span class="nav-link disabled">Welcome, {{currentUser.firstName}}</span>
+            <span class="nav-link nav-link-static disabled">Welcome, {{currentUser.firstName}}</span>
           </li>
         {{/if}}
 
-        {{#if isInRole 'admin,hta'}}
+        {{#if isInRole 'admin,mta,hta'}}
           <li class="nav-item">
             <a class="nav-link" href="/dashboard">Settings</a>
           </li>

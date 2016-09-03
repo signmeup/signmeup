@@ -1,3 +1,12 @@
 .app-nav {
   border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 }
+
+.nav-link-static.disabled {
+  cursor: text;
+
+  &:hover, &:active, &:focus {
+    cursor: text !important;
+    color: $navbar-light-color !important;
+  }
+}

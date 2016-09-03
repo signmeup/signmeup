@@ -1,9 +1,12 @@
 import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
 import Courses from '/imports/api/courses/courses.js';
 import Locations from '/imports/api/locations/locations.js';
+
+import { createQueue } from '/imports/api/queues/methods.js';
 
 import './modal-queue-create.html';
 
@@ -29,5 +32,24 @@ Template.ModalQueueCreate.helpers({
     }
 
     return endTimes;
+  },
+});
+
+Template.ModalQueueCreate.events({
+  'submit #js-modal-queue-create-form'(event) {
+    event.preventDefault();
+
+    const data = {
+      courseId: event.target.courseId.value,
+      name: event.target.name.value,
+      locationId: event.target.locationId.value,
+      scheduledEndTime: new Date(event.target.endTime.value),
+    };
+
+    createQueue.call(data, (err) => {
+      // TODO: surface ValidationErrors to UI
+      if (err) console.error(err);
+      $('.modal-queue-create').modal('hide');
+    });
   },
 });
