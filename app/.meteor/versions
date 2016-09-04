@@ -7,6 +7,7 @@ aldeed:schema-deny@1.0.1
 aldeed:schema-index@1.0.1
 aldeed:simple-schema@1.5.3
 allow-deny@1.0.5
+amplify@1.0.0
 athyuttamre:accounts-saml2@0.0.3
 autoupdate@1.2.11
 babel-compiler@6.8.4
@@ -118,6 +119,7 @@ standard-minifier-js@1.0.8
 templating@1.1.13
 templating-tools@1.0.4
 tracker@1.0.14
+u2622:persistent-session@0.4.4
 ui@1.0.11
 underscore@1.0.9
 url@1.0.10

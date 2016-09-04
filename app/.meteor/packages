@@ -44,3 +44,4 @@ useraccounts:bootstrap
 dburles:collection-helpers
 mdg:validated-method
 aldeed:simple-schema
+u2622:persistent-session
