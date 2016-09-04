@@ -10,39 +10,15 @@
       </div>
 
       <div class="tbody">
-        <div class="row">
-          <div class="td col-xs-1">1</div>
-          <div class="td col-xs-6">Athyuttam Eleti</div>
-          <div class="td col-xs-2">3 minutes ago</div>
-          <div class="td col-xs-3 actions">
-            <div class="btn-group">
-              <button type="button" class="btn btn-secondary">Claim ticket</button>
-              <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-              <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Mark as missing</a>
-                <a class="dropdown-item text-danger" href="#">Delete ticket</a>
-              </div>
-            </div>
+        {{#if activeTicketsAvailable}}
+          {{#each ticket in queue.activeTickets}}
+            {{> Ticket ticket=ticket}}
+          {{/each}}
+        {{else}}
+          <div class="row empty">
+            No signups to show.
           </div>
-        </div>
-        <div class="row drawer">
-          <div class="td col-xs-1 text-muted">1m 30s</div>
-          <div class="td col-xs-6">
-            <h5>Question</h5>
-            <p>How do trees work?</p>
-          </div>
-          <div class="td col-xs-5">
-            <h5>Notifications</h5>
-            <div class="btn-group" role="group" aria-label="Basic example">
-              <button type="button" class="btn btn-secondary" disabled>Announce name</button>
-              <button type="button" class="btn btn-secondary">Send email</button>
-              <button type="button" class="btn btn-secondary">Send text</button>
-            </div>
-          </div>
-        </div>
-        <div class="row empty">
-          No signups to show.
-        </div>
+        {{/if}}
       </div>
     </div>
   </div>

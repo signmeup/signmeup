@@ -1,0 +1,1 @@
+import './ticket-drawer.html';
