@@ -24,6 +24,19 @@ i.material-icons {
 @import "{}/imports/ui/components/nav/nav.scss";
 
 @import "{}/imports/ui/components/modals/modal-queue-create/modal-queue-create.scss";
+@import "{}/imports/ui/components/modals/modal-join-queue/modal-join-queue.scss";
+
+.modal {
+  .close .material-icons {
+    margin-right: 0;
+    vertical-align: middle;
+  }
+
+  .modal-dialog {
+    margin-top: 20vh;
+    animation-duration: 0.4s;
+  }
+}
 
 @import "{}/imports/ui/components/queue-card/queue-card.scss";
 @import "{}/imports/ui/components/queue-header/queue-header.scss";

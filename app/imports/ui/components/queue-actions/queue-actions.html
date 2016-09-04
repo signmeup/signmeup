@@ -5,11 +5,18 @@
       <span class="m-l-1 text-muted">This queue is accepting signups.</span>
 
       <div class="pull-xs-right">
-        <button type="button" class="btn btn-secondary">
-          <i class="material-icons">add</i>
-          New announcement
-        </button>
-        {{> QueueMoreDropdown}}
+        {{#if taView}}
+          <button type="button" class="btn btn-secondary">
+            <i class="material-icons">add</i>
+            New announcement
+          </button>
+          {{> QueueMoreDropdown}}
+        {{else}}
+          <button type="button" class="btn btn-primary js-show-modal-join-queue">
+            <i class="material-icons">add</i>
+            Join queue
+          </button>
+        {{/if}}
       </div>
     </div>
   </div>

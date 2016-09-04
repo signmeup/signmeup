@@ -17,7 +17,7 @@ Tickets.schema = new SimpleSchema({
 
   notifications: { type: Object, defaultValue: {} },
   'notifications.announce': { type: Boolean, optional: true },
-  'notifications.email': { type: String, regEx: SimpleSchema.RegEx.Email, optional: true },
+  'notifications.email': { type: Boolean, optional: true },
   'notifications.phone': { type: Object, optional: true },
   'notifications.phone.number': { type: String },
   'notifications.phone.carrier': { type: String, regEx: SimpleSchema.RegEx.Domain },

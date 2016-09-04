@@ -9,6 +9,7 @@ import '/imports/ui/components/queue-header/queue-header.js';
 import '/imports/ui/components/queue-actions/queue-actions.js';
 import '/imports/ui/components/queue-devices/queue-devices.js';
 import '/imports/ui/components/queue-table/queue-table.js';
+import '/imports/ui/components/modals/modal-join-queue/modal-join-queue.js';
 
 import './queue.html';
 

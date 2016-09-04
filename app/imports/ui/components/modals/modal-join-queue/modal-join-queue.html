@@ -1,0 +1,88 @@
+<template name="ModalJoinQueue">
+  <div class="modal-join-queue modal">
+    <div class="modal-dialog animated fadeInUp">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <i class="material-icons">close</i>
+          </button>
+          <h4 class="modal-title">Join Queue</h4>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form id="js-modal-join-queue-form">
+            <!-- Students -->
+            <div class="form-group">
+              <label for="student">Student(s)</label>
+              <ul class="student-list list-unstyled m-b-0">
+                <li class="student-item">
+                  <div class="content">
+                    <p class="student-name">Athyuttam Eleti</p>
+                    <small class="text-muted">athyuttam_eleti@brown.edu</small>
+                  </div>
+                  <button type="button" class="close"><i class="material-icons">close</i></button>
+                </li>
+              </ul>
+              <input type="text" name="student" class="form-control" placeholder="Enter email">
+            </div>
+
+            <!-- Question -->
+            <div class="form-group">
+              <label for="question">Question</label>
+              <textarea name="question" class="form-control" rows="3" placeholder="What would you like help on?"></textarea>
+            </div>
+
+            <!-- Notifications -->
+            <div class="form-group">
+              <label for="notifications" class="m-b-0">Notifications</label>
+              <small class="form-text text-muted m-t-0">Choose how you'd like the TA to notify you when your turn comes.</small>
+              <div class="form-inline">
+                <div class="form-check m-r-1">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox" checked> Announce my name
+                  </label>
+                </div>
+                <div class="form-check m-r-1">
+                  <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox"> Email me
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input class="form-check-input js-text-checkbox" type="checkbox"> Text me
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications: text -->
+            <div class="row">
+              <div class="col-md-6">
+                <label for="carrier">Carrier</label>
+                <select name="carrier" class="form-control">
+                  <option value="att.net">AT&amp;T</option>
+                  <option value="tmo.net">T-Mobile</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="phone-number">Phone Number</label>
+                <input type="tel" name="phone-number" class="form-control" placeholder="000-000-0000">
+              </div>
+            </div>
+            <div class="form-group">
+
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" form="js-modal-join-queue-form" class="btn btn-primary">Join Queue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
