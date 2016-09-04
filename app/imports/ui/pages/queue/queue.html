@@ -2,7 +2,7 @@
   <div class="queue">
     {{#if Template.subscriptionsReady}}
       {{> QueueHeader queue=queue taView=taView}}
-      {{> QueueDevices queue=queue taView=taView}}
+      {{> QueueAlertRestrictedSignups queue=queue taView=taView}}
       {{> QueueActions queue=queue taView=taView}}
       {{> QueueTable queue=queue taView=taView}}
     {{/if}}

@@ -1,8 +1,8 @@
 import { Template } from 'meteor/templating';
 
-import './queue-devices.html';
+import './queue-alert-restricted-signups.html';
 
-Template.QueueDevices.onCreated(function onCreated() {
+Template.QueueAlertRestrictedSignups.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('sessions.byQueueId', Template.currentData().queue._id);
   });
