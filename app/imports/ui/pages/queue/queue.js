@@ -1,5 +1,7 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
+import { Roles } from 'meteor/alanning:roles';
 
 import Queues from '/imports/api/queues/queues.js';
 
@@ -12,11 +14,13 @@ import './queue.html';
 
 Template.Queue.onCreated(function onCreated() {
   this.getQueueId = () => { return FlowRouter.getParam('queueId'); };
+  this.getView = () => { return FlowRouter.getQueryParam('view'); };
+  this.getQueue = () => { return Queues.findOne(this.getQueueId()); };
 
   this.autorun(() => {
     this.subscribe('queues.byId', this.getQueueId());
 
-    const queue = Queues.findOne(this.getQueueId());
+    const queue = this.getQueue();
     if (queue) this.subscribe('courses.byId', queue.courseId);
   });
 });
@@ -24,7 +28,7 @@ Template.Queue.onCreated(function onCreated() {
 Template.Queue.onRendered(function onRendered() {
   this.autorun(() => {
     if (this.subscriptionsReady()) {
-      const queue = Queues.findOne(this.getQueueId());
+      const queue = this.getQueue();
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
     }
   });
@@ -32,6 +36,19 @@ Template.Queue.onRendered(function onRendered() {
 
 Template.Queue.helpers({
   queue() {
-    return Queues.findOne(Template.instance().getQueueId());
+    return Template.instance().getQueue();
+  },
+
+  view() {
+    if (this.getView() === 'student') {
+      return 'student';
+    }
+
+    const courseId = Template.instance().getQueue().courseId;
+    if (Roles.userIsInRole(Meteor.user(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
+      return 'ta';
+    }
+
+    return 'student';
   },
 });

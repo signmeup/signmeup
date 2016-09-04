@@ -1,10 +1,10 @@
 <template name="Queue">
   <div class="queue">
     {{#if Template.subscriptionsReady}}
-      {{> QueueHeader queue=queue}}
-      {{> QueueActions queue=queue}}
-      {{> QueueDevices queue=queue}}
-      {{> QueueTable queue=queue}}
+      {{> QueueHeader queue=queue view=view}}
+      {{> QueueDevices queue=queue view=view}}
+      {{> QueueActions queue=queue view=view}}
+      {{> QueueTable queue=queue view=view}}
     {{/if}}
   </div>
 </template>
