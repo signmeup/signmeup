@@ -1,16 +1,7 @@
 <template name="QueueActions">
   <div class="queue-actions p-t-2 p-b-2">
     <div class="container">
-      <div class="btn-group">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="material-icons">flash_on</i> Active
-        </button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#"><i class="material-icons">warning</i>Cutoff</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item text-danger" href="#"><i class="material-icons">do_not_disturb_alt</i>End Queue</a>
-        </div>
-      </div>
+      {{> QueueStatusDropdown}}
       <span class="m-l-1 text-muted">This queue is accepting signups.</span>
 
       <div class="pull-xs-right">
@@ -18,18 +9,7 @@
           <i class="material-icons">add</i>
           New announcement
         </button>
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            More
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item" href="#">Limit signups to device</a>
-            <a class="dropdown-item" href="#">Show past tickets</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item text-warning" href="#">Shuffle all tickets</a>
-            <a class="dropdown-item text-danger" href="#">Delete all tickets</a>
-          </div>
-        </div>
+        {{> QueueMoreDropdown}}
       </div>
     </div>
   </div>
