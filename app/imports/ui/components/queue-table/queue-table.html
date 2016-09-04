@@ -10,7 +10,7 @@
       </div>
 
       <div class="tbody">
-        {{#if activeTicketsAvailable}}
+        {{#if activeTicketsAvailable queue}}
           {{#each ticket in queue.activeTickets}}
             {{> Ticket ticket=ticket}}
           {{/each}}
