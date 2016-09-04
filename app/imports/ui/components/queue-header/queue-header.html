@@ -8,9 +8,12 @@
           <span class="m-r-1"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
           <span class="m-r-1"><i class="material-icons">people</i>{{ticketCount queue}}</span>
           <span class="m-r-1"><i class="material-icons">access_time</i>Ends at {{scheduledEndTime queue.scheduledEndTime}}</span>
-          <a href="#" role="button" class="btn-black-link pull-xs-right">
-            <i class="material-icons">mode_edit</i> Edit Queue
-          </a>
+
+          {{#if taView}}
+            <a href="#" role="button" class="btn-black-link pull-xs-right">
+              <i class="material-icons">mode_edit</i> Edit Queue
+            </a>
+          {{/if}}
         </div>
       </div>
     {{/if}}

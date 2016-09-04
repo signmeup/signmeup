@@ -39,16 +39,16 @@ Template.Queue.helpers({
     return Template.instance().getQueue();
   },
 
-  view() {
-    if (this.getView() === 'student') {
-      return 'student';
+  taView() {
+    if (Template.instance().getView() === 'student') {
+      return false;
     }
 
     const courseId = Template.instance().getQueue().courseId;
     if (Roles.userIsInRole(Meteor.user(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
-      return 'ta';
+      return true;
     }
 
-    return 'student';
+    return false;
   },
 });
