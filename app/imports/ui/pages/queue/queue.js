@@ -15,11 +15,19 @@ Template.Queue.onCreated(function onCreated() {
 
   this.autorun(() => {
     this.subscribe('queues.byId', this.getQueueId());
+
+    const queue = Queues.findOne(this.getQueueId());
+    if (queue) this.subscribe('courses.byId', queue.courseId);
   });
 });
 
-Template.Queue.onRendered(() => {
-  document.title = '(0) cs15 · TA Hours · SignMeUp';
+Template.Queue.onRendered(function onRendered() {
+  this.autorun(() => {
+    if (this.subscriptionsReady()) {
+      const queue = Queues.findOne(this.getQueueId());
+      document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
+    }
+  });
 });
 
 Template.Queue.helpers({
