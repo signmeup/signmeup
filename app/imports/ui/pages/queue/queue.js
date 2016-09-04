@@ -7,7 +7,7 @@ import Queues from '/imports/api/queues/queues.js';
 
 import '/imports/ui/components/queue-header/queue-header.js';
 import '/imports/ui/components/queue-actions/queue-actions.js';
-import '/imports/ui/components/queue-alert-restricted-signups/queue-alert-restricted-signups.js';
+import '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
 import '/imports/ui/components/queue-table/queue-table.js';
 import '/imports/ui/components/modals/modal-join-queue/modal-join-queue.js';
 
