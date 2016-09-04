@@ -5,18 +5,26 @@ import moment from 'moment';
 
 import './queue-card.html';
 
+export function svgPatternUrl(queue) {
+  const svgPattern = GeoPattern.generate(queue.course().name);
+  return svgPattern.toDataUrl();
+}
+
+export function ticketCount(queue) {
+  const activeTicketsCount = queue.activeTickets().count();
+  return `${activeTicketsCount} ticket${activeTicketsCount !== 1 ? 's' : ''}`;
+}
+
+export function scheduledEndTime(endTime) {
+  return moment(endTime).format('LT');
+}
+
 Template.QueueCard.helpers({
-  svgPatternUrl(queue) {
-    const svgPattern = GeoPattern.generate(queue.course().name);
-    return svgPattern.toDataUrl();
+  hyphenate(name) {
+    return name.toLowerCase().replace(' ', '-');
   },
 
-  signupCount(queue) {
-    const activeTicketsCount = queue.activeTickets().count();
-    return `${activeTicketsCount} signup${activeTicketsCount !== 1 ? 's' : ''}`;
-  },
-
-  scheduledEndTime(scheduledEndTime) {
-    return moment(scheduledEndTime).format('LT');
-  },
+  svgPatternUrl,
+  ticketCount,
+  scheduledEndTime,
 });

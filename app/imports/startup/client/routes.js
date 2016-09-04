@@ -7,11 +7,7 @@ import '/imports/ui/layouts/app-body/app-body.js';
 
 // Import pages
 import '/imports/ui/pages/index/index.js';
-// import '/imports/ui/pages/404/404';
-// import '/imports/ui/pages/admin/admin';
-// import '/imports/ui/pages/index/index';
 import '/imports/ui/pages/login-password/login-password.js';
-// import '/imports/ui/pages/loginPassword/loginPassword';
 import '/imports/ui/pages/queue/queue.js';
 
 // BlazeLayout normally renders layouts into a new div.
@@ -29,7 +25,7 @@ FlowRouter.route('/login-password', {
 
 // Pages
 
-FlowRouter.route('/queue', {
+FlowRouter.route('/:queueId/:queueTag', {
   name: 'queue',
   action() {
     BlazeLayout.render('AppBody', { content: 'Queue' });
@@ -43,21 +39,6 @@ FlowRouter.route('/', {
   },
 });
 
-//
-// FlowRouter.route('/admin', {
-//   name: 'admin',
-//   action() {
-//     BlazeLayout.render('baseLayout', { content: 'admin' });
-//   },
-// });
-//
-// FlowRouter.route('/hta', {
-//   name: 'hta',
-//   action() {
-//     BlazeLayout.render('baseLayout', { content: 'admin' });
-//   },
-// });
-//
 // // Errors
 //
 // FlowRouter.notFound = {

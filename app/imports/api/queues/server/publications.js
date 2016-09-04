@@ -6,7 +6,7 @@ import { Roles } from 'meteor/alanning:roles';
 import Queues from '/imports/api/queues/queues';
 
 Meteor.publish('queues.byId', function byId(queueId) {
-  return Queues.findOne(queueId);
+  return Queues.find({ _id: queueId });
 });
 
 Meteor.publish('queues.active', function active() {

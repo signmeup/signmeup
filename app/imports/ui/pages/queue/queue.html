@@ -1,8 +1,10 @@
 <template name="Queue">
   <div class="queue">
-    {{> QueueHeader}}
-    {{> QueueActions}}
-    {{> QueueDevices}}
-    {{> QueueTable}}
+    {{#if Template.subscriptionsReady}}
+      {{> QueueHeader queue=queue}}
+      {{> QueueActions queue=queue}}
+      {{> QueueDevices queue=queue}}
+      {{> QueueTable queue=queue}}
+    {{/if}}
   </div>
 </template>

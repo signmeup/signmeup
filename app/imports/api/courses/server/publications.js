@@ -10,7 +10,7 @@ Meteor.publish('courses.byId', function byId(courseId) {
     courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
   }).validate({ courseId });
 
-  return Courses.findOne(courseId);
+  return Courses.find({ _id: courseId });
 });
 
 Meteor.publish('courses.all', function all() {
