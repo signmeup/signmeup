@@ -45,4 +45,8 @@ Queues.helpers({
       _id: { $in: this.settings.restrictedSessionIds },
     });
   },
+
+  requireLogin() {
+    return !this.isRestricted();
+  },
 });

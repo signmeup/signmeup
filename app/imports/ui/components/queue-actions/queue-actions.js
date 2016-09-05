@@ -9,7 +9,7 @@ import './queue-actions.html';
 
 Template.QueueActions.events({
   'click .js-show-modal-join-queue'() {
-    if (!Meteor.user()) {
+    if (this.queue.requireLogin() && !Meteor.user()) {
       Meteor.loginWithSaml(() => {
         if (Meteor.user()) {
           $('.modal-join-queue').modal();

@@ -16,16 +16,20 @@
             <!-- Students -->
             <div class="form-group">
               <label for="student">Student(s)</label>
-              <ul class="student-list list-unstyled m-b-0">
-                <li class="student-item">
-                  <div class="content">
-                    <p class="student-name">Athyuttam Eleti</p>
-                    <small class="text-muted">athyuttam_eleti@brown.edu</small>
-                  </div>
-                  <button type="button" class="close"><i class="material-icons">close</i></button>
-                </li>
-              </ul>
-              <input type="text" name="student" class="form-control" placeholder="Enter email">
+              {{#if showStudents}}
+                <ul class="student-list list-unstyled m-b-0">
+                  {{#each student in students}}
+                    <li class="student-item" data-id="{{student._id}}">
+                      <div class="content">
+                        <p class="student-name">{{student.fullName}}</p>
+                        <small class="text-muted">{{student.emailAddress}}</small>
+                      </div>
+                      <button type="button" class="close js-remove-student"><i class="material-icons">close</i></button>
+                    </li>
+                  {{/each}}
+                </ul>
+              {{/if}}
+              <input type="text" name="student" class="form-control" placeholder="email_address@brown.edu">
             </div>
 
             <!-- Question -->
