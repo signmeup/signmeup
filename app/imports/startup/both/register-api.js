@@ -12,6 +12,7 @@ import '/imports/api/queues/methods.js';
 import '/imports/api/queues/helpers.js';
 
 import '/imports/api/sessions/methods.js';
+import '/imports/api/sessions/helpers.js';
 
 import '/imports/api/tickets/methods.js';
 

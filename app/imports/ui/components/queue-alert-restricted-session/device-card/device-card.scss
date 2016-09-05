@@ -1,0 +1,14 @@
+.device-card {
+  margin-top: $spacer-y;
+  margin-right: $spacer-x;
+
+  padding: $spacer;
+
+  border: 1px solid $gray-lighter;
+  border-radius: 4px;
+
+  .material-icons {
+    margin-top: 4px;
+    font-size: 36px !important;
+  }
+}

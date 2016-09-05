@@ -5,15 +5,9 @@
       Students can only sign up for this queue on the following devices:
 
       <div class="device-cards">
-        <div class="device-card media">
-          <div class="media-left" href="#">
-            <i class="media-object material-icons">laptop_chromebook</i>
-          </div>
-          <div class="media-body">
-            <strong class="media-heading">Fishbowl Alpha</strong>
-            <p class="text-muted">Dan Ziring &middot; Chrome 53 on Debian</p>
-          </div>
-        </div>
+        {{#each session in queue.restrictedSessions}}
+          {{> DeviceCard session=session}}
+        {{/each}}
       </div>
     </div>
   </div>

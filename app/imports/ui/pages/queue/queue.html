@@ -2,7 +2,11 @@
   <div class="queue">
     {{#if Template.subscriptionsReady}}
       {{> QueueHeader queue=queue taView=taView}}
-      {{> QueueAlertRestrictedSession queue=queue taView=taView}}
+
+      {{#if showRestrictedSessionAlert}}
+        {{> QueueAlertRestrictedSession queue=queue taView=taView}}
+      {{/if}}
+
       {{> QueueActions queue=queue taView=taView}}
       {{> QueueTable queue=queue taView=taView}}
     {{/if}}

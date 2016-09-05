@@ -1,6 +1,7 @@
 import Courses from '/imports/api/courses/courses.js';
 import Locations from '/imports/api/locations/locations.js';
 import Queues from '/imports/api/queues/queues.js';
+import Sessions from '/imports/api/sessions/sessions.js';
 import Tickets from '/imports/api/tickets/tickets.js';
 
 Queues.helpers({
@@ -20,6 +21,12 @@ Queues.helpers({
     return Tickets.find({
       _id: { $in: this.ticketIds },
       status: { $in: ['open', 'claimed'] },
+    });
+  },
+
+  restrictedSessions() {
+    return Sessions.find({
+      _id: { $in: this.settings.restrictedSessionIds },
     });
   },
 });

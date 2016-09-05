@@ -1,5 +1,7 @@
 import { Template } from 'meteor/templating';
 
+import './device-card/device-card.js';
+
 import './queue-alert-restricted-session.html';
 
 Template.QueueAlertRestrictedSession.onCreated(function onCreated() {
