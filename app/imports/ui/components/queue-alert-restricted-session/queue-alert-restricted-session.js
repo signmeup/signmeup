@@ -14,6 +14,11 @@ Template.QueueAlertRestrictedSession.onCreated(function onCreated() {
   });
 });
 
+export function isRestrictedToSession(queue, sessionId) {
+  const restrictedSessionSecrets = Session.get('restrictedSessionSecrets') || {};
+  return (sessionId in restrictedSessionSecrets);
+}
+
 export function isRestrictedToDevice(queue) {
   const restrictedSessionSecrets = Session.get('restrictedSessionSecrets') || {};
   return queue.settings.restrictedSessionIds.some((sessionId) => {

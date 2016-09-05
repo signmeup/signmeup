@@ -7,6 +7,11 @@
   border: 1px solid $gray-lighter;
   border-radius: 4px;
 }
+
+.current-device-card {
+  box-shadow: inset 0 -2px $brand-warning;
+}
+
 .device-icon.material-icons {
   margin-top: 4px;
   font-size: 36px !important;
