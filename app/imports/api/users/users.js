@@ -4,6 +4,15 @@ import { Meteor } from 'meteor/meteor';
 // account for every possible field. This is dangerous and hard to maintain
 // as we add more packages or as Meteor changes. Best to stay away for now.
 
+Meteor.users.publicFields = {
+  email: true,
+  'emails.address': true,
+  saml: true, // Adding this anticipating that we'll start storing data in `saml`
+  'profile.name': true,
+  'profile.displayName': true,
+  'profile.givenName': true,
+};
+
 Meteor.users.allow({
   insert() { return false; },
   update() { return false; },

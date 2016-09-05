@@ -1,46 +1,28 @@
-// Users Publications
+/* eslint-disable prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
 
-import { authorized } from '/imports/lib/both/auth';
-
-Meteor.publish('userData', function userData() {
-  if (!this.userId) {
-    throw new Meteor.Error('no-user');
-  }
-
+Meteor.publish('users.self', function self() {
   return Meteor.users.find({
     _id: this.userId,
   }, {
     fields: {
       email: true,
-      admin: true,
-      htaCourses: true,
-      taCourses: true,
+      saml: true, // Adding this anticipating that we'll start storing data in `saml`
     },
   });
 });
 
-Meteor.publish('allUsers', () => {
-  if (!this.userId) {
-    throw new Meteor.Error('no-user');
-  }
+Meteor.publish('users.byId', function byId(userId) {
+  return Meteor.users.find({
+    _id: userId,
+  }, {
+    fields: Meteor.users.publicFields,
+  });
+});
 
-  if (authorized.admin(this.userId)) {
-    return Meteor.users.find({});
-  } else if (authorized.hta(this.userId)) {
-    return Meteor.users.find({}, {
-      fields: {
-        email: true,
-        emails: true,
-        admin: true,
-        htaCourses: true,
-        taCourses: true,
-        'profile.displayName': true,
-        'profile.name': true,
-      },
-    });
-  }
-
-  throw new Meteor.Error('not-allowed');
+Meteor.publish('users.all', function all() {
+  return Meteor.users.find({}, {
+    fields: Meteor.users.publicFields,
+  });
 });
