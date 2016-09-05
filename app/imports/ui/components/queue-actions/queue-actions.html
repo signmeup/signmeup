@@ -1,10 +1,39 @@
 <template name="QueueActions">
   <div class="queue-actions p-t-2 p-b-2">
     <div class="container">
-      {{> QueueStatusDropdown queue=queue}}
-      <span class="m-l-1 text-muted">This queue is accepting signups.</span>
+      <div class="left-actions">
+        {{#if taView}}
+          {{> QueueStatusDropdown queue=queue}}
+        {{else}}
+          {{#if queue.isOpen}}
+            <span class="text-success">Active </span>
+          {{/if}}
 
-      <div class="pull-xs-right">
+          {{#if queue.isCutoff}}
+            <span class="text-warning">Cutoff </span>
+          {{/if}}
+
+          {{#if queue.isEnded}}
+            <span class="text-danger">Ended </span>
+          {{/if}}
+        {{/if}}
+        <span class="middot">&middot;</span>
+        <span class="text-muted">
+          {{#if queue.isOpen}}
+            This queue is accepting signups.
+          {{/if}}
+
+          {{#if queue.isCutoff}}
+            This queue is accepting signups, but you may not be helped.
+          {{/if}}
+
+          {{#if queue.isEnded}}
+            This queue has ended, and no longer accepting signups.
+          {{/if}}
+        </span>
+      </div>
+
+      <div class="right-actions">
         {{#if taView}}
           <button type="button" class="btn btn-secondary">
             <i class="material-icons">add</i>

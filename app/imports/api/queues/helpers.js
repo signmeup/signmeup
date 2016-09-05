@@ -13,6 +13,18 @@ Queues.helpers({
     return Locations.findOne(this.locationId);
   },
 
+  isOpen() {
+    return this.status === 'open';
+  },
+
+  isCutoff() {
+    return this.status === 'cutoff';
+  },
+
+  isEnded() {
+    return this.status === 'ended';
+  },
+
   tickets() {
     return Tickets.find({ _id: { $in: this.ticketIds } });
   },
