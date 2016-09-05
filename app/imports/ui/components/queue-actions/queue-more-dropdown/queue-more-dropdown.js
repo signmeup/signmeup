@@ -13,7 +13,7 @@ Template.QueueMoreDropdown.events({
     const secret = Random.id();
     restrictSignups.call({
       queueId: this.queue._id,
-      name: 'Test Computer',
+      name: this.queue.location().name,
       userAgent: navigator.userAgent,
       secret,
     }, (err) => {
