@@ -52,8 +52,4 @@ Template.Queue.helpers({
 
     return false;
   },
-
-  showRestrictedSessionAlert() {
-    return Template.instance().getQueue().settings.restrictedSessionIds.length > 0;
-  },
 });

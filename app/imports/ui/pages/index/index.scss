@@ -2,7 +2,7 @@
   min-height: 199px;
 }
 
-.create-queue-card {
+.dashed-card {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10,7 +10,7 @@
   height: 100%;
 
   color: $navbar-light-color;
-  border: 2px dashed $navbar-light-color;
+  border: 2px dashed $navbar-light-color !important;
   transition: all 0.2s ease;
 
   &:hover, &:focus, &:active {

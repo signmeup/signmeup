@@ -6,9 +6,8 @@
 
   border: 1px solid $gray-lighter;
   border-radius: 4px;
-
-  .material-icons {
-    margin-top: 4px;
-    font-size: 36px !important;
-  }
+}
+.device-icon.material-icons {
+  margin-top: 4px;
+  font-size: 36px !important;
 }

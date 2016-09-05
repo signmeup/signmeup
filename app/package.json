@@ -50,6 +50,7 @@
       ],
       "import/no-unresolved": 1,
       "meteor/audit-argument-checks": 0,
+      "meteor/no-session": 0,
       "meteor/template-names": [
         2,
         "pascal-case"

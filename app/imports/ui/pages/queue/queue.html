@@ -3,7 +3,7 @@
     {{#if Template.subscriptionsReady}}
       {{> QueueHeader queue=queue taView=taView}}
 
-      {{#if showRestrictedSessionAlert}}
+      {{#if queue.isRestricted}}
         {{> QueueAlertRestrictedSession queue=queue taView=taView}}
       {{/if}}
 

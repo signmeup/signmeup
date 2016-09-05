@@ -76,5 +76,7 @@ export const restrictSignups = new ValidatedMethod({
     }, {
       $push: { 'settings.restrictedSessionIds': sessionId },
     });
+
+    return sessionId;
   },
 });

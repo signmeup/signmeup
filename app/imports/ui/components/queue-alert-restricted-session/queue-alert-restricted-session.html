@@ -8,6 +8,12 @@
         {{#each session in queue.restrictedSessions}}
           {{> DeviceCard session=session}}
         {{/each}}
+
+        {{#if showAddDeviceCard queue}}
+          <a class="add-device-card device-card dashed-card js-add-device" href="#">
+            <i class="material-icons">add</i> Add my device
+          </a>
+        {{/if}}
       </div>
     </div>
   </div>

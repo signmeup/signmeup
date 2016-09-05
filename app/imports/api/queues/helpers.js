@@ -24,6 +24,10 @@ Queues.helpers({
     });
   },
 
+  isRestricted() {
+    return this.settings.restrictedSessionIds.length > 0;
+  },
+
   restrictedSessions() {
     return Sessions.find({
       _id: { $in: this.settings.restrictedSessionIds },
