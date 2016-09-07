@@ -8,10 +8,10 @@ import { check, Match } from 'meteor/check';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import { _ } from 'meteor/underscore';
 
-import Courses from '/imports/api/courses/courses';
-import Locations from '/imports/api/locations/locations';
-import Queues from '/imports/api/queues/queues';
-import Tickets from '/imports/api/tickets/tickets';
+import { Courses } from '/imports/api/courses/courses';
+import { Locations } from '/imports/api/locations/locations';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 import { authorized } from '/imports/lib/both/auth';
 import { _getUserEmail } from '/imports/lib/both/users';

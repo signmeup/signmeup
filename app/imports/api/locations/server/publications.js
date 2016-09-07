@@ -2,7 +2,7 @@
 
 import { Meteor } from 'meteor/meteor';
 
-import Locations from '/imports/api/locations/locations';
+import { Locations } from '/imports/api/locations/locations';
 
 Meteor.publish('locations.byId', function byId(locationId) {
   return Locations.find({ _id: locationId });

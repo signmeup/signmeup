@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Queues = new Mongo.Collection('queues');
+export const Queues = new Mongo.Collection('queues');
 
 Queues.schema = new SimpleSchema({
   name: { type: String },
@@ -44,5 +44,3 @@ Queues.deny({
   update() { return true; },
   remove() { return true; },
 });
-
-export default Queues;

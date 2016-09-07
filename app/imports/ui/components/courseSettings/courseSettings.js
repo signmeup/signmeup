@@ -6,8 +6,8 @@ import { moment } from 'meteor/momentjs:moment';
 import { saveAs } from 'meteor/pfafman:filesaver';
 import { $ } from 'meteor/jquery';
 
-import Queues from '/imports/api/queues/queues';
-import Tickets from '/imports/api/tickets/tickets';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 import { authorized } from '/imports/lib/both/auth';
 import { _getUserFromEmail } from '/imports/lib/both/users';

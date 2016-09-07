@@ -3,7 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 
 Meteor.publish('courses.byId', function byId(courseId) {
   new SimpleSchema({

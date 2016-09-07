@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 
-import Sessions from '/imports/api/sessions/sessions.js';
+import { Sessions } from '/imports/api/sessions/sessions.js';
 
 Sessions.helpers({
   user() {

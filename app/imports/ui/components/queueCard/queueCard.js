@@ -3,8 +3,8 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { $ } from 'meteor/jquery';
 
-import Courses from '/imports/api/courses/courses';
-import Locations from '/imports/api/locations/locations';
+import { Courses } from '/imports/api/courses/courses';
+import { Locations } from '/imports/api/locations/locations';
 
 import { authorized } from '/imports/lib/both/auth';
 import { _activeTickets } from '/imports/lib/both/filters';

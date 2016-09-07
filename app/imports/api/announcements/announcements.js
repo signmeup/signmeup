@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Announcements = new Mongo.Collection('announcements');
+export const Announcements = new Mongo.Collection('announcements');
 
 Announcements.schema = new SimpleSchema({
   type: {
@@ -30,5 +30,3 @@ Announcements.deny({
   update() { return true; },
   remove() { return true; },
 });
-
-export default Announcements;

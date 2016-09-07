@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
 
-import Queues from '/imports/api/queues/queues';
-import Tickets from '/imports/api/tickets/tickets';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 export function sendEmailNotification(ticketId) {
   const ticket = Tickets.findOne(ticketId);

@@ -9,8 +9,8 @@
 
 import { _ } from 'meteor/underscore';
 
-import Queues from '/imports/api/queues/queues';
-import Tickets from '/imports/api/tickets/tickets';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 function calculateWaitTime(ticket, queue) {
   const allTickets = Tickets.find({

@@ -1,9 +1,9 @@
 import { Migrations } from 'meteor/percolate:migrations';
 
-import Courses from '/imports/api/courses/courses';
-import Locations from '/imports/api/locations/locations';
-import Queues from '/imports/api/queues/queues';
-import Tickets from '/imports/api/tickets/tickets';
+import { Courses } from '/imports/api/courses/courses';
+import { Locations } from '/imports/api/locations/locations';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 Migrations.add({
   version: 1,

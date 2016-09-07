@@ -1,7 +1,15 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Tickets = new Mongo.Collection('tickets');
+export const Tickets = new Mongo.Collection('tickets');
+
+export const NotificationsSchema = new SimpleSchema({
+  announce: { type: Boolean, optional: true },
+  email: { type: String, regEx: SimpleSchema.RegEx.Email, optional: true },
+  phone: { type: Object, optional: true },
+  'phone.number': { type: String },
+  'phone.carrier': { type: String, regEx: SimpleSchema.RegEx.Domain },
+});
 
 Tickets.schema = new SimpleSchema({
   courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
@@ -15,12 +23,7 @@ Tickets.schema = new SimpleSchema({
   studentIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
   question: { type: String, optional: true },
 
-  notifications: { type: Object, defaultValue: {} },
-  'notifications.announce': { type: Boolean, optional: true },
-  'notifications.email': { type: Boolean, optional: true },
-  'notifications.phone': { type: Object, optional: true },
-  'notifications.phone.number': { type: String },
-  'notifications.phone.carrier': { type: String, regEx: SimpleSchema.RegEx.Domain },
+  notifications: { type: NotificationsSchema, defaultValue: {} },
 
   createdAt: { type: Date },
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
@@ -37,6 +40,19 @@ Tickets.schema = new SimpleSchema({
 
 Tickets.attachSchema(Tickets.schema);
 
+Tickets.publicFields = {
+  courseId: true,
+  queueId: true,
+  status: true,
+
+  studentIds: true,
+
+  createdAt: true,
+  claimedAt: true,
+  markedAsDoneAt: true,
+  deletedAt: true,
+};
+
 Tickets.allow({
   insert() { return false; },
   update() { return false; },
@@ -48,5 +64,3 @@ Tickets.deny({
   update() { return true; },
   remove() { return true; },
 });
-
-export default Tickets;

@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Roles } from 'meteor/alanning:roles';
 
-import Locations from '/imports/api/locations/locations.js';
+import { Locations } from '/imports/api/locations/locations.js';
 
 export const createLocation = new ValidatedMethod({
   name: 'locations.createLocation',

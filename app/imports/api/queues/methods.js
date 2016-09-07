@@ -3,10 +3,10 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 
-import Courses from '/imports/api/courses/courses.js';
-import Locations from '/imports/api/locations/locations.js';
-import Queues from '/imports/api/queues/queues.js';
-import Sessions from '/imports/api/sessions/sessions.js';
+import { Courses } from '/imports/api/courses/courses.js';
+import { Locations } from '/imports/api/locations/locations.js';
+import { Queues } from '/imports/api/queues/queues.js';
+import { Sessions } from '/imports/api/sessions/sessions.js';
 
 export const createQueue = new ValidatedMethod({
   name: 'queues.createQueue',

@@ -1,6 +1,7 @@
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Random } from 'meteor/random';
+import { _ } from 'meteor/underscore';
 
 import { restrictSignups } from '/imports/api/queues/methods.js';
 
@@ -14,16 +15,20 @@ Template.QueueAlertRestrictedSession.onCreated(function onCreated() {
   });
 });
 
-export function isRestrictedToSession(queue, sessionId) {
-  const restrictedSessionSecrets = Session.get('restrictedSessionSecrets') || {};
-  return (sessionId in restrictedSessionSecrets);
+export function getCurrentSession(queue) {
+  const restrictedSessions = Session.get('restrictedSessions') || {};
+  return restrictedSessions[queue._id] || {};
+}
+
+export function isSessionForCurrentDevice(queue, sessionId) {
+  const currentSession = getCurrentSession(queue);
+  return (currentSession.sessionId === sessionId);
 }
 
 export function isRestrictedToDevice(queue) {
-  const restrictedSessionSecrets = Session.get('restrictedSessionSecrets') || {};
-  return queue.settings.restrictedSessionIds.some((sessionId) => {
-    return (sessionId in restrictedSessionSecrets);
-  });
+  const restrictedSessions = Session.get('restrictedSessions') || {};
+  const sessionId = restrictedSessions[queue._id] && restrictedSessions[queue._id].sessionId;
+  return _.contains(queue.settings.restrictedSessionIds, sessionId);
 }
 
 Template.QueueAlertRestrictedSession.helpers({
@@ -41,9 +46,9 @@ export function restrictToDevice(queue) {
     secret,
   }, (err, sessionId) => {
     if (!err) {
-      const restrictedSessionSecrets = Session.get('restrictedSessionSecrets') || {};
-      restrictedSessionSecrets[sessionId] = secret;
-      Session.setPersistent('restrictedSessionSecrets', restrictedSessionSecrets);
+      const restrictedSessions = Session.get('restrictedSessions') || {};
+      restrictedSessions[queue._id] = { sessionId, secret };
+      Session.setPersistent('restrictedSessions', restrictedSessions);
     }
   });
 }

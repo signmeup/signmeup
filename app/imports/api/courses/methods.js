@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { Roles } from 'meteor/alanning:roles';
 
-import Courses from '/imports/api/courses/courses.js';
+import { Courses } from '/imports/api/courses/courses.js';
 
 export const createCourse = new ValidatedMethod({
   name: 'courses.createCourse',

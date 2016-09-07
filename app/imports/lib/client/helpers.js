@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { moment } from 'meteor/momentjs:moment';
 import { $ } from 'meteor/jquery';
 
-import Locations from '/imports/api/locations/locations';
+import { Locations } from '/imports/api/locations/locations';
 
 export function _formatTime(milliseconds, format = 'h:mm A, MMMM DD') {
   return moment(milliseconds).format(format);

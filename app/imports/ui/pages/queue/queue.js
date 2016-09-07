@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Roles } from 'meteor/alanning:roles';
 
-import Queues from '/imports/api/queues/queues.js';
+import { Queues } from '/imports/api/queues/queues.js';
 
 import '/imports/ui/components/queue-header/queue-header.js';
 import '/imports/ui/components/queue-actions/queue-actions.js';
@@ -22,7 +22,10 @@ Template.Queue.onCreated(function onCreated() {
     this.subscribe('queues.byId', this.getQueueId());
 
     const queue = this.getQueue();
-    if (queue) this.subscribe('courses.byId', queue.courseId);
+    if (queue) {
+      this.subscribe('courses.byId', queue.courseId);
+      this.subscribe('tickets.byQueueId', queue._id);
+    }
   });
 });
 

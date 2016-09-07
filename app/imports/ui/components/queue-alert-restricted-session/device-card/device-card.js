@@ -2,9 +2,9 @@ import { Template } from 'meteor/templating';
 
 import uaParser from 'ua-parser-js';
 
-import Queues from '/imports/api/queues/queues.js';
+import { Queues } from '/imports/api/queues/queues.js';
 
-import { isRestrictedToSession } from
+import { isSessionForCurrentDevice } from
   '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
 
 import './device-card.html';
@@ -18,7 +18,7 @@ Template.DeviceCard.onCreated(function onCreated() {
 Template.DeviceCard.helpers({
   currentDeviceClass(session) {
     const queue = Queues.findOne(session.queueId);
-    return isRestrictedToSession(queue, session._id) ? 'current-device-card' : '';
+    return isSessionForCurrentDevice(queue, session._id) ? 'current-device-card' : '';
   },
 
   icon(userAgent) {

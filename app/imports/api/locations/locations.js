@@ -1,7 +1,7 @@
 import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
-const Locations = new Mongo.Collection('locations');
+export const Locations = new Mongo.Collection('locations');
 
 Locations.schema = new SimpleSchema({
   name: { type: String },
@@ -20,5 +20,3 @@ Locations.deny({
   update() { return true; },
   remove() { return true; },
 });
-
-export default Locations;

@@ -2,9 +2,9 @@
 
 import { _ } from 'meteor/underscore';
 
-import Courses from '/imports/api/courses/courses';
-import Queues from '/imports/api/queues/queues';
-import Tickets from '/imports/api/tickets/tickets';
+import { Courses } from '/imports/api/courses/courses';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 // Calculate the next possible time that the given user can sign up for this
 // queue. Usually they can re-signup instantly, but if a signupGap is set, they

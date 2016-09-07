@@ -7,7 +7,7 @@ import { Meteor } from 'meteor/meteor';
 import { check } from 'meteor/check';
 import { _ } from 'meteor/underscore';
 
-import Courses from '/imports/api/courses/courses';
+import { Courses } from '/imports/api/courses/courses';
 
 import { authorized } from '/imports/lib/both/auth';
 import { _getUserFromEmail } from '/imports/lib/both/users';

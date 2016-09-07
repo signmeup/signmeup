@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 
-import Queues from '/imports/api/queues/queues';
+import { Queues } from '/imports/api/queues/queues';
 
 import '/imports/ui/components/queueCard/queueCard';
 import '/imports/ui/components/queueList/queueList';

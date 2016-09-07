@@ -5,7 +5,7 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { _ } from 'meteor/underscore';
 
-import Queues from '/imports/api/queues/queues';
+import { Queues } from '/imports/api/queues/queues';
 
 import { _activeTickets } from '/imports/lib/both/filters';
 import { _showModal } from '/imports/lib/client/helpers';

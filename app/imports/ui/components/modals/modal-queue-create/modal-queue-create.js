@@ -3,8 +3,8 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import Courses from '/imports/api/courses/courses.js';
-import Locations from '/imports/api/locations/locations.js';
+import { Courses } from '/imports/api/courses/courses.js';
+import { Locations } from '/imports/api/locations/locations.js';
 
 import { createQueue } from '/imports/api/queues/methods.js';
 
