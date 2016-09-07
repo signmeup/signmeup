@@ -15,6 +15,7 @@ import '/imports/api/sessions/methods.js';
 import '/imports/api/sessions/helpers.js';
 
 import '/imports/api/tickets/methods.js';
+import '/imports/api/tickets/helpers.js';
 
 import '/imports/api/users/users.js';
 import '/imports/api/users/helpers.js';
