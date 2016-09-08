@@ -1,3 +1,5 @@
+import { _ } from 'meteor/underscore';
+
 import { Courses } from '/imports/api/courses/courses.js';
 import { Locations } from '/imports/api/locations/locations.js';
 import { Queues } from '/imports/api/queues/queues.js';
@@ -33,6 +35,13 @@ Queues.helpers({
     return Tickets.find({
       _id: { $in: this.ticketIds },
       status: { $in: ['open', 'claimed', 'markedAsMissing'] },
+    });
+  },
+
+  hasActiveTicketWithUser(userId) {
+    const activeTickets = this.activeTickets().fetch();
+    return activeTickets.some((ticket) => {
+      return _.contains(ticket.studentIds, userId);
     });
   },
 

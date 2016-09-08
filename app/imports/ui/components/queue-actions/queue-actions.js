@@ -2,6 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import { isRestrictedToDevice } from
+  '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
+
 import './queue-status-dropdown/queue-status-dropdown.js';
 import './queue-more-dropdown/queue-more-dropdown.js';
 
@@ -9,6 +12,15 @@ import './queue-actions.html';
 
 Template.QueueActions.onRendered(() => {
   $('.js-announcements-tooltip-wrapper').tooltip();
+});
+
+Template.QueueActions.helpers({
+  joinQueueDisabledClass(queue) {
+    const isDisabled = queue.isEnded() ||
+                       (queue.isRestricted() && !isRestrictedToDevice(queue)) ||
+                       (queue.hasActiveTicketWithUser(Meteor.userId()));
+    return isDisabled ? 'disabled' : '';
+  },
 });
 
 Template.QueueActions.events({

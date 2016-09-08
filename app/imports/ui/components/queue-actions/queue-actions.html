@@ -44,7 +44,7 @@
           </span>
           {{> QueueMoreDropdown queue=queue}}
         {{else}}
-          <button type="button" class="btn btn-primary js-show-modal-join-queue">
+          <button type="button" class="btn btn-primary js-show-modal-join-queue {{joinQueueDisabledClass queue}}">
             <i class="material-icons">add</i>
             Join queue
           </button>
