@@ -1,12 +1,34 @@
 <template name="QueueStatusDropdown">
   <div class="queue-status-dropdown btn-group m-r-1">
-    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-      <i class="material-icons">flash_on</i> Active
-    </button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" href="#"><i class="material-icons">warning</i>Cutoff</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item text-danger" href="#"><i class="material-icons">do_not_disturb_alt</i>End Queue</a>
-    </div>
+    {{#if queue.isOpen}}
+      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="material-icons">flash_on</i> Active
+      </button>
+    {{/if}}
+
+    {{#if queue.isCutoff}}
+      <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="material-icons">warning</i> Cutoff
+      </button>
+    {{/if}}
+
+    {{#if queue.isEnded}}
+      <button type="button" class="btn btn-danger">
+        <i class="material-icons">do_not_disturb_alt</i> Ended
+      </button>
+    {{/if}}
+
+    {{#unless queue.isEnded}}
+      <div class="dropdown-menu">
+        {{#if queue.isOpen}}
+          <a class="dropdown-item text-warning js-cutoff-queue" href="#"><i class="material-icons">warning</i>Cutoff</a>
+        {{else}}
+          <a class="dropdown-item text-success js-open-queue" href="#"><i class="material-icons">flash_on</i>Resume Queue</a>
+        {{/if}}
+
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item text-danger js-end-queue" href="#"><i class="material-icons">do_not_disturb_alt</i>End Queue</a>
+      </div>
+    {{/unless}}
   </div>
 </template>
