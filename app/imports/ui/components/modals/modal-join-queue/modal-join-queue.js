@@ -11,9 +11,12 @@ import './modal-join-queue.html';
 
 Template.ModalJoinQueue.onCreated(function onCreated() {
   this.studentEmails = new ReactiveArray([]);
-  if (Meteor.user()) {
-    this.studentEmails.push(Meteor.user().emailAddress());
-  }
+
+  this.autorun(() => {
+    if (Meteor.user()) {
+      this.studentEmails.push(Meteor.user().emailAddress());
+    }
+  });
 
   this.autorun(() => {
     this.subscribe('users.all');
