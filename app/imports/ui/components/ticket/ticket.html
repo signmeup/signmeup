@@ -1,17 +1,18 @@
 <template name="Ticket">
-  <div class="ticket row">
+  <div class="ticket {{ticket.status}}-ticket {{currentUserClass}} row">
     <div class="td col-xs-1">{{ticket.index}}</div>
     <div class="td col-xs-6">{{studentNames ticket.students}}</div>
     <div class="td col-xs-2">{{formattedTimestamp ticket.createdAt}}</div>
-    <div class="td col-xs-3 actions">
-      <div class="btn-group">
-        <button type="button" class="btn btn-secondary">Claim ticket</button>
-        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#">Mark as missing</a>
-          <a class="dropdown-item text-danger" href="#">Delete ticket</a>
+    {{#if taView}}
+      {{> TicketTAActions ticket=ticket}}
+    {{else}}
+      {{#if currentUserTicket ticket}}
+        <div class="td col-xs-3 actions">
+          <button type="button" class="btn btn-outline-danger js-delete-ticket">Delete ticket</button>
         </div>
-      </div>
-    </div>
+      {{/if}}
+    {{/if}}
   </div>
+
+  {{> TicketDrawer ticket=ticket}}
 </template>
