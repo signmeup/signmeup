@@ -55,7 +55,9 @@ Template.Ticket.events({
     ticketDrawer.slideToggle(150);
   },
 
-  'click .js-delete-ticket'() {
+  'click .js-delete-ticket'(event) {
+    event.preventDefault();
+
     const sure = prompt('Are you sure you want to delete this ticket? If yes, type \'DELETE\' in the input below.'); // eslint-disable-line max-len
     if (sure === 'DELETE') {
       deleteTicket.call({

@@ -75,7 +75,7 @@ export const createTicket = new ValidatedMethod({
       notifications,
 
       createdAt: new Date(),
-      createdBy: this.userId,
+      createdBy: this.userId || studentIds[0],
     });
 
     // Add ticket to queue
