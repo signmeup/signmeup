@@ -12,7 +12,7 @@
       <div class="tbody">
         {{#if activeTicketsAvailable queue}}
           {{#each ticket in (activeTicketsWithIndexes queue)}}
-            {{> Ticket ticket=ticket}}
+            {{> Ticket ticket=ticket taView=taView}}
           {{/each}}
         {{else}}
           <div class="row empty">

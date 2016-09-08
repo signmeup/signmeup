@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses.js';
 import { Queues } from '/imports/api/queues/queues.js';
@@ -21,5 +22,9 @@ Tickets.helpers({
     return Meteor.users.find({
       _id: { $in: this.studentIds },
     });
+  },
+
+  belongsToUser(userId) {
+    return _.contains(this.studentIds, userId);
   },
 });

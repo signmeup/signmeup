@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
 import { Queues } from '/imports/api/queues/queues.js';
@@ -83,6 +84,40 @@ export const createTicket = new ValidatedMethod({
     }, {
       $push: {
         ticketIds: ticketId,
+      },
+    });
+  },
+});
+
+export const deleteTicket = new ValidatedMethod({
+  name: 'tickets.deleteTicket',
+  validate: new SimpleSchema({
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ ticketId }) {
+    const ticket = Tickets.findOne(ticketId);
+    if (!ticket) {
+      throw new Meteor.Error('tickets.doesNotExist'
+        `No ticket exists with id ${ticketId}`);
+    }
+
+    const taOrAbove = Roles.userIsInRole(
+      this.userId,
+      ['admin', 'mta', 'hta', 'ta'],
+      ticket.courseId
+    );
+    if (!(ticket.belongsToUser(this.userId) || taOrAbove)) {
+      throw new Meteor.Error('tickets.deleteTicket.unauthorized',
+        'Only ticket owners or TAs and above can delete tickets.');
+    }
+
+    Tickets.update({
+      _id: ticketId,
+    }, {
+      $set: {
+        status: 'deleted',
+        deletedAt: new Date(),
+        deletedBy: this.userId,
       },
     });
   },

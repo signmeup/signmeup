@@ -1,5 +1,5 @@
 <template name="Ticket">
-  <div class="ticket {{ticket.status}}-ticket {{currentUserClass}} row">
+  <div class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} row">
     <div class="td col-xs-1">{{ticket.index}}</div>
     <div class="td col-xs-6">{{studentNames ticket.students}}</div>
     <div class="td col-xs-2">{{formattedTimestamp ticket.createdAt}}</div>
@@ -14,5 +14,7 @@
     {{/if}}
   </div>
 
-  {{> TicketDrawer ticket=ticket}}
+  {{#if showTicketDrawer ticket taView}}
+    {{> TicketDrawer ticket=ticket taView=taView currentUserTicket=currentUserTicket}}
+  {{/if}}
 </template>

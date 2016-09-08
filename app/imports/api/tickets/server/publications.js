@@ -8,12 +8,12 @@ import { Tickets } from '/imports/api/tickets/tickets.js';
 
 Meteor.publish('tickets.byId', function byId(ticketId) {
   const ticket = Tickets.findOne(ticketId);
-  if (!ticket) {
+  if (!ticket || ticket.status === 'deleted') {
     throw new Meteor.Error('tickets.doesNotExist',
       `No ticket exists with id ${ticketId}`);
   }
 
-  if (this.userId === ticket.userId) {
+  if (ticket.belongsToUser(this.userId)) {
     return Tickets.find({
       _id: ticketId,
     });
@@ -39,6 +39,7 @@ Meteor.publish('tickets.byQueueId', function byQueueId(queueId) {
 
   return Tickets.find({
     queueId,
+    status: { $ne: 'deleted' },
   }, {
     fields: Tickets.publicFields,
   });

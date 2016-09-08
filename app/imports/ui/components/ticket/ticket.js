@@ -1,25 +1,29 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
+import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
+
+import { deleteTicket } from '/imports/api/tickets/methods.js';
 
 import '/imports/ui/components/ticket/ticket-drawer/ticket-drawer.js';
 import '/imports/ui/components/ticket/ticket-ta-actions/ticket-ta-actions.js';
 
 import './ticket.html';
 
+Template.Ticket.onCreated(function onCreated() {
+  this.autorun(() => {
+    this.subscribe('tickets.byId', Template.currentData().ticket._id);
+  });
+});
+
 Template.Ticket.helpers({
   currentUserTicket(ticket) {
-    return (Meteor.user() && _.contains(ticket.studentIds, Meteor.userId()));
+    return ticket && ticket.belongsToUser(Meteor.userId());
   },
 
   currentUserClass(ticket) {
-    if (Meteor.user() && _.contains(ticket.studentIds, Meteor.userId())) {
-      return 'current-user-ticket';
-    }
-
-    return '';
+    return (ticket && ticket.belongsToUser(Meteor.userId())) ? 'current-user-ticket' : '';
   },
 
   studentNames(students) {
@@ -38,5 +42,27 @@ Template.Ticket.helpers({
 
   formattedTimestamp(createdAt) {
     return moment(createdAt).fromNow();
+  },
+
+  showTicketDrawer(ticket, taView) {
+    return taView || (ticket && ticket.belongsToUser(Meteor.userId()));
+  },
+});
+
+Template.Ticket.events({
+  'click .ticket'() {
+    const ticketDrawer = $(Template.instance().find('.ticket-drawer'));
+    ticketDrawer.slideToggle(150);
+  },
+
+  'click .js-delete-ticket'() {
+    const sure = prompt('Are you sure you want to delete this ticket? If yes, type \'DELETE\' in the input below.'); // eslint-disable-line max-len
+    if (sure === 'DELETE') {
+      deleteTicket.call({
+        ticketId: this.ticket._id,
+      }, (err) => {
+        if (err) console.log(err);
+      });
+    }
   },
 });
