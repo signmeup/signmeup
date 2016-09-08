@@ -16,8 +16,9 @@
           {{#if queue.isEnded}}
             <span class="text-danger">Ended </span>
           {{/if}}
+
+          <span class="middot text-muted">&middot;</span>
         {{/if}}
-        <span class="middot text-muted">&middot;</span>
         <span class="text-muted">
           {{#if queue.isOpen}}
             This queue is accepting signups.
@@ -35,10 +36,12 @@
 
       <div class="right-actions">
         {{#if taView}}
-          <button type="button" class="btn btn-secondary">
-            <i class="material-icons">add</i>
-            New announcement
-          </button>
+          <span class="js-announcements-tooltip-wrapper" data-toggle="tooltip" data-placement="left" title="Coming soon!">
+            <button type="button" class="btn btn-secondary disabled">
+              <i class="material-icons">add</i>
+              New announcement
+            </button>
+          </span>
           {{> QueueMoreDropdown queue=queue}}
         {{else}}
           <button type="button" class="btn btn-primary js-show-modal-join-queue">

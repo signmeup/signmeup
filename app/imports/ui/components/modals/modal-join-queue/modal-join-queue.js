@@ -13,7 +13,7 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
   this.studentEmails = new ReactiveArray([]);
 
   this.autorun(() => {
-    if (Meteor.user()) {
+    if (Meteor.user() && this.studentEmails.array().length === 0) {
       this.studentEmails.push(Meteor.user().emailAddress());
     }
   });

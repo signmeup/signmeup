@@ -7,6 +7,10 @@ import './queue-more-dropdown/queue-more-dropdown.js';
 
 import './queue-actions.html';
 
+Template.QueueActions.onRendered(() => {
+  $('.js-announcements-tooltip-wrapper').tooltip();
+});
+
 Template.QueueActions.events({
   'click .js-show-modal-join-queue'() {
     if (this.queue.requireLogin() && !Meteor.user()) {

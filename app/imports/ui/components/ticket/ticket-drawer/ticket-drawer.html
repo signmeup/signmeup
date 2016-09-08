@@ -2,9 +2,11 @@
   <div class="ticket-drawer row drawer hidden">
     <div class="container">
       <div class="row">
-        {{#if ticket.isClaimed}}
-          <div class="td col-xs-1 text-muted">{{formattedClaimDuration}}</div>
-        {{/if}}
+        <div class="td col-xs-1 text-muted">
+          {{#if ticket.isClaimed}}
+            {{formattedClaimDuration}}
+          {{/if}}
+        </div>
         <div class="td col-xs-6">
           <h5>Question</h5>
           <p>{{ticket.question}}</p>

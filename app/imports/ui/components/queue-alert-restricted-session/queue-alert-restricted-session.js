@@ -1,6 +1,8 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Session } from 'meteor/session';
 import { Random } from 'meteor/random';
+import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
 import { restrictSignups } from '/imports/api/queues/methods.js';
@@ -33,7 +35,8 @@ export function isRestrictedToDevice(queue) {
 
 Template.QueueAlertRestrictedSession.helpers({
   showAddDeviceCard(queue) {
-    return !isRestrictedToDevice(queue);
+    const taOrAbove = Roles.userIsInRole(Meteor.userId(), ['admin', 'mta', 'hta', 'ta'], queue.courseId); // eslint-disable-line max-len
+    return taOrAbove && !isRestrictedToDevice(queue);
   },
 });
 
