@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
+import { SyncedCron } from 'meteor/percolate:synced-cron';
 
 import { Courses } from '/imports/api/courses/courses.js';
 import { Locations } from '/imports/api/locations/locations.js';
@@ -39,7 +40,18 @@ export const createQueue = new ValidatedMethod({
       createdBy: this.userId,
     });
 
-    // TODO: create cron job
+    if (Meteor.isServer) {
+      SyncedCron.add({
+        name: `queues.endQueue.${queueId}`,
+        schedule(parser) {
+          const date = new Date(scheduledEndTime);
+          return parser.recur().on(date).fullDate();
+        },
+        job() {
+          Meteor.call('queues.endQueue', { queueId });
+        },
+      });
+    }
 
     return queueId;
   },
@@ -82,8 +94,9 @@ export const updateQueue = new ValidatedMethod({
 
     if (scheduledEndTime !== queue.scheduledEndTime) {
       setFields.scheduledEndTime = scheduledEndTime;
-
-      // TODO: update cron job
+      if (Meteor.isServer) {
+        SyncedCron.remove(`queues.endQueue.${queueId}`);
+      }
     }
 
     Queues.update({
@@ -91,6 +104,19 @@ export const updateQueue = new ValidatedMethod({
     }, {
       $set: setFields,
     });
+
+    if (Meteor.isServer) {
+      SyncedCron.add({
+        name: `queues.endQueue.${queueId}`,
+        schedule(parser) {
+          const date = new Date(scheduledEndTime || queue.scheduledEndTime);
+          return parser.recur().on(date).fullDate();
+        },
+        job() {
+          Meteor.call('queues.endQueue', { queueId });
+        },
+      });
+    }
   },
 });
 
@@ -167,7 +193,7 @@ export const endQueue = new ValidatedMethod({
         `No queue exists with id ${queueId}`);
     }
 
-    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) {
+    if (!!this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
       throw new Meteor.Error('queues.endQueue.unauthorized',
         'Only TAs and above can end queues.');
     }
@@ -182,7 +208,9 @@ export const endQueue = new ValidatedMethod({
       },
     });
 
-    // TODO: turn off cron jobs
+    if (Meteor.isServer) {
+      SyncedCron.remove(`queues.endQueue.${queueId}`);
+    }
   },
 });
 
