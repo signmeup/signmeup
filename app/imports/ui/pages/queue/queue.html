@@ -12,5 +12,9 @@
     {{/if}}
   </div>
 
-  {{> ModalJoinQueue queue=queue}}
+  {{#if taView}}
+    {{> ModalQueueEdit queue=queue}}
+  {{else}}
+    {{> ModalJoinQueue queue=queue}}
+  {{/if}}
 </template>

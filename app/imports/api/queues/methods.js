@@ -45,6 +45,55 @@ export const createQueue = new ValidatedMethod({
   },
 });
 
+export const updateQueue = new ValidatedMethod({
+  name: 'queues.updateQueue',
+  validate: new SimpleSchema({
+    queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    name: { type: String, optional: true },
+    locationId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+    scheduledEndTime: { type: Date, optional: true },
+  }).validator(),
+  run({ queueId, name, locationId, scheduledEndTime }) {
+    const queue = Queues.findOne(queueId);
+    if (!queue || queue.status === 'ended') {
+      throw new Meteor.Error('queues.doesNotExist'
+        `No queue exists with id ${queueId}`);
+    }
+
+    if (locationId && !Locations.findOne(locationId)) {
+      throw new Meteor.Error('locations.doesNotExist',
+        `No location exists with id ${locationId}`);
+    }
+
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) {
+      throw new Meteor.Error('queues.createQueue.unauthorized',
+        'Only TAs and above can create queues.');
+    }
+
+    const setFields = {};
+
+    if (name !== queue.name) {
+      setFields.name = name;
+    }
+
+    if (locationId !== queue.locationId) {
+      setFields.locationId = locationId;
+    }
+
+    if (scheduledEndTime !== queue.scheduledEndTime) {
+      setFields.scheduledEndTime = scheduledEndTime;
+
+      // TODO: update cron job
+    }
+
+    Queues.update({
+      _id: queueId,
+    }, {
+      $set: setFields,
+    });
+  },
+});
+
 export const openQueue = new ValidatedMethod({
   name: 'queues.openQueue',
   validate: new SimpleSchema({

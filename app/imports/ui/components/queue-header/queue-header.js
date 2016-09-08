@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import {
   svgPatternUrl,
@@ -19,4 +20,10 @@ Template.QueueHeader.helpers({
   svgPatternUrl,
   ticketCount,
   scheduledEndTime,
+});
+
+Template.QueueHeader.events({
+  'click .js-show-modal-queue-edit'() {
+    $('.modal-queue-edit').modal();
+  },
 });

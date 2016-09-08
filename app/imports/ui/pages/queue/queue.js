@@ -9,6 +9,7 @@ import '/imports/ui/components/queue-header/queue-header.js';
 import '/imports/ui/components/queue-actions/queue-actions.js';
 import '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
 import '/imports/ui/components/queue-table/queue-table.js';
+import '/imports/ui/components/modals/modal-queue-edit/modal-queue-edit.js';
 import '/imports/ui/components/modals/modal-join-queue/modal-join-queue.js';
 
 import './queue.html';
@@ -48,7 +49,8 @@ Template.Queue.helpers({
       return false;
     }
 
-    const courseId = Template.instance().getQueue().courseId;
+    const queue = Template.instance().getQueue();
+    const courseId = queue && queue.courseId;
     if (Roles.userIsInRole(Meteor.user(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
       return true;
     }

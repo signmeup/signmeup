@@ -10,29 +10,33 @@ import { createQueue } from '/imports/api/queues/methods.js';
 
 import './modal-queue-create.html';
 
+export function activeCourses() {
+  return Courses.find({ active: true });
+}
+
+export function locations() {
+  return Locations.find();
+}
+
+export function endTimes() {
+  const result = [];
+
+  const time = moment().add(1, 'hour').startOf('hour');
+  while (time <= moment().add(1, 'day').startOf('day')) {
+    result.push({
+      formattedString: time.format('LT'),
+      ISOString: time.toISOString(),
+    });
+    time.add(15, 'minutes');
+  }
+
+  return result;
+}
+
 Template.ModalQueueCreate.helpers({
-  activeCourses() {
-    return Courses.find({ active: true });
-  },
-
-  locations() {
-    return Locations.find();
-  },
-
-  endTimes() {
-    const endTimes = [];
-
-    const time = moment().add(1, 'hour').startOf('hour');
-    while (time <= moment().add(1, 'day').startOf('day')) {
-      endTimes.push({
-        formattedString: time.format('LT'),
-        ISOString: time.toISOString(),
-      });
-      time.add(30, 'minutes');
-    }
-
-    return endTimes;
-  },
+  activeCourses,
+  locations,
+  endTimes,
 });
 
 Template.ModalQueueCreate.events({
@@ -48,8 +52,11 @@ Template.ModalQueueCreate.events({
 
     createQueue.call(data, (err) => {
       // TODO: surface ValidationErrors to UI
-      if (err) console.error(err);
-      $('.modal-queue-create').modal('hide');
+      if (err) {
+        console.error(err);
+      } else {
+        $('.modal-queue-create').modal('hide');
+      }
     });
   },
 });
