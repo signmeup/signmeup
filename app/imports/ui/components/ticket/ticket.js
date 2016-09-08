@@ -50,9 +50,12 @@ Template.Ticket.helpers({
 });
 
 Template.Ticket.events({
-  'click .ticket'() {
-    const ticketDrawer = $(Template.instance().find('.ticket-drawer'));
-    ticketDrawer.slideToggle(150);
+  'click .ticket'(event) {
+    const target = $(event.target);
+    if (target.hasClass('td') || target.hasClass('ticket')) {
+      const ticketDrawer = $(Template.instance().find('.ticket-drawer'));
+      ticketDrawer.slideToggle(150);
+    }
   },
 
   'click .js-delete-ticket'(event) {

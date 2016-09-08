@@ -18,6 +18,26 @@ Tickets.helpers({
     });
   },
 
+  isOpen() {
+    return this.status === 'open';
+  },
+
+  isClaimed() {
+    return this.status === 'claimed';
+  },
+
+  isMarkedAsMissing() {
+    return this.status === 'markedAsMissing';
+  },
+
+  isMarkedAsDone() {
+    return this.status === 'markedAsDone';
+  },
+
+  isDeleted() {
+    return this.status === 'deleted';
+  },
+
   students() {
     return Meteor.users.find({
       _id: { $in: this.studentIds },
@@ -26,5 +46,9 @@ Tickets.helpers({
 
   belongsToUser(userId) {
     return _.contains(this.studentIds, userId);
+  },
+
+  claimedByUser(userId) {
+    return this.claimedBy && userId === this.claimedBy;
   },
 });

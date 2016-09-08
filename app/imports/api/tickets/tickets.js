@@ -16,7 +16,7 @@ Tickets.schema = new SimpleSchema({
   queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
   status: {
     type: String,
-    allowedValues: ['open', 'claimed', 'markedAsDone', 'deleted'],
+    allowedValues: ['open', 'claimed', 'markedAsMissing', 'markedAsDone', 'deleted'],
     defaultValue: 'open',
   },
 
