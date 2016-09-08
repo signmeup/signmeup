@@ -17,6 +17,17 @@ Template.Ticket.onCreated(function onCreated() {
   });
 });
 
+Template.Ticket.onRendered(function onRendered() {
+  this.autorun(() => {
+    const ticketDrawer = $(this.find('.ticket-drawer'));
+    if (Template.currentData().ticket.status === 'claimed') {
+      ticketDrawer.slideDown(150);
+    } else {
+      ticketDrawer.slideUp(150);
+    }
+  });
+});
+
 Template.Ticket.helpers({
   currentUserTicket(ticket) {
     return ticket && ticket.belongsToUser(Meteor.userId());

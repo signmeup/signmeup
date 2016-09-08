@@ -89,6 +89,125 @@ export const createTicket = new ValidatedMethod({
   },
 });
 
+export const claimTicket = new ValidatedMethod({
+  name: 'tickets.claimTicket',
+  validate: new SimpleSchema({
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ ticketId }) {
+    const ticket = Tickets.findOne(ticketId);
+    if (!ticket || ticket.status === 'deleted') {
+      throw new Meteor.Error('tickets.doesNotExist'
+        `No ticket exists with id ${ticketId}`);
+    }
+
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], ticket.courseId)) {
+      throw new Meteor.Error('tickets.claimTicket.unauthorized',
+        'Only TAs and above can claim tickets.');
+    }
+
+    Tickets.update({
+      _id: ticketId,
+    }, {
+      $set: {
+        status: 'claimed',
+        claimedAt: new Date(),
+        claimedBy: this.userId,
+      },
+    });
+  },
+});
+
+export const releaseTicket = new ValidatedMethod({
+  name: 'tickets.releaseTicket',
+  validate: new SimpleSchema({
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ ticketId }) {
+    const ticket = Tickets.findOne(ticketId);
+    if (!ticket || ticket.status === 'deleted') {
+      throw new Meteor.Error('tickets.doesNotExist'
+        `No ticket exists with id ${ticketId}`);
+    }
+
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], ticket.courseId)) {
+      throw new Meteor.Error('tickets.releaseTicket.unauthorized',
+        'Only TAs and above can release tickets.');
+    }
+
+    Tickets.update({
+      _id: ticketId,
+    }, {
+      $set: {
+        status: 'open',
+      },
+
+      $unset: {
+        claimedAt: '',
+        claimedBy: '',
+      },
+    });
+  },
+});
+
+export const markTicketAsMissing = new ValidatedMethod({
+  name: 'tickets.markTicketAsMissing',
+  validate: new SimpleSchema({
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ ticketId }) {
+    const ticket = Tickets.findOne(ticketId);
+    if (!ticket || ticket.status === 'deleted') {
+      throw new Meteor.Error('tickets.doesNotExist'
+        `No ticket exists with id ${ticketId}`);
+    }
+
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], ticket.courseId)) {
+      throw new Meteor.Error('tickets.markTicketAsMissing.unauthorized',
+        'Only TAs and above can mark tickets as missing.');
+    }
+
+    Tickets.update({
+      _id: ticketId,
+    }, {
+      $set: {
+        status: 'markedAsMissing',
+        markedAsMissingAt: new Date(),
+        markedAsMissingBy: this.userId,
+      },
+    });
+  },
+});
+
+export const markTicketAsDone = new ValidatedMethod({
+  name: 'tickets.markTicketAsDone',
+  validate: new SimpleSchema({
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ ticketId }) {
+    const ticket = Tickets.findOne(ticketId);
+    if (!ticket || ticket.status === 'deleted') {
+      throw new Meteor.Error('tickets.doesNotExist'
+        `No ticket exists with id ${ticketId}`);
+    }
+
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], ticket.courseId)) {
+      throw new Meteor.Error('tickets.markTicketAsDone.unauthorized',
+        'Only TAs and above can mark tickets as done.');
+    }
+
+    Tickets.update({
+      _id: ticketId,
+    }, {
+      $set: {
+        status: 'markedAsDone',
+        markedAsDoneAt: new Date(),
+        markedAsDoneBy: this.userId,
+      },
+    });
+  },
+});
+
 export const deleteTicket = new ValidatedMethod({
   name: 'tickets.deleteTicket',
   validate: new SimpleSchema({

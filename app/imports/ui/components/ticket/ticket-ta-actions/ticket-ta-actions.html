@@ -24,19 +24,23 @@
       </button>
 
       <div class="dropdown-menu">
-        {{#if ticket.isMarkedAsMissing}}
-          <a class="dropdown-item" href="#">Mark as missing</a>
-        {{else}}
-          <a class="dropdown-item" href="#">Claim ticket</a>
+        {{#if ticket.claimedByUser currentUser._id}}
+          <a class="dropdown-item js-release-ticket" href="#">Release ticket</a>
         {{/if}}
 
-        {{#unless ticket.isClaimedByUser currentUser._id}}
-          <a class="dropdown-item text-success">Mark as done</a>
+        {{#if ticket.isMarkedAsMissing}}
+          <a class="dropdown-item js-claim-ticket" href="#">Claim ticket</a>
+        {{else}}
+          <a class="dropdown-item js-mark-as-missing" href="#">Mark as missing</a>
+        {{/if}}
+
+        {{#unless ticket.claimedByUser currentUser._id}}
+          <a class="dropdown-item text-success js-mark-as-done">Mark as done</a>
         {{/unless}}
 
         <div class="dropdown-divider"></div>
 
-        <a class="dropdown-item text-danger" href="#">Delete ticket</a>
+        <a class="dropdown-item text-danger js-delete-ticket" href="#">Delete ticket</a>
       </div>
     </div>
   </div>

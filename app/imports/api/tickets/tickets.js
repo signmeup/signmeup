@@ -31,6 +31,9 @@ Tickets.schema = new SimpleSchema({
   claimedAt: { type: Date, optional: true },
   claimedBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
 
+  markedAsMissingAt: { type: Date, optional: true },
+  markedAsMissingBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+
   markedAsDoneAt: { type: Date, optional: true },
   markedAsDoneBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
 
