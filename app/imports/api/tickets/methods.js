@@ -175,6 +175,11 @@ export const markTicketAsMissing = new ValidatedMethod({
         markedAsMissingAt: new Date(),
         markedAsMissingBy: this.userId,
       },
+
+      $unset: {
+        claimedAt: '',
+        claimedBy: '',
+      },
     });
   },
 });

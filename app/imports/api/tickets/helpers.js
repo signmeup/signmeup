@@ -49,6 +49,6 @@ Tickets.helpers({
   },
 
   claimedByUser(userId) {
-    return this.claimedBy && userId === this.claimedBy;
+    return (this.status === 'claimed') && (userId === this.claimedBy);
   },
 });
