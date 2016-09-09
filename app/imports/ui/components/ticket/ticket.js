@@ -20,7 +20,7 @@ Template.Ticket.onCreated(function onCreated() {
 
 Template.Ticket.onRendered(function onRendered() {
   this.autorun(() => {
-    const ticketDrawer = $(this.find('.ticket-drawer'));
+    const ticketDrawer = $(Template.instance().find('.ticket-drawer'));
     if (Template.currentData().ticket.status === 'claimed') {
       ticketDrawer.slideDown(150);
     } else {
