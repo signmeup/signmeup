@@ -4,6 +4,8 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import moment from 'moment';
 
+import { notifyTicketByEmail, notifyTicketByText } from '/imports/api/tickets/methods.js';
+
 import './ticket-drawer.html';
 
 Template.TicketDrawer.onCreated(function onCreated() {
@@ -34,5 +36,23 @@ Template.TicketDrawer.helpers({
     }
 
     return `${prefixZero(minutes)}:${prefixZero(seconds)}`;
+  },
+});
+
+Template.TicketDrawer.events({
+  'click .js-notify-email'() {
+    notifyTicketByEmail.call({
+      ticketId: this.ticket._id,
+    }, (err) => {
+      if (err) console.error(err);
+    });
+  },
+
+  'click .js-notify-text'() {
+    notifyTicketByText.call({
+      ticketId: this.ticket._id,
+    }, (err) => {
+      if (err) console.error(err);
+    });
   },
 });

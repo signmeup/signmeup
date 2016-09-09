@@ -1,7 +1,3 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { _ } from 'meteor/underscore';
-
 /* eslint-disable quote-props */
 
 export const carriers = {
@@ -196,11 +192,3 @@ export const carriers = {
 };
 
 /* eslint-enable quote-props */
-
-if (Meteor.isClient) {
-  Template.registerHelper('carriers', () => {
-    return _.map(Object.keys(carriers), (k) => {
-      return { name: k, domain: carriers[k] };
-    });
-  });
-}

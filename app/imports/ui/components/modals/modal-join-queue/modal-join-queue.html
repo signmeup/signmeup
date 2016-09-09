@@ -73,15 +73,14 @@
                 <label for="carrier">Carrier</label>
                 <select name="carrier" class="form-control">
                   <option value="" disabled selected>Select carrier</option>
-                  <option value="att.net">AT&amp;T</option>
-                  <option value="sprint.net">Sprint</option>
-                  <option value="tmo.net">T-Mobile</option>
-                  <option value="att.net">Verizon</option>
+                  {{#each carrier in carriers}}
+                    <option value="{{carrier.domain}}">{{carrier.name}}</option>
+                  {{/each}}
                 </select>
               </div>
               <div class="col-md-6">
-                <label for="phoneNumber">Phone Number</label>
-                <input type="tel" name="phoneNumber" class="form-control" placeholder="000-000-0000">
+                <label for="number">Phone Number</label>
+                <input type="tel" name="number" class="form-control" placeholder="000-000-0000">
               </div>
             </div>
           </form>

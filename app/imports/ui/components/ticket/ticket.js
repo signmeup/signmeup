@@ -14,6 +14,7 @@ import './ticket.html';
 Template.Ticket.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('tickets.byId', Template.currentData().ticket._id);
+    this.subscribe('users.byIds', Template.currentData().ticket.studentIds);
   });
 });
 

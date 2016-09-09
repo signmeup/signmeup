@@ -4,6 +4,8 @@ import { ReactiveArray } from 'meteor/manuel:reactivearray';
 import { $ } from 'meteor/jquery';
 
 import { createTicket } from '/imports/api/tickets/methods.js';
+
+import { carriers } from '/imports/lib/both/carriers.js';
 import { isRestrictedToDevice, getCurrentSession } from
   '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
 
@@ -60,6 +62,15 @@ Template.ModalJoinQueue.helpers({
     const emails = Template.instance().studentEmails.array();
     if (emails.length > 0) return emails[0];
     return '';
+  },
+
+  carriers() {
+    return ['AT&T', 'Sprint', 'T-Mobile', 'Verizon'].map((carrierName) => {
+      return {
+        name: carrierName,
+        domain: carriers[carrierName],
+      };
+    });
   },
 });
 

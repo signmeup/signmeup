@@ -8,6 +8,7 @@ import { Queues } from '/imports/api/queues/queues.js';
 import { Sessions } from '/imports/api/sessions/sessions.js';
 import { Tickets, NotificationsSchema } from '/imports/api/tickets/tickets.js';
 
+import { Notifications } from '/imports/lib/both/notifications';
 import { createUser } from '/imports/lib/both/users.js';
 
 export const createTicket = new ValidatedMethod({
@@ -244,5 +245,41 @@ export const deleteTicket = new ValidatedMethod({
         deletedBy: this.userId,
       },
     });
+  },
+});
+
+export const notifyTicketByEmail = new ValidatedMethod({
+  name: 'tickets.notifyTicketByEmail',
+  validate: new SimpleSchema({
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ ticketId }) {
+    const ticket = Tickets.findOne(ticketId);
+    if (!ticket) {
+      throw new Meteor.Error('tickets.doesNotExist',
+        `No ticket exists with id ${ticketId}`);
+    }
+
+    if (Meteor.isServer) {
+      Notifications.sendEmailNotification(ticket);
+    }
+  },
+});
+
+export const notifyTicketByText = new ValidatedMethod({
+  name: 'tickets.notifyTicketByText',
+  validate: new SimpleSchema({
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ ticketId }) {
+    const ticket = Tickets.findOne(ticketId);
+    if (!ticket) {
+      throw new Meteor.Error('tickets.doesNotExist',
+        `No ticket exists with id ${ticketId}`);
+    }
+
+    if (Meteor.isServer) {
+      Notifications.sendTextNotification(ticket);
+    }
   },
 });

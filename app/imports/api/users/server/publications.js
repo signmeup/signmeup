@@ -21,6 +21,14 @@ Meteor.publish('users.byId', function byId(userId) {
   });
 });
 
+Meteor.publish('users.byIds', function byIds(userIds) {
+  return Meteor.users.find({
+    _id: { $in: userIds },
+  }, {
+    fields: Meteor.users.publicFields,
+  });
+});
+
 Meteor.publish('users.all', function all() {
   return Meteor.users.find({}, {
     fields: Meteor.users.publicFields,
