@@ -6,7 +6,7 @@ Meteor.settings.public.version = version;
 console.log(`Running SignMeUp ${version}`); // eslint-disable-line no-console
 
 // Set config
-import '/imports/lib/both/config.js';
+import '../both/config.js';
 
 // Register API
 import '../both/register-api.js';

@@ -35,6 +35,11 @@ Meteor.users.helpers({
     return null;
   },
 
+  htaCourses() {
+    const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
+    return Courses.find({ _id: { $in: htaCourseIds } });
+  },
+
   courses() {
     if (Roles.userIsInRole(this._id, ['admin', 'mta'])) {
       return Courses.find();

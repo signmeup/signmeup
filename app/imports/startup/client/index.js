@@ -1,5 +1,5 @@
 // Set config
-import '/imports/lib/both/config.js';
+import '../both/config.js';
 
 // Initialize global vendors
 import './vendor.js';
