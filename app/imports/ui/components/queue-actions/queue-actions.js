@@ -15,11 +15,11 @@ Template.QueueActions.onRendered(() => {
 });
 
 Template.QueueActions.helpers({
-  joinQueueDisabledClass(queue) {
+  disableJoinQueue(queue) {
     const isDisabled = queue.isEnded() ||
                        (queue.isRestricted() && !isRestrictedToDevice(queue)) ||
                        (queue.hasActiveTicketWithUser(Meteor.userId()));
-    return isDisabled ? 'disabled' : '';
+    return isDisabled;
   },
 });
 
