@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
@@ -37,6 +38,15 @@ Template.TicketDrawer.helpers({
 
     return `${prefixZero(minutes)}:${prefixZero(seconds)}`;
   },
+
+  showEmailNotificationButton(ticket) {
+    return ticket.notifications && ticket.notifications.email;
+  },
+
+  showTextNotificationButton(ticket) {
+    const phone = ticket.notifications && ticket.notifications.phone;
+    return phone && phone.number && phone.carrier;
+  },
 });
 
 Template.TicketDrawer.events({
@@ -44,7 +54,16 @@ Template.TicketDrawer.events({
     notifyTicketByEmail.call({
       ticketId: this.ticket._id,
     }, (err) => {
-      if (err) console.error(err);
+      if (err) {
+        console.error(err);
+        $('.js-notification-result').append(
+          '<div class="text-danger"><i class="material-icons">error_outline</i> Error sending email, sorry.</div>' // eslint-disable-line
+        );
+      } else {
+        $('.js-notification-result').append(
+          '<div class="text-success"><i class="material-icons">check</i> Email successfully sent.</div>' // eslint-disable-line
+        );
+      }
     });
   },
 
@@ -52,7 +71,16 @@ Template.TicketDrawer.events({
     notifyTicketByText.call({
       ticketId: this.ticket._id,
     }, (err) => {
-      if (err) console.error(err);
+      if (err) {
+        console.error(err);
+        $('.js-notification-result').append(
+          '<div class="text-danger"><i class="material-icons">error_outline</i> Error sending text, sorry.</div>' // eslint-disable-line
+        );
+      } else {
+        $('.js-notification-result').append(
+          '<div class="text-success"><i class="material-icons">check</i> Text successfully sent.</div>' // eslint-disable-line
+        );
+      }
     });
   },
 });

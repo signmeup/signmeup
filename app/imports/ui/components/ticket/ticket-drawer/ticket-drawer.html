@@ -14,12 +14,20 @@
         <div class="td col-xs-5">
           {{#if taView}}
             <h5>Notifications</h5>
-            <div class="btn-group" role="group" aria-label="Basic example">
+            <div class="btn-group">
               <button type="button" class="btn btn-secondary" disabled>Announce name</button>
-              <button type="button" class="btn btn-secondary js-notify-email">Send email</button>
-              <button type="button" class="btn btn-secondary js-notify-text">Send text</button>
+
+              {{#if showEmailNotificationButton ticket}}
+                <button type="button" class="btn btn-secondary js-notify-email">Send email</button>
+              {{/if}}
+
+              {{#if showTextNotificationButton ticket}}
+                <button type="button" class="btn btn-secondary js-notify-text">Send text</button>
+              {{/if}}
             </div>
           {{/if}}
+
+          <div class="js-notification-result m-t-1"></div>
         </div>
       </div>
     </div>
