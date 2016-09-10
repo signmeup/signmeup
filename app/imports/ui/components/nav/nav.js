@@ -7,6 +7,7 @@ import './nav.html';
 Template.Nav.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('users.self');
+    this.subscribe('courses.all');
   });
 });
 
