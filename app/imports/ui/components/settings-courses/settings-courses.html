@@ -1,3 +1,51 @@
 <template name="SettingsCourses">
-  Courses
+  <div class="settings-courses">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <select class="form-control js-select-course">
+            <option value="">cs15</option>
+            <option value="">cs17</option>
+
+            {{#if isInRole 'admin,mta'}}
+              <option value="new-course">Create new course...</option>
+            {{/if}}
+          </select>
+        </div>
+
+        <ul class="nav nav-pills nav-stacked">
+          <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#courses-general" role="tab">General</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#courses-people" role="tab">HTAs and TAs</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#courses-analytics" role="tab">Analytics</a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="settings-courses-body col-md-9">
+        <div class="tab-content">
+          <div class="tab-pane fade in active" id="courses-general" role="tab-panel">
+            <h2 class="h3">General</h2>
+          </div>
+
+          <div class="tab-pane fade" id="courses-people" role="tab-panel">
+            <h2 class="h3">HTAs and TAs</h2>
+          </div>
+
+          <div class="tab-pane fade" id="courses-analytics" role="tab-panel">
+            <h2 class="h3">Analytics</h2>
+            <p>Coming soon!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{#if isInRole 'admin,mta'}}
+    {{> ModalCourseCreate}}
+  {{/if}}
 </template>
