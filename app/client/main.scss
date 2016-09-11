@@ -1,5 +1,6 @@
 /* Vendor */
 @import "{}/node_modules/bootstrap/scss/bootstrap-flex.scss";
+// @import "{}/node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker3.css";
 @import "{}/imports/ui/stylesheets/animate.scss";
 
 /* Material Icons */
@@ -47,3 +48,4 @@ i.material-icons {
 
 @import "{}/imports/ui/components/settings-courses/courses-general/courses-general.scss";
 @import "{}/imports/ui/components/settings-courses/courses-people/courses-people.scss";
+@import "{}/imports/ui/components/settings-courses/courses-analytics/courses-analytics.scss";

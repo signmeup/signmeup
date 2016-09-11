@@ -1,11 +1,32 @@
 <template name="CoursesAnalytics">
   <div class="tab-pane fade" id="courses-analytics" role="tab-panel">
     <div class="card">
-      <div class="card-header">Analytics</div>
+      <div class="card-header">Logs</div>
       <div class="card-block">
-        <div class="form-group">
-          <label for="description">Signup Gap</label>
-        </div>
+        <form id="download-logs-form">
+          <div class="row">
+            <div class="form-group col-md-3">
+              <label for="type">Type</label>
+              <select class="form-control m-b-0">
+                <option value="tickets">Tickets</option>
+                <option value="queues">Queues</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-6 m-b-0 p-l-0">
+              <label>Dates</label>
+              <div class="input-daterange input-group js-logs-datepicker">
+                <input type="text" class="form-control" name="start" />
+                <span class="input-group-addon">to</span>
+                <input type="text" class="form-control" name="end" />
+              </div>
+            </div>
+
+            <div class="form-group m-b-0 p-l-0">
+              <button class="btn btn-primary btn-inline">Download</button>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   </div>
