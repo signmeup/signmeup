@@ -5,6 +5,7 @@ import { Meteor } from 'meteor/meteor';
 import '/imports/api/announcements/methods.js';
 
 import '/imports/api/courses/methods.js';
+import '/imports/api/courses/helpers.js';
 
 import '/imports/api/locations/methods.js';
 

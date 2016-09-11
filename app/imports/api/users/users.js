@@ -11,6 +11,7 @@ Meteor.users.publicFields = {
   'profile.name': true,
   'profile.displayName': true,
   'profile.givenName': true,
+  roles: true,
 };
 
 Meteor.users.allow({

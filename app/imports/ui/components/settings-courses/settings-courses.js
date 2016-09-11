@@ -5,6 +5,9 @@ import { $ } from 'meteor/jquery';
 
 import { Courses } from '/imports/api/courses/courses.js';
 
+import '/imports/ui/components/settings-courses/courses-general/courses-general.js';
+import '/imports/ui/components/settings-courses/courses-people/courses-people.js';
+import '/imports/ui/components/settings-courses/courses-analytics/courses-analytics.js';
 import '/imports/ui/components/modals/modal-course-create/modal-course-create.js';
 
 import './settings-courses.html';
