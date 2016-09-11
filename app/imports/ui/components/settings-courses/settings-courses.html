@@ -1,49 +1,150 @@
 <template name="SettingsCourses">
   <div class="settings-courses">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="form-group">
-          <select class="form-control js-select-course">
-            {{#each course in currentUser.courses}}
-              <option value="{{course._id}}" selected={{isSelectedCourse course}}>{{course.name}}</option>
-            {{/each}}
+    {{#if Template.subscriptionsReady}}
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <select class="form-control js-select-course">
+              {{#each course in currentUser.courses}}
+                <option value="{{course._id}}" selected={{isSelectedCourse course}}>{{course.name}}</option>
+              {{/each}}
 
-            {{#if isInRole 'admin,mta'}}
-              <option value="new-course">Create new course...</option>
-            {{/if}}
-          </select>
+              {{#if isInRole 'admin,mta'}}
+                <option value="new-course">Create new course...</option>
+              {{/if}}
+            </select>
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#courses-general" role="tab">General</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#courses-people" role="tab">HTAs and TAs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#courses-analytics" role="tab">Analytics</a>
+            </li>
+          </ul>
         </div>
 
-        <ul class="nav nav-pills nav-stacked">
-          <li class="nav-item">
-            <a class="nav-link active" data-toggle="tab" href="#courses-general" role="tab">General</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#courses-people" role="tab">HTAs and TAs</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#courses-analytics" role="tab">Analytics</a>
-          </li>
-        </ul>
-      </div>
+        <div class="settings-courses-body col-md-9">
+          <h3 class="m-b-2">{{selectedCourse.name}}</h3>
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="courses-general" role="tab-panel">
+              <div class="card">
+                <div class="card-header">Info</div>
+                <div class="card-block">
+                  <form id="update-course-form">
+                    <div class="row">
+                      <div class="form-group col-md-4">
+                        <label for="name">Name</label>
+                        <input type="text" name="name" value="{{selectedCourse.name}}" class="form-control">
+                      </div>
 
-      <div class="settings-courses-body col-md-9">
-        <div class="tab-content">
-          <div class="tab-pane fade in active" id="courses-general" role="tab-panel">
-            <h2 class="h3">General</h2>
-          </div>
+                      <div class="form-group col-md-6 p-l-0">
+                        <label for="description">Description</label>
+                        <input type="text" name="description" value="{{selectedCourse.description}}" class="form-control">
+                      </div>
 
-          <div class="tab-pane fade" id="courses-people" role="tab-panel">
-            <h2 class="h3">HTAs and TAs</h2>
-          </div>
+                      <div class="form-group">
+                        <button type="submit" class="btn btn-secondary btn-inline">Save</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
 
-          <div class="tab-pane fade" id="courses-analytics" role="tab-panel">
-            <h2 class="h3">Analytics</h2>
-            <p>Coming soon!</p>
+              <div class="card">
+                <div class="card-header">Settings</div>
+
+                <div class="card-block">
+                  <div class="form-check m-b-0">
+                    <label class="form-check-label">
+                      <input type="checkbox" class="form-check-input">
+                      <p>
+                        Restrict signups to device by default<br>
+                        <span class="text-muted">Limit signups to the TA's machine for all new queues.</span>
+                      </p>
+                    </label>
+                  </div>
+                </div>
+
+                <div class="card-block">
+                  <div class="form-group row m-b-0">
+                    <label for="signup-gap" class="col-xs-9 col-form-label">
+                      Signup Gap<br>
+                      <span class="text-muted">Minimum time a student must wait after resolution to sign up again.</span>
+                    </label>
+                    <div class="col-xs-3">
+                      <select class="form-control m-t-1" name="signup-gap">
+                        <option value="0">No gap</option>
+                        <option value="15">15 minutes</option>
+                        <option value="30">30 minutes</option>
+                        <option value="45">45 minutes</option>
+                        <option value="60">1 hour</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-block">
+                  <div class="form-group">
+                    <label for="signup-gap" class="col-form-label">
+                      Notifications<br>
+                      <span class="text-muted">Choose which notification methods students can request.</span>
+                    </label>
+                    <div class="form-inline">
+                      <div class="form-check m-r-1">
+                        <label class="form-check-label">
+                          <input name="emailCheckbox" class="form-check-input js-email-checkbox" type="checkbox"> Allow email notifications
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <label class="form-check-label">
+                          <input name="textCheckbox" class="form-check-input js-text-checkbox" type="checkbox"> Allow text notifications
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="courses-people" role="tab-panel">
+              <div class="card">
+                <div class="card-header">HTAs</div>
+                <div class="card-block">
+                  <div class="form-group">
+                    <label for="description">Signup Gap</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card">
+                <div class="card-header">TAs</div>
+                <div class="card-block">
+                  <div class="form-group">
+                    <label for="description">Signup Gap</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="courses-analytics" role="tab-panel">
+              <div class="card">
+                <div class="card-header">Analytics</div>
+                <div class="card-block">
+                  <div class="form-group">
+                    <label for="description">Signup Gap</label>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    {{/if}}
   </div>
 
   {{#if isInRole 'admin,mta'}}
