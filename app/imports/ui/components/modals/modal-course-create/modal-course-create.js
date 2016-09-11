@@ -14,11 +14,12 @@ Template.ModalCourseCreate.events({
       description: event.target.description.value,
     };
 
-    createCourse.call(data, (err) => {
+    createCourse.call(data, (err, courseId) => {
       if (err) {
         console.error(err);
       } else {
         $('.modal-course-create').modal('hide');
+        this.setSelectedCourseId(courseId);
       }
     });
   },
