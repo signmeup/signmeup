@@ -7,8 +7,11 @@
       <strong class="media-heading">{{session.name}}</strong>
       <p class="text-muted m-b-0">{{session.user.fullName}} &middot; {{formattedUserAgent session.userAgent}}</p>
     </div>
-    <button type="button" class="close js-release-session">
-      <i class="material-icons">close</i>
-    </button>
+
+    {{#if isInRole 'admin,mta,hta,ta' session.queue.courseId}}
+      <button type="button" class="close js-release-session">
+        <i class="material-icons">close</i>
+      </button>
+    {{/if}}
   </div>
 </template>
