@@ -47,3 +47,31 @@ export const addRoleGivenEmail = new ValidatedMethod({
     }
   },
 });
+
+export const removeRole = new ValidatedMethod({
+  name: 'users.removeRole',
+  validate: new SimpleSchema({
+    userId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    role: { type: String, allowedValues: ['admin', 'mta', 'hta', 'ta'] },
+    courseId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+  }).validator(),
+  run({ userId, role, courseId }) {
+    const user = Meteor.users.findOne(userId);
+    if (!user) {
+      throw new Meteor.Error('users.doesNotExist',
+        `No user exists with id ${userId}`);
+    }
+
+    const course = Courses.findOne(courseId);
+    if (_.contains(['hta', 'ta'], role) && !course) {
+      throw new Meteor.Error('courses.doesNotExist',
+        `No course with id ${courseId}`);
+    }
+
+    if (course) {
+      Roles.removeUsersFromRoles(userId, role, courseId);
+    } else {
+      Roles.removeUsersFromRoles(userId, role);
+    }
+  },
+});

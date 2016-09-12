@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { addRoleGivenEmail } from '/imports/api/users/methods.js';
+import { addRoleGivenEmail, removeRole } from '/imports/api/users/methods.js';
 
 import './courses-people.html';
 
@@ -40,7 +40,7 @@ Template.CoursesPeople.events({
 
       addRoleGivenEmail.call(data, (err) => {
         if (err) {
-          console.log(err);
+          console.error(err);
         } else {
           $('.js-hta-email').val('');
         }
@@ -60,10 +60,40 @@ Template.CoursesPeople.events({
 
       addRoleGivenEmail.call(data, (err) => {
         if (err) {
-          console.log(err);
+          console.error(err);
         } else {
           $('.js-ta-email').val('');
         }
+      });
+    }
+  },
+
+  'click .js-remove-hta'(event) {
+    const userId = event.target.dataset.id;
+    if (userId) {
+      const data = {
+        userId,
+        role: 'hta',
+        courseId: this.course._id,
+      };
+
+      removeRole.call(data, (err) => {
+        if (err) console.error(err);
+      });
+    }
+  },
+
+  'click .js-remove-ta'(event) {
+    const userId = event.target.dataset.id;
+    if (userId) {
+      const data = {
+        userId,
+        role: 'ta',
+        courseId: this.course._id,
+      };
+
+      removeRole.call(data, (err) => {
+        if (err) console.error(err);
       });
     }
   },
