@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 
 import { Courses } from '/imports/api/courses/courses.js';
@@ -24,5 +25,35 @@ export const createCourse = new ValidatedMethod({
     });
 
     return courseId;
+  },
+});
+
+export const updateCourse = new ValidatedMethod({
+  name: 'courses.updateCourse',
+  validate: new SimpleSchema({
+    courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    name: { type: String },
+    description: { type: String },
+  }).validator(),
+  run({ courseId, name, description }) {
+    const course = Courses.findOne(courseId);
+    if (!course) {
+      throw new Meteor.Error('courses.doesNotExist',
+        `No course exists with id ${courseId}`);
+    }
+
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta'], courseId)) {
+      throw new Meteor.Error('courses.unauthorized',
+        'Only HTAs and above can update courses.');
+    }
+
+    Courses.update({
+      _id: courseId,
+    }, {
+      $set: {
+        name: name, // eslint-disable-line object-shorthand
+        description: description, // eslint-disable-line object-shorthand
+      },
+    });
   },
 });

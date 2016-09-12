@@ -79,7 +79,7 @@ export const updateQueue = new ValidatedMethod({
 
     if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) {
       throw new Meteor.Error('queues.createQueue.unauthorized',
-        'Only TAs and above can create queues.');
+        'Only TAs and above can update queues.');
     }
 
     const setFields = {};
