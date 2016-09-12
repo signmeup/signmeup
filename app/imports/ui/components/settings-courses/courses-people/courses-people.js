@@ -11,6 +11,22 @@ Template.CoursesPeople.onCreated(function onCreated() {
   });
 });
 
+Template.CoursesPeople.helpers({
+  htas(course) {
+    const htas = course.htas().fetch();
+    return htas.sort((a, b) => {
+      return a.fullName().localeCompare(b.fullName());
+    });
+  },
+
+  tas(course) {
+    const tas = course.tas().fetch();
+    return tas.sort((a, b) => {
+      return a.fullName().localeCompare(b.fullName());
+    });
+  },
+});
+
 Template.CoursesPeople.events({
   'submit #add-hta-form'(event) {
     event.preventDefault();

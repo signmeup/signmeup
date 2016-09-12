@@ -13,7 +13,7 @@
         </form>
       </div>
 
-      {{#each hta in course.htas}}
+      {{#each hta in (htas course)}}
         <div class="card-block">
           <div class="row m-b-0">
             <p class="col-xs-9 m-b-0">
@@ -43,7 +43,7 @@
         </form>
       </div>
 
-      {{#each ta in course.tas}}
+      {{#each ta in (tas course)}}
         <div class="card-block">
           <div class="row m-b-0">
             <p class="col-xs-9 m-b-0">
