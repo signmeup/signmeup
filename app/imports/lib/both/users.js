@@ -41,3 +41,12 @@ export function createUser(options) {
 
   return userId;
 }
+
+export function findUserByEmail(email) {
+  return Meteor.users.findOne({
+    $or: [
+      { email: email }, // eslint-disable-line object-shorthand
+      { 'emails.address': email },
+    ],
+  });
+}

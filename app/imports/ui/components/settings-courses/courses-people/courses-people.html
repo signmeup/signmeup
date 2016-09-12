@@ -3,12 +3,14 @@
     <div class="card">
       <div class="card-header">HTAs</div>
       <div class="card-block">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="hta_email@brown.edu">
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button">Add</button>
-          </span>
-        </div>
+        <form id="add-hta-form">
+          <div class="input-group">
+            <input type="text" class="form-control js-hta-email" name="htaEmail" placeholder="hta_email@brown.edu">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="submit">Add</button>
+            </span>
+          </div>
+        </form>
       </div>
 
       {{#each hta in course.htas}}
@@ -31,12 +33,14 @@
     <div class="card">
       <div class="card-header">TAs</div>
       <div class="card-block">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="ta_email@brown.edu">
-          <span class="input-group-btn">
-            <button class="btn btn-secondary" type="button">Add</button>
-          </span>
-        </div>
+        <form id="add-ta-form">
+          <div class="input-group">
+            <input type="text" class="form-control js-ta-email" name="taEmail" placeholder="ta_email@brown.edu">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="submit">Add</button>
+            </span>
+          </div>
+        </form>
       </div>
 
       {{#each ta in course.tas}}

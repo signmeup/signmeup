@@ -9,7 +9,7 @@ import { Sessions } from '/imports/api/sessions/sessions.js';
 import { Tickets, NotificationsSchema } from '/imports/api/tickets/tickets.js';
 
 import { Notifications } from '/imports/lib/both/notifications';
-import { createUser } from '/imports/lib/both/users.js';
+import { createUser, findUserByEmail } from '/imports/lib/both/users.js';
 
 export const createTicket = new ValidatedMethod({
   name: 'tickets.createTicket',
@@ -35,13 +35,7 @@ export const createTicket = new ValidatedMethod({
 
     // Gather student ids
     const studentIds = studentEmails.map((email) => {
-      const student = Meteor.users.findOne({
-        $or: [
-          { email: email }, // eslint-disable-line object-shorthand
-          { 'emails.address': email },
-        ],
-      });
-
+      const student = findUserByEmail(email);
       if (student) return student._id;
       return createUser({ email });
     });
