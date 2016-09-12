@@ -2,8 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { isRestrictedToDevice } from
-  '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
 
 import './queue-status-dropdown/queue-status-dropdown.js';
 import './queue-more-dropdown/queue-more-dropdown.js';
@@ -17,7 +16,7 @@ Template.QueueActions.onRendered(() => {
 Template.QueueActions.helpers({
   disableJoinQueue(queue) {
     const isDisabled = queue.isEnded() ||
-                       (queue.isRestricted() && !isRestrictedToDevice(queue)) ||
+                       (queue.isRestricted() && !RestrictedSessions.isRestrictedToDevice(queue)) ||
                        (queue.hasActiveTicketWithUser(Meteor.userId()));
     return isDisabled;
   },

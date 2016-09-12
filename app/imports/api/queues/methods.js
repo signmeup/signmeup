@@ -214,8 +214,8 @@ export const endQueue = new ValidatedMethod({
   },
 });
 
-export const restrictSignups = new ValidatedMethod({
-  name: 'queues.restrictSignups',
+export const restrictToSession = new ValidatedMethod({
+  name: 'queues.restrictToSession',
   validate: new SimpleSchema({
     queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
     name: { type: String },
@@ -230,7 +230,7 @@ export const restrictSignups = new ValidatedMethod({
     }
 
     if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) {
-      throw new Meteor.Error('queues.restrictSignups.unauthorized',
+      throw new Meteor.Error('queues.restrictToSession.unauthorized',
         'Only TAs and above can restrict queue signups.');
     }
 
@@ -249,5 +249,31 @@ export const restrictSignups = new ValidatedMethod({
     });
 
     return sessionId;
+  },
+});
+
+export const releaseFromSession = new ValidatedMethod({
+  name: 'queues.releaseFromSession',
+  validate: new SimpleSchema({
+    queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    sessionId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ queueId, sessionId }) {
+    const queue = Queues.findOne(queueId);
+    if (!queue) {
+      throw new Meteor.Error('queues.doesNotExist',
+        `No queue exists with id ${queueId}`);
+    }
+
+    if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) {
+      throw new Meteor.Error('queues.restrictToSession.unauthorized',
+        'Only TAs and above can release queues from sessions.');
+    }
+
+    Queues.update({
+      _id: queueId,
+    }, {
+      $pull: { 'settings.restrictedSessionIds': sessionId },
+    });
   },
 });

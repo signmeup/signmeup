@@ -6,8 +6,7 @@ import { $ } from 'meteor/jquery';
 import { createTicket } from '/imports/api/tickets/methods.js';
 
 import { carriers } from '/imports/lib/both/carriers.js';
-import { isRestrictedToDevice, getCurrentSession } from
-  '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
 
 import './modal-join-queue.html';
 
@@ -118,8 +117,8 @@ Template.ModalJoinQueue.events({
       data.notifications.phone.number = event.target.number.value;
     }
 
-    if (this.queue.isRestricted() && isRestrictedToDevice(this.queue)) {
-      data = Object.assign(data, getCurrentSession(this.queue));
+    if (this.queue.isRestricted() && RestrictedSessions.isRestrictedToDevice(this.queue)) {
+      data = Object.assign(data, RestrictedSessions.getCurrentSession(this.queue));
     }
 
     createTicket.call(data, (err) => {

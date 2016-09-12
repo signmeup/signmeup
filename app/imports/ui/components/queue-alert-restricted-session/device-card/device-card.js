@@ -4,8 +4,9 @@ import uaParser from 'ua-parser-js';
 
 import { Queues } from '/imports/api/queues/queues.js';
 
-import { isSessionForCurrentDevice } from
-  '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
+import { releaseFromSession } from '/imports/api/queues/methods.js';
+
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
 
 import './device-card.html';
 
@@ -18,7 +19,7 @@ Template.DeviceCard.onCreated(function onCreated() {
 Template.DeviceCard.helpers({
   currentDeviceClass(session) {
     const queue = Queues.findOne(session.queueId);
-    return isSessionForCurrentDevice(queue, session._id) ? 'current-device-card' : '';
+    return RestrictedSessions.isSessionForCurrentDevice(queue, session._id) ? 'current-device-card' : ''; // eslint-disable-line max-len
   },
 
   icon(userAgent) {
@@ -33,5 +34,16 @@ Template.DeviceCard.helpers({
   formattedUserAgent(userAgent) {
     const ua = uaParser(userAgent);
     return `${ua.browser.name} on ${ua.os.name}`;
+  },
+});
+
+Template.DeviceCard.events({
+  'click .js-release-session'() {
+    releaseFromSession.call({
+      queueId: this.session.queueId,
+      sessionId: this.session._id,
+    }, (err) => {
+      if (err) console.error(err);
+    });
   },
 });

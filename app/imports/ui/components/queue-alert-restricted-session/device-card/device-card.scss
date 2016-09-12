@@ -1,4 +1,6 @@
 .device-card {
+  position: relative;
+
   margin-top: $spacer-y;
   margin-right: $spacer-x;
 
@@ -15,4 +17,16 @@
 .device-icon.material-icons {
   margin-top: 4px;
   font-size: 36px !important;
+}
+
+.device-card .close {
+  height: 18px;
+  width: 18px;
+
+  position: absolute;
+
+  top: 0.75rem;
+  right: 0.75rem;
+
+  outline: 0;
 }
