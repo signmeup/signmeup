@@ -19,7 +19,8 @@ Template.ModalQueueEdit.helpers({
   },
 
   isCurrentEndTime(queue, time) {
-    return queue.scheduledEndTime && moment(queue.scheduledEndTime).isSame(moment(time.ISOString));
+    return queue && queue.scheduledEndTime &&
+           moment(queue.scheduledEndTime).isSame(moment(time.ISOString));
   },
 });
 
