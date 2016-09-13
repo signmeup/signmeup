@@ -146,6 +146,7 @@ export const openQueue = new ValidatedMethod({
 
       $unset: {
         cutoffAt: '',
+        cutoffAfter: '',
         cutoffBy: '',
       },
     });
@@ -175,6 +176,7 @@ export const cutoffQueue = new ValidatedMethod({
       $set: {
         status: 'cutoff',
         cutoffAt: new Date(),
+        cutoffAfter: queue.ticketIds[queue.ticketIds.length - 1],
         cutoffBy: this.userId,
       },
     });

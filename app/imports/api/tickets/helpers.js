@@ -38,6 +38,10 @@ Tickets.helpers({
     return this.status === 'deleted';
   },
 
+  isActive() {
+    return this.isOpen() || this.isClaimed() || this.isMarkedAsMissing();
+  },
+
   students() {
     return Meteor.users.find({
       _id: { $in: this.studentIds },

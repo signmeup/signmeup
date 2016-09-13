@@ -10,14 +10,21 @@
       </div>
 
       <div class="tbody">
-        {{#if activeTicketsAvailable queue}}
-          {{#each ticket in (activeTicketsWithIndexes queue)}}
-            {{> Ticket ticket=ticket taView=taView}}
-          {{/each}}
-        {{else}}
+        {{#if noActiveTickets queue}}
           <div class="row empty">
             No signups to show.
           </div>
+        {{else}}
+          {{#each row in (rows queue)}}
+            {{#if row.isCutoffMarker}}
+              <div class="cutoff-marker row table-warning">
+                Cutoff<br>
+                <span class="small text-muted">Students that sign up after this may not be helped.</span>
+              </div>
+            {{else}}
+              {{> Ticket ticket=row taView=taView}}
+            {{/if}}
+          {{/each}}
         {{/if}}
       </div>
     </div>

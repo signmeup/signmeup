@@ -25,6 +25,7 @@ Queues.schema = new SimpleSchema({
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
 
   cutoffAt: { type: Date, optional: true },
+  cutoffAfter: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   cutoffBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
 
   endedAt: { type: Date, optional: true },

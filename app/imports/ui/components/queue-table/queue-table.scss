@@ -45,6 +45,16 @@
   }
 }
 
+.cutoff-marker {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+
+  .small {
+    margin-left: 0.5rem;
+  }
+}
+
 .row.empty {
   display: flex;
   align-items: center;
