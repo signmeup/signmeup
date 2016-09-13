@@ -1,4 +1,6 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Roles } from 'meteor/alanning:roles';
 
 import '/imports/ui/components/settings-courses/settings-courses.js';
 import '/imports/ui/components/settings-locations/settings-locations.js';
@@ -13,4 +15,11 @@ Template.Settings.onRendered(function onRendered() {
       document.title = 'Settings · SignMeUp';
     }
   });
+});
+
+Template.Settings.helpers({
+  showSettings() {
+    return Roles.userIsInRole(this._id, ['admin', 'mta']) ||
+           Meteor.user().htaCourses().count() > 0;
+  },
 });
