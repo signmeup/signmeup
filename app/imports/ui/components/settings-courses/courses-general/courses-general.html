@@ -24,13 +24,13 @@
     </div>
 
     <div class="card">
-      <div class="card-header">Settings</div>
+      <div class="card-header">Settings <span class="tag tag-default">Coming Soon</span></div>
 
       <form id="update-course-settings-form">
         <div class="card-block">
-          <div class="form-check m-b-0">
+          <div class="form-check disabled m-b-0">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" name="restrictSessionsByDefault">
+              <input type="checkbox" class="form-check-input" name="restrictSessionsByDefault" disabled>
               <p>
                 Restrict signups to device by default<br>
                 <span class="text-muted">Limit signups to the TA's machine for all new queues.</span>
@@ -42,11 +42,11 @@
         <div class="card-block">
           <div class="form-group row m-b-0">
             <label for="signup-gap" class="col-xs-9 col-form-label">
-              Signup Gap<br>
+              <span class="text-muted">Signup Gap</span><br>
               <span class="text-muted">Minimum time a student must wait after resolution to sign up again.</span>
             </label>
             <div class="col-xs-3">
-              <select class="form-control m-t-1" name="signupGap">
+              <select class="form-control disabled m-t-1" name="signupGap" disabled>
                 <option value="0">No gap</option>
                 <option value="15">15 minutes</option>
                 <option value="30">30 minutes</option>
@@ -60,18 +60,18 @@
         <div class="card-block">
           <div class="form-group">
             <label for="signup-gap" class="col-form-label">
-              Notifications<br>
+              <span class="text-muted">Notifications</span><br>
               <span class="text-muted">Choose which notification methods students can request.</span>
             </label>
             <div class="form-inline">
-              <div class="form-check m-r-1">
+              <div class="form-check disabled m-r-1">
                 <label class="form-check-label">
-                  <input name="allowEmail" class="form-check-input js-email-checkbox" type="checkbox"> Allow email notifications
+                  <input name="allowEmail" class="form-check-input" type="checkbox" disabled> Allow email notifications
                 </label>
               </div>
-              <div class="form-check">
+              <div class="form-check disabled">
                 <label class="form-check-label">
-                  <input name="allowText" class="form-check-input js-text-checkbox" type="checkbox"> Allow text notifications
+                  <input name="allowText" class="form-check-input" type="checkbox" disabled> Allow text notifications
                 </label>
               </div>
             </div>
