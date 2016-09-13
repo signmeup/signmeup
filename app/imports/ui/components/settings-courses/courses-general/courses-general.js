@@ -5,6 +5,12 @@ import { updateCourse, updateSettings } from '/imports/api/courses/methods.js';
 
 import './courses-general.html';
 
+Template.CoursesGeneral.helpers({
+  isCurrentSignupGap(course, signupGap) {
+    return course.settings.signupGap === signupGap;
+  },
+});
+
 Template.CoursesGeneral.events({
   'submit #update-course-form'(event) {
     event.preventDefault();

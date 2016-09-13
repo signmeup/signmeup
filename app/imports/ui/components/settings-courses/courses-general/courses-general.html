@@ -30,7 +30,7 @@
         <div class="card-block">
           <div class="form-check disabled m-b-0">
             <label class="form-check-label">
-              <input type="checkbox" class="form-check-input" name="restrictSessionsByDefault" disabled>
+              <input type="checkbox" class="form-check-input" name="restrictSessionsByDefault" checked="{{course.settings.restrictSessionsByDefault}}" disabled>
               <p>
                 Restrict signups to device by default<br>
                 <span class="text-muted">Limit signups to the TA's machine for all new queues.</span>
@@ -47,11 +47,11 @@
             </label>
             <div class="col-xs-3">
               <select class="form-control disabled m-t-1" name="signupGap" disabled>
-                <option value="0">No gap</option>
-                <option value="15">15 minutes</option>
-                <option value="30">30 minutes</option>
-                <option value="45">45 minutes</option>
-                <option value="60">1 hour</option>
+                <option value="0" selected="{{isCurrentSignupGap course 0}}">No gap</option>
+                <option value="15" selected="{{isCurrentSignupGap course 15}}">15 minutes</option>
+                <option value="30" selected="{{isCurrentSignupGap course 30}}">30 minutes</option>
+                <option value="45" selected="{{isCurrentSignupGap course 45}}">45 minutes</option>
+                <option value="60" selected="{{isCurrentSignupGap course 60}}">1 hour</option>
               </select>
             </div>
           </div>
@@ -66,12 +66,12 @@
             <div class="form-inline">
               <div class="form-check disabled m-r-1">
                 <label class="form-check-label">
-                  <input name="allowEmail" class="form-check-input" type="checkbox" disabled> Allow email notifications
+                  <input name="allowEmail" class="form-check-input" type="checkbox" checked="{{course.settings.notifications.allowEmail}}" disabled> Allow email notifications
                 </label>
               </div>
               <div class="form-check disabled">
                 <label class="form-check-label">
-                  <input name="allowText" class="form-check-input" type="checkbox" disabled> Allow text notifications
+                  <input name="allowText" class="form-check-input" type="checkbox" checked="{{course.settings.notifications.allowText}}" disabled> Allow text notifications
                 </label>
               </div>
             </div>
