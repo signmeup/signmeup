@@ -19,7 +19,8 @@ Template.Settings.onRendered(function onRendered() {
 
 Template.Settings.helpers({
   showSettings() {
-    return Roles.userIsInRole(this._id, ['admin', 'mta']) ||
-           Meteor.user().htaCourses().count() > 0;
+    return Meteor.user() &&
+           (Roles.userIsInRole(Meteor.userId(), ['admin', 'mta']) ||
+            Meteor.user().htaCourses().count() > 0);
   },
 });

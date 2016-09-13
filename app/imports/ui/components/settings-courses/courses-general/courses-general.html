@@ -26,56 +26,58 @@
     <div class="card">
       <div class="card-header">Settings</div>
 
-      <div class="card-block">
-        <div class="form-check m-b-0">
-          <label class="form-check-label">
-            <input type="checkbox" class="form-check-input">
-            <p>
-              Restrict signups to device by default<br>
-              <span class="text-muted">Limit signups to the TA's machine for all new queues.</span>
-            </p>
-          </label>
-        </div>
-      </div>
-
-      <div class="card-block">
-        <div class="form-group row m-b-0">
-          <label for="signup-gap" class="col-xs-9 col-form-label">
-            Signup Gap<br>
-            <span class="text-muted">Minimum time a student must wait after resolution to sign up again.</span>
-          </label>
-          <div class="col-xs-3">
-            <select class="form-control m-t-1" name="signup-gap">
-              <option value="0">No gap</option>
-              <option value="15">15 minutes</option>
-              <option value="30">30 minutes</option>
-              <option value="45">45 minutes</option>
-              <option value="60">1 hour</option>
-            </select>
+      <form id="update-course-settings-form">
+        <div class="card-block">
+          <div class="form-check m-b-0">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" name="restrictSessionsByDefault">
+              <p>
+                Restrict signups to device by default<br>
+                <span class="text-muted">Limit signups to the TA's machine for all new queues.</span>
+              </p>
+            </label>
           </div>
         </div>
-      </div>
 
-      <div class="card-block">
-        <div class="form-group">
-          <label for="signup-gap" class="col-form-label">
-            Notifications<br>
-            <span class="text-muted">Choose which notification methods students can request.</span>
-          </label>
-          <div class="form-inline">
-            <div class="form-check m-r-1">
-              <label class="form-check-label">
-                <input name="emailCheckbox" class="form-check-input js-email-checkbox" type="checkbox"> Allow email notifications
-              </label>
-            </div>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input name="textCheckbox" class="form-check-input js-text-checkbox" type="checkbox"> Allow text notifications
-              </label>
+        <div class="card-block">
+          <div class="form-group row m-b-0">
+            <label for="signup-gap" class="col-xs-9 col-form-label">
+              Signup Gap<br>
+              <span class="text-muted">Minimum time a student must wait after resolution to sign up again.</span>
+            </label>
+            <div class="col-xs-3">
+              <select class="form-control m-t-1" name="signupGap">
+                <option value="0">No gap</option>
+                <option value="15">15 minutes</option>
+                <option value="30">30 minutes</option>
+                <option value="45">45 minutes</option>
+                <option value="60">1 hour</option>
+              </select>
             </div>
           </div>
         </div>
-      </div>
+
+        <div class="card-block">
+          <div class="form-group">
+            <label for="signup-gap" class="col-form-label">
+              Notifications<br>
+              <span class="text-muted">Choose which notification methods students can request.</span>
+            </label>
+            <div class="form-inline">
+              <div class="form-check m-r-1">
+                <label class="form-check-label">
+                  <input name="allowEmail" class="form-check-input js-email-checkbox" type="checkbox"> Allow email notifications
+                </label>
+              </div>
+              <div class="form-check">
+                <label class="form-check-label">
+                  <input name="allowText" class="form-check-input js-text-checkbox" type="checkbox"> Allow text notifications
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </template>

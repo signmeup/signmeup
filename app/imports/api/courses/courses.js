@@ -3,13 +3,20 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 
 export const Courses = new Mongo.Collection('courses');
 
+export const SettingsSchema = new SimpleSchema({
+  signupGap: { type: Number, defaultValue: 0 },
+  restrictSessionsByDefault: { type: Boolean, defaultValue: false },
+  notifications: { type: Object, defaultValue: {} },
+  'notifications.allowEmail': { type: Boolean, defaultValue: true },
+  'notifications.allowText': { type: Boolean, defaultValue: true },
+});
+
 Courses.schema = new SimpleSchema({
   name: { type: String },
   description: { type: String, optional: true },
   active: { type: Boolean },
 
-  settings: { type: Object, defaultValue: {} },
-  'settings.signupGap': { type: Number, defaultValue: 0 },
+  settings: { type: SettingsSchema, defaultValue: {} },
 
   createdAt: { type: Date },
   deletedAt: { type: Date, optional: true },
