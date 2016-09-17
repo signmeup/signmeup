@@ -44,12 +44,22 @@ Template.ModalJoinQueue.helpers({
 
   students() {
     const emails = Template.instance().studentEmails.array();
-    return Meteor.users.find({
-      $or: [
-        { email: { $in: emails } },
-        { 'emails.address': { $in: emails } },
-      ],
+    const students = emails.map((email) => {
+      const student = Meteor.users.findOne({
+        $or: [
+          { email: email }, // eslint-disable-line object-shorthand
+          { 'emails.address': email },
+        ],
+      });
+
+      if (student) return student;
+      return {
+        emailAddress: email,
+        fullName: email.split('@')[0],
+      };
     });
+
+    return students;
   },
 
   studentPlaceholder() {

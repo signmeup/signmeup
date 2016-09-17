@@ -19,7 +19,7 @@
               {{#if showStudents}}
                 <ul class="student-list list-unstyled m-b-0">
                   {{#each student in students}}
-                    <li class="student-item" data-id="{{student._id}}" data-email="{{student.emailAddress}}">
+                    <li class="student-item" data-email="{{student.emailAddress}}">
                       <div class="content">
                         <p class="student-name">{{student.fullName}}</p>
                         <small class="text-muted">{{student.emailAddress}}</small>
