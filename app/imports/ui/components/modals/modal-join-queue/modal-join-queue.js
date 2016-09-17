@@ -12,12 +12,11 @@ import './modal-join-queue.html';
 
 Template.ModalJoinQueue.onCreated(function onCreated() {
   this.studentEmails = new ReactiveArray([]);
-
-  this.autorun(() => {
-    if (Meteor.user() && this.studentEmails.array().length === 0) {
-      this.studentEmails.push(Meteor.user().emailAddress());
-    }
-  });
+  this.addStudentEmail = (email, callback) => {
+    // TODO: make sure email is valid, and unique
+    this.studentEmails.push(email);
+    callback();
+  };
 
   this.autorun(() => {
     this.subscribe('users.all');
@@ -25,6 +24,10 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
 });
 
 Template.ModalJoinQueue.onRendered(function onRendered() {
+  if (Meteor.user() && this.studentEmails.array().length === 0) {
+    this.studentEmails.push(Meteor.user().emailAddress());
+  }
+
   $('.modal-join-queue').on('shown.bs.modal', () => {
     if (this.studentEmails.array().length > 0) {
       $('textarea[name=question]').focus();
@@ -79,10 +82,33 @@ Template.ModalJoinQueue.events({
       event.preventDefault();
       const email = event.target.value;
 
-      // TODO: make sure email is valid, and unique
-      Template.instance().studentEmails.push(email);
-      $('.js-email-input').val('');
+      Template.instance().addStudentEmail(email, () => {
+        $('.js-email-input').val('');
+      });
     }
+  },
+
+  'blur .js-email-input'(event) {
+    const email = event.target.value;
+    if (email.length > 0) {
+      Template.instance().addStudentEmail(email, () => {
+        $('.js-email-input').val('');
+      });
+    }
+  },
+
+  'click .js-add-email'() {
+    const email = $('.js-add-email').val();
+    if (email.length > 0) {
+      Template.instance().addStudentEmail(email, () => {
+        $('.js-email-input').val('').focus();
+      });
+    }
+  },
+
+  'click .js-remove-student'(event) {
+    const email = $(event.target).closest('.student-item').data('email');
+    Template.instance().studentEmails.remove(email);
   },
 
   'click .js-email-checkbox'() {

@@ -24,7 +24,8 @@
   }
 }
 
-.student-list + input {
+.student-list + .input-group input,
+.student-list + .input-group button {
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 }

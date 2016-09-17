@@ -19,23 +19,30 @@
               {{#if showStudents}}
                 <ul class="student-list list-unstyled m-b-0">
                   {{#each student in students}}
-                    <li class="student-item" data-id="{{student._id}}">
+                    <li class="student-item" data-id="{{student._id}}" data-email="{{student.emailAddress}}">
                       <div class="content">
                         <p class="student-name">{{student.fullName}}</p>
                         <small class="text-muted">{{student.emailAddress}}</small>
                       </div>
-                      <button type="button" class="close js-remove-student"><i class="material-icons">close</i></button>
+                      <button type="button" class="close js-remove-student">
+                        <i class="material-icons">close</i>
+                      </button>
                     </li>
                   {{/each}}
                 </ul>
               {{/if}}
-              <input type="email" name="student" class="form-control js-email-input" placeholder="{{studentPlaceholder}}">
+              <div class="input-group">
+                <input type="email" name="student" class="form-control js-email-input" placeholder="{{studentPlaceholder}}">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button">Add</button>
+                </span>
+              </div>
             </div>
 
             <!-- Question -->
             <div class="form-group">
               <label for="question">Question</label>
-              <textarea name="question" class="form-control" rows="3" placeholder="What would you like help on?"></textarea>
+              <textarea name="question" class="form-control" rows="3" placeholder="What would you like help on?" required></textarea>
             </div>
 
             <!-- Notifications -->
