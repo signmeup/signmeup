@@ -8,3 +8,5 @@ require('bootstrap/dist/js/bootstrap.js');
 
 require('bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js');
 require('bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css');
+
+import 'jquery-mask-plugin/dist/jquery.mask.min.js';

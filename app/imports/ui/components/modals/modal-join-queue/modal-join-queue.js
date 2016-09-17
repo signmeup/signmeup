@@ -35,6 +35,8 @@ Template.ModalJoinQueue.onRendered(function onRendered() {
       $('input[name=student]').focus();
     }
   });
+
+  $('input[name=number]').mask('(000) 000-0000');
 });
 
 Template.ModalJoinQueue.helpers({

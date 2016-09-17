@@ -1,3 +1,10 @@
+.form-group.required > label:after {
+  content: '*';
+  color: $brand-danger;
+
+  margin-left: 4px;
+}
+
 .student-item {
   display: flex;
 

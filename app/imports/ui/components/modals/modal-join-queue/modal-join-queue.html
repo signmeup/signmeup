@@ -14,7 +14,7 @@
         <div class="modal-body">
           <form id="js-modal-join-queue-form">
             <!-- Students -->
-            <div class="form-group">
+            <div class="form-group required">
               <label for="student">Student(s)</label>
               {{#if showStudents}}
                 <ul class="student-list list-unstyled m-b-0">
@@ -40,7 +40,7 @@
             </div>
 
             <!-- Question -->
-            <div class="form-group">
+            <div class="form-group required">
               <label for="question">Question</label>
               <textarea name="question" class="form-control" rows="3" placeholder="What would you like help on?" required></textarea>
             </div>
@@ -87,7 +87,7 @@
               </div>
               <div class="col-md-6">
                 <label for="number">Phone Number</label>
-                <input type="tel" name="number" class="form-control" placeholder="000-000-0000">
+                <input type="tel" name="number" class="form-control" placeholder="(000) 000-0000">
               </div>
             </div>
           </form>
