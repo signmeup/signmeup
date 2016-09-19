@@ -38,10 +38,10 @@ Queues.helpers({
     });
   },
 
-  hasActiveTicketWithUser(userId) {
+  hasActiveTicketWithUsers(userIds) {
     const activeTickets = this.activeTickets().fetch();
     return activeTickets.some((ticket) => {
-      return _.contains(ticket.studentIds, userId);
+      return _.intersection(ticket.studentIds, userIds).length > 0;
     });
   },
 

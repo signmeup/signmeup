@@ -35,7 +35,7 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
       return;
     }
 
-    if (!$.trim(email).endsWith('@brown.edu')) {
+    if (!(email.endsWith('@brown.edu') || email.endsWith('@signmeup.cs.brown.edu'))) {
       this.errors.set('student', 'Email must end with @brown.edu.');
       return;
     }
@@ -271,7 +271,6 @@ Template.ModalJoinQueue.events({
     if (!errors) {
       createTicket.call(data, (err) => {
         if (err) {
-          console.error(err);
           templateInstance.errors.set('server', err.reason);
         } else {
           templateInstance.errors.delete('server');

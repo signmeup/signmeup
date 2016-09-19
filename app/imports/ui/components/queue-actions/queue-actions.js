@@ -17,7 +17,7 @@ Template.QueueActions.helpers({
   disableJoinQueue(queue) {
     const isDisabled = queue.isEnded() ||
                        (queue.isRestricted() && !RestrictedSessions.isRestrictedToDevice(queue)) ||
-                       (queue.hasActiveTicketWithUser(Meteor.userId()));
+                       (queue.hasActiveTicketWithUsers([Meteor.userId()]));
     return isDisabled;
   },
 });

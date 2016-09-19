@@ -33,14 +33,32 @@ export const createTicket = new ValidatedMethod({
         `No session exists with id ${sessionId}`);
     }
 
+    // Check: logged in user is included in studentEmails
+    if (this.userId && !(_.contains(studentEmails, Meteor.user().emailAddress()))) {
+      throw new Meteor.Error('tickets.createTicket.currentUserMissing',
+        'The current user must be one of the students in the ticket');
+    }
+
     // Gather student ids
     const studentIds = studentEmails.map((email) => {
-      // TODO: Check: emails end with @brown.edu
-      // TODO: Check: logged in user is included in signup
+      // Check: all emails end with @brown.edu or @signmeup.cs.brown.edu
+      if (!(email.endsWith('@brown.edu') || email.endsWith('@signmeup.cs.brown.edu'))) {
+        throw new Meteor.Error('tickets.createTicket.NonBrownEmail',
+          `Email ${email} does not end with @brown.edu`);
+      }
+
       const student = findUserByEmail(email);
       if (student) return student._id;
       return createUser({ email, saml: true });
     });
+
+    // Check: duplicate signups
+    if (queue.hasActiveTicketWithUsers(studentIds)) {
+      throw new Meteor.Error('tickets.createTicket.duplicateSignup',
+        'One or more users are already signed up for this queue.');
+    }
+
+    // TODO: Check: signup gap
 
     // Check: restricted sessions
     if (Meteor.isServer && queue.isRestricted()) {
@@ -56,10 +74,6 @@ export const createTicket = new ValidatedMethod({
           `Cannot signup with invalid secret ${secret}`);
       }
     }
-
-    // TODO: Check: duplicate signups
-
-    // TODO: Check: signup gap
 
     // Create ticket
     const ticketId = Tickets.insert({
