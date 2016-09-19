@@ -1,0 +1,13 @@
+.ticket {
+  &.ta-ticket:hover {
+    background-color: $gray-lightest;
+  }
+
+  &.current-user-ticket {
+    background-color: $gray-lightest;
+
+    &:hover {
+      background-color: darken($gray-lightest, 2%);
+    }
+  }
+}
