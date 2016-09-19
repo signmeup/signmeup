@@ -25,7 +25,7 @@ Template.Index.helpers({
     return Queues.find({ status: { $in: ['open', 'cutoff'] } });
   },
 
-  showCreateQueueCard(user) {
+  isTA(user) {
     if (!user) return false;
     return user.courses().count() > 0;
   },

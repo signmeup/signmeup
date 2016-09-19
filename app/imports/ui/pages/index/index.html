@@ -1,20 +1,41 @@
 <template name="Index">
   <div class="index container m-t-3 m-b-3">
-    <div class="row">
-      {{#each queue in activeQueues}}
-        <div class="col-lg-4 col-md-6 m-b-2">
-          {{> QueueCard queue=queue}}
-        </div>
-      {{/each}}
 
-      {{#if showCreateQueueCard currentUser}}
-        <div class="create-queue-card-container col-lg-4 col-md-6 m-b-2">
-          <a class="card dashed-card js-show-modal-queue-create" href="#">
-            <i class="material-icons">add</i> New Queue
-          </a>
+    {{#if activeQueues.count}}
+      <div class="row">
+        {{#each queue in activeQueues}}
+          <div class="col-lg-4 col-md-6 m-b-2">
+            {{> QueueCard queue=queue}}
+          </div>
+        {{/each}}
+
+        {{#if isTA currentUser}}
+          <div class="create-queue-card-container col-lg-4 col-md-6 m-b-2">
+            <a class="card dashed-card js-show-modal-queue-create" href="#">
+              <i class="material-icons">add</i> New Queue
+            </a>
+          </div>
+        {{/if}}
+      </div>
+    {{else}}
+      <div class="index-empty row flex-items-xs-center" style="text-align: center;">
+        <div class="m-t-3">
+          <p>
+            No courses holding hours right now.
+          </p>
+
+          {{#if isTA currentUser}}
+            <p>
+              <a class="create-queue-link js-show-modal-queue-create" href="#">
+                <i class="material-icons">add</i> New Queue
+              </a>
+            </p>
+          {{else}}
+            <p class="text-muted">TA? Sign in to start a new queue.</p>
+          {{/if}}
         </div>
-      {{/if}}
-    </div>
+      </div>
+    {{/if}}
   </div>
 
   {{> ModalQueueCreate}}

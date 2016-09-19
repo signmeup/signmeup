@@ -19,3 +19,10 @@
     border-color: $navbar-light-hover-color;
   }
 }
+
+.create-queue-link {
+
+  &:hover {
+    text-decoration: none;
+  }
+}
