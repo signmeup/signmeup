@@ -12,7 +12,7 @@
 
         <!-- Modal Body -->
         <div class="modal-body">
-          <form id="js-modal-join-queue-form">
+          <form id="js-modal-join-queue-form" novalidate>
             <!-- Errors -->
             {{#if errors "server"}}
               <div class="alert alert-danger">
@@ -121,7 +121,14 @@
               </div>
               <div class="form-group col-md-6 {{#if errors 'number'}}has-danger{{/if}}">
                 <label for="number">Phone Number</label>
-                <input type="tel" name="number" class="form-control js-number {{#if errors 'number'}}form-control-warning{{/if}}" placeholder="(000) 000-0000">
+                <input
+                  type="tel"
+                  name="number"
+                  class="form-control js-number {{#if errors 'number'}}form-control-warning{{/if}}"
+                  placeholder="(000) 000-0000"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off">
                 {{#if errors "number"}}
                   <div class="form-control-feedback">{{errors "number"}}</div>
                 {{/if}}

@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { ReactiveArray } from 'meteor/manuel:reactivearray';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import { _ } from 'meteor/underscore';
 import { $ } from 'meteor/jquery';
 
 import { createTicket } from '/imports/api/tickets/methods.js';
@@ -24,11 +25,18 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
           regEx: SimpleSchema.RegEx.Email,
         },
       }).validate({ email });
-
-      // TODO: make sure email is unique
-      // TODO: make sure email ends with @brown.edu
     } catch (err) {
       this.errors.set('student', 'Please enter a valid email address.');
+      return;
+    }
+
+    if (_.contains(this.studentEmails, email)) {
+      this.errors.set('student', 'Email address already added.');
+      return;
+    }
+
+    if (!$.trim(email).endsWith('@brown.edu')) {
+      this.errors.set('student', 'Email must end with @brown.edu.');
       return;
     }
 
@@ -190,12 +198,19 @@ Template.ModalJoinQueue.events({
 
     let data = {
       queueId: this.queue._id,
-      studentEmails: Template.instance().studentEmails.array(),
       notifications: {},
     };
 
+    const studentEmails = Template.instance().studentEmails.array();
+    if (studentEmails.length === 0) {
+      Template.instance().errors.set('student', 'Please enter your email address.');
+      errors = true;
+    } else {
+      data.studentEmails = studentEmails;
+    }
+
     const question = event.target.question.value;
-    if (!question) {
+    if (!$.trim(question)) {
       Template.instance().errors.set('question', 'Please enter a question.');
       errors = true;
     } else {
