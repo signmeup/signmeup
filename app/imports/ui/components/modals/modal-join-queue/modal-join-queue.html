@@ -26,14 +26,17 @@
               {{#if showStudents}}
                 <ul class="student-list list-unstyled m-b-0">
                   {{#each student in students}}
-                    <li class="student-item" data-email="{{student.emailAddress}}">
+                    <li class="student-item {{#if currentStudent student}}current{{/if}}" data-email="{{student.emailAddress}}">
                       <div class="content">
                         <p class="student-name">{{student.fullName}}</p>
                         <small class="text-muted">{{student.emailAddress}}</small>
                       </div>
-                      <button type="button" class="close js-remove-student">
-                        <i class="material-icons">close</i>
-                      </button>
+
+                      {{#unless currentStudent student}}
+                        <button type="button" class="close js-remove-student">
+                          <i class="material-icons">close</i>
+                        </button>
+                      {{/unless}}
                     </li>
                   {{/each}}
                 </ul>

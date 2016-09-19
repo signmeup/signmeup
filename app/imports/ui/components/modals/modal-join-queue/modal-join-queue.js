@@ -100,12 +100,16 @@ Template.ModalJoinQueue.helpers({
 
       if (student) return student;
       return {
-        emailAddress: email,
-        fullName: email.split('@')[0],
+        emailAddress: () => { return email; },
+        fullName: () => { return email.split('@')[0]; },
       };
     });
 
     return students;
+  },
+
+  currentStudent(student) {
+    return Meteor.user() && (Meteor.user().emailAddress() === student.emailAddress());
   },
 
   studentPlaceholder() {
