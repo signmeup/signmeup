@@ -28,6 +28,9 @@ Template.QueueStatusDropdown.events({
   'click .js-end-queue'(event) {
     event.preventDefault();
 
+    const ok = confirm('Are you sure you want to end this queue?');
+    if (!ok) return;
+
     endQueue.call({
       queueId: this.queue._id,
     }, (err) => {
