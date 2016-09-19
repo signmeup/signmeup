@@ -45,8 +45,8 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
   };
 
   this.showNotifications = new ReactiveDict({
-    email: false,
-    text: false,
+    email: 'false',
+    text: 'false',
   });
 
   this.autorun(() => {
@@ -55,16 +55,25 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
 });
 
 Template.ModalJoinQueue.onRendered(function onRendered() {
-  if (Meteor.user() && this.studentEmails.array().length === 0) {
-    this.studentEmails.push(Meteor.user().emailAddress());
-  }
-
+  const templateInstance = this;
   $('.modal-join-queue').on('shown.bs.modal', () => {
-    if (this.studentEmails.array().length > 0) {
+    if (Meteor.user() && templateInstance.studentEmails.array().length === 0) {
+      templateInstance.studentEmails.push(Meteor.user().emailAddress());
+    }
+
+    if (templateInstance.studentEmails.array().length > 0) {
       $('textarea[name=question]').focus();
     } else {
       $('input[name=student]').focus();
     }
+  });
+
+  $('.modal-join-queue').on('hidden.bs.modal', () => {
+    $('#js-modal-join-queue-form')[0].reset();
+
+    templateInstance.errors.clear();
+    templateInstance.studentEmails.clear();
+    templateInstance.showNotifications.clear();
   });
 
   $('input[name=number]').mask('(000) 000-0000');
@@ -129,7 +138,7 @@ Template.ModalJoinQueue.helpers({
 
 Template.ModalJoinQueue.events({
   'input .js-email-input'() {
-    Template.instance().errors.set('student', null);
+    Template.instance().errors.delete('student');
   },
 
   'keypress .js-email-input'(event) {
@@ -169,27 +178,27 @@ Template.ModalJoinQueue.events({
   },
 
   'input .js-question'() {
-    Template.instance().errors.set('question', null);
+    Template.instance().errors.delete('question');
   },
 
-  'click .js-email-checkbox'(event) {
+  'change .js-email-checkbox'(event) {
     Template.instance().showNotifications.set('email', event.target.checked);
   },
 
-  'click .js-text-checkbox'(event) {
+  'change .js-text-checkbox'(event) {
     Template.instance().showNotifications.set('text', event.target.checked);
   },
 
   'input .js-email'() {
-    Template.instance().errors.set('email', null);
+    Template.instance().errors.delete('email');
   },
 
   'change .js-carrier'() {
-    Template.instance().errors.set('carrier', null);
+    Template.instance().errors.delete('carrier');
   },
 
   'input .js-number'() {
-    Template.instance().errors.set('number', null);
+    Template.instance().errors.delete('number');
   },
 
   'submit #js-modal-join-queue-form'(event, templateInstance) {
@@ -261,7 +270,7 @@ Template.ModalJoinQueue.events({
           console.error(err);
           templateInstance.errors.set('server', err.reason);
         } else {
-          templateInstance.errors.set('server', null);
+          templateInstance.errors.delete('server');
           $('.modal-join-queue').modal('hide');
         }
       });
