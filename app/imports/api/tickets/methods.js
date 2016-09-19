@@ -37,7 +37,7 @@ export const createTicket = new ValidatedMethod({
     const studentIds = studentEmails.map((email) => {
       const student = findUserByEmail(email);
       if (student) return student._id;
-      return createUser({ email });
+      return createUser({ email, saml: true });
     });
 
     // Check: restricted sessions
@@ -54,6 +54,8 @@ export const createTicket = new ValidatedMethod({
           `Cannot signup with invalid secret ${secret}`);
       }
     }
+
+    // TODO: Check: logged in user is included in signup
 
     // TODO: Check: duplicate signups
 

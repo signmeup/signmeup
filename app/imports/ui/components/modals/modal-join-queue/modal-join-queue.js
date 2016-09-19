@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveArray } from 'meteor/manuel:reactivearray';
+import { ReactiveDict } from 'meteor/reactive-dict';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { $ } from 'meteor/jquery';
 
 import { createTicket } from '/imports/api/tickets/methods.js';
@@ -11,12 +13,33 @@ import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
 import './modal-join-queue.html';
 
 Template.ModalJoinQueue.onCreated(function onCreated() {
+  this.errors = new ReactiveDict();
+
   this.studentEmails = new ReactiveArray([]);
   this.addStudentEmail = (email, callback) => {
-    // TODO: make sure email is valid, and unique
+    try {
+      new SimpleSchema({
+        email: {
+          type: String,
+          regEx: SimpleSchema.RegEx.Email,
+        },
+      }).validate({ email });
+
+      // TODO: make sure email is unique
+      // TODO: make sure email ends with @brown.edu
+    } catch (err) {
+      this.errors.set('student', 'Please enter a valid email address.');
+      return;
+    }
+
     this.studentEmails.push(email);
     callback();
   };
+
+  this.showNotifications = new ReactiveDict({
+    email: false,
+    text: false,
+  });
 
   this.autorun(() => {
     this.subscribe('users.all');
@@ -40,6 +63,10 @@ Template.ModalJoinQueue.onRendered(function onRendered() {
 });
 
 Template.ModalJoinQueue.helpers({
+  errors(target) {
+    return Template.instance().errors.get(target);
+  },
+
   showStudents() {
     return Template.instance().studentEmails.array().length > 0;
   },
@@ -72,6 +99,10 @@ Template.ModalJoinQueue.helpers({
     return 'email_address@brown.edu';
   },
 
+  showNotifications(type) {
+    return Template.instance().showNotifications.get(type);
+  },
+
   defaultEmail() {
     const emails = Template.instance().studentEmails.array();
     if (emails.length > 0) return emails[0];
@@ -89,14 +120,20 @@ Template.ModalJoinQueue.helpers({
 });
 
 Template.ModalJoinQueue.events({
+  'input .js-email-input'() {
+    Template.instance().errors.set('student', null);
+  },
+
   'keypress .js-email-input'(event) {
     if (event.which === 13) {
       event.preventDefault();
       const email = event.target.value;
 
-      Template.instance().addStudentEmail(email, () => {
-        $('.js-email-input').val('');
-      });
+      if (email.length > 0) {
+        Template.instance().addStudentEmail(email, () => {
+          $('.js-email-input').val('');
+        });
+      }
     }
   },
 
@@ -123,48 +160,96 @@ Template.ModalJoinQueue.events({
     Template.instance().studentEmails.remove(email);
   },
 
-  'click .js-email-checkbox'() {
-    $('.js-notifications-email').toggleClass('hidden');
+  'input .js-question'() {
+    Template.instance().errors.set('question', null);
   },
 
-  'click .js-text-checkbox'() {
-    $('.js-notifications-text').toggleClass('hidden');
+  'click .js-email-checkbox'(event) {
+    Template.instance().showNotifications.set('email', event.target.checked);
   },
 
-  'submit #js-modal-join-queue-form'(event) {
+  'click .js-text-checkbox'(event) {
+    Template.instance().showNotifications.set('text', event.target.checked);
+  },
+
+  'input .js-email'() {
+    Template.instance().errors.set('email', null);
+  },
+
+  'change .js-carrier'() {
+    Template.instance().errors.set('carrier', null);
+  },
+
+  'input .js-number'() {
+    Template.instance().errors.set('number', null);
+  },
+
+  'submit #js-modal-join-queue-form'(event, templateInstance) {
     event.preventDefault();
+    let errors = false;
 
     let data = {
       queueId: this.queue._id,
       studentEmails: Template.instance().studentEmails.array(),
-      question: event.target.question.value,
       notifications: {},
     };
+
+    const question = event.target.question.value;
+    if (!question) {
+      Template.instance().errors.set('question', 'Please enter a question.');
+      errors = true;
+    } else {
+      data.question = question;
+    }
 
     if (event.target.announceCheckbox.checked) {
       data.notifications.announce = true;
     }
 
     if (event.target.emailCheckbox.checked) {
-      data.notifications.email = event.target.email.value;
+      const email = event.target.email.value;
+      if (!email) {
+        Template.instance().errors.set('email', 'Please enter a valid email.');
+        errors = true;
+      }
+
+      data.notifications.email = email;
     }
 
     if (event.target.textCheckbox.checked) {
-      data.notifications.phone = {};
-      data.notifications.phone.carrier = event.target.carrier.value;
-      data.notifications.phone.number = event.target.number.value;
+      const carrier = event.target.carrier.value;
+      const number = event.target.number.value;
+
+      if (!carrier) {
+        Template.instance().errors.set('carrier', 'Please select a carrier.');
+        errors = true;
+      }
+
+      if (!number) {
+        Template.instance().errors.set('number', 'Please enter a valid phone number.');
+        errors = true;
+      }
+
+      data.notifications.phone = {
+        carrier,
+        number,
+      };
     }
 
     if (this.queue.isRestricted() && RestrictedSessions.isRestrictedToDevice(this.queue)) {
       data = Object.assign(data, RestrictedSessions.getCurrentSession(this.queue));
     }
 
-    createTicket.call(data, (err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        $('.modal-join-queue').modal('hide');
-      }
-    });
+    if (!errors) {
+      createTicket.call(data, (err) => {
+        if (err) {
+          console.error(err);
+          templateInstance.errors.set('server', err.reason);
+        } else {
+          templateInstance.errors.set('server', null);
+          $('.modal-join-queue').modal('hide');
+        }
+      });
+    }
   },
 });
