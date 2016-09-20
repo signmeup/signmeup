@@ -28,7 +28,7 @@ FlowRouter.route('/login-password', {
 
 // Pages
 
-FlowRouter.route('/:queueId', {
+FlowRouter.route('/queue/:queueId', {
   name: 'queue',
   action() {
     BlazeLayout.render('AppBody', { content: 'Queue' });
