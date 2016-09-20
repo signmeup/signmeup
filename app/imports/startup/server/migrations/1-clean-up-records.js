@@ -7,6 +7,7 @@ import { Tickets } from '/imports/api/tickets/tickets';
 
 Migrations.add({
   version: 1,
+
   up() {
     // Courses: add 'createdAt' for courses without a creation time
     Courses.find({ createdAt: { $exists: false } }).forEach((course) => {
@@ -31,6 +32,7 @@ Migrations.add({
     // Tickets: remove 'missedAt' and 'flag'
     Tickets.update({}, { $unset: { missedAt: '', flag: '' } }, { multi: true, validate: false });
   },
+
   down() {
     Locations.update({}, { $set: { ips: [], geo: {} } }, { multi: true });
     Queues.update({}, { $set: { mode: 'universal', localSettings: {} } }, { multi: true });
