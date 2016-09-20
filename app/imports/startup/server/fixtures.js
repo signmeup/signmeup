@@ -56,4 +56,9 @@ function init() {
   }
 }
 
-init();
+// Note: we must put this inside a Meteor.startup() block because migrations
+// only run inside a Meteor.startup block. We can only setup fixtures after
+// migrations are done.
+Meteor.startup(() => {
+  init();
+});

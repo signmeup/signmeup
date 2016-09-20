@@ -31,6 +31,7 @@ Migrations.add({
         },
 
         $set: {
+          createdAt: new Date(course.createdAt || Date.now()),
           settings: {
             signupGap: course.signupGap || 0,
             restrictSessionsByDefault: false,
@@ -40,6 +41,8 @@ Migrations.add({
             },
           },
         },
+      }, {
+        validate: false,
       });
 
       Roles.addUsersToRoles(htas, 'hta', course._id);
@@ -66,11 +69,18 @@ Migrations.add({
 
       const set = {
         courseId: course._id,
+        locationId: queue.location,
+
         createdAt: new Date(queue.startTime),
         createdBy: queue.owner.id,
+
+        announcementIds: queue.announcements,
+        ticketIds: queue.tickets,
+
         settings: {
           restrictedSessionIds: [],
         },
+
         scheduledEndTime: queue.endTime,
         endedAt: queue.endTime,
       };
@@ -86,19 +96,22 @@ Migrations.add({
       Queues.update(queue._id, {
         $unset: {
           course: '',
+          location: '',
+
           owner: '',
+
+          announcements: '',
+          tickets: '',
+
           startTime: '',
           cutoffTime: '',
+          endTime: '',
           averageWaitTime: '',
         },
 
         $set: set,
-
-        $rename: {
-          location: 'locationId',
-          announcements: 'announcementIds',
-          tickets: 'ticketIds',
-        },
+      }, {
+        validate: false,
       });
     });
 
@@ -177,11 +190,17 @@ Migrations.add({
         $unset: {
           course: '',
           owner: '',
+
           notify: '',
           ta: '',
+
+          doneAt: '',
+          cancelledAt: '',
         },
 
         $set: set,
+      }, {
+        validate: false,
       });
     });
 
@@ -198,6 +217,8 @@ Migrations.add({
           htaCourses: '',
           taCourses: '',
         },
+      }, {
+        validate: false,
       });
     });
   },
