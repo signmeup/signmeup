@@ -10,13 +10,15 @@ Template.QueueTable.helpers({
   },
 
   rows(queue) {
+    let index = 1;
     const rows = [];
 
     const tickets = queue.tickets().fetch();
-    tickets.forEach((ticket, i) => {
+    tickets.forEach((ticket) => {
       if (ticket.isActive()) {
-        ticket.index = i + 1; // eslint-disable-line no-param-reassign
+        ticket.index = index; // eslint-disable-line no-param-reassign
         rows.push(ticket);
+        index += 1;
       }
 
       if (queue.isCutoff() && (ticket._id === queue.cutoffAfter)) {
