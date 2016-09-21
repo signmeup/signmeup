@@ -18,38 +18,42 @@ RUN apt-get install -y python python-dev python-distribute python-pip
 
 # Get curl in order to download curl
 RUN apt-get install curl -y \
+    # Set up colors
+    && GREEN='\033[0;32m' \
+    && NC='\033[0m' \
+
     # Install Meteor
-    && echo "=> Installing Meteor..." \
+    && echo "${GREEN}=> Installing Meteor...${NC}" \
     && (curl https://install.meteor.com/ | sh) \
 
     # Build the NPM packages needed for build
-    && echo "=> Installing app's npm modules..." \
+    && echo "${GREEN}=> Installing app's npm modules...${NC}" \
     && cd /meteor/src \
     && meteor npm install \
 
     # Build the Meteor app
-    && echo "=> Bundling Meteor app..." \
+    && echo "${GREEN}=> Bundling Meteor app...${NC}" \
     && meteor build --verbose ../build --directory \
 
     # Install the version of Node.js we need
-    && echo "=> Installing Node.js at the OS level..." \
+    && echo "${GREEN}=> Installing Node.js at the OS level...${NC}" \
     && cd /meteor/build/bundle \
     && bash -c 'curl "https://nodejs.org/dist/$(<.node_version.txt)/node-$(<.node_version.txt)-linux-x64.tar.gz" > /meteor/build/required-node-linux-x64.tar.gz' \
     && cd /usr/local && tar --strip-components 1 -xzf /meteor/build/required-node-linux-x64.tar.gz \
     && rm /meteor/build/required-node-linux-x64.tar.gz \
 
     # Install the NPM packages needed for build
-    && echo "=> Installing npm modules in /bundle/programs/server..." \
+    && echo "${GREEN}=> Installing npm modules in /bundle/programs/server...${NC}" \
     && cd /meteor/build/bundle/programs/server \
     && npm install \
 
     # Remove Meteor
-    && echo "=> Uninstalling Meteor..." \
+    && echo "${GREEN}=> Uninstalling Meteor...${NC}" \
     && rm /usr/local/bin/meteor \
     && rm -rf ~/.meteor \
 
     # Remove curl
-    && echo "=> Uninstalling curl..." \
+    && echo "${GREEN}=> Uninstalling curl...${NC}" \
     && apt-get --purge autoremove curl -y
 
 ENV PORT 80
