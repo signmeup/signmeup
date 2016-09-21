@@ -1,2 +1,2 @@
-FROM ulexus/meteor
+FROM signmeup/meteor:v1.4
 MAINTAINER SignMeUp

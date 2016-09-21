@@ -1,11 +1,13 @@
 venv
 
+mongodb/mongodump
 mongodb/data/*
 !mongodb/data/.gitkeep
 
 .meteor/local
 node_modules/
 .DS_Store
+*.log
 
 *.key
 *.crt
