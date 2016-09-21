@@ -13,24 +13,29 @@ Migrations.add({
     const moonlabWithLocation = Locations.findOne({ name: 'CIT 227 (Moonlab)' });
     const moonlab = Locations.findOne({ name: 'Moonlab' });
 
-    Queues.update({
-      locationId: fishbowl._id,
-    }, {
-      $set: {
-        locationId: fishbowlWithLocation._id,
-      },
-    });
+    if (fishbowlWithLocation && fishbowl) {
+      Queues.update({
+        locationId: fishbowl._id,
+      }, {
+        $set: {
+          locationId: fishbowlWithLocation._id,
+        },
+      });
 
-    Queues.update({
-      locationId: moonlab._id,
-    }, {
-      $set: {
-        locationId: moonlabWithLocation._id,
-      },
-    });
+      Locations.remove(fishbowl._id);
+    }
 
-    Locations.remove(fishbowl._id);
-    Locations.remove(moonlab._id);
+    if (moonlabWithLocation && moonlab) {
+      Queues.update({
+        locationId: moonlab._id,
+      }, {
+        $set: {
+          locationId: moonlabWithLocation._id,
+        },
+      });
+
+      Locations.remove(moonlab._id);
+    }
   },
 
   down() {

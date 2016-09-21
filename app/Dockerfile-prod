@@ -1,2 +1,2 @@
-FROM meteorhacks/meteord:devbuild
-MAINTAINER Athyuttam Eleti
+FROM ulexus/meteor
+MAINTAINER SignMeUp
