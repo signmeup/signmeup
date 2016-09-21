@@ -18,7 +18,7 @@
               <div class="form-group col-md-4">
                 <label for="courseId">Course</label>
                 <select name="courseId" class="form-control">
-                  {{#each course in activeCourses}}
+                  {{#each course in currentUser.courses}}
                     <option value="{{course._id}}">{{course.name}}</option>
                   {{/each}}
                 </select>

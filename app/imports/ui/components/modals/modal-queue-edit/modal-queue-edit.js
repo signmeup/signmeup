@@ -4,7 +4,7 @@ import { $ } from 'meteor/jquery';
 import moment from 'moment';
 
 import { updateQueue } from '/imports/api/queues/methods.js';
-import { activeCourses, locations, endTimes } from
+import { locations, endTimes } from
   '/imports/ui/components/modals/modal-queue-create/modal-queue-create.js';
 
 import './modal-queue-edit.html';
@@ -16,7 +16,6 @@ Template.ModalQueueEdit.onCreated(function onCreated() {
 });
 
 Template.ModalQueueEdit.helpers({
-  activeCourses,
   locations,
   endTimes,
 
