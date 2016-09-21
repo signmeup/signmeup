@@ -1,0 +1,20 @@
+<template name="QueueAlertRestrictedSession">
+  <div class="queue-alert-restricted-session p-t-2 p-b-1">
+    <div class="container">
+      <strong>Restricted signup mode.</strong>
+      Students can only sign up for this queue on the following devices:
+
+      <div class="device-cards">
+        {{#each session in queue.restrictedSessions}}
+          {{> DeviceCard session=session}}
+        {{/each}}
+
+        {{#if showAddDeviceCard queue}}
+          <a class="add-device-card device-card dashed-card js-add-device" href="#">
+            <i class="material-icons">add</i> Add my device
+          </a>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</template>

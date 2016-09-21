@@ -4,11 +4,8 @@ Here's a quick guide to developing SignMeUp and deploying it to production.
 
 ## Setup
 
-Note that we only support development on Linux and OS X right now, since
-`docker-compose` only works on those platforms.
-
-1. Install Docker Toolbox (this should include `docker-machine` and `docker`),
-   as well as `docker-compose`.
+1. Install the Docker engine on your machine. For Mac or Windows, use the app.
+   For Linux, use `docker-toolbox`.
 
 2. Clone this repository:
 
@@ -22,24 +19,17 @@ Note that we only support development on Linux and OS X right now, since
 4. In your terminal, run:
 
    ```shell
-   $ sudo echo "$(docker-machine ip) local.cis-dev.brown.edu" | sudo tee -a /etc/hosts > /dev/null
+   $ sudo printf "127.0.0.1\tlocal.cis-dev.brown.edu" | sudo tee -a /etc/hosts > /dev/null
    ```
 
-   This adds a reference to your Docker Machine's IP address in your hosts file, allowing you
-   to point your browser to `local.cis-dev.brown.edu` and load containers running on the Docker Machine.
+   This adds an entry matching `local.cis-dev.brown.edu` to `localhost`. The
+   Docker container usually runs on `localhost:3000`, but this lets you load it
+   when pointing to `local.cis-dev.brown.edu:3000`.
 
    To check if the append worked, run `$ cat /etc/hosts` and make sure the line was added to the end.
 
-   On Mac, to make sure your settings are applied, flush your DNS cache:
-
-   ```shell
-   $ dscacheutil -flushcache
-   ```
-
-   There are similar ways to flush the cache on Linux distributions.
-
-5. `cd` into the `signmeup` directory, and proceed to create a `settings.json` file
-   from `settings.template.json`:
+5. `cd` into the `signmeup` directory, and proceed to create a `settings.json`
+   file from `settings.template.json`:
 
     ```shell
     $ cp app/settings.template.json app/settings.json
@@ -71,8 +61,6 @@ Note that we only support development on Linux and OS X right now, since
 9. Use `docker-compose logs` to see all the logs in realtime. Use
    `docker-compose logs app` to see just your Meteor app's logs.
 
-<!-- TODO: Figure out Git workflow including the dev branch. -->
-
 When running the local version of the app, you might notice that starting the
 app container is slow, and sometimes takes a long time at `=> Starting proxy`.
 This is normal, just wait it out.
@@ -83,38 +71,73 @@ If everything went well so far, you should see something like this when running 
 
 ## Development
 
-TBD. Should include Git workflow and how to work with the `dev` branch and
-feature branches.
+We follow the [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) method of developing software.
+
+This method has two important axioms:
+
+- `master` is always ready to deploy.
+- `dev` represents the current version under development.
+
+Never directly push to either of these branches.
+
+When developing a new feature, or fixing a bug:
+
+1. Branch off of `dev` into something like `feature/my-feature-name`.
+
+2. While developing, if you need to pull in changes to `dev` that occurred after
+   branching, use `git rebase dev`.
+
+3. Once finished developing your feature, push to GitHub, and open a pull
+   pull request to the `dev` branch.
+
+4. Get feedback from other developers. You can continue pushing commits to the
+   branch; these will be automatically reflected in the pull request.
+
+5. Once approved, merge into `dev`. Move on to developing something new.
+
+If fixing a bug in production:
+
+1. Branch off `master` into something like `hotfix/fix-this-bug`.
+
+2. Once ready, push to GitHub, and open two pull requests, one to `master`, and
+   one to `dev`.
+
+3. Once approved, merge both pull requests.
 
 ## Production
 
-Once your app is working well locally, and you're ready to deploy to production,
-follow these steps:
+Once you've merged a bunch of features into `dev`, and are ready to deploy to production, follow these steps:
 
-1. Test that bundling works. Stop and remove all running containers, then run
-   `make bundle-all`. This bundles your code into a Node app and runs it locally.
-   Make sure this works.
+1. Create a pull-request from `dev` to `master` branch detailing your changes,
+   named something like `Release 2.2.3: Add this feature, fix this bug`.
 
-2. If you're ready, push your changes to the GitHub repository.
-   Create a pull-request for the `master` branch detailing your changes.
+   We version our app in `major.minor.patch` format. Increment the patch number
+   for bug fixes, and small additions. Increment the minor number when
+   introducing new features. Increment the major version when the app has been
+   majorly restructured, or your release culminates the development of many
+   features.
 
-2. Once a collaborator has looked through your changes, merge the pull-request
-   into `master`. Then create a new release on GitHub. Use semantic versioning.
+2. Once a collaborator has looked through your changes, merge the pull request
+   into `master`.
 
-3. Now, SSH into your Brown CS account. Then run `kinit`, and enter your password.
-   Then type `ssh smu` to log in into the virtual machine.
+3. Create a new release on GitHub with good release notes. Name the tag and
+   release something like `v2.2.3`.
+
+3. Now, SSH into your Brown CS account. Then run `kinit`, and enter your
+   password. Then type `ssh smu` to log in into the virtual machine.
 
 4. `cd` into `/usr/local/docker/signmeup`.
 
-  Because `docker-compose` isn't packaged for Debian yet
-  (see [#2235](https://github.com/docker/compose/issues/2235)), we must run it in
-  a Python `virtualenv`. Run `source venv/bin/activate` to start the virtual environment.
-  Type `docker-compose` to make sure it's available.
+   Because `docker-compose` isn't packaged for Debian yet
+   (see [#2235](https://github.com/docker/compose/issues/2235)), we must run it
+   in a Python `virtualenv`. Run `source venv/bin/activate` to start the virtual
+   environment. Type `docker-compose` to make sure it's available.
 
    To deploy, run `make prod`.
 
    This will:
-    - Pull the latest version of `master` from the Git repo
+    - Pull the latest release on `master` from GitHub
+    - Load the release version into an environment variable
     - Load `settings.json` into an environment variable
     - Build an image for the new codebase
     - Run it with production settings
@@ -124,4 +147,5 @@ follow these steps:
 
 ## Docker Tips
 
-If you accumulate a bunch of containers or images, clean-up with this: http://blog.yohanliyanage.com/2015/05/docker-clean-up-after-yourself/.
+If you accumulate a bunch of containers or images, clean-up with the
+instructions in [this article](http://blog.yohanliyanage.com/2015/05/docker-clean-up-after-yourself/).

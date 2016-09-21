@@ -4,29 +4,8 @@
 
 # Simply use `docker-compose up` to run all 3 services.
 # Use other standard docker-compose commands to interact with the containers.
-# 
+#
 # Automatically combines docker-compose.yml with docker-compose.override.yml.
-
-
-## Bundle
-
-# Bundle is a middle-ground. It bundles up the app into a node.js app,
-# but has settings configured for a local setup. Use this to make sure your
-# app works fine in bundled form too. Then proceed to deploy on prod.
-
-# Builds and runs the app with bundle settings.
-# Does not affect other running services. Use when you've changed just the app.
-bundle:
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
-	docker-compose -f docker-compose.bundle.yml build bundle && \
-	docker-compose -f docker-compose.bundle.yml up --no-deps -d bundle
-
-# Builds and runs all services with bundle settings.
-# Use when you've updated the nginx or mongo configuration too.
-bundle-all:
-	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
-	docker-compose -f docker-compose.bundle.yml build && \
-	docker-compose -f docker-compose.bundle.yml up -d
 
 
 ## Production
@@ -34,7 +13,10 @@ bundle-all:
 # Builds and runs the app with prod settings.
 # Does not affect other running services. Use when you've changed just the app.
 prod:
-	git pull && \
+	git fetch --tags && \
+	git checkout master && \
+	export VERSION='$(shell git describe --tags)' && \
+	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build app && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up --no-deps -d app
@@ -42,7 +24,10 @@ prod:
 # Builds and runs all services with prod settings.
 # Use when you've updated the nginx or mongo configuration too.
 prod-all:
-	git pull && \
+	git fetch --tags && \
+	git checkout master && \
+	export VERSION='$(shell git describe --tags)' && \
+	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml build && \
 	docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d

@@ -1,0 +1,13 @@
+<template name="AlertEndingSoon">
+  {{#if endingSoon queue}}
+    <div class="alert-ending-soon container m-b-2">
+      <div class="alert alert-warning">
+        <strong>Heads up!</strong> This queue is ending in {{timeRemaining}}.
+        {{#if taView}}
+          <a href="#" class="js-edit-end-time">Change the end time</a>, or
+          <a href="#" class="js-end-now">end it now</a>.
+        {{/if}}
+      </div>
+    </div>
+  {{/if}}
+</template>

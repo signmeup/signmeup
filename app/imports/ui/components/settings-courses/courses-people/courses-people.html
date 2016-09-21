@@ -1,0 +1,63 @@
+<template name="CoursesPeople">
+  <div class="tab-pane fade" id="courses-people" role="tab-panel">
+    <div class="card">
+      <div class="card-header">HTAs</div>
+      <div class="card-block">
+        <form id="add-hta-form">
+          <div class="input-group">
+            <input type="text" class="form-control js-hta-email" name="htaEmail" placeholder="hta_email@brown.edu">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="submit">Add</button>
+            </span>
+          </div>
+        </form>
+      </div>
+
+      {{#each hta in (htas course)}}
+        <div class="card-block">
+          <div class="row m-b-0">
+            <p class="col-xs-9 m-b-0">
+              {{hta.fullName}}<br>
+              <span class="text-muted">{{hta.emailAddress}}</span>
+            </p>
+            <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
+              <button class="btn btn-outline-danger pull-xs-right js-remove-hta" data-id="{{hta._id}}">
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+
+    <div class="card">
+      <div class="card-header">TAs</div>
+      <div class="card-block">
+        <form id="add-ta-form">
+          <div class="input-group">
+            <input type="text" class="form-control js-ta-email" name="taEmail" placeholder="ta_email@brown.edu">
+            <span class="input-group-btn">
+              <button class="btn btn-secondary" type="submit">Add</button>
+            </span>
+          </div>
+        </form>
+      </div>
+
+      {{#each ta in (tas course)}}
+        <div class="card-block">
+          <div class="row m-b-0">
+            <p class="col-xs-9 m-b-0">
+              {{ta.fullName}}<br>
+              <span class="text-muted">{{ta.emailAddress}}</span>
+            </p>
+            <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
+              <button class="btn btn-outline-danger pull-xs-right js-remove-ta" data-id="{{ta._id}}">
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</template>

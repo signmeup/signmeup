@@ -1,0 +1,49 @@
+<template name="SettingsCourses">
+  <div class="settings-courses">
+    {{#if Template.subscriptionsReady}}
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
+            <select class="form-control js-select-course">
+              {{#each course in currentUser.courses}}
+                <option value="{{course._id}}" selected={{isSelectedCourse course}}>{{course.name}}</option>
+              {{/each}}
+
+              {{#if isInRole 'admin,mta'}}
+                <option value="new-course">Create new course...</option>
+              {{/if}}
+            </select>
+          </div>
+
+          <ul class="nav nav-pills nav-stacked">
+            <li class="nav-item">
+              <a class="nav-link active" data-toggle="tab" href="#courses-general" role="tab">General</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#courses-people" role="tab">HTAs and TAs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="tab" href="#courses-analytics" role="tab">Analytics</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="settings-courses-body col-md-9">
+          <h3 class="m-b-2">
+            {{selectedCourse.name}}
+            <small class="text-muted">{{selectedCourse.description}}</small>
+          </h3>
+          <div class="tab-content">
+            {{> CoursesGeneral course=selectedCourse}}
+            {{> CoursesPeople course=selectedCourse}}
+            {{> CoursesAnalytics course=selectedCourse}}
+          </div>
+        </div>
+      </div>
+    {{/if}}
+  </div>
+
+  {{#if isInRole 'admin,mta'}}
+    {{> ModalCourseCreate modalCreateCourseArgs}}
+  {{/if}}
+</template>

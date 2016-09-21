@@ -1,0 +1,151 @@
+<template name="ModalJoinQueue">
+  <div class="modal-join-queue modal">
+    <div class="modal-dialog animated fadeInUp">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <i class="material-icons">close</i>
+          </button>
+          <h4 class="modal-title">Join Queue</h4>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form id="js-modal-join-queue-form" novalidate>
+            <!-- Errors -->
+            {{#if errors "server"}}
+              <div class="alert alert-danger">
+                {{errors "server"}}
+              </div>
+            {{/if}}
+
+            <!-- Students -->
+            <div class="form-group required {{#if errors 'student'}}has-danger{{/if}}">
+              <label for="student">Student(s)</label>
+              {{#if showStudents}}
+                <ul class="student-list list-unstyled m-b-0">
+                  {{#each student in students}}
+                    <li class="student-item {{#if currentStudent student}}current{{/if}}" data-email="{{student.emailAddress}}">
+                      <div class="content">
+                        <p class="student-name">{{student.fullName}}</p>
+                        <small class="text-muted">{{student.emailAddress}}</small>
+                      </div>
+
+                      {{#unless currentStudent student}}
+                        <button type="button" class="close js-remove-student">
+                          <i class="material-icons">close</i>
+                        </button>
+                      {{/unless}}
+                    </li>
+                  {{/each}}
+                </ul>
+              {{/if}}
+              <div class="input-group">
+                <input
+                  type="email"
+                  name="student"
+                  class="form-control js-email-input {{#if errors 'student'}}form-control-warning{{/if}}"
+                  placeholder="{{studentPlaceholder}}"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off">
+                <span class="input-group-btn">
+                  <button class="btn btn-secondary" type="button" tabindex="-1">Add</button>
+                </span>
+              </div>
+              {{#if errors "student"}}
+                <div class="form-control-feedback">{{errors "student"}}</div>
+              {{/if}}
+            </div>
+
+            <!-- Question -->
+            <div class="form-group required {{#if errors 'question'}}has-danger{{/if}}">
+              <label for="question">Question</label>
+              <textarea name="question" class="form-control js-question {{#if errors 'question'}}form-control-warning{{/if}}" rows="3" placeholder="What would you like help on?"></textarea>
+              {{#if errors "question"}}
+                <div class="form-control-feedback">{{errors "question"}}</div>
+              {{/if}}
+            </div>
+
+            <!-- Notifications -->
+            <div class="form-group">
+              <label for="notifications" class="m-b-0">Notifications</label>
+              <small class="form-text text-muted m-t-0">Choose how you'd like the TA to notify you when your turn comes.</small>
+              <div class="form-inline">
+                <div class="form-check m-r-1">
+                  <label class="form-check-label">
+                    <input name="announceCheckbox" class="form-check-input" type="checkbox" checked> Announce my name
+                  </label>
+                </div>
+                <div class="form-check m-r-1">
+                  <label class="form-check-label">
+                    <input name="emailCheckbox" class="form-check-input js-email-checkbox" type="checkbox"> Email me
+                  </label>
+                </div>
+                <div class="form-check">
+                  <label class="form-check-label">
+                    <input name="textCheckbox" class="form-check-input js-text-checkbox" type="checkbox"> Text me
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Notifications: email -->
+            <div class="form-group js-notifications-email {{#unless showNotifications 'email'}}hidden{{/unless}} {{#if errors 'email'}}has-danger{{/if}}">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                name="email"
+                class="form-control js-email {{#if errors 'email'}}form-control-warning{{/if}}"
+                placeholder="email_address@brown.edu"
+                value="{{defaultEmail}}"
+                autocomplete="off"
+                autocorrect="off"
+                autocapitalize="off">
+              {{#if errors "email"}}
+                <div class="form-control-feedback">{{errors "email"}}</div>
+              {{/if}}
+            </div>
+
+            <!-- Notifications: text -->
+            <div class="row js-notifications-text {{#unless showNotifications 'text'}}hidden{{/unless}}">
+              <div class="form-group col-md-6 {{#if errors 'carrier'}}has-danger{{/if}}">
+                <label for="carrier">Carrier</label>
+                <select name="carrier" class="form-control js-carrier {{#if errors 'carrier'}}form-control-warning{{/if}}">
+                  <option value="" disabled selected>Select carrier...</option>
+                  {{#each carrier in carriers}}
+                    <option value="{{carrier.domain}}">{{carrier.name}}</option>
+                  {{/each}}
+                </select>
+                {{#if errors "carrier"}}
+                  <div class="form-control-feedback">{{errors "carrier"}}</div>
+                {{/if}}
+              </div>
+              <div class="form-group col-md-6 {{#if errors 'number'}}has-danger{{/if}}">
+                <label for="number">Phone Number</label>
+                <input
+                  type="tel"
+                  name="number"
+                  class="form-control js-number {{#if errors 'number'}}form-control-warning{{/if}}"
+                  placeholder="(000) 000-0000"
+                  autocomplete="off"
+                  autocorrect="off"
+                  autocapitalize="off">
+                {{#if errors "number"}}
+                  <div class="form-control-feedback">{{errors "number"}}</div>
+                {{/if}}
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" form="js-modal-join-queue-form" class="btn btn-primary">Join Queue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

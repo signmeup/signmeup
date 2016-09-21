@@ -1,0 +1,20 @@
+<template name="Ticket">
+  <div class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} {{#if taView}}ta-ticket{{/if}} row">
+    <div class="td col-xs-1">{{ticket.index}}</div>
+    <div class="td col-xs-6">{{studentNames ticket.students}}</div>
+    <div class="td col-xs-2">{{formattedTimestamp ticket.createdAt}}</div>
+    {{#if taView}}
+      {{> TicketTAActions ticket=ticket}}
+    {{else}}
+      {{#if currentUserTicket ticket}}
+        <div class="td col-xs-3 actions">
+          <button type="button" class="btn btn-outline-danger js-delete-ticket">Delete ticket</button>
+        </div>
+      {{/if}}
+    {{/if}}
+  </div>
+
+  {{#if showTicketDrawer ticket taView}}
+    {{> TicketDrawer ticket=ticket taView=taView currentUserTicket=currentUserTicket}}
+  {{/if}}
+</template>

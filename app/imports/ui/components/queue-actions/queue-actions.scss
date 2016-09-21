@@ -1,0 +1,18 @@
+.queue-actions {
+  border-top: 1px solid $gray-lighter;
+  border-bottom: 1px solid $gray-lighter;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .left-actions {
+    display: flex;
+    align-items: center;
+  }
+
+  .middot {
+    margin: 0 0.5rem;
+  }
+}

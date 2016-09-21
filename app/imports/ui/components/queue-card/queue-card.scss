@@ -1,0 +1,21 @@
+.queue-card {
+  color: inherit !important;
+  text-decoration: none !important;
+
+  @include hover-focus-active {
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.075);
+
+    .queue-card-pattern {
+      opacity: 1.0;
+    }
+  }
+}
+
+.queue-card-pattern {
+  height: $spacer-y;
+  opacity: 0.9;
+}
+
+.queue-card, .queue-card * {
+  transition: all 0.1s ease-in-out;
+}

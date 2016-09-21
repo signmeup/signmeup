@@ -1,0 +1,30 @@
+<template name="Nav">
+  <nav class="app-nav nav navbar navbar-light p-t-1 p-b-1">
+    <div class="container">
+      <a class="navbar-brand" href="/">SignMeUp</a>
+      <ul class="nav navbar-nav pull-xs-right">
+        {{#if currentUser}}
+          <li class="nav-item">
+            <span class="nav-link nav-link-static disabled">Welcome, {{currentUser.firstName}}</span>
+          </li>
+        {{/if}}
+
+        {{#if showSettings}}
+          <li class="nav-item">
+            <a class="nav-link" href="/settings">Settings</a>
+          </li>
+        {{/if}}
+
+        {{#if currentUser}}
+          <li class="nav-item">
+            <button type="button" class="btn btn-secondary js-sign-out">Sign Out</button>
+          </li>
+        {{else}}
+          <li class="nav-item">
+            <button type="button" class="btn btn-primary js-sign-in">Sign In</button>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </nav>
+</template>

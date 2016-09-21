@@ -9,6 +9,7 @@ app:
    - MONGO_URL=mongodb://db:27017/signmeup
    - VIRTUAL_HOST=local.cis-dev.brown.edu
    - ARGS=--settings settings.json --port 80 # Relative to project directory
+   - HTTP_FORWARDED_COUNT=1
 
 db:
   ports:

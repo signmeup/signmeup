@@ -1,10 +1,6 @@
 {
-  "public": {
-    "version": "INSERT-VERSION-NO-HERE"
-  },
-
   "users": [{
-    "name": "Admin",
+    "name": "Admin Test",
     "email": "admin@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "admin"
@@ -13,25 +9,30 @@
     "saml": true,
     "type": "admin"
   }, {
+    "name": "MTA Test",
+    "email": "mta@signmeup.cs.brown.edu",
+    "password": "INSERT-PASSWORD-HERE",
+    "type": "mta"
+  }, {
     "email": "emma_herold@brown.edu",
     "saml": true,
-    "type": "admin"
+    "type": "mta"
   }, {
-    "email": "eli_rosenthal@brown.edu",
+    "email": "marley_rafson@brown.edu",
     "saml": true,
-    "type": "admin"
+    "type": "mta"
   }, {
-    "name": "Test HTA",
+    "name": "HTA Test",
     "email": "hta@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "hta"
   }, {
-    "name": "Test TA",
+    "name": "TA Test",
     "email": "ta@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "ta"
   }, {
-    "name": "Test Student",
+    "name": "Student Test",
     "email": "student@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "student"
@@ -67,7 +68,7 @@
     }
   },
 
-  "kadira": { 
+  "kadira": {
     "appId": "INSERT-APP-ID-HERE",
     "appSecret": "INSERT-APP-SECRET-HERE"
   }
