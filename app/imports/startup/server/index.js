@@ -14,7 +14,6 @@ import '../both/register-api.js';
 // Run migrations
 import './migrations/migrations.js';
 
-
 // Initialize test data
 import './fixtures.js';
 

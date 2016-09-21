@@ -113,7 +113,7 @@
               <div class="form-group col-md-6 {{#if errors 'carrier'}}has-danger{{/if}}">
                 <label for="carrier">Carrier</label>
                 <select name="carrier" class="form-control js-carrier {{#if errors 'carrier'}}form-control-warning{{/if}}">
-                  <option value="" disabled selected>Select carrier</option>
+                  <option value="" disabled selected>Select carrier...</option>
                   {{#each carrier in carriers}}
                     <option value="{{carrier.domain}}">{{carrier.name}}</option>
                   {{/each}}

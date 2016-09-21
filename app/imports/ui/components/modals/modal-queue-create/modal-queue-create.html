@@ -36,6 +36,7 @@
               <div class="form-group col-md-8">
                 <label for="locationId">Location</label>
                 <select name="locationId" class="form-control">
+                  <option value="" disabled selected>Select location...</option>
                   {{#each location in locations}}
                     <option value="{{location._id}}">{{location.name}}</option>
                   {{/each}}
