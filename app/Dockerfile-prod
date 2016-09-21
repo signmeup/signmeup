@@ -1,2 +1,63 @@
-FROM ulexus/meteor
-MAINTAINER SignMeUp
+# Source: https://github.com/mbanting/meteor-production-docker-example
+
+FROM ubuntu:14.04
+
+MAINTAINER Athyuttam Eleti, athyuttamre@gmail.com
+
+RUN mkdir /meteor
+
+WORKDIR /meteor
+
+ADD . ./src
+
+# Do basic updates
+RUN apt-get update -q && apt-get clean
+
+# Install Python and Basic Python Tools for binary rebuilds of NPM packages
+RUN apt-get install -y python python-dev python-distribute python-pip
+
+# Get curl in order to download curl
+RUN apt-get install curl -y \
+    # Set up colors
+    && GREEN='\033[0;32m' \
+    && NC='\033[0m' \
+
+    # Install Meteor
+    && echo "${GREEN}=> Installing Meteor...${NC}" \
+    && (curl https://install.meteor.com/ | sh) \
+
+    # Build the NPM packages needed for build
+    && echo "${GREEN}=> Installing app's npm modules...${NC}" \
+    && cd /meteor/src \
+    && meteor npm install \
+
+    # Build the Meteor app
+    && echo "${GREEN}=> Bundling Meteor app...${NC}" \
+    && meteor build --verbose ../build --directory \
+
+    # Install the version of Node.js we need
+    && echo "${GREEN}=> Installing Node.js at the OS level...${NC}" \
+    && cd /meteor/build/bundle \
+    && bash -c 'curl "https://nodejs.org/dist/$(<.node_version.txt)/node-$(<.node_version.txt)-linux-x64.tar.gz" > /meteor/build/required-node-linux-x64.tar.gz' \
+    && cd /usr/local && tar --strip-components 1 -xzf /meteor/build/required-node-linux-x64.tar.gz \
+    && rm /meteor/build/required-node-linux-x64.tar.gz \
+
+    # Install the NPM packages needed for build
+    && echo "${GREEN}=> Installing npm modules in /bundle/programs/server...${NC}" \
+    && cd /meteor/build/bundle/programs/server \
+    && npm install \
+
+    # Remove Meteor
+    && echo "${GREEN}=> Uninstalling Meteor...${NC}" \
+    && rm /usr/local/bin/meteor \
+    && rm -rf ~/.meteor \
+
+    # Remove curl
+    && echo "${GREEN}=> Uninstalling curl...${NC}" \
+    && apt-get --purge autoremove curl -y
+
+ENV PORT 80
+
+EXPOSE 80
+
+CMD ["node", "build/bundle/main.js"]
