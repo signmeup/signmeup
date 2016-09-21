@@ -9,12 +9,17 @@
         {{#if ticket.isClaimedByUser currentUser._id}}
           <button type="button" class="btn btn-outline-success js-mark-as-done">Mark as Done</button>
         {{else}}
-          <button type="button" class="btn btn-secondary disabled">Claimed by {{ticket.claimedByUser.fullName}}</button>
+          <button
+            type="button"
+            class="btn btn-secondary text-truncate" style="max-width: 200px;"
+            title="Claimed by {{ticket.claimedByUser.fullName}}" disabled>
+            Claimed by {{ticket.claimedByUser.fullName}}
+          </button>
         {{/if}}
       {{/if}}
 
       {{#if ticket.isMarkedAsMissing}}
-        <button type="button" class="btn btn-secondary disabled">Missing</button>
+        <button type="button" class="btn btn-secondary" disabled>Missing</button>
       {{/if}}
 
       <button

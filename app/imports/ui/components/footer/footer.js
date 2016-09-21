@@ -1,9 +1,10 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
 import './footer.html';
 
 Template.Footer.helpers({
   version() {
-    return 'Dev';
+    return Meteor.settings.public.version || 'Dev';
   },
 });
