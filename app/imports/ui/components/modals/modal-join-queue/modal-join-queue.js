@@ -253,7 +253,7 @@ Template.ModalJoinQueue.events({
         errors = true;
       }
 
-      if (!number && number.length === 10) {
+      if (!number.length === 10) {
         Template.instance().errors.set('number', 'Please enter a valid phone number.');
         errors = true;
       }
