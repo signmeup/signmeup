@@ -34,3 +34,20 @@ Template.AlertEndingSoon.helpers({
     return moment.duration(Template.instance().timeRemaining.get()).humanize();
   },
 });
+
+Template.AlertEndingSoon.events({
+  'click .js-edit-end-time'() {
+    $('.modal-queue-edit').modal();
+  },
+
+  'click .js-end-now'() {
+    const ok = confirm('Are you sure you want to end this queue?');
+    if (!ok) return;
+
+    endQueue.call({
+      queueId: this.queue._id,
+    }, (err) => {
+      if (err) console.log(err);
+    });
+  },
+});

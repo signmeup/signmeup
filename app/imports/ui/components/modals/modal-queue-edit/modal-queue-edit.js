@@ -9,6 +9,12 @@ import { locations, endTimes } from
 
 import './modal-queue-edit.html';
 
+Template.ModalQueueEdit.onCreated(function onCreated() {
+  this.autorun(() => {
+    this.subscribe('locations.all');
+  });
+});
+
 Template.ModalQueueEdit.helpers({
   locations,
   endTimes,
