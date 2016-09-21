@@ -11,15 +11,15 @@
         {{else}}
           <button
             type="button"
-            class="btn btn-secondary disabled text-truncate" style="max-width: 200px;"
-            title="Claimed by {{currentUser.fullName}}">
+            class="btn btn-secondary text-truncate" style="max-width: 200px;"
+            title="Claimed by {{currentUser.fullName}}" disabled>
             Claimed by {{currentUser.fullName}}
           </button>
         {{/if}}
       {{/if}}
 
       {{#if ticket.isMarkedAsMissing}}
-        <button type="button" class="btn btn-secondary disabled">Missing</button>
+        <button type="button" class="btn btn-secondary" disabled>Missing</button>
       {{/if}}
 
       <button

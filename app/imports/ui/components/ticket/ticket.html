@@ -6,11 +6,25 @@
     {{#if taView}}
       {{> TicketTAActions ticket=ticket}}
     {{else}}
-      {{#if currentUserTicket ticket}}
-        <div class="td col-xs-3 actions">
-          <button type="button" class="btn btn-outline-danger js-delete-ticket">Delete ticket</button>
+      <div class="td col-xs-3 actions">
+        <div class="btn-group">
+          {{#if ticket.isClaimed}}
+            <button
+              class="btn btn-secondary text-truncate" style="max-width: 150px;"
+              title="Claimed by {{ticket.claimedByUser.fullName}}" disabled>
+              Claimed by {{ticket.claimedByUser.fullName}}
+            </button>
+          {{/if}}
+
+          {{#if ticket.isMarkedAsMissing}}
+            <button class="btn btn-secondary" disabled>Missing</button>
+          {{/if}}
+
+          {{#if currentUserTicket ticket}}
+            <button type="button" class="btn btn-outline-danger js-delete-ticket">Delete</button>
+          {{/if}}
         </div>
-      {{/if}}
+      </div>
     {{/if}}
   </div>
 
