@@ -2,8 +2,6 @@ app:
   build: ./app # EXPOSEs 80
   dockerfile: Dockerfile-prod
   restart: always
-  volumes:
-   - ./app:/src/app
   environment:
    - VERSION=${VERSION}
    - ROOT_URL=https://signmeup.cs.brown.edu
