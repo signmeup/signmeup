@@ -6,10 +6,10 @@
       {{/if}}
 
       {{#if ticket.isClaimed}}
-        {{#if ticket.claimedByUser currentUser._id}}
+        {{#if ticket.isClaimedByUser currentUser._id}}
           <button type="button" class="btn btn-outline-success js-mark-as-done">Mark as Done</button>
         {{else}}
-          <button type="button" class="btn btn-secondary disabled">Claimed by {{currentUser.fullName}}</button>
+          <button type="button" class="btn btn-secondary disabled">Claimed by {{ticket.claimedByUser.fullName}}</button>
         {{/if}}
       {{/if}}
 
@@ -24,7 +24,7 @@
       </button>
 
       <div class="dropdown-menu dropdown-menu-right">
-        {{#if ticket.claimedByUser currentUser._id}}
+        {{#if ticket.isClaimedByUser currentUser._id}}
           <a class="dropdown-item js-release-ticket" href="#">Release ticket</a>
         {{/if}}
 
@@ -34,7 +34,7 @@
           <a class="dropdown-item js-mark-as-missing" href="#">Mark as missing</a>
         {{/if}}
 
-        {{#unless ticket.claimedByUser currentUser._id}}
+        {{#unless ticket.isClaimedByUser currentUser._id}}
           <a class="dropdown-item text-success js-mark-as-done" href="#">Mark as done</a>
         {{/unless}}
 

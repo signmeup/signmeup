@@ -5,10 +5,6 @@ import { claimTicket, releaseTicket, markTicketAsMissing, markTicketAsDone }
 
 import './ticket-ta-actions.html';
 
-Template.TicketTAActions.helpers({
-
-});
-
 Template.TicketTAActions.events({
   'click .js-claim-ticket'(event) {
     event.preventDefault();
