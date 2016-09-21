@@ -33,7 +33,7 @@
 
             <div class="row">
               <!-- Location -->
-              <div class="form-group col-md-8">
+              <div class="form-group col-md-7">
                 <label for="locationId">Location</label>
                 <select name="locationId" class="form-control">
                   <option value="" disabled selected>Select location...</option>
@@ -44,9 +44,10 @@
               </div>
 
               <!-- End Time -->
-              <div class="form-group col-md-4 p-l-0">
+              <div class="form-group col-md-5 p-l-0">
                 <label for="endTime">End Time</label>
                 <select name="endTime" class="form-control">
+                  <option value="" disabled selected>Select end time...</option>
                   {{#each time in endTimes}}
                     <option value="{{time.ISOString}}">{{time.formattedString}}</option>
                   {{/each}}
