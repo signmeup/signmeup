@@ -246,14 +246,14 @@ Template.ModalJoinQueue.events({
 
     if (event.target.textCheckbox.checked) {
       const carrier = event.target.carrier.value;
-      const number = event.target.number.value;
+      const number = event.target.number.value.replace(/\D+/g, '');
 
       if (!carrier) {
         Template.instance().errors.set('carrier', 'Please select a carrier.');
         errors = true;
       }
 
-      if (!number) {
+      if (!number && number.length === 10) {
         Template.instance().errors.set('number', 'Please enter a valid phone number.');
         errors = true;
       }
