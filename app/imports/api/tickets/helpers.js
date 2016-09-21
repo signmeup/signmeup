@@ -52,7 +52,11 @@ Tickets.helpers({
     return _.contains(this.studentIds, userId);
   },
 
-  claimedByUser(userId) {
+  claimedByUser() {
+    return Meteor.users.findOne(this.claimedBy);
+  },
+
+  isClaimedByUser(userId) {
     return (this.status === 'claimed') && (userId === this.claimedBy);
   },
 });
