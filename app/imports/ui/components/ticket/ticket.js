@@ -57,6 +57,10 @@ Template.Ticket.helpers({
     return moment(createdAt).fromNow();
   },
 
+  isClaimedOrMissing(ticket) {
+    return ticket.isClaimed() || ticket.isMarkedAsMissing();
+  },
+
   showTicketDrawer(ticket, taView) {
     return taView || (ticket && ticket.belongsToUser(Meteor.userId()));
   },

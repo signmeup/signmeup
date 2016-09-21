@@ -52,6 +52,7 @@ Tickets.publicFields = {
 
   createdAt: true,
   claimedAt: true,
+  claimedBy: true,
   markedAsDoneAt: true,
   deletedAt: true,
 };
