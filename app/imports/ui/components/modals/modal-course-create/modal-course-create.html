@@ -1,0 +1,40 @@
+<template name="ModalCourseCreate">
+  <div class="modal-course-create modal">
+    <div class="modal-dialog animated fadeInUp">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">
+            <i class="material-icons">close</i>
+          </button>
+          <h4 class="modal-title">Create Course</h4>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form id="js-modal-course-create-form">
+            <div class="row">
+              <!-- Name -->
+              <div class="form-group col-md-4">
+                <label for="name">Name</label>
+                <input type="text" name="name" placeholder="cs00" class="form-control">
+              </div>
+
+              <!-- Description -->
+              <div class="form-group col-md-8 p-l-0">
+                <label for="description">Description</label>
+                <input type="text" name="description" placeholder="Intro to Cracked Pots" class="form-control">
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="submit" form="js-modal-course-create-form" class="btn btn-primary">Create Course</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

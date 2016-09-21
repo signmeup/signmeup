@@ -1,0 +1,59 @@
+<template name="Settings">
+  <div class="settings">
+    {{#if Template.subscriptionsReady}}
+      {{#if showSettings}}
+        <div class="settings-header">
+          <div class="container">
+            <h1 class="display-5 m-t-3 m-b-3">Settings</h1>
+          </div>
+        </div>
+
+        <div class="settings-nav">
+          <div class="container">
+            <ul class="nav nav-tabs" role="tablist">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#courses" role="tab">Courses</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#locations" role="tab">Locations</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#people" role="tab">People</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Profile</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="settings-body">
+          <div class="container p-t-3 p-b-3">
+            <div class="tab-content">
+              <div class="tab-pane fade in active" id="courses" role="tabpanel">
+                {{> SettingsCourses}}
+              </div>
+              <div class="tab-pane fade" id="locations" role="tabpanel">
+                {{> SettingsLocations}}
+              </div>
+              <div class="tab-pane fade" id="people" role="tabpanel">
+                {{> SettingsPeople}}
+              </div>
+              <div class="tab-pane fade" id="profile" role="tabpanel">
+                {{> SettingsProfile}}
+              </div>
+            </div>
+          </div>
+        </div>
+      {{else}}
+        <div class="settings-unauthorized container">
+          <div class="row flex-items-xs-center">
+            <p class="m-t-3 text-muted" style="text-align: center;">
+              Sorry, only HTAs and above can access settings.
+            </p>
+          </div>
+        </div>
+      {{/if}}
+    {{/if}}
+  </div>
+</template>

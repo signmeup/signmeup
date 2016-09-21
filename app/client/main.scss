@@ -1,0 +1,53 @@
+/* Vendor */
+@import "{}/node_modules/bootstrap/scss/bootstrap-flex.scss";
+@import "{}/imports/ui/stylesheets/animate.forked.scss";
+
+/* Material Icons */
+i.material-icons {
+  margin-right: 5px;
+
+  font-size: 18px;
+  vertical-align: text-top;
+
+  transition: none;
+}
+
+/* Layouts */
+@import "{}/imports/ui/layouts/app-body/app-body.scss";
+
+/* Pages */
+@import "{}/imports/ui/pages/login-password/login-password.scss";
+@import "{}/imports/ui/pages/index/index.scss";
+@import "{}/imports/ui/pages/settings/settings.scss";
+
+/* Components */
+@import "{}/imports/ui/components/alerts/alert-ending-soon/alert-ending-soon.scss";
+
+@import "{}/imports/ui/components/footer/footer.scss";
+@import "{}/imports/ui/components/nav/nav.scss";
+
+@import "{}/imports/ui/components/modals/modal-join-queue/modal-join-queue.scss";
+
+.modal {
+  .close .material-icons {
+    margin-right: 0;
+    vertical-align: middle;
+  }
+
+  .modal-dialog {
+    animation-duration: 0.4s;
+  }
+}
+
+@import "{}/imports/ui/components/queue-card/queue-card.scss";
+@import "{}/imports/ui/components/queue-header/queue-header.scss";
+@import "{}/imports/ui/components/queue-actions/queue-actions.scss";
+@import "{}/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.scss";
+@import "{}/imports/ui/components/queue-alert-restricted-session/device-card/device-card.scss";
+@import "{}/imports/ui/components/queue-table/queue-table.scss";
+
+@import "{}/imports/ui/components/settings-courses/courses-general/courses-general.scss";
+@import "{}/imports/ui/components/settings-courses/courses-people/courses-people.scss";
+@import "{}/imports/ui/components/settings-courses/courses-analytics/courses-analytics.scss";
+
+@import "{}/imports/ui/components/ticket/ticket.scss";

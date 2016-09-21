@@ -4,6 +4,7 @@ mongodb/data/*
 !mongodb/data/.gitkeep
 
 .meteor/local
+node_modules/
 .DS_Store
 
 *.key

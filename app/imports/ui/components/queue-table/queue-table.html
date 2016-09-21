@@ -1,0 +1,32 @@
+<template name="QueueTable">
+  <div class="queue-table container">
+    <div class="custom-table container m-t-3 m-b-3">
+      <div class="thead">
+        <div class="row">
+          <div class="td col-xs-1">No.</div>
+          <div class="td col-xs-6">Name(s)</div>
+          <div class="td col-xs-2">Time</div>
+        </div>
+      </div>
+
+      <div class="tbody">
+        {{#if noActiveTickets queue}}
+          <div class="row empty">
+            No signups to show.
+          </div>
+        {{else}}
+          {{#each row in (rows queue)}}
+            {{#if row.isCutoffMarker}}
+              <div class="cutoff-marker row table-warning">
+                Cutoff<br>
+                <span class="small text-muted">Students that sign up after this may not be helped.</span>
+              </div>
+            {{else}}
+              {{> Ticket ticket=row taView=taView}}
+            {{/if}}
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+</template>

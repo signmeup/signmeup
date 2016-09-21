@@ -1,0 +1,47 @@
+<template name="TicketTAActions">
+  <div class="ta-actions td col-xs-3 actions js-ta-actions">
+    <div class="btn-group">
+      {{#if ticket.isOpen}}
+        <button type="button" class="btn btn-secondary js-claim-ticket">Claim ticket</button>
+      {{/if}}
+
+      {{#if ticket.isClaimed}}
+        {{#if ticket.claimedByUser currentUser._id}}
+          <button type="button" class="btn btn-outline-success js-mark-as-done">Mark as Done</button>
+        {{else}}
+          <button type="button" class="btn btn-secondary disabled">Claimed by {{currentUser.fullName}}</button>
+        {{/if}}
+      {{/if}}
+
+      {{#if ticket.isMarkedAsMissing}}
+        <button type="button" class="btn btn-secondary disabled">Missing</button>
+      {{/if}}
+
+      <button
+        type="button"
+        class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      </button>
+
+      <div class="dropdown-menu dropdown-menu-right">
+        {{#if ticket.claimedByUser currentUser._id}}
+          <a class="dropdown-item js-release-ticket" href="#">Release ticket</a>
+        {{/if}}
+
+        {{#if ticket.isMarkedAsMissing}}
+          <a class="dropdown-item js-claim-ticket" href="#">Claim ticket</a>
+        {{else}}
+          <a class="dropdown-item js-mark-as-missing" href="#">Mark as missing</a>
+        {{/if}}
+
+        {{#unless ticket.claimedByUser currentUser._id}}
+          <a class="dropdown-item text-success js-mark-as-done" href="#">Mark as done</a>
+        {{/unless}}
+
+        <div class="dropdown-divider"></div>
+
+        <a class="dropdown-item text-danger js-delete-ticket" href="#">Delete ticket</a>
+      </div>
+    </div>
+  </div>
+</template>

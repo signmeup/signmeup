@@ -1,0 +1,32 @@
+.device-card {
+  position: relative;
+
+  margin-top: $spacer-y;
+  margin-right: $spacer-x;
+
+  padding: $spacer;
+
+  border: 1px solid $gray-lighter;
+  border-radius: 4px;
+}
+
+.current-device-card {
+  box-shadow: inset 0 -2px $brand-warning;
+}
+
+.device-icon.material-icons {
+  margin-top: 4px;
+  font-size: 36px !important;
+}
+
+.device-card .close {
+  height: 18px;
+  width: 18px;
+
+  position: absolute;
+
+  top: 0.75rem;
+  right: 0.75rem;
+
+  outline: 0;
+}

@@ -1,0 +1,21 @@
+<template name="Queue">
+  <div class="queue">
+    {{#if Template.subscriptionsReady}}
+      {{> QueueHeader queue=queue taView=taView}}
+      {{> AlertEndingSoon queue=queue taView=taView}}
+
+      {{#if queue.isRestricted}}
+        {{> QueueAlertRestrictedSession queue=queue taView=taView}}
+      {{/if}}
+
+      {{> QueueActions queue=queue taView=taView}}
+      {{> QueueTable queue=queue taView=taView}}
+    {{/if}}
+  </div>
+
+  {{#if taView}}
+    {{> ModalQueueEdit queue=queue}}
+  {{else}}
+    {{> ModalJoinQueue queue=queue}}
+  {{/if}}
+</template>
