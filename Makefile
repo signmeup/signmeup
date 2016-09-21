@@ -14,7 +14,7 @@
 # Does not affect other running services. Use when you've changed just the app.
 prod:
 	git fetch --tags && \
-	git checkout master && \
+	git checkout production && \
 	export VERSION='$(shell git describe --tags)' && \
 	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
@@ -25,7 +25,7 @@ prod:
 # Use when you've updated the nginx or mongo configuration too.
 prod-all:
 	git fetch --tags && \
-	git checkout master && \
+	git checkout production && \
 	export VERSION='$(shell git describe --tags)' && \
 	git checkout $$VERSION && \
 	export METEOR_SETTINGS='$(shell cat ./app/settings.json)' && \
