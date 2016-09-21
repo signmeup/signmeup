@@ -37,20 +37,16 @@ Meteor.users.helpers({
 
   htaCourses() {
     const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
-    return Courses.find({ _id: { $in: htaCourseIds } });
+    return Courses.find({ _id: { $in: htaCourseIds }, active: true });
   },
 
   courses() {
     if (Roles.userIsInRole(this._id, ['admin', 'mta'])) {
-      return Courses.find();
+      return Courses.find({ active: true });
     }
 
     const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
     const taCourseIds = Roles.getGroupsForUser(this._id, 'ta');
-    return Courses.find({ _id: { $in: htaCourseIds.concat(taCourseIds) } });
-  },
-
-  activeCourses() {
-    return this.courses().find({ active: true });
+    return Courses.find({ _id: { $in: htaCourseIds.concat(taCourseIds) }, active: true });
   },
 });

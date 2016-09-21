@@ -10,10 +10,6 @@ import { createQueue } from '/imports/api/queues/methods.js';
 
 import './modal-queue-create.html';
 
-export function activeCourses() {
-  return Courses.find({ active: true });
-}
-
 export function locations() {
   return Locations.find();
 }
@@ -34,7 +30,6 @@ export function endTimes() {
 }
 
 Template.ModalQueueCreate.helpers({
-  activeCourses,
   locations,
   endTimes,
 });
