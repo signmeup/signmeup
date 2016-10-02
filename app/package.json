@@ -52,6 +52,7 @@
         "error",
         "always"
       ],
+      "import/no-extraneous-dependencies": 0,
       "import/no-unresolved": 1,
       "meteor/audit-argument-checks": 0,
       "meteor/no-session": 0,
@@ -64,6 +65,7 @@
       "no-param-reassign": 1,
       "no-shadow": 1,
       "no-underscore-dangle": 0,
+      "object-shorthand": 0,
       "radix": 0
     }
   }
