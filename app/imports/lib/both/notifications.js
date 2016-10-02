@@ -4,7 +4,7 @@ import { Email } from 'meteor/email';
 import { Courses } from '/imports/api/courses/courses.js';
 import { Queues } from '/imports/api/queues/queues.js';
 
-export class Notifications {
+export default class Notifications {
   static sendEmailNotification(ticket) {
     const queue = Queues.findOne(ticket.queueId);
     if (!queue) {

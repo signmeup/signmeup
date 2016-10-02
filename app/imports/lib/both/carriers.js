@@ -1,6 +1,6 @@
 /* eslint-disable quote-props */
 
-export const carriers = {
+const carriers = {
   '3 River Wireless': 'sms.3rivers.net',
   'ACS Wireless': 'paging.acswireless.com',
   'Alltel': 'message.alltel.com',
@@ -190,5 +190,7 @@ export const carriers = {
   'VoiceStream': 'voicestream.net',
   'WebLink Wireless': 'pagemart.net',
 };
+
+export default carriers;
 
 /* eslint-enable quote-props */

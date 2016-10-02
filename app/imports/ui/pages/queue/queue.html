@@ -3,6 +3,7 @@
     {{#if Template.subscriptionsReady}}
       {{> QueueHeader queue=queue taView=taView}}
       {{> AlertEndingSoon queue=queue taView=taView}}
+      {{> AlertSignupGap queue=queue taView=taView}}
 
       {{#if queue.isRestricted}}
         {{> QueueAlertRestrictedSession queue=queue taView=taView}}

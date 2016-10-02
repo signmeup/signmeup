@@ -7,6 +7,7 @@ import { Queues } from '/imports/api/queues/queues.js';
 
 import '/imports/ui/components/queue-header/queue-header.js';
 import '/imports/ui/components/alerts/alert-ending-soon/alert-ending-soon.js';
+import '/imports/ui/components/alerts/alert-signup-gap/alert-signup-gap.js';
 import '/imports/ui/components/queue-actions/queue-actions.js';
 import '/imports/ui/components/queue-alert-restricted-session/queue-alert-restricted-session.js';
 import '/imports/ui/components/queue-table/queue-table.js';
