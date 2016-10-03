@@ -3,7 +3,7 @@ import moment from 'moment';
 export class SignupGap {
   static nextSignupTime(queue, userId) {
     if (!userId || queue.hasActiveTicketWithUsers([userId])) {
-      return -1;
+      return null;
     }
 
     // Get user's last ticket that was marked as done

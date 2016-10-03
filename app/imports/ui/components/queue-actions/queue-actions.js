@@ -20,12 +20,12 @@ Template.QueueActions.onRendered(() => {
 Template.QueueActions.helpers({
   disableJoinQueue(queue) {
     const nextSignupTime = SignupGap.nextSignupTime(queue, Meteor.userId());
-    const showSignupGap = nextSignupTime > 0 && moment(nextSignupTime).diff(moment()) > 0;
+    const disableSignups = nextSignupTime && moment(nextSignupTime).diff(moment()) > 0;
 
     const isDisabled = queue.isEnded() ||
                        (queue.isRestricted() && !RestrictedSessions.isRestrictedToDevice(queue)) ||
                        (queue.hasActiveTicketWithUsers([Meteor.userId()])) ||
-                       showSignupGap;
+                       disableSignups;
     return isDisabled;
   },
 });

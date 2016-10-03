@@ -16,9 +16,9 @@ Template.AlertSignupGap.onCreated(function onCreated() {
     const queue = Template.currentData().queue;
     const nextSignupTime = SignupGap.nextSignupTime(queue, Meteor.userId());
 
-    // If nextSignupTime is -1, the user cannot signup. In this case, we avoid
+    // If nextSignupTime is null, the user cannot signup. In this case, we avoid
     // showing the alert message.
-    if (nextSignupTime === -1) {
+    if (!nextSignupTime) {
       return;
     }
 
