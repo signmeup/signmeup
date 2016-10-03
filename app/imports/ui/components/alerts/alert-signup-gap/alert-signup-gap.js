@@ -4,30 +4,38 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import moment from 'moment';
 
+import { SignupGap } from '/imports/lib/both/signup-gap.js';
+
 import './alert-signup-gap.html';
 
 Template.AlertSignupGap.onCreated(function onCreated() {
   const self = this;
-  self.threshold = moment.duration(20, 'minutes').asMilliseconds();
   self.timeRemaining = new ReactiveVar(0);
 
   self.autorun(() => {
     const queue = Template.currentData().queue;
+    const nextSignupTime = SignupGap.nextSignupTime(queue, Meteor.userId());
+
+    // If nextSignupTime is -1, the user cannot signup. In this case, we avoid
+    // showing the alert message.
+    if (nextSignupTime === -1) {
+      return;
+    }
 
     if (self.timeRemainingInterval) Meteor.clearInterval(self.timeRemainingInterval);
 
     self.timeRemainingInterval = Meteor.setInterval(() => {
-      self.timeRemaining.set(moment(queue.scheduledEndTime).diff(moment()));
+      self.timeRemaining.set(moment(nextSignupTime).diff(moment()));
     }, 1000);
   });
 });
 
 Template.AlertSignupGap.helpers({
   showSignupGap() {
-    return true;
+    return Meteor.user() && Template.instance().timeRemaining.get() > 0;
   },
 
   timeRemaining() {
-    return moment.duration(5, 'minutes').humanize();
+    return moment.duration(Template.instance().timeRemaining.get()).humanize();
   },
 });
