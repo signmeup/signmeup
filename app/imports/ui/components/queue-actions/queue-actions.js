@@ -2,6 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
+import moment from 'moment';
+
+import { SignupGap } from '/imports/lib/both/signup-gap.js';
+
 import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
 
 import './queue-status-dropdown/queue-status-dropdown.js';
@@ -15,9 +19,13 @@ Template.QueueActions.onRendered(() => {
 
 Template.QueueActions.helpers({
   disableJoinQueue(queue) {
+    const nextSignupTime = SignupGap.nextSignupTime(queue, Meteor.userId());
+    const disableSignups = nextSignupTime && moment(nextSignupTime).diff(moment()) > 0;
+
     const isDisabled = queue.isEnded() ||
                        (queue.isRestricted() && !RestrictedSessions.isRestrictedToDevice(queue)) ||
-                       (queue.hasActiveTicketWithUsers([Meteor.userId()]));
+                       (queue.hasActiveTicketWithUsers([Meteor.userId()])) ||
+                       disableSignups;
     return isDisabled;
   },
 });

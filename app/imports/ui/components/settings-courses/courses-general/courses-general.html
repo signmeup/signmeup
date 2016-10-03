@@ -42,11 +42,11 @@
         <div class="card-block">
           <div class="form-group row m-b-0">
             <label for="signup-gap" class="col-xs-9 col-form-label">
-              <span class="text-muted">Signup Gap</span><br>
-              <span class="text-muted">Minimum time a student must wait after resolution to sign up again.</span>
+              <span>Signup Gap</span><br>
+              <span>Minimum time a student must wait after resolution to sign up again.</span>
             </label>
             <div class="col-xs-3">
-              <select class="form-control disabled m-t-1" name="signupGap" disabled>
+              <select class="form-control m-t-1" name="signupGap">
                 <option value="0" selected="{{isCurrentSignupGap course 0}}">No gap</option>
                 <option value="15" selected="{{isCurrentSignupGap course 15}}">15 minutes</option>
                 <option value="30" selected="{{isCurrentSignupGap course 30}}">30 minutes</option>

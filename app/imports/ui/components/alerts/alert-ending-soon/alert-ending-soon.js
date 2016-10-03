@@ -1,8 +1,11 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
+import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
+
+import { endQueue } from '/imports/api/queues/methods.js';
 
 import './alert-ending-soon.html';
 
@@ -50,4 +53,8 @@ Template.AlertEndingSoon.events({
       if (err) console.log(err);
     });
   },
+});
+
+Template.AlertEndingSoon.onDestroyed(() => {
+  Meteor.clearInterval(this.timeRemainingInterval);
 });

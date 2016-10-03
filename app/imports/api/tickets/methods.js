@@ -4,11 +4,14 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
+import moment from 'moment';
+
 import { Queues } from '/imports/api/queues/queues.js';
 import { Sessions } from '/imports/api/sessions/sessions.js';
 import { Tickets, NotificationsSchema } from '/imports/api/tickets/tickets.js';
 
-import { Notifications } from '/imports/lib/both/notifications';
+import { SignupGap } from '/imports/lib/both/signup-gap.js';
+import { Notifications } from '/imports/lib/both/notifications.js';
 import { createUser, findUserByEmail } from '/imports/lib/both/users.js';
 
 export const createTicket = new ValidatedMethod({
@@ -58,7 +61,17 @@ export const createTicket = new ValidatedMethod({
         'One or more users are already signed up for this queue.');
     }
 
-    // TODO: Check: signup gap
+    // Check: signup gap
+    studentIds.forEach((studentId) => {
+      const studentName = Meteor.users.findOne(studentId).fullName();
+      const nextSignupTime = SignupGap.nextSignupTime(queue, studentId);
+      const timeRemaining = moment(nextSignupTime).diff(moment());
+
+      if (timeRemaining > 0) {
+        throw new Meteor.Error('tickets.createTicket.signupGap',
+          `${studentName} must wait for ${moment.duration(timeRemaining).humanize()} before signing up again.`);
+      }
+    });
 
     // Check: restricted sessions
     if (Meteor.isServer && queue.isRestricted()) {
