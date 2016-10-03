@@ -39,3 +39,7 @@ Template.AlertSignupGap.helpers({
     return moment.duration(Template.instance().timeRemaining.get()).humanize();
   },
 });
+
+Template.AlertSignupGap.onDestroyed(() => {
+  Meteor.clearInterval(this.timeRemainingInterval);
+});

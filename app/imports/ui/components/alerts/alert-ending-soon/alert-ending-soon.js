@@ -54,3 +54,7 @@ Template.AlertEndingSoon.events({
     });
   },
 });
+
+Template.AlertEndingSoon.onDestroyed(() => {
+  Meteor.clearInterval(this.timeRemainingInterval);
+});
