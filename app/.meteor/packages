@@ -31,7 +31,6 @@ athyuttamre:accounts-saml2
 email@1.1.17
 kadira:debug
 meteorhacks:kadira
-pfafman:filesaver
 aldeed:collection2
 percolate:migrations
 standard-minifier-js@1.2.0

@@ -31,6 +31,11 @@ Template.Nav.events({
   },
 
   'click .js-sign-out'() {
-    Meteor.logout();
+    const isSamlUser = Meteor.user().isSamlUser();
+    Meteor.logout((err) => {
+      if (!err && isSamlUser) {
+        window.location = 'https://sso.brown.edu/idp/shib_logout.jsp';
+      }
+    });
   },
 });

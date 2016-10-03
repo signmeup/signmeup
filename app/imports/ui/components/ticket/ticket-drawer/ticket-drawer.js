@@ -50,34 +50,38 @@ Template.TicketDrawer.helpers({
 });
 
 Template.TicketDrawer.events({
-  'click .js-notify-email'() {
+  'click .js-notify-email'(event, templateInstance) {
     notifyTicketByEmail.call({
       ticketId: this.ticket._id,
     }, (err) => {
+      const notificationResult = $(templateInstance.find('.js-notification-result'));
+
       if (err) {
         console.error(err);
-        $('.js-notification-result').append(
+        notificationResult.append(
           '<div class="text-danger"><i class="material-icons">error_outline</i> Error sending email, sorry.</div>' // eslint-disable-line
         );
       } else {
-        $('.js-notification-result').append(
+        notificationResult.append(
           '<div class="text-success"><i class="material-icons">check</i> Email successfully sent.</div>' // eslint-disable-line
         );
       }
     });
   },
 
-  'click .js-notify-text'() {
+  'click .js-notify-text'(event, templateInstance) {
     notifyTicketByText.call({
       ticketId: this.ticket._id,
     }, (err) => {
+      const notificationResult = $(templateInstance.find('.js-notification-result'));
+
       if (err) {
         console.error(err);
-        $('.js-notification-result').append(
+        notificationResult.append(
           '<div class="text-danger"><i class="material-icons">error_outline</i> Error sending text, sorry.</div>' // eslint-disable-line
         );
       } else {
-        $('.js-notification-result').append(
+        notificationResult.append(
           '<div class="text-success"><i class="material-icons">check</i> Text successfully sent.</div>' // eslint-disable-line
         );
       }

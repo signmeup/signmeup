@@ -4,6 +4,10 @@ import { Roles } from 'meteor/alanning:roles';
 import { Courses } from '/imports/api/courses/courses.js';
 
 Meteor.users.helpers({
+  isSamlUser() {
+    return this.profile && this.profile.brownUUID;
+  },
+
   fullName() {
     if (!this.emailAddress()) return null;
     let name = this.emailAddress().split('@')[0];

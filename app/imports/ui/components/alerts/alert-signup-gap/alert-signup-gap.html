@@ -1,0 +1,10 @@
+<template name="AlertSignupGap">
+  {{#if showSignupGap queue}}
+    <div class="alert-signup-gap container m-b-2">
+      <div class="alert alert-info">
+        <strong>Hang in there!</strong> You need to wait {{timeRemaining}} before
+        you can sign up again.
+      </div>
+    </div>
+  {{/if}}
+</template>
