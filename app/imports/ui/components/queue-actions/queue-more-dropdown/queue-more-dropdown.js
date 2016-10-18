@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
 
 import { shuffleQueue } from '/imports/api/queues/methods.js';
+import { deleteTicket } from '/imports/api/tickets/methods.js';
 
 import './queue-more-dropdown.html';
 
@@ -20,11 +21,11 @@ Template.QueueMoreDropdown.events({
     event.preventDefault();
 
     if (this.queue.isCutoff()) {
-      alert("Sorry, cutoff queues cannot be shuffled. Resume the queue to proceed.");
+      alert('Sorry, cutoff queues cannot be shuffled. Resume the queue to proceed.');
       return;
     }
 
-    const sure = prompt("Are you sure you want to shuffle all tickets? If yes, type \'SHUFFLE\' in the input below.");
+    const sure = prompt('Are you sure you want to shuffle all tickets? If yes, type \'SHUFFLE\' in the input below.');
     if (sure === 'SHUFFLE') {
       shuffleQueue.call({
         queueId: this.queue._id,
@@ -36,5 +37,16 @@ Template.QueueMoreDropdown.events({
 
   'click .js-delete-all-tickets'(event) {
     event.preventDefault();
+
+    const sure = prompt('Are you sure you want to delete all tickets? If yes, type \'DELETE-ALL\' in the input below.');
+    if (sure === 'DELETE-ALL') {
+      this.queue.activeTicketIds().forEach((ticketId) => {
+        deleteTicket.call({
+          ticketId: ticketId,
+        }, (err) => {
+          if (err) console.log(err);
+        });
+      });
+    }
   },
 });
