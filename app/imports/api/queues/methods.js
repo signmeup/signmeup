@@ -3,6 +3,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
+import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses.js';
 import { Locations } from '/imports/api/locations/locations.js';
@@ -178,6 +179,45 @@ export const cutoffQueue = new ValidatedMethod({
         cutoffAt: new Date(),
         cutoffAfter: queue.ticketIds[queue.ticketIds.length - 1],
         cutoffBy: this.userId,
+      },
+    });
+  },
+});
+
+export const shuffleQueue = new ValidatedMethod({
+  name: 'queues.shuffleQueue',
+  validate: new SimpleSchema({
+    queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ queueId }) {
+    const queue = Queues.findOne(queueId);
+    if (!queue || queue.status === 'ended') {
+      throw new Meteor.Error('queues.doesNotExist'
+        `No queue exists with id ${queueId}`);
+    }
+
+    if (!!this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
+      throw new Meteor.Error('queues.shuffleQueue.unauthorized',
+        'Only TAs and above can shuffle queues.');
+    }
+
+    if (queue.isCutoff()) {
+      throw new Meteor.Error('queues.shuffleQueue.cannotShuffleCutoffQueue',
+        'Cannot shuffle a cutoff queue.');
+    }
+
+    const activeTicketIds = queue.activeTicketIds();
+    const inactiveTicketIds = queue.ticketIds.filter((ticketId) => {
+      return !(activeTicketIds.indexOf(ticketId) >= 0);
+    });
+
+    const shuffledTicketIds = inactiveTicketIds.concat(_.shuffle(activeTicketIds));
+
+    Queues.update({
+      _id: queueId,
+    }, {
+      $set: {
+        ticketIds: shuffledTicketIds,
       },
     });
   },
