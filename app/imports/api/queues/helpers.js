@@ -28,18 +28,25 @@ Queues.helpers({
   },
 
   tickets() {
-    return Tickets.find({ _id: { $in: this.ticketIds } });
+    return this.ticketIds.map((ticketId) => {
+      return Tickets.findOne({ _id: ticketId });
+    });
   },
 
   activeTickets() {
-    return Tickets.find({
-      _id: { $in: this.ticketIds },
-      status: { $in: ['open', 'claimed', 'markedAsMissing'] },
+    return this.tickets().filter((ticket) => {
+      return ticket.isActive();
+    });
+  },
+
+  activeTicketIds() {
+    return this.activeTickets().map((ticket) => {
+      return ticket._id;
     });
   },
 
   hasActiveTicketWithUsers(userIds) {
-    const activeTickets = this.activeTickets().fetch();
+    const activeTickets = this.activeTickets();
     return activeTickets.some((ticket) => {
       return _.intersection(ticket.studentIds, userIds).length > 0;
     });
