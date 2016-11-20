@@ -6,21 +6,29 @@ import './queue-table.html';
 
 Template.QueueTable.helpers({
   noActiveTickets(queue) {
-    return queue.activeTickets().length === 0;
+    return queue.activeTickets().count() === 0;
   },
 
   rows(queue) {
-    let index = 1;
     const rows = [];
 
-    queue.tickets().forEach((ticket) => {
-      if (ticket.isActive()) {
-        ticket.index = index; // eslint-disable-line no-param-reassign
+    const tickets = queue.tickets().fetch();
+    const ticketsById = {};
+    tickets.forEach((ticket) => {
+      ticketsById[ticket._id] = ticket;
+    });
+
+    let index = 1;
+    queue.ticketIds.forEach((ticketId) => {
+      const ticket = ticketsById[ticketId];
+
+      if (ticket && ticket.isActive()) {
+        ticket.index = index;
         rows.push(ticket);
         index += 1;
       }
 
-      if (queue.isCutoff() && (ticket._id === queue.cutoffAfter)) {
+      if (queue.isCutoff() && (ticketId === queue.cutoffAfter)) {
         rows.push({
           isCutoffMarker: true,
         });
