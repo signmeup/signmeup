@@ -24,7 +24,7 @@
             <div class="form-group required {{#if errors 'student'}}has-danger{{/if}}">
               <label for="student">Student(s)</label>
               {{#if showStudents}}
-                <ul class="student-list list-unstyled m-b-0">
+                <ul class="student-list list-unstyled mb-0">
                   {{#each student in students}}
                     <li class="student-item {{#if currentStudent student}}current{{/if}}" data-email="{{student.emailAddress}}">
                       <div class="content">
@@ -70,15 +70,15 @@
 
             <!-- Notifications -->
             <div class="form-group">
-              <label for="notifications" class="m-b-0">Notifications</label>
-              <small class="form-text text-muted m-t-0">Choose how you'd like the TA to notify you when your turn comes.</small>
+              <label for="notifications" class="mb-0">Notifications</label>
+              <small class="form-text text-muted mt-0">Choose how you'd like the TA to notify you when your turn comes.</small>
               <div class="form-inline">
-                <div class="form-check m-r-1">
+                <div class="form-check mr-0">
                   <label class="form-check-label">
                     <input name="announceCheckbox" class="form-check-input" type="checkbox" checked> Announce my name
                   </label>
                 </div>
-                <div class="form-check m-r-1">
+                <div class="form-check mr-0">
                   <label class="form-check-label">
                     <input name="emailCheckbox" class="form-check-input js-email-checkbox" type="checkbox"> Email me
                   </label>

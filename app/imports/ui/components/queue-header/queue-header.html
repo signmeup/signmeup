@@ -2,15 +2,15 @@
   <div class="queue-header">
     {{#if Template.subscriptionsReady}}
       <div class="queue-header-background" style="background-image: {{svgPatternUrl queue}}"></div>
-      <div class="container p-t-3 p-b-2">
-        <h1 class="display-5 m-b-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
-        <div class="info text-muted m-b-1">
-          <span class="m-r-1"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
-          <span class="m-r-1"><i class="material-icons">people</i>{{ticketCount queue}}</span>
-          <span class="m-r-1"><i class="material-icons">access_time</i>Ends at {{scheduledEndTime queue.scheduledEndTime}}</span>
+      <div class="container pt-3 pb-2">
+        <h1 class="display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
+        <div class="info text-muted mb-1">
+          <span class="mr-0"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
+          <span class="mr-0"><i class="material-icons">people</i>{{ticketCount queue}}</span>
+          <span class="mr-0"><i class="material-icons">access_time</i>Ends at {{scheduledEndTime queue.scheduledEndTime}}</span>
 
           {{#if taView}}
-            <a href="#" role="button" class="btn-black-link pull-xs-right js-show-modal-queue-edit">
+            <a href="#" role="button" class="btn-black-link float-xs-right js-show-modal-queue-edit">
               <i class="material-icons">mode_edit</i> Edit Queue
             </a>
           {{/if}}

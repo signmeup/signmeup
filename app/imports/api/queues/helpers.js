@@ -28,20 +28,13 @@ Queues.helpers({
   },
 
   tickets() {
-    // We map ticketIds to tickets rather than use a $in query in order to
-    // preserve order of tickets.
-    return this.ticketIds.map((ticketId) => {
-      return Tickets.findOne({ _id: ticketId });
-    }).filter((ticket) => {
-      // Filter in case the client has not subscribed to all tickets; this happens
-      // because students aren't allowed access to deleted tickets.
-      return ticket !== undefined;
-    });
+    return Tickets.find({ _id: { $in: this.ticketIds } });
   },
 
   activeTickets() {
-    return this.tickets().filter((ticket) => {
-      return ticket.isActive();
+    return Tickets.find({
+      _id: { $in: this.ticketIds },
+      status: { $in: ['open', 'claimed', 'markAsMissing'] },
     });
   },
 
@@ -52,7 +45,7 @@ Queues.helpers({
   },
 
   hasActiveTicketWithUsers(userIds) {
-    const activeTickets = this.activeTickets();
+    const activeTickets = this.activeTickets().fetch();
     return activeTickets.some((ticket) => {
       return _.intersection(ticket.studentIds, userIds).length > 0;
     });

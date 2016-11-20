@@ -7,7 +7,7 @@ export class SignupGap {
     }
 
     // Get user's last ticket that was marked as done
-    const userTickets = queue.tickets().filter((ticket) => {
+    const userTickets = queue.tickets().fetch().filter((ticket) => {
       return ticket.status === 'markedAsDone' && ticket.studentIds.indexOf(userId) !== -1;
     });
 

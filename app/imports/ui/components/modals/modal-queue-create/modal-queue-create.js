@@ -3,8 +3,10 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { Courses } from '/imports/api/courses/courses.js';
 import { Locations } from '/imports/api/locations/locations.js';
+import { Queues } from '/imports/api/queues/queues.js';
+
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
 
 import { createQueue } from '/imports/api/queues/methods.js';
 
@@ -45,11 +47,17 @@ Template.ModalQueueCreate.events({
       scheduledEndTime: new Date(event.target.endTime.value),
     };
 
-    createQueue.call(data, (err) => {
-      // TODO: surface ValidationErrors to UI
+    createQueue.call(data, (err, queueId) => {
       if (err) {
+        // TODO: surface ValidationErrors to UI
         console.error(err);
       } else {
+        // If needed, restrict queue to device
+        const queue = Queues.findOne(queueId);
+        if (queue.course().settings.restrictSessionsByDefault) {
+          RestrictedSessions.restrictToDevice(queue);
+        }
+
         $('.modal-queue-create').modal('hide');
       }
     });

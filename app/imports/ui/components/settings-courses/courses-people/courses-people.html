@@ -15,13 +15,13 @@
 
       {{#each hta in (htas course)}}
         <div class="card-block">
-          <div class="row m-b-0">
-            <p class="col-xs-9 m-b-0">
+          <div class="row mb-0">
+            <p class="col-xs-9 mb-0">
               {{hta.fullName}}<br>
               <span class="text-muted">{{hta.emailAddress}}</span>
             </p>
             <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
-              <button class="btn btn-outline-danger pull-xs-right js-remove-hta" data-id="{{hta._id}}">
+              <button class="btn btn-outline-danger float-xs-right js-remove-hta" data-id="{{hta._id}}">
                 Remove
               </button>
             </div>
@@ -45,13 +45,13 @@
 
       {{#each ta in (tas course)}}
         <div class="card-block">
-          <div class="row m-b-0">
-            <p class="col-xs-9 m-b-0">
+          <div class="row mb-0">
+            <p class="col-xs-9 mb-0">
               {{ta.fullName}}<br>
               <span class="text-muted">{{ta.emailAddress}}</span>
             </p>
             <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
-              <button class="btn btn-outline-danger pull-xs-right js-remove-ta" data-id="{{ta._id}}">
+              <button class="btn btn-outline-danger float-xs-right js-remove-ta" data-id="{{ta._id}}">
                 Remove
               </button>
             </div>
