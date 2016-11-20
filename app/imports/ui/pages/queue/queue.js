@@ -36,7 +36,7 @@ Template.Queue.onRendered(function onRendered() {
   this.autorun(() => {
     if (this.subscriptionsReady()) {
       const queue = this.getQueue();
-      document.title = `(${queue.activeTickets().length}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
+      document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
     }
   });
 });

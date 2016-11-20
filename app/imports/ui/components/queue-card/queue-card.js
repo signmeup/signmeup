@@ -17,7 +17,7 @@ export function svgPatternUrl(queue) {
 }
 
 export function ticketCount(queue) {
-  const activeTicketsCount = queue.activeTickets().length;
+  const activeTicketsCount = queue.activeTickets().count();
   return `${activeTicketsCount} ticket${activeTicketsCount !== 1 ? 's' : ''}`;
 }
 
