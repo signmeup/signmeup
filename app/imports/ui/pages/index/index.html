@@ -1,16 +1,16 @@
 <template name="Index">
-  <div class="index container m-t-3 m-b-3">
+  <div class="index container mt-3 mb-3">
     {{#if Template.subscriptionsReady}}
       {{#if activeQueues.count}}
         <div class="row">
           {{#each queue in activeQueues}}
-            <div class="col-lg-4 col-md-6 m-b-2">
+            <div class="col-lg-4 col-md-6 mb-2">
               {{> QueueCard queue=queue}}
             </div>
           {{/each}}
 
           {{#if isTA currentUser}}
-            <div class="create-queue-card-container col-lg-4 col-md-6 m-b-2">
+            <div class="create-queue-card-container col-lg-4 col-md-6 mb-2">
               <a class="card dashed-card js-show-modal-queue-create" href="#">
                 <i class="material-icons">add</i> New Queue
               </a>
