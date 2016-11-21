@@ -11,7 +11,7 @@ export const createCourse = new ValidatedMethod({
     'name', 'description',
   ]).validator(),
   run({ name, description }) {
-    if (!!this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta'])) {
+    if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta'])) {
       throw new Meteor.Error('courses.createCourse.unauthorized',
         'Only admins and MTAs can create courses.');
     }
