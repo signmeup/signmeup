@@ -3,7 +3,16 @@
     {{#if Template.subscriptionsReady}}
       <div class="queue-header-background" style="background-image: {{svgPatternUrl queue}}"></div>
       <div class="container pt-3 pb-2">
-        <h1 class="display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
+        <div class="name-and-staff">
+          <h1 class="display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
+          <div class="staff">
+            {{#each ta in onlineStaff}}
+              <div>
+                {{ta.fullName}} - {{ta.status.online}} - {{#if ta.status.idle}}idle{{else}}active{{/if}}
+              </div>
+            {{/each}}
+          </div>
+        </div>
         <div class="info text-muted mb-1">
           <span class="mr-1"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
           <span class="mr-1"><i class="material-icons">people</i>{{ticketCount queue}}</span>

@@ -8,4 +8,7 @@ import './vendor.js';
 import '../both/register-api.js';
 
 // Initialize routing
-import './routes';
+import './routes.js';
+
+// Initialize idle tracking
+import './tracking.js';

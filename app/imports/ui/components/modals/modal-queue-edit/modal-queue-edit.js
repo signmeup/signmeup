@@ -20,7 +20,11 @@ Template.ModalQueueEdit.helpers({
   endTimes,
 
   isCurrentLocation(queue, location) {
-    return location && location._id === queue.locationId;
+    if (location && queue) {
+      return location._id === queue.locationId;
+    }
+
+    return false;
   },
 
   isCurrentEndTime(queue, time) {
