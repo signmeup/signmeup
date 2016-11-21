@@ -11,7 +11,7 @@ import './index.html';
 Template.Index.onCreated(function onCreated() {
   this.autorun(() => {
     this.subscribe('courses.all');
-    this.subscribe('locations.all');
+    this.subscribe('locations.active');
     this.subscribe('queues.active');
   });
 });

@@ -5,6 +5,9 @@ export const Locations = new Mongo.Collection('locations');
 
 Locations.schema = new SimpleSchema({
   name: { type: String },
+
+  deletedAt: { type: Date, optional: true },
+  deletedBy: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
 });
 
 Locations.attachSchema(Locations.schema);
