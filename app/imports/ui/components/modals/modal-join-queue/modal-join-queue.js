@@ -50,7 +50,7 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
   });
 
   this.autorun(() => {
-    this.subscribe('users.all');
+    this.subscribe('users.byEmails', this.studentEmails.array());
   });
 });
 
@@ -98,8 +98,7 @@ Template.ModalJoinQueue.helpers({
         ],
       });
 
-      if (student) return student;
-      return {
+      return student || {
         emailAddress: () => { return email; },
         fullName: () => { return email.split('@')[0]; },
       };

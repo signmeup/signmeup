@@ -1,6 +1,7 @@
 /* eslint-disable prefer-arrow-callback */
 
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 
 Meteor.publish('users.self', function self() {
   return Meteor.users.find({
@@ -13,14 +14,6 @@ Meteor.publish('users.self', function self() {
   });
 });
 
-Meteor.publish('users.byId', function byId(userId) {
-  return Meteor.users.find({
-    _id: userId,
-  }, {
-    fields: Meteor.users.publicFields,
-  });
-});
-
 Meteor.publish('users.byIds', function byIds(userIds) {
   return Meteor.users.find({
     _id: { $in: userIds },
@@ -29,8 +22,15 @@ Meteor.publish('users.byIds', function byIds(userIds) {
   });
 });
 
-Meteor.publish('users.all', function all() {
-  return Meteor.users.find({}, {
-    fields: Meteor.users.publicFields,
+Meteor.publish('users.byEmails', function byEmails(emails) {
+  return Meteor.users.find({
+    $or: [
+      { email: { $in: emails } },
+      { 'emails.address': { $in: emails } },
+    ],
   });
+});
+
+Meteor.publish('users.byCourseId', function byCourseId(courseId) {
+  return Roles.getUsersInRole(['hta', 'ta'], courseId);
 });

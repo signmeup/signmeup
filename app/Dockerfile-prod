@@ -1,6 +1,7 @@
 # Source: https://github.com/mbanting/meteor-production-docker-example
 
-FROM ubuntu:14.04
+# Base image with curl, make, gcc, python etc. needed to build platform-specific Node modules
+FROM python
 
 MAINTAINER Athyuttam Eleti, athyuttamre@gmail.com
 
@@ -10,16 +11,9 @@ WORKDIR /meteor
 
 ADD . ./src
 
-# Do basic updates
-RUN apt-get update -q && apt-get clean
-
-# Install Python and Basic Python Tools for binary rebuilds of NPM packages
-RUN apt-get install -y python python-dev python-distribute python-pip
-
-# Get curl in order to download curl
-RUN apt-get install curl -y \
+RUN \
     # Set up colors
-    && GREEN='\033[0;32m' \
+    GREEN='\033[0;32m' \
     && NC='\033[0m' \
 
     # Install Meteor
@@ -29,11 +23,11 @@ RUN apt-get install curl -y \
     # Build the NPM packages needed for build
     && echo "${GREEN}=> Installing app's npm modules...${NC}" \
     && cd /meteor/src \
-    && meteor npm install \
+    && meteor npm install --production \
 
     # Build the Meteor app
     && echo "${GREEN}=> Bundling Meteor app...${NC}" \
-    && meteor build --verbose ../build --directory \
+    && meteor build --allow-superuser --verbose ../build --directory \
 
     # Install the version of Node.js we need
     && echo "${GREEN}=> Installing Node.js at the OS level...${NC}" \
@@ -45,16 +39,7 @@ RUN apt-get install curl -y \
     # Install the NPM packages needed for build
     && echo "${GREEN}=> Installing npm modules in /bundle/programs/server...${NC}" \
     && cd /meteor/build/bundle/programs/server \
-    && npm install \
-
-    # Remove Meteor
-    && echo "${GREEN}=> Uninstalling Meteor...${NC}" \
-    && rm /usr/local/bin/meteor \
-    && rm -rf ~/.meteor \
-
-    # Remove curl
-    && echo "${GREEN}=> Uninstalling curl...${NC}" \
-    && apt-get --purge autoremove curl -y
+    && npm install;
 
 ENV PORT 80
 

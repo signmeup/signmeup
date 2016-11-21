@@ -12,7 +12,7 @@ import './device-card.html';
 
 Template.DeviceCard.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('users.byId', Template.currentData().session.userId);
+    this.subscribe('users.byIds', [Template.currentData().session.userId]);
   });
 });
 
