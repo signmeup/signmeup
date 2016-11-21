@@ -16,9 +16,13 @@ export const createLocation = new ValidatedMethod({
         'Only TAs and above can create locations.');
     }
 
-    const locationId = Locations.insert({ name });
+    const location = Locations.findOne({ name: name });
+    if (location) {
+      throw new Meteor.Error('locations.createLocation.alreadyExists',
+        'A location with that name already exists.');
+    }
 
-    return locationId;
+    return Locations.insert({ name });
   },
 });
 
