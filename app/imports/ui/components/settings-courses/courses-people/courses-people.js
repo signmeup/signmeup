@@ -7,7 +7,7 @@ import './courses-people.html';
 
 Template.CoursesPeople.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('users.all');
+    this.subscribe('users.byCourseId', Template.currentData().course._id);
   });
 });
 
