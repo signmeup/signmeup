@@ -14,7 +14,7 @@ babel-compiler@6.13.0
 babel-runtime@1.0.1
 base64@1.0.10
 binary-heap@1.0.10
-blaze@2.1.9
+blaze@2.2.0
 blaze-html-templates@1.0.5
 blaze-tools@1.0.10
 boilerplate-generator@1.0.11
@@ -35,7 +35,6 @@ ecmascript@0.6.1
 ecmascript-runtime@0.3.15
 ejson@1.0.13
 email@1.1.18
-fastclick@1.0.13
 fourseven:scss@3.10.1
 geojson-utils@1.0.10
 hot-code-push@1.0.4
@@ -49,8 +48,6 @@ kadira:blaze-layout@2.3.0
 kadira:debug@3.2.2
 kadira:flow-router@2.12.1
 kadira:runtime-dev@0.0.1
-launch-screen@1.0.12
-less@2.7.8
 livedata@1.0.18
 localstorage@1.0.12
 logging@1.1.16
@@ -79,15 +76,11 @@ meteortoys:toykit@3.0.4
 minifier-css@1.2.15
 minifier-js@1.2.15
 minimongo@1.0.19
-mobile-experience@1.0.4
-mobile-status-bar@1.0.13
 modules@0.7.7
 modules-runtime@0.7.7
-momentjs:moment@2.16.0
 mongo@1.1.14
 mongo-id@1.0.6
 mongo-livedata@1.0.12
-mrt:smart-publish@0.2.1
 msavin:jetsetter@2.0.0
 msavin:mongol@2.0.1
 npm-bcrypt@0.9.2
@@ -105,9 +98,6 @@ reactive-var@1.0.11
 reload@1.1.11
 retry@1.0.9
 routepolicy@1.0.12
-sarasate:semantic-ui-datetimepicker@0.0.2
-semantic:ui@2.2.1
-semantic:ui-data@2.2.4
 service-configuration@1.0.11
 session@1.1.7
 sha@1.0.9
