@@ -1,9 +1,11 @@
 <template name="SettingsLocations">
   <div class="settings-locations">
-    <h3 class="mb-2">Locations</h3>
+    <h3 class="mb-2">
+      Locations
+      <small class="text-muted">{{locations.count}}</small>
+    </h3>
 
     <div class="card">
-      <div class="card-header">Locations</div>
       <div class="card-block">
         <form id="add-location-form">
           <div class="input-group">
