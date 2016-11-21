@@ -53,4 +53,8 @@ Meteor.users.helpers({
     const taCourseIds = Roles.getGroupsForUser(this._id, 'ta');
     return Courses.find({ _id: { $in: htaCourseIds.concat(taCourseIds) }, active: true });
   },
+
+  isTAOrAbove() {
+    return this.courses().count() > 0;
+  },
 });
