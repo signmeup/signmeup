@@ -44,6 +44,8 @@ export const createTicket = new ValidatedMethod({
 
     // Gather student ids
     const studentIds = studentEmails.map((email) => {
+      email = email.toLowerCase(); // eslint-disable-line no-param-reassign
+
       // Check: all emails end with @brown.edu or @signmeup.cs.brown.edu
       if (!(email.endsWith('@brown.edu') || email.endsWith('@signmeup.cs.brown.edu'))) {
         throw new Meteor.Error('tickets.createTicket.NonBrownEmail',

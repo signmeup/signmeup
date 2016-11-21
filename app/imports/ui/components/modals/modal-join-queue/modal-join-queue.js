@@ -18,6 +18,7 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
 
   this.studentEmails = new ReactiveArray([]);
   this.addStudentEmail = (email, callback) => {
+    email = email.toLowerCase(); // eslint-disable-line no-param-reassign
     try {
       new SimpleSchema({
         email: {
@@ -234,7 +235,7 @@ Template.ModalJoinQueue.events({
     }
 
     if (event.target.emailCheckbox.checked) {
-      const email = event.target.email.value;
+      const email = event.target.email.value.toLowerCase();
       if (!email) {
         Template.instance().errors.set('email', 'Please enter a valid email.');
         errors = true;
