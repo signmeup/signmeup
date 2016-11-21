@@ -28,9 +28,13 @@ Meteor.publish('users.byEmails', function byEmails(emails) {
       { email: { $in: emails } },
       { 'emails.address': { $in: emails } },
     ],
+  }, {
+    fields: Meteor.users.publicFields,
   });
 });
 
 Meteor.publish('users.byCourseId', function byCourseId(courseId) {
-  return Roles.getUsersInRole(['hta', 'ta'], courseId);
+  return Roles.getUsersInRole(['hta', 'ta'], courseId, {
+    fields: Meteor.users.publicFields,
+  });
 });
