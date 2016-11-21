@@ -11,7 +11,7 @@ import './modal-queue-edit.html';
 
 Template.ModalQueueEdit.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('locations.all');
+    this.subscribe('locations.active');
   });
 });
 

@@ -8,6 +8,8 @@ Meteor.publish('locations.byId', function byId(locationId) {
   return Locations.find({ _id: locationId });
 });
 
-Meteor.publish('locations.all', function all() {
-  return Locations.find({});
+Meteor.publish('locations.active', function active() {
+  return Locations.find({
+    deletedAt: { $exists: false },
+  });
 });

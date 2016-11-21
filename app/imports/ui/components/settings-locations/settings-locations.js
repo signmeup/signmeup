@@ -6,40 +6,41 @@ import { createLocation } from '/imports/api/locations/methods.js';
 import './settings-locations.html';
 
 Template.SettingsLocations.onCreated(function onCreated() {
-	this.autorun(() => {
-		this.subscribe('locations.all');
-	});
+  this.autorun(() => {
+    this.subscribe('locations.active');
+  });
 });
 
-
 Template.SettingsLocations.helpers({
-	locations() {
-		return Locations.find({});
-	},
+  locations() {
+    return Locations.find({
+      deletedAt: { $exists: false },
+    });
+  },
 });
 
 Template.SettingsLocations.events({
-	'submit #add-location-form'(event) {
-		event.preventDefault();
-		const name = event.target.locationName.value;
-		if (name) {
-			const data = {
-				'name' : name,
-			};
+  'submit #add-location-form'(event) {
+    event.preventDefault();
+    const name = event.target.locationName.value;
+    if (name) {
+      const data = {
+        'name' : name,
+      };
 
-			createLocation.call(data, (err) => {
-				if (err) {
-					console.error(err);
-				} else {
-					$('.js-location-name').val('');
-				}
-			});
-		}
-	},
+      createLocation.call(data, (err) => {
+        if (err) {
+          console.error(err);
+        } else {
+          $('.js-location-name').val('');
+        }
+      });
+    }
+  },
 
-	'click .js-remove-location'(event) {
-		const locationId = event.target.dataset.id;
-		console.error("Oops! Removing locations isn't supported!");
-	},
+  'click .js-remove-location'(event) {
+    const locationId = event.target.dataset.id;
+    console.error("Oops! Removing locations isn't supported!");
+  },
 });
 

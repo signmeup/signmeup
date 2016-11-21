@@ -1,30 +1,30 @@
 <template name="SettingsLocations">
-	<div class="card">
-		<div class="card-header">Locations</div>
-		<div class="card-block">
-			<form id="add-location-form">
-				<div class="input-group">
-					<input type="text" class="form-control js-location-name" name="locationName" placeholder="Room name/number">
-					<span class="input-group-btn">
-						<button class="btn btn-secondary" type="submit">Add</button>
-					</span>
-				</div>
-			</form>
-		</div>
+  <div class="card">
+    <div class="card-header">Locations</div>
+    <div class="card-block">
+      <form id="add-location-form">
+        <div class="input-group">
+          <input type="text" class="form-control js-location-name" name="locationName" placeholder="Room name/number">
+          <span class="input-group-btn">
+            <button class="btn btn-secondary" type="submit">Add</button>
+          </span>
+        </div>
+      </form>
+    </div>
 
-		{{#each location in locations}}
-			<div class="card-block">
-				<div class="row m-b-0">
-					<p class="col-xs-9 m-b-0">
-					{{location.name}}
-					</p>
-					<div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
-						<button class="btn btn-outline-danger pull-xs-right js-remove-location" data-id="{{hta._id}}">
-							Remove
-						</button>
-					</div>
-				</div>
-			</div>
-			{{/each}}
-	</div>
+    {{#each location in locations}}
+      <div class="card-block">
+        <div class="row m-b-0">
+          <p class="col-xs-9 m-b-0">
+          {{location.name}}
+          </p>
+          <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
+            <button class="btn btn-outline-danger pull-xs-right js-remove-location" data-id="{{hta._id}}">
+              Remove
+            </button>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+  </div>
 </template>
