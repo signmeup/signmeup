@@ -1,16 +1,20 @@
 venv
 
-mongodb/mongodump
-mongodb/data/*
-!mongodb/data/.gitkeep
-
 .meteor/local
 node_modules/
-.DS_Store
-*.log
+
+data/*
+!data/.gitkeep
 
 *.key
+*.cert
 *.crt
 *.pem
 
 settings.json
+
+logs
+*.log
+npm-debug.log*
+
+.DS_Store

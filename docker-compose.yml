@@ -9,5 +9,5 @@ db:
 proxy:
   image: jwilder/nginx-proxy:latest
   volumes:
-   - ./nginx/ssl:/etc/nginx/certs
+   - ./ssl:/etc/nginx/certs
    - /var/run/docker.sock:/tmp/docker.sock:ro

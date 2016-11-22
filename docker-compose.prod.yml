@@ -1,21 +1,20 @@
 app:
-  build: ./app # EXPOSEs 80
-  dockerfile: Dockerfile-prod
+  dockerfile: Dockerfile.prod
   restart: always
   environment:
-   - VERSION=${VERSION}
-   - ROOT_URL=https://signmeup.cs.brown.edu
-   - MONGO_URL=mongodb://db:27017/signmeup
-   - VIRTUAL_HOST=signmeup.cs.brown.edu
-   - METEOR_SETTINGS=${METEOR_SETTINGS}
-   - MAIL_URL=smtp://mx.cs.brown.edu:25
    - HTTP_FORWARDED_COUNT=1
+   - MAIL_URL=smtp://mx.cs.brown.edu:25
+   - METEOR_SETTINGS=${METEOR_SETTINGS}
+   - MONGO_URL=mongodb://db:27017/signmeup
    - PRODUCTION=true
+   - ROOT_URL=https://signmeup.cs.brown.edu
+   - VERSION=${VERSION}
+   - VIRTUAL_HOST=signmeup.cs.brown.edu
 
 db:
   restart: always
   volumes:
-   - ./mongodb/data:/data/db
+   - ./data:/data/db
 
 proxy:
   restart: always
