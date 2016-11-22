@@ -6,7 +6,7 @@
         <div class="name-and-staff">
           <h1 class="queue-name display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
           <div class="staff float-xs-right">
-            {{#each ta in onlineStaff}}
+            {{#each ta in (onlineStaff queue)}}
               {{> ProfilePic user=ta}}
             {{/each}}
           </div>
