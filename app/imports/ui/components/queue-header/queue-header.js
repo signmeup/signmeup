@@ -26,9 +26,21 @@ Template.QueueHeader.helpers({
   scheduledEndTime,
 
   onlineStaff() {
-    return Meteor.users.find({
+    const staff = Meteor.users.find({
       'status.online': true,
+    }).fetch();
+
+    const online = [];
+    const idle = [];
+    staff.forEach((user) => {
+      if (user.status.idle) {
+        idle.push(user);
+      } else {
+        online.push(user);
+      }
     });
+
+    return online.concat(idle);
   },
 });
 
