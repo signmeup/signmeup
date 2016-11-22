@@ -39,6 +39,8 @@ i.material-icons {
   }
 }
 
+@import "{}/imports/ui/components/profile-pic/profile-pic.scss";
+
 @import "{}/imports/ui/components/queue-card/queue-card.scss";
 @import "{}/imports/ui/components/queue-header/queue-header.scss";
 @import "{}/imports/ui/components/queue-actions/queue-actions.scss";

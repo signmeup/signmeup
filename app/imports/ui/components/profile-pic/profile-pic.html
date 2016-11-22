@@ -1,0 +1,7 @@
+<template name="ProfilePic">
+  <div
+    class="profile-pic {{#if user.status.online}}online{{/if}} {{#if user.status.idle}}idle{{/if}}"
+    data-toggle="tooltip" data-placement="bottom" title="{{user.fullName}}">
+    {{user.initials}}
+  </div>
+</template>
