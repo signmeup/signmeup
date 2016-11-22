@@ -25,14 +25,16 @@ Template.QueueHeader.helpers({
   ticketCount,
   scheduledEndTime,
 
-  onlineStaff() {
-    const staff = Meteor.users.find({
+  onlineStaff(queue) {
+    const staff = queue.course().staff().fetch();
+    const onlineStaff = Meteor.users.find({
+      _id: { $in: staff.map((user) => { return user._id; }) },
       'status.online': true,
-    }).fetch();
+    });
 
     const online = [];
     const idle = [];
-    staff.forEach((user) => {
+    onlineStaff.forEach((user) => {
       if (user.status.idle) {
         idle.push(user);
       } else {
