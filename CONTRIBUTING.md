@@ -67,7 +67,7 @@ This is normal, just wait it out.
 
 If everything went well so far, you should see something like this when running `docker-compose logs app`:
 
-![Successful setup.](img/successful-setup.png)
+![Successful setup.](docs/successful-setup.png)
 
 ## Development
 
