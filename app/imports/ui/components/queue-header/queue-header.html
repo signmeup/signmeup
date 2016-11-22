@@ -4,12 +4,10 @@
       <div class="queue-header-background" style="background-image: {{svgPatternUrl queue}}"></div>
       <div class="container pt-3 pb-2">
         <div class="name-and-staff">
-          <h1 class="display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
-          <div class="staff">
+          <h1 class="queue-name display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
+          <div class="staff float-xs-right">
             {{#each ta in onlineStaff}}
-              <div>
-                {{ta.fullName}} - {{ta.status.online}} - {{#if ta.status.idle}}idle{{else}}active{{/if}}
-              </div>
+              {{> ProfilePic user=ta}}
             {{/each}}
           </div>
         </div>

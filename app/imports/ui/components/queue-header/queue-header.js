@@ -8,6 +8,8 @@ import {
   scheduledEndTime }
 from '/imports/ui/components/queue-card/queue-card.js';
 
+import '/imports/ui/components/profile-pic/profile-pic.js';
+
 import './queue-header.html';
 
 Template.QueueHeader.onCreated(function onCreated() {

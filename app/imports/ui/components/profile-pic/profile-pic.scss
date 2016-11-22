@@ -1,0 +1,40 @@
+.profile-pic {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: text-bottom;
+
+  margin-left: 4px;
+  padding: 4px 6px 8px 6px;
+
+  background-color: white;
+  border: 1px solid $gray-lighter;
+  color: $gray;
+
+  user-select: none;
+  cursor: default;
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &.online::after {
+    content: " ";
+
+    position: absolute;
+    bottom: -1px;
+    left: -1px;
+    right: -1px;
+
+    height: 6px;
+    background-color: $brand-success;
+  }
+
+  &.idle {
+    color: $gray-light;
+
+    &::after {
+      background-color: $brand-warning;
+    }
+  }
+}
