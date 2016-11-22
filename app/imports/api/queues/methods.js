@@ -196,7 +196,7 @@ export const shuffleQueue = new ValidatedMethod({
         `No queue exists with id ${queueId}`);
     }
 
-    if (!!this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
+    if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
       throw new Meteor.Error('queues.shuffleQueue.unauthorized',
         'Only TAs and above can shuffle queues.');
     }
@@ -231,11 +231,11 @@ export const endQueue = new ValidatedMethod({
   run({ queueId }) {
     const queue = Queues.findOne(queueId);
     if (!queue || queue.status === 'ended') {
-      throw new Meteor.Error('queues.doesNotExist'
+      throw new Meteor.Error('queues.doesNotExist',
         `No queue exists with id ${queueId}`);
     }
 
-    if (!!this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
+    if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
       throw new Meteor.Error('queues.endQueue.unauthorized',
         'Only TAs and above can end queues.');
     }

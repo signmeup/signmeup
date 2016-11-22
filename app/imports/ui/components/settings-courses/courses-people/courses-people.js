@@ -7,7 +7,7 @@ import './courses-people.html';
 
 Template.CoursesPeople.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('users.byCourseId', Template.currentData().course._id);
+    this.subscribe('users.staffByCourseId', Template.currentData().course._id);
   });
 });
 
@@ -30,7 +30,7 @@ Template.CoursesPeople.helpers({
 Template.CoursesPeople.events({
   'submit #add-hta-form'(event) {
     event.preventDefault();
-    const email = event.target.htaEmail.value;
+    const email = event.target.htaEmail.value.toLowerCase();
     if (email) {
       const data = {
         email,
@@ -50,7 +50,7 @@ Template.CoursesPeople.events({
 
   'submit #add-ta-form'(event) {
     event.preventDefault();
-    const email = event.target.taEmail.value;
+    const email = event.target.taEmail.value.toLowerCase();
     if (email) {
       const data = {
         email,

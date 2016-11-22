@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 
 import { Locations } from '/imports/api/locations/locations.js';
@@ -10,13 +11,82 @@ export const createLocation = new ValidatedMethod({
     'name',
   ]).validator(),
   run({ name }) {
-    if (!!this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'])) {
-      throw new Meteor.Error('locations.createLocation.unauthorized',
+    if (this.connection) {
+      const user = Meteor.users.findOne(this.userId);
+      if (!user.isTAOrAbove()) {
+        throw new Meteor.Error('locations.createLocation.unauthorized',
         'Only TAs and above can create locations.');
+      }
     }
 
-    const locationId = Locations.insert({ name });
+    const location = Locations.findOne({
+      name: name,
+      deletedAt: { $exists: false },
+    });
 
-    return locationId;
+    if (location) {
+      throw new Meteor.Error('locations.createLocation.alreadyExists',
+        'A location with that name already exists.');
+    }
+
+    return Locations.insert({ name });
+  },
+});
+
+export const updateLocation = new ValidatedMethod({
+  name: 'locations.updateLocation',
+  validate: new SimpleSchema({
+    locationId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    name: { type: String },
+  }).validator(),
+  run({ locationId, name }) {
+    const location = Locations.findOne(locationId);
+    if (!location) {
+      throw new Meteor.Error('locations.doesNotExist',
+        `No location exists with id ${locationId}`);
+    }
+
+    const user = Meteor.users.findOne(this.userId);
+    if (!user.isTAOrAbove()) {
+      throw new Meteor.Error('locations.createLocation.unauthorized',
+      'Only TAs and above can create locations.');
+    }
+
+    Locations.update({
+      _id: locationId,
+    }, {
+      $set: {
+        name: name,
+      },
+    });
+  },
+});
+
+export const deleteLocation = new ValidatedMethod({
+  name: 'locations.deleteLocation',
+  validate: new SimpleSchema({
+    locationId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ locationId }) {
+    const location = Locations.findOne(locationId);
+    if (!location) {
+      throw new Meteor.Error('locations.doesNotExist',
+        `No location exists with id ${locationId}`);
+    }
+
+    const user = Meteor.users.findOne(this.userId);
+    if (!user.isTAOrAbove()) {
+      throw new Meteor.Error('locations.createLocation.unauthorized',
+      'Only TAs and above can create locations.');
+    }
+
+    Locations.update({
+      _id: locationId,
+    }, {
+      $set: {
+        deletedAt: new Date(),
+        deletedBy: this.userId,
+      },
+    });
   },
 });

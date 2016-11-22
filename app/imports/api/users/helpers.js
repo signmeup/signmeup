@@ -27,6 +27,26 @@ Meteor.users.helpers({
     return this.fullName().split(' ')[0];
   },
 
+  initials() {
+    let initials = '';
+    const fullName = this.fullName();
+
+    if (this.profile && this.profile.name) {
+      initials = this.profile.name.substring(0, 2);
+    } else {
+      let parts = fullName.split(' ');
+      if (parts.length < 2) parts = fullName.split('_');
+
+      if (parts.length >= 2) {
+        initials = parts[0][0] + parts[parts.length - 1][0];
+      } else {
+        initials = parts[0].substring(0, 2);
+      }
+    }
+
+    return initials.toUpperCase();
+  },
+
   emailAddress() {
     if (this.email) {
       return this.email;
@@ -52,5 +72,9 @@ Meteor.users.helpers({
     const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
     const taCourseIds = Roles.getGroupsForUser(this._id, 'ta');
     return Courses.find({ _id: { $in: htaCourseIds.concat(taCourseIds) }, active: true });
+  },
+
+  isTAOrAbove() {
+    return this.courses().count() > 0;
   },
 });

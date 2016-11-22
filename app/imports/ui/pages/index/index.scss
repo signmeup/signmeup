@@ -10,7 +10,7 @@
   height: 100%;
 
   color: $navbar-light-color;
-  border: 2px dashed $navbar-light-color !important;
+  border: 2px dashed $navbar-light-color;
   transition: all 0.2s ease;
 
   &:hover, &:focus, &:active {
