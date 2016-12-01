@@ -1,13 +1,18 @@
-app:
-  links:
-   - db
-   - proxy
-
-db:
-  image: mongo:latest # EXPOSEs 27017
-
+# # version: '2'
+# services:
+#   proxy:
+#     image: steveltn/https-portal
+#     ports:
+#     - 80:80    # HTTP on 80
+#     - 3000:443 # HTTPS on 3000 to allow SAML to work
+#     environment:
+#       STAGE: local
+#       DOMAINS: 'local.cis-dev.brown.edu -> http://dockerhost:8080'
 proxy:
-  image: jwilder/nginx-proxy:latest
-  volumes:
-   - ./ssl:/etc/nginx/certs
-   - /var/run/docker.sock:/tmp/docker.sock:ro
+  image: steveltn/https-portal
+  ports:
+  - 80:80    # HTTP on 80
+  - 3000:443 # HTTPS on 3000 to allow SAML to work
+  environment:
+    STAGE: local
+    DOMAINS: 'local.cis-dev.brown.edu -> http://dockerhost:8080'
