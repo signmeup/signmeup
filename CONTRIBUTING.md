@@ -1,16 +1,74 @@
 # Contributing
 
-Here's a quick guide to developing SignMeUp and deploying it to production.
+Contributions are welcome from one and all. There is lots  of potential
+to improve the app, including new features and bug fixes, adding analytics, making
+it work at other universities, and much more.
 
-## Setup
+We follow a [code of conduct](CODE_OF_CONDUCT.md), and hope to do our bit in making
+open-source more welcoming and inclusive.
 
-1. Install the Docker engine on your machine. For Mac or Windows, use the app.
-   For Linux, use `docker-toolbox`.
+## Issues and Bug Reports
 
-2. Clone this repository:
+To report an issue or bug report:
+
+1. Open an issue, describe the issue, and include the conditions under which you faced it.
+2. Contribute to disccusion from maintainers and other contributors
+3. If you'd like to help fix the issue, ask to be assigned the task.
+   A maintainer will help you get setup and guide you through the fix.
+
+## Pull Requests
+
+We have two different workflows, one for maintainers, one for external contributors.
+Both begin by setting up the repo and running SignMeUp locally.
+
+### Setup
+
+1. Install [Meteor](https://www.meteor.com/install). This installs Node and npm as well.
+
+2. Clone this repository, and install dependencies:
 
    ```shell
-   $ git clone https://github.com/athyuttamre/signmeup.git
+   git clone https://github.com/athyuttamre/signmeup.git
+   cd signmeup
+   meteor npm install
+   ```
+3. Set up `settings.json`. To do so, start by copying the template:
+
+   ```shell
+   cp app/settings.template.json app/settings.json
+   ```
+
+   Now we need to fill in various values inside `settings.json`.
+
+   - Replace `INSERT-PASSWORD-HERE` with a good password. Feel free to add any extra user accounts
+     if you want.
+   - **Optional:** fill in the `saml` settings to set up Shibboleth login. See instructions below.
+   - **Optional:** replace `appID` and `appSecret` with the correct values from kadira.io to track
+     the app's performance.
+
+4. Run the app:
+
+   ```shell
+   cd app
+   meteor --settings settings.json
+   ```
+
+5. Navigate to `localhost:3000` in your web browser to see SignMeUp running!
+
+#### SAML Authentication
+
+In order to enable Shibboleth login locally, we need to run SignMeUp with SSL.
+To do so, we will run an nginx reverse proxy on our machine.
+
+1. Install [nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/). On macOS,
+   this can be done with Homebrew, a popular package manager:
+
+   ```shell
+   # 1. Install Homebrew
+   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+   # 2. Install nginx
+   brew install nginx
    ```
 
 3. Generate self-signed certificates for `local.cis-dev.brown.edu` using
