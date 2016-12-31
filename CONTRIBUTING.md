@@ -11,8 +11,8 @@ open-source more welcoming and inclusive.
 
 To report an issue or bug report:
 
-1. Open an issue, describe the issue, and include the conditions under which you faced it.
-2. Contribute to disccusion from maintainers and other contributors
+1. Open an issue, describe the problem, conditions under which you faced it, and any steps to reproduce the bug.
+2. Contribute to discussion from maintainers and other contributors.
 3. If you'd like to help fix the issue, ask to be assigned the task.
    A maintainer will help you get setup and guide you through the fix.
 
@@ -23,7 +23,7 @@ Both begin by setting up the repo and running SignMeUp locally.
 
 ### Setup
 
-1. Install [Meteor](https://www.meteor.com/install). This installs Node and npm as well.
+1. Install [Meteor](https://www.meteor.com/install). This installs the Node runtime and the npm package manager too.
 
 2. Clone this repository, and install dependencies:
 
@@ -71,7 +71,7 @@ To do so, we will run an nginx reverse proxy on our machine.
    brew install nginx
    ```
 
-2. Shibboleth identity providers (in our case Brown University), often whitelist local domains from
+2. Shibboleth identity providers (in our case Brown University) whitelist domains from
    which they accept requests. For Brown, the testing domain is `local.cis-dev.brown.edu:3000`; this means
    we need to run SignMeUp locally on this domain.
 
@@ -82,7 +82,7 @@ To do so, we will run an nginx reverse proxy on our machine.
    ```
 
    This adds an entry matching `local.cis-dev.brown.edu` to `localhost` in your hosts file. This way
-   when a browser tries to reach `local.cis-dev.brown.edu`, it actually is reaching `localhost`.
+   when a browser tries to reach `local.cis-dev.brown.edu`, it actually reaches `localhost`.
 
    To check if the append worked, run `cat /etc/hosts` and make sure the line was added to the end.
 
