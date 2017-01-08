@@ -192,8 +192,11 @@ If fixing a bug in production:
 
 ### Debugging Meteor
 
-In addition to the various [Meteor debugging methods](http://joshowens.me/easily-debugging-meteor-js/),
-we also have the free version of Meteor Toys package enabled. Once the app is running, type <kbd>Ctrl</kbd>+<kbd>m</kbd> to enable Mongol.
+In addition to the various [Meteor debugging
+methods](http://joshowens.me/easily-debugging-meteor-js/),
+we also have the free version of [Meteor Toys](http://meteor.toys/)
+package enabled. Once the app is running, type <kbd>Ctrl</kbd>+<kbd>m</kbd> to
+enable Mongol.
 
 ## Deployment
 
