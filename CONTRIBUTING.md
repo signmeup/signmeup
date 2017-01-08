@@ -4,21 +4,24 @@ Thanks for your interest in contributing to SignMeUp! There is lots  of potentia
 to improve the app, including adding new features, fixing bugs, building out analytics,
 making it work at other universities, and much more.
 
-We follow a [code of conduct](CODE_OF_CONDUCT.md), and hope to do our bit in making
+Please follow our [code of conduct](CODE_OF_CONDUCT.md), and help us do our bit in making
 open-source more welcoming and inclusive.
 
 ## Issues and Bug Reports
 
 To report an issue or bug report:
 
-1. Open an issue, describe the problem, conditions under which you faced it, and any steps to reproduce the bug.
+1. Open an issue and describe the problem along with the conditions under which you faced it, and any steps to reproduce the bug.
 2. Contribute to discussion from maintainers and other contributors.
 3. If you'd like to help fix the issue, ask to be assigned the task.
    A maintainer will help you get setup and guide you through the fix.
 
 ## Pull Requests
 
-We have two different workflows, one for maintainers, one for external contributors.
+We have two different workflows, one for maintainers, one for external contributors. Maintainers work within the primary repo, whereas external
+contributors fork the repo into their own, and open pull requests back into
+`master`.
+
 Both begin by setting up the repo and running SignMeUp locally.
 
 ### Setup
@@ -157,44 +160,41 @@ To do so, we will run an nginx reverse proxy on our machine.
 
 ## Development
 
-We follow the [Gitflow](https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow) method of developing software.
+We follow a pretty simple workflow, with two primary branches:
 
-This method has two important axioms:
+- `master` is the current working branch.
+- `production` represents the publicly deployed version.
 
-- `master` is always ready to deploy.
-- `dev` represents the current version under development.
+For small bug fixes and features, feel free to directly push to `master`. When
+working on anything larger:
 
-Never directly push to either of these branches.
+1. Branch off of `master` into something like `feature/my-feature-name`.
 
-When developing a new feature, or fixing a bug:
-
-1. Branch off of `dev` into something like `feature/my-feature-name`.
-
-2. While developing, if you need to pull in changes to `dev` that occurred after
-   branching, use `git rebase dev`.
+2. While developing, if you need to pull in changes to your branch that
+   occurred after branching, use `git rebase master`.
 
 3. Once finished developing your feature, push to GitHub, and open a pull
-   pull request to the `dev` branch.
+   pull request to the `master` branch.
 
 4. Get feedback from other developers. You can continue pushing commits to the
    branch; these will be automatically reflected in the pull request.
 
-5. Once approved, merge into `dev`. Move on to developing something new.
+5. Once approved, merge into `master`. Move on to developing something new.
 
 If fixing a bug in production:
 
-1. Branch off `master` into something like `hotfix/fix-this-bug`.
+1. Branch off `production` into something like `hotfix/fix-this-bug`.
 
-2. Once ready, push to GitHub, and open two pull requests, one to `master`, and
-   one to `dev`.
+2. Once ready, push to GitHub, and open a pull request into `production`.
 
-3. Once approved, merge both pull requests.
+3. Once approved, merge the pull request. Then merge `production` into `master`
+   so both branches are up to date.
 
-## Production
+## Deployment
 
-Once you've merged a bunch of features into `dev`, and are ready to deploy to production, follow these steps:
+Once you've merged a bunch of features into `master`, and are ready to deploy to production, follow these steps:
 
-1. Create a pull-request from `dev` to `master` branch detailing your changes,
+1. Create a pull-request from `master` to `production` detailing your changes,
    named something like `Release 2.2.3: Add this feature, fix this bug`.
 
    We version our app in `major.minor.patch` format. Increment the patch number
@@ -204,7 +204,7 @@ Once you've merged a bunch of features into `dev`, and are ready to deploy to pr
    features.
 
 2. Once a collaborator has looked through your changes, merge the pull request
-   into `master`.
+   into `production`.
 
 3. Create a new release on GitHub with good release notes. Name the tag and
    release something like `v2.2.3`.
