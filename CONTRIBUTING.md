@@ -190,6 +190,11 @@ If fixing a bug in production:
 3. Once approved, merge the pull request. Then merge `production` into `master`
    so both branches are up to date.
 
+### Debugging Meteor
+
+In addition to the various [Meteor debugging methods](http://joshowens.me/easily-debugging-meteor-js/),
+we also have the free version of Meteor Toys package enabled. Once the app is running, type <kbd>Ctrl</kbd>+<kbd>m</kbd> to enable Mongol.
+
 ## Deployment
 
 Once you've merged a bunch of features into `master`, and are ready to deploy to production, follow these steps:
@@ -231,7 +236,11 @@ Once you've merged a bunch of features into `master`, and are ready to deploy to
   It will not touch the already running `db` and `proxy` containers. For more
   deployment options, check out the `Makefile`.
 
-## Docker Tips
+### Managing Docker
 
-If you accumulate a bunch of containers or images, clean-up with the
+- If you accumulate a bunch of containers or images, clean-up with the
 instructions in [this article](http://blog.yohanliyanage.com/2015/05/docker-clean-up-after-yourself/).
+
+- If you would like to run scripts within a container, run `bash` first:
+
+  `docker exec -it <container_name> bash`
