@@ -1,18 +1,35 @@
-# # version: '2'
-# services:
-#   proxy:
-#     image: steveltn/https-portal
-#     ports:
-#     - 80:80    # HTTP on 80
-#     - 3000:443 # HTTPS on 3000 to allow SAML to work
-#     environment:
-#       STAGE: local
-#       DOMAINS: 'local.cis-dev.brown.edu -> http://dockerhost:8080'
-proxy:
-  image: steveltn/https-portal
-  ports:
-  - 80:80    # HTTP on 80
-  - 3000:443 # HTTPS on 3000 to allow SAML to work
-  environment:
-    STAGE: local
-    DOMAINS: 'local.cis-dev.brown.edu -> http://dockerhost:8080'
+version: '2'
+services:
+  db:
+    image: mongo:latest
+    volumes:
+      - data:/data/db
+    # restart: always
+
+  web:
+    build: .
+    links:
+      - db
+    env_file: .env
+    environment:
+      - VERSION
+      - HTTP_FORWARDED_COUNT=1
+      - ROOT_URL=https://${HOST}
+      - MONGO_URL=mongodb://db:27017/signmeup
+    # restart: always
+
+  proxy:
+    image: steveltn/https-portal:latest
+    links:
+      - web
+    ports:
+      - '80:80'
+      - '443:443'
+      - '3000:443' # Allow HTTPS on 3000 as well for local SAML
+    env_file: .env
+    environment:
+      DOMAINS: '${HOST} -> http://web'
+    # restart: always
+
+volumes:
+  data: {}

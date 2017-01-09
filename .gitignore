@@ -3,15 +3,8 @@ venv
 .meteor/local
 node_modules/
 
-data/*
-!data/.gitkeep
-
-*.key
-*.cert
-*.crt
-*.pem
-
 settings.json
+.env
 
 logs
 *.log
