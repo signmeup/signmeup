@@ -4,7 +4,7 @@ services:
     image: mongo:latest
     volumes:
       - data:/data/db
-    # restart: always
+    restart: always
 
   web:
     build: .
@@ -16,7 +16,7 @@ services:
       - HTTP_FORWARDED_COUNT=1
       - ROOT_URL=https://${HOST}
       - MONGO_URL=mongodb://db:27017/signmeup
-    # restart: always
+    restart: always
 
   proxy:
     image: steveltn/https-portal:latest
@@ -25,11 +25,10 @@ services:
     ports:
       - '80:80'
       - '443:443'
-      - '3000:443' # Allow HTTPS on 3000 as well for local SAML
     env_file: .env
     environment:
       DOMAINS: '${HOST} -> http://web'
-    # restart: always
+    restart: always
 
 volumes:
   data: {}
