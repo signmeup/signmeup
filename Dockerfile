@@ -5,11 +5,15 @@ FROM python
 
 MAINTAINER Athyuttam Eleti, athyuttamre@gmail.com
 
-RUN mkdir /meteor
+RUN groupadd -r meteor && useradd -r -m -g meteor meteor
+USER meteor
 
-WORKDIR /meteor
+RUN mkdir $HOME/web
+
+WORKDIR $HOME/web
 
 ADD . ./src
+RUN chown -R 
 
 RUN \
     # Set up colors
@@ -19,23 +23,25 @@ RUN \
     # Install Meteor
     && echo "${GREEN}=> Installing Meteor...${NC}" \
     && (curl https://install.meteor.com/ | sh) \
+    && export PATH=$HOME/.meteor:$PATH \
+    && echo $PATH \
 
     # Install Yarn using Meteor's node
     && echo "${GREEN}=> Installing Yarn using Meteor's node..${NC}" \
-    && cd /meteor/src \
     && meteor npm install -g yarn \
 
     # Install app's NPM modules
     && echo "${GREEN}=> Installing app's npm modules...${NC}" \
+    && cd ~/web/src \
     && meteor yarn install --production \
 
     # Build the Meteor app
     && echo "${GREEN}=> Bundling Meteor app...${NC}" \
-    && meteor build --allow-superuser --verbose ../build --directory \
+    && meteor build --verbose ../build --directory \
 
     # Install the NPM packages needed for build
     && echo "${GREEN}=> Installing npm modules in /bundle/programs/server...${NC}" \
-    && cd /meteor/build/bundle/programs/server \
+    && cd ~/web/build/bundle/programs/server \
     && meteor npm install;
 
 ENV PORT 80
