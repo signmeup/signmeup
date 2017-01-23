@@ -46,8 +46,6 @@ Both begin by setting up the repo and running SignMeUp locally.
    - Replace `INSERT-PASSWORD-HERE` with a good password. Feel free to add any extra user accounts
      if you want.
    - **Optional:** fill in the `saml` settings to set up Shibboleth login. See instructions below.
-   - **Optional:** replace `appID` and `appSecret` with the correct values from kadira.io to track
-     the app's performance.
 
 4. Run the app:
 
