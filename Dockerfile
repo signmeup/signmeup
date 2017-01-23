@@ -45,4 +45,4 @@ ENV PORT 80
 
 EXPOSE 80
 
-CMD ["node", "build/bundle/main.js"]
+CMD export METEOR_SETTINGS="$(cat src/settings.json)" && node build/bundle/main.js

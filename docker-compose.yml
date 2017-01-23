@@ -1,13 +1,35 @@
-app:
-  links:
-   - db
-   - proxy
+version: '2'
 
-db:
-  image: mongo:latest # EXPOSEs 27017
+services:
+  db:
+    image: mongo:latest
+    volumes:
+      - data:/data/db
+    restart: always
 
-proxy:
-  image: jwilder/nginx-proxy:latest
-  volumes:
-   - ./nginx/ssl:/etc/nginx/certs
-   - /var/run/docker.sock:/tmp/docker.sock:ro
+  web:
+    build: .
+    links:
+      - db
+    env_file: .env
+    environment:
+      - VERSION
+      - HTTP_FORWARDED_COUNT=1
+      - ROOT_URL=https://${HOST}
+      - MONGO_URL=mongodb://db:27017/signmeup
+    restart: always
+
+  proxy:
+    image: steveltn/https-portal:latest
+    links:
+      - web
+    ports:
+      - '80:80'
+      - '443:443'
+    env_file: .env
+    environment:
+      DOMAINS: '${HOST} -> http://web'
+    restart: always
+
+volumes:
+  data: {}
