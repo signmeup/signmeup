@@ -14,7 +14,7 @@ Tracker.autorun(() => {
       // be thrown. We just wait it out, and then idle tracking
       // works as expected.
     }
-  } else {
+  } else if (UserStatus.isMonitoring()) {
     UserStatus.stopMonitor();
   }
 });
