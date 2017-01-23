@@ -20,26 +20,23 @@ RUN \
     && echo "${GREEN}=> Installing Meteor...${NC}" \
     && (curl https://install.meteor.com/ | sh) \
 
-    # Build the NPM packages needed for build
-    && echo "${GREEN}=> Installing app's npm modules...${NC}" \
+    # Install Yarn using Meteor's node
+    && echo "${GREEN}=> Installing Yarn using Meteor's node..${NC}" \
     && cd /meteor/src \
-    && meteor npm install --production \
+    && meteor npm install -g yarn \
+
+    # Install app's NPM modules
+    && echo "${GREEN}=> Installing app's npm modules...${NC}" \
+    && meteor yarn install --production \
 
     # Build the Meteor app
     && echo "${GREEN}=> Bundling Meteor app...${NC}" \
     && meteor build --allow-superuser --verbose ../build --directory \
 
-    # Install the version of Node.js we need
-    && echo "${GREEN}=> Installing Node.js at the OS level...${NC}" \
-    && cd /meteor/build/bundle \
-    && bash -c 'curl "https://nodejs.org/dist/$(<.node_version.txt)/node-$(<.node_version.txt)-linux-x64.tar.gz" > /meteor/build/required-node-linux-x64.tar.gz' \
-    && cd /usr/local && tar --strip-components 1 -xzf /meteor/build/required-node-linux-x64.tar.gz \
-    && rm /meteor/build/required-node-linux-x64.tar.gz \
-
     # Install the NPM packages needed for build
     && echo "${GREEN}=> Installing npm modules in /bundle/programs/server...${NC}" \
     && cd /meteor/build/bundle/programs/server \
-    && npm install;
+    && meteor npm install;
 
 ENV PORT 80
 
