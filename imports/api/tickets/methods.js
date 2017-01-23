@@ -1,10 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
 import moment from 'moment';
+import SimpleSchema from 'simpl-schema';
 
 import { Queues } from '/imports/api/queues/queues.js';
 import { Sessions } from '/imports/api/sessions/sessions.js';
@@ -18,13 +18,15 @@ export const createTicket = new ValidatedMethod({
   name: 'tickets.createTicket',
   validate: new SimpleSchema({
     queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
-    studentEmails: { type: [String], regEx: SimpleSchema.RegEx.Email, minCount: 1 },
+    studentEmails: { type: Array, minCount: 1 },
+    'studentEmails.$': { type: String, regEx: SimpleSchema.RegEx.Email },
     question: { type: String, optional: true },
     notifications: { type: NotificationsSchema },
     sessionId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
     secret: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   }).validator(),
   run({ queueId, studentEmails, question, notifications, sessionId, secret }) {
+    console.log("Creating ticket!")
     const queue = Queues.findOne(queueId);
     if (!queue) {
       throw new Meteor.Error('queues.doesNotExist',

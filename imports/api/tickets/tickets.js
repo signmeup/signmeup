@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+import SimpleSchema from 'simpl-schema';
 
 export const Tickets = new Mongo.Collection('tickets');
 
@@ -20,7 +21,8 @@ Tickets.schema = new SimpleSchema({
     defaultValue: 'open',
   },
 
-  studentIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
+  studentIds: { type: Array, defaultValue: [] },
+  'studentIds.$': { type: String, regEx: SimpleSchema.RegEx.Id },
   question: { type: String, optional: true },
 
   notifications: { type: NotificationsSchema, defaultValue: {} },

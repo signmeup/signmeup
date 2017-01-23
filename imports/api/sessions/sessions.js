@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+import SimpleSchema from 'simpl-schema';
 
 export const Sessions = new Mongo.Collection('sessions');
 

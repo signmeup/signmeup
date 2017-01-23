@@ -2,9 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveArray } from 'meteor/manuel:reactivearray';
 import { ReactiveDict } from 'meteor/reactive-dict';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
 import { $ } from 'meteor/jquery';
+
+import SimpleSchema from 'simpl-schema';
 
 import { createTicket } from '/imports/api/tickets/methods.js';
 
@@ -267,6 +268,8 @@ Template.ModalJoinQueue.events({
     if (this.queue.isRestricted() && RestrictedSessions.isRestrictedToDevice(this.queue)) {
       data = Object.assign(data, RestrictedSessions.getCurrentSession(this.queue));
     }
+
+    console.log(errors, data);
 
     if (!errors) {
       createTicket.call(data, (err) => {

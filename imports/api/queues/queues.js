@@ -1,5 +1,6 @@
 import { Mongo } from 'meteor/mongo';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+import SimpleSchema from 'simpl-schema';
 
 export const Queues = new Mongo.Collection('queues');
 
@@ -9,15 +10,15 @@ Queues.schema = new SimpleSchema({
   locationId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
   status: { type: String, allowedValues: ['open', 'cutoff', 'ended'], defaultValue: 'open' },
 
-  announcementIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
-  ticketIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
+  announcementIds: { type: Array, defaultValue: [] },
+  'announcementIds.$': { type: String, regEx: SimpleSchema.RegEx.Id },
+
+  ticketIds: { type: Array, defaultValue: [] },
+  'ticketIds.$': { type: String, regEx: SimpleSchema.RegEx.Id },
 
   settings: { type: Object, defaultValue: {} },
-  'settings.restrictedSessionIds': {
-    type: [String],
-    regEx: SimpleSchema.RegEx.Id,
-    defaultValue: [],
-  },
+  'settings.restrictedSessionIds': { type: Array, defaultValue: [] },
+  'settings.restrictedSessionIds.$': { type: String, regEx: SimpleSchema.RegEx.Id },
 
   scheduledEndTime: { type: Date },
 

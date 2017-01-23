@@ -24,7 +24,6 @@ reactive-var@1.0.11
 percolate:synced-cron
 email@1.1.18
 kadira:debug
-aldeed:collection2
 percolate:migrations
 standard-minifier-js@1.2.1
 juliancwirko:postcss
@@ -34,9 +33,9 @@ alanning:roles
 useraccounts:bootstrap
 dburles:collection-helpers
 mdg:validated-method
-aldeed:simple-schema
 u2622:persistent-session
 manuel:reactivearray
 shell-server@0.2.1
 mizzao:user-status
 athyuttamre:accounts-saml2
+aldeed:collection2-core@2.0.0

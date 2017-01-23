@@ -1,9 +1,10 @@
 import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
-import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import { _ } from 'meteor/underscore';
+
+import SimpleSchema from 'simpl-schema';
 
 import { Courses } from '/imports/api/courses/courses.js';
 import { Locations } from '/imports/api/locations/locations.js';
