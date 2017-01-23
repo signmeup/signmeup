@@ -1,0 +1,9 @@
+eslint:
+  enabled: true
+  config_file: app/.eslintrc.json
+
+jshint:
+  enabled: false
+
+scss:
+  enabled: false
