@@ -24,7 +24,6 @@ reactive-var@1.0.11
 percolate:synced-cron
 email@1.1.18
 kadira:debug
-meteorhacks:kadira
 aldeed:collection2
 percolate:migrations
 standard-minifier-js@1.2.1
