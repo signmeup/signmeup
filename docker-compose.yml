@@ -26,6 +26,7 @@ services:
     ports:
       - '80:80'
       - '443:443'
+      - '3000:443'
     env_file: .env
     environment:
       DOMAINS: '${HOST} -> http://web'
