@@ -10,7 +10,7 @@ SMU is built with Meteor, and uses MongoDB as a data store and Bootstrap v4 for 
 
 ## Contributing
 
-Contributions are welcome from one and all. Please read [CONTRIBUTING.md](CONTRIBUTING.md) to get set up. For questions, please email signmeup-dev@lists.cs.brown.edu.
+Contributions are welcome from one and all. Please read [CONTRIBUTING.md](.github/CONTRIBUTING.md) to get set up. For questions, please email signmeup-dev@lists.cs.brown.edu.
 
 ## Credits
 
