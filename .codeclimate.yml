@@ -5,6 +5,12 @@ engines:
     config:
       config: ".eslintrc.json"
 
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript:
+
 ratings:
   paths:
     - "client/**/*"
