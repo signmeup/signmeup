@@ -3,6 +3,7 @@
 [![GitHub release](https://img.shields.io/github/release/signmeup/signmeup.svg)]()
 [![Meteor version](https://img.shields.io/badge/meteor-1.4.2.3-brightgreen.svg)]()
 [![Dependencies](https://img.shields.io/david/signmeup/signmeup.svg)]()
+[![Code Climate](https://img.shields.io/codeclimate/github/signmeup/signmeup.svg)]()
 [![License](https://img.shields.io/github/license/signmeup/signmeup.svg)]()
 
 Real-time application to sign up for and manage TA hours.
