@@ -1,4 +1,4 @@
-# SignMeUp <small>&middot; TA hours made simple</small>
+# SignMeUp
 
 [![GitHub release](https://img.shields.io/github/release/signmeup/signmeup.svg)]()
 [![Meteor version](https://img.shields.io/badge/meteor-1.4.2.3-brightgreen.svg)]()
