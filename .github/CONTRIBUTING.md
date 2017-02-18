@@ -33,7 +33,8 @@ Both begin by setting up the repo and running SignMeUp locally.
    ```shell
    git clone https://github.com/signmeup/signmeup.git
    cd signmeup
-   meteor npm install
+   meteor npm install -g yarn
+   meteor yarn
    ```
 3. Set up `settings.json`. To do so, start by copying the template:
 
