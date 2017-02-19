@@ -28,7 +28,7 @@ RUN \
     && echo "${GREEN}=> Installing app's npm modules...${NC}" \
     && cd /meteor/src \
     && meteor yarn install --production \
-    && meteor yarn add --save bcrypt \
+    && meteor yarn add bcrypt \
 
     # Build the Meteor app
     && echo "${GREEN}=> Bundling Meteor app...${NC}" \
