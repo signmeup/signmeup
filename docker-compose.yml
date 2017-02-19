@@ -47,6 +47,7 @@ services:
     env_file: .env
     environment:
       DOMAINS: '${HOST} -> http://web'
+      WEBSOCKET: 'true'
     restart: always
 
 volumes:
