@@ -5,7 +5,7 @@ RED="\033[0;31m"
 NC="\033[0m"
 
 if [[ $# -eq 0 ]] ; then
-    echo "Usage: ./mongo-restore.sh /backup/<backup-name>/signmeup\n"
+    echo "Usage: mongo-restore.sh /backup/<backup-name>/signmeup\n"
     exit 1
 fi
 

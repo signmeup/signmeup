@@ -17,5 +17,5 @@ elif [[ $1 == "local" ]]; then
 
     docker-compose up -d --build
 else
-    echo "Usage: ./deploy.sh <production/local>"
+    echo "Usage: deploy.sh <production/local>"
 fi
