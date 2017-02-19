@@ -1,11 +1,21 @@
 #!/bin/bash
 
-git checkout production
-git fetch --all
-git reset --hard origin/production
+if [[ $1 == "production" ]]; then
+    echo "Deploying production..."
 
-export VERSION="$(git describe --tags)"
-echo "Deploying SignMeUp $VERSION..."
-git checkout $VERSION
+    git checkout production
+    git fetch --all
+    git reset --hard origin/production
 
-docker-compose up --build
+    export VERSION="$(git describe --tags)"
+    echo "Deploying SignMeUp $VERSION..."
+    git checkout $VERSION
+
+    docker-compose up -d --build
+else if [[ $1 == "local" ]]; then
+    echo "Deploying locally..."
+
+    docker-compose up -d --build
+else
+    echo "Usage: ./deploy.sh <production/local>"
+fi

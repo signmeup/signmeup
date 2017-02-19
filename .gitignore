@@ -1,5 +1,8 @@
 venv
 
+.backup/*
+!.backup/.gitkeep
+
 .meteor/local
 node_modules/
 

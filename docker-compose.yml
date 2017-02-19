@@ -9,6 +9,21 @@ services:
       - data:/data/db
     restart: always
 
+  backup:
+    image: tutum/mongodb-backup
+    links:
+      - db
+    environment:
+      - MONGODB_HOST=db
+      - MONGODB_PORT=27017
+      - MONGODB_DB=signmeup
+      - CRON_TIME=0 0,4,8,12,16,20 * * *
+      - MAX_BACKUPS=6
+      - INIT_BACKUP=true
+    volumes:
+      - .backup:/backup
+    restart: always
+
   web:
     build: .
     links:
