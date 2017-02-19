@@ -20,7 +20,7 @@
 
   "rules": {
     "arrow-body-style": [
-      "error",
+      2,
       "always"
     ],
     "import/no-extraneous-dependencies": 0,
