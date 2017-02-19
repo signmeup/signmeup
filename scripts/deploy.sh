@@ -12,7 +12,7 @@ if [[ $1 == "production" ]]; then
     git checkout $VERSION
 
     docker-compose up -d --build
-else if [[ $1 == "local" ]]; then
+elif [[ $1 == "local" ]]; then
     echo "Deploying locally..."
 
     docker-compose up -d --build
