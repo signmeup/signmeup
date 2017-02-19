@@ -1,0 +1,21 @@
+engines:
+  eslint:
+    enabled: true
+    channel: "eslint-3"
+    config:
+      config: ".eslintrc.json"
+
+  duplication:
+    enabled: true
+    config:
+      languages:
+        - javascript:
+
+  stylelint:
+    enabled: true
+
+ratings:
+  paths:
+    - "client/**/*"
+    - "imports/**/*"
+    - "server/**/*"
