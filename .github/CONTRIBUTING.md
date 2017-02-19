@@ -33,7 +33,8 @@ Both begin by setting up the repo and running SignMeUp locally.
    ```shell
    git clone https://github.com/signmeup/signmeup.git
    cd signmeup
-   meteor npm install
+   meteor npm install -g yarn
+   meteor yarn
    ```
 3. Set up `settings.json`. To do so, start by copying the template:
 
@@ -46,8 +47,6 @@ Both begin by setting up the repo and running SignMeUp locally.
    - Replace `INSERT-PASSWORD-HERE` with a good password. Feel free to add any extra user accounts
      if you want.
    - **Optional:** fill in the `saml` settings to set up Shibboleth login. See instructions below.
-   - **Optional:** replace `appID` and `appSecret` with the correct values from kadira.io to track
-     the app's performance.
 
 4. Run the app:
 
