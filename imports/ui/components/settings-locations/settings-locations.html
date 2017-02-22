@@ -18,11 +18,18 @@
       </div>
 
       {{#each location in locations}}
-        <div class="card-block">
+        <div class="card-block" data-location-id="{{location._id}}">
           <div class="row mb-0">
             <p class="location-name col-xs-9 mb-0">
               {{location.name}}
+              <i class="material-icons flipped js-location-name-edit-button">mode_edit</i>
             </p>
+            <div class="location-name-edit input-group col-xs-9 mb-0 hidden">
+              <input type="text" class="form-control js-location-name-edit" name="locationName" placeholder="CIT 123" value="{{location.name}}">
+              <span class="input-group-btn">
+                <button class="btn btn-secondary" type="button" tabindex="-1">Done</button>
+              </span>
+            </div>
             <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
               <button
                 class="btn btn-outline-danger pull-xs-right js-remove-location"
