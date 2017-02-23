@@ -1,30 +1,27 @@
 <template name="Nav">
-  <nav class="app-nav nav navbar navbar-light pt-1 pb-1">
+  <nav class="app-nav navbar navbar-light pt-1 pb-1">
     <div class="container">
       <a class="navbar-brand" href="/">SignMeUp</a>
-      <ul class="nav navbar-nav float-xs-right">
-        {{#if currentUser}}
-          <li class="nav-item">
-            <span class="nav-link nav-link-static disabled">Welcome, {{currentUser.firstName}}</span>
-          </li>
-        {{/if}}
 
+      {{#if currentUser}}
+        <span class="navbar-text">Welcome, {{currentUser.firstName}}</span>
+      {{/if}}
+
+      <ul class="navbar-nav">
         {{#if showSettings}}
           <li class="nav-item">
             <a class="nav-link" href="/settings">Settings</a>
           </li>
         {{/if}}
-
-        {{#if currentUser}}
-          <li class="nav-item">
-            <button type="button" class="btn btn-secondary js-sign-out">Sign Out</button>
-          </li>
-        {{else}}
-          <li class="nav-item">
-            <button type="button" class="btn btn-primary js-sign-in">Sign In</button>
-          </li>
-        {{/if}}
       </ul>
+
+      <form class="form-inline">
+        {{#if currentUser}}
+          <button type="button" class="btn btn-secondary js-sign-out">Sign Out</button>
+        {{else}}
+          <button type="button" class="btn btn-primary js-sign-in">Sign In</button>
+        {{/if}}
+      </form>
     </div>
   </nav>
 </template>
