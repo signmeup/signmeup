@@ -1,24 +1,42 @@
 <template name="LocationEntry">
   <div class="card-block" data-location-id="{{location._id}}">
     <div class="row mb-0">
-      <p class="location-name col-xs-9 mb-0">
-        {{location.name}}
-        <i class="material-icons flipped js-location-name-edit-button">mode_edit</i>
-      </p>
-      <div class="location-name-edit input-group col-xs-9 mb-0 hidden">
-        <input type="text" class="form-control js-location-name-edit" name="locationName" placeholder="CIT 123" value="{{location.name}}">
-        <span class="input-group-btn">
-          <button class="btn btn-secondary" type="button" tabindex="-1">Done</button>
-        </span>
-      </div>
-      <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
-        <button
-          class="btn btn-outline-danger pull-xs-right js-remove-location"
-          data-name="{{location.name}}"
-          data-id="{{location._id}}">
-          Remove
-        </button>
-      </div>
+      {{#if isNormal}}
+        <p class="location-name col-xs-9 mb-0">
+          {{location.name}}
+        </p>
+        <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right button-holder">
+          <button
+            class="btn btn-outline-primary pull-xs-right js-edit-location">
+            Edit
+          </button>
+          <button
+            class="btn btn-outline-danger pull-xs-right js-remove-location"
+            data-name="{{location.name}}"
+            data-id="{{location._id}}">
+            Remove
+          </button>
+        </div>
+      {{else}}
+        <form class="js-location-name-edit-form">
+          <p class="location-name-edit col-xs-9 mb-0">
+            <input type="hidden" name="id" value="{{location._id}}">
+            <input type="text" class="form-control js-location-name-edit" name="name" placeholder="CIT 123" value="{{location.name}}">
+          </p>
+          <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right button-holder">
+            <button
+              class="btn btn-outline-primary pull-xs-right js-cancel-edit-location"
+              type="button">
+              Cancel
+            </button>
+            <button
+              class="btn btn-outline-success pull-xs-right js-save-edit-location"
+              type="submit">
+              Save
+            </button>
+          </div>
+        </form>
+      {{/if}}
     </div>
   </div>
 </template>

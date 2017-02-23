@@ -1,8 +1,8 @@
-.hidden {
-  display: none;
+.js-location-name-edit-form {
+  width: 100%;
+  display: flex;
 }
 
-i.material-icons.flipped {
-  margin-right: 0;
-  margin-left: 5px;
+.button-holder > button:first-child {
+  margin-right: 5px;
 }
