@@ -80,7 +80,7 @@ To do so, we will run an nginx reverse proxy on our machine.
    In your terminal, run:
 
    ```shell
-   sudo printf "127.0.0.1\tlocal.cis-dev.brown.edu" | sudo tee -a /etc/hosts > /dev/null
+   sudo printf "127.0.0.1\tlocal.cis-dev.brown.edu\n" | sudo tee -a /etc/hosts > /dev/null
    ```
 
    This adds an entry matching `local.cis-dev.brown.edu` to `localhost` in your hosts file. This way
@@ -94,7 +94,7 @@ To do so, we will run an nginx reverse proxy on our machine.
    ```shell
    cd /usr/local/etc/nginx
    mkdir ssl && cd ssl
-   cp /path/to/cert local.cis-dev.brown.edu.crt
+   cp /path/to/cert local.cis-dev.brown.edu.cert
    cp /path/to/key local.cis-dev.brown.edu.key
    ```
 
