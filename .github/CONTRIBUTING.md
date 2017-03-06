@@ -28,10 +28,10 @@ Both begin by setting up the repo and running SignMeUp locally.
 
 1. Install [Meteor](https://www.meteor.com/install). This installs the Node runtime and the npm package manager too.
 
-2. Clone this repository, and install dependencies:
+2. If you're a maintainer, clone this repository. Otherwise fork it, and install dependencies:
 
    ```shell
-   git clone https://github.com/signmeup/signmeup.git
+   git clone https://github.com/<username>/signmeup.git
    cd signmeup
    meteor npm install -g yarn
    meteor yarn
@@ -54,7 +54,10 @@ Both begin by setting up the repo and running SignMeUp locally.
    meteor --settings settings.json
    ```
 
-5. Navigate to `localhost:3000` in your web browser to see SignMeUp running! Note that to log into the test accounts you'll need to nagivate to `localhost:3000/login-password` rather than clicking on the "Sign In" button.
+5. Navigate to `localhost:3000` in your web browser to see SignMeUp running!
+
+Note that to log into the test accounts you'll need to navigate to
+`localhost:3000/login-password` rather than clicking on the "Sign In" button.
 
 #### SAML Authentication
 
