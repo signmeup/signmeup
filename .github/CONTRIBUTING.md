@@ -39,7 +39,7 @@ Both begin by setting up the repo and running SignMeUp locally.
 3. Set up `settings.json`. To do so, start by copying the template:
 
    ```shell
-   cp app/settings.template.json app/settings.json
+   cp settings.template.json settings.json
    ```
 
    Now we need to fill in various values inside `settings.json`.
@@ -51,11 +51,10 @@ Both begin by setting up the repo and running SignMeUp locally.
 4. Run the app:
 
    ```shell
-   cd app
    meteor --settings settings.json
    ```
 
-5. Navigate to `localhost:3000` in your web browser to see SignMeUp running!
+5. Navigate to `localhost:3000` in your web browser to see SignMeUp running! Note that to log into the test accounts you'll need to nagivate to `localhost:3000/login-password` rather than clicking on the "Sign In" button.
 
 #### SAML Authentication
 
@@ -150,7 +149,6 @@ To do so, we will run an nginx reverse proxy on our machine.
 7. Finally, run SignMeUp as usual, but this time on port 8000:
 
    ```shell
-   cd app
    meteor --settings settings.json --port 8000
    ```
 
