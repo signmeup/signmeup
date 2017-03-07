@@ -266,7 +266,7 @@ export const reopenQueue = new ValidatedMethod({
     if (!queue) {
       throw new Meteor.Error('queues.doesNotExist',
         `No queue exists with id ${queueId}`);
-    } else if (queue.status != 'ended') {
+    } else if (queue.status !== 'ended') {
       throw new Meteor.Error('queues.reopenQueue.notClosed',
         `Queue with id ${queueId} is not closed so can not be reopened`);
     }
