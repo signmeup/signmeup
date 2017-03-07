@@ -5,6 +5,8 @@ import { Roles } from 'meteor/alanning:roles';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import { _ } from 'meteor/underscore';
 
+import moment from 'moment';
+
 import { Courses } from '/imports/api/courses/courses.js';
 import { Locations } from '/imports/api/locations/locations.js';
 import { Queues } from '/imports/api/queues/queues.js';
