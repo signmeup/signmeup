@@ -3,7 +3,7 @@ import { $ } from 'meteor/jquery';
 
 import { Locations } from '/imports/api/locations/locations.js';
 
-import { createLocation, deleteLocation } from '/imports/api/locations/methods.js';
+import { createLocation } from '/imports/api/locations/methods.js';
 
 import '/imports/ui/components/settings-locations/location-entry/location-entry.js';
 
@@ -35,20 +35,6 @@ Template.SettingsLocations.events({
           console.error(err);
         } else {
           $('.js-location-name').val('');
-        }
-      });
-    }
-  },
-
-  'click .js-remove-location'(event) {
-    const locationId = event.target.dataset.id;
-    const locationName = event.target.dataset.name;
-
-    const sure = confirm(`Are you sure you want to delete ${locationName}?`);
-    if (sure) {
-      deleteLocation.call({ locationId }, (err) => {
-        if (err) {
-          console.error(err);
         }
       });
     }

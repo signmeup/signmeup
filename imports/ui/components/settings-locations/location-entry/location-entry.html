@@ -1,36 +1,33 @@
 <template name="LocationEntry">
-  <div class="card-block" data-location-id="{{location._id}}">
+  <div class="card-block location-entry">
     <div class="row mb-0">
       {{#if isNormal}}
         <p class="location-name col-xs-9 mb-0">
           {{location.name}}
         </p>
-        <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right button-holder">
+        <div class="col-xs-3 text-right">
           <button
-            class="btn btn-outline-primary pull-xs-right js-edit-location">
+            class="btn btn-outline-secondary js-edit-location">
             Edit
           </button>
           <button
-            class="btn btn-outline-danger pull-xs-right js-remove-location"
-            data-name="{{location.name}}"
-            data-id="{{location._id}}">
+            class="btn btn-outline-danger js-remove-location">
             Remove
           </button>
         </div>
       {{else}}
-        <form class="js-location-name-edit-form">
-          <p class="location-name-edit col-xs-9 mb-0">
-            <input type="hidden" name="id" value="{{location._id}}">
-            <input type="text" class="form-control js-location-name-edit" name="name" placeholder="CIT 123" value="{{location.name}}">
-          </p>
-          <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right button-holder">
+        <form class="location-name-edit-form js-location-name-edit-form">
+          <div class="col-xs-9 mb-0">
+            <input type="text" class="form-control" name="name" placeholder="CIT 123" value="{{location.name}}">
+          </div>
+          <div class="col-xs-3 text-right">
             <button
-              class="btn btn-outline-primary pull-xs-right js-cancel-edit-location"
+              class="btn btn-outline-secondary js-cancel-edit-location"
               type="button">
               Cancel
             </button>
             <button
-              class="btn btn-outline-success pull-xs-right js-save-edit-location"
+              class="btn btn-outline-success"
               type="submit">
               Save
             </button>
