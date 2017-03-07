@@ -66,12 +66,12 @@ Meteor.users.helpers({
 
   courses() {
     if (Roles.userIsInRole(this._id, ['admin', 'mta'])) {
-      return Courses.find({ active: true });
+      return Courses.find({ active: true }, {sort: {name: 1}});
     }
 
     const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
     const taCourseIds = Roles.getGroupsForUser(this._id, 'ta');
-    return Courses.find({ _id: { $in: htaCourseIds.concat(taCourseIds) }, active: true });
+    return Courses.find({ _id: { $in: htaCourseIds.concat(taCourseIds) }, active: true}, {sort: {name: 1}});
   },
 
   isTAOrAbove() {
