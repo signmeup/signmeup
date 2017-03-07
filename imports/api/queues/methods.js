@@ -256,6 +256,45 @@ export const endQueue = new ValidatedMethod({
   },
 });
 
+export const reopenQueue = new ValidatedMethod({
+  name: 'queues.reopenQueue',
+  validate: new SimpleSchema({
+    queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ queueId }) {
+    const queue = Queues.findOne(queueId);
+    if (!queue) {
+      throw new Meteor.Error('queues.doesNotExist',
+        `No queue exists with id ${queueId}`);
+    } else if (queue.status != 'ended') {
+      throw new Meteor.Error('queues.reopenQueue.notClosed',
+        `Queue with id ${queueId} is not closed so can not be reopened`);
+    }
+
+    if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
+      throw new Meteor.Error('queues.endQueue.unauthorized',
+        'Only TAs and above can reopen queues.');
+    }
+
+    let restoredStatus = 'cutoff';
+    if (queue.cutoffAt == null) {
+      restoredStatus = 'open';
+    }
+
+    Queues.update({
+      _id: queueId,
+    }, {
+      $set: {
+        status: restoredStatus,
+      },
+      $unset: {
+        endedAt: 1,
+        endedBy: 1,
+      },
+    });
+  },
+});
+
 export const restrictToSession = new ValidatedMethod({
   name: 'queues.restrictToSession',
   validate: new SimpleSchema({

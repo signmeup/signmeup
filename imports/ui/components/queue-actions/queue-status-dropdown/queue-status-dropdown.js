@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import { openQueue, cutoffQueue, endQueue } from '/imports/api/queues/methods.js';
+import { openQueue, cutoffQueue, endQueue, reopenQueue } from '/imports/api/queues/methods.js';
 
 import './queue-status-dropdown.html';
 
@@ -35,6 +35,16 @@ Template.QueueStatusDropdown.events({
       queueId: this.queue._id,
     }, (err) => {
       if (err) console.log(err);
+    });
+  },
+
+  'click .js-reopen-queue'(event) {
+    event.preventDefault();
+
+    reopenQueue.call({
+      queueId: this.queue._id,
+    }, (err) => {
+      if(err) console.log(err);
     });
   },
 });
