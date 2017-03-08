@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 
-import { Queues } from '/imports/api/queues/queues.js';
-import { Sessions } from '/imports/api/sessions/sessions.js';
+import { Queues } from '/imports/api/queues/queues';
+import { Sessions } from '/imports/api/sessions/sessions';
 
 Sessions.helpers({
   user() {

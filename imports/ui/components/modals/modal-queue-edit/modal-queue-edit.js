@@ -3,9 +3,9 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { updateQueue } from '/imports/api/queues/methods.js';
+import { updateQueue } from '/imports/api/queues/methods';
 import { locations, endTimes } from
-  '/imports/ui/components/modals/modal-queue-create/modal-queue-create.js';
+  '/imports/ui/components/modals/modal-queue-create/modal-queue-create';
 
 import './modal-queue-edit.html';
 

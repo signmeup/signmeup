@@ -4,14 +4,14 @@ import { Meteor } from 'meteor/meteor';
 
 import moment from 'moment';
 
-import { Courses } from '/imports/api/courses/courses.js';
-import { Locations } from '/imports/api/locations/locations.js';
-import { Queues } from '/imports/api/queues/queues.js';
+import { Courses } from '/imports/api/courses/courses';
+import { Locations } from '/imports/api/locations/locations';
+import { Queues } from '/imports/api/queues/queues';
 
-import { createCourse } from '/imports/api/courses/methods.js';
-import { createLocation } from '/imports/api/locations/methods.js';
-import { createQueue } from '/imports/api/queues/methods.js';
-import { createUser } from '/imports/lib/both/users.js';
+import { createCourse } from '/imports/api/courses/methods';
+import { createLocation } from '/imports/api/locations/methods';
+import { createQueue } from '/imports/api/queues/methods';
+import { createUser } from '/imports/lib/both/users';
 
 let testCourseId;
 let testLocationId;

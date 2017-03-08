@@ -2,9 +2,9 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Roles } from 'meteor/alanning:roles';
 
-import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
-import './device-card/device-card.js';
+import './device-card/device-card';
 
 import './queue-alert-restricted-session.html';
 

@@ -3,8 +3,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 
-import { Queues } from '/imports/api/queues/queues.js';
-import { Tickets } from '/imports/api/tickets/tickets.js';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 Meteor.publish('tickets.byId', function byId(ticketId) {
   const ticket = Tickets.findOne(ticketId);

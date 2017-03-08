@@ -1,10 +1,10 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { Queues } from '/imports/api/queues/queues.js';
+import { Queues } from '/imports/api/queues/queues';
 
-import '/imports/ui/components/queue-card/queue-card.js';
-import '/imports/ui/components/modals/modal-queue-create/modal-queue-create.js';
+import '/imports/ui/components/queue-card/queue-card';
+import '/imports/ui/components/modals/modal-queue-create/modal-queue-create';
 
 import './index.html';
 

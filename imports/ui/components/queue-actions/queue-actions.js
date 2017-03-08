@@ -4,12 +4,12 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { SignupGap } from '/imports/lib/both/signup-gap.js';
+import { SignupGap } from '/imports/lib/both/signup-gap';
 
-import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
-import './queue-status-dropdown/queue-status-dropdown.js';
-import './queue-more-dropdown/queue-more-dropdown.js';
+import './queue-status-dropdown/queue-status-dropdown';
+import './queue-more-dropdown/queue-more-dropdown';
 
 import './queue-actions.html';
 

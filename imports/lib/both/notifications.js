@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Email } from 'meteor/email';
 
-import { Courses } from '/imports/api/courses/courses.js';
-import { Queues } from '/imports/api/queues/queues.js';
+import { Courses } from '/imports/api/courses/courses';
+import { Queues } from '/imports/api/queues/queues';
 
 export class Notifications {
   static sendEmailNotification(ticket) {
