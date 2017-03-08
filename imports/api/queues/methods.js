@@ -270,7 +270,7 @@ export const reopenQueue = new ValidatedMethod({
         `No queue exists with id ${queueId}`);
     } else if (queue.status !== 'ended') {
       throw new Meteor.Error('queues.reopenQueue.notEnded',
-        `Only ended queues can be reopened`);
+        'Only ended queues can be reopened');
     }
 
     if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
