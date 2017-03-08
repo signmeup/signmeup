@@ -25,12 +25,9 @@ Template.Queue.onCreated(function onCreated() {
     this.subscribe('queues.byId', this.getQueueId());
 
     const queue = this.getQueue();
-    this.error = false;
     if (queue) {
       this.subscribe('courses.byId', queue.courseId);
       this.subscribe('tickets.byQueueId', queue._id);
-    } else {
-      this.error = true;
     }
   });
 });
