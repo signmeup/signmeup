@@ -5,10 +5,12 @@ import { Roles } from 'meteor/alanning:roles';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import { _ } from 'meteor/underscore';
 
-import { Courses } from '/imports/api/courses/courses.js';
-import { Locations } from '/imports/api/locations/locations.js';
-import { Queues } from '/imports/api/queues/queues.js';
-import { Sessions } from '/imports/api/sessions/sessions.js';
+import moment from 'moment';
+
+import { Courses } from '/imports/api/courses/courses';
+import { Locations } from '/imports/api/locations/locations';
+import { Queues } from '/imports/api/queues/queues';
+import { Sessions } from '/imports/api/sessions/sessions';
 
 export const createQueue = new ValidatedMethod({
   name: 'queues.createQueue',
@@ -253,6 +255,52 @@ export const endQueue = new ValidatedMethod({
     if (Meteor.isServer) {
       SyncedCron.remove(`queues.endQueue.${queueId}`);
     }
+  },
+});
+
+export const reopenQueue = new ValidatedMethod({
+  name: 'queues.reopenQueue',
+  validate: new SimpleSchema({
+    queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ queueId }) {
+    const queue = Queues.findOne(queueId);
+    if (!queue) {
+      throw new Meteor.Error('queues.doesNotExist',
+        `No queue exists with id ${queueId}`);
+    } else if (queue.status !== 'ended') {
+      throw new Meteor.Error('queues.reopenQueue.notEnded',
+        'Only ended queues can be reopened');
+    }
+
+    if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
+      throw new Meteor.Error('queues.endQueue.unauthorized',
+        'Only TAs and above can reopen queues.');
+    }
+
+    let restoredStatus = 'open';
+    if (queue.cutoffAt !== null) {
+      restoredStatus = 'cutoff';
+    }
+
+    let newTime = moment().add(1, 'hour').startOf('hour').toDate();
+    // Use old end time if hasn't passed yet
+    if (queue.scheduledEndTime > new Date()) {
+      newTime = queue.scheduledEndTime;
+    }
+
+    Queues.update({
+      _id: queueId,
+    }, {
+      $set: {
+        status: restoredStatus,
+        scheduledEndTime: newTime,
+      },
+      $unset: {
+        endedAt: '',
+        endedBy: '',
+      },
+    });
   },
 });
 

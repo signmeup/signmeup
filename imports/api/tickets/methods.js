@@ -6,13 +6,13 @@ import { _ } from 'meteor/underscore';
 
 import moment from 'moment';
 
-import { Queues } from '/imports/api/queues/queues.js';
-import { Sessions } from '/imports/api/sessions/sessions.js';
-import { Tickets, NotificationsSchema } from '/imports/api/tickets/tickets.js';
+import { Queues } from '/imports/api/queues/queues';
+import { Sessions } from '/imports/api/sessions/sessions';
+import { Tickets, NotificationsSchema } from '/imports/api/tickets/tickets';
 
-import { SignupGap } from '/imports/lib/both/signup-gap.js';
-import { Notifications } from '/imports/lib/both/notifications.js';
-import { createUser, findUserByEmail } from '/imports/lib/both/users.js';
+import { SignupGap } from '/imports/lib/both/signup-gap';
+import { Notifications } from '/imports/lib/both/notifications';
+import { createUser, findUserByEmail } from '/imports/lib/both/users';
 
 export const createTicket = new ValidatedMethod({
   name: 'tickets.createTicket',

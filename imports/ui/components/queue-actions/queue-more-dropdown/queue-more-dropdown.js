@@ -1,9 +1,9 @@
 import { Template } from 'meteor/templating';
 
-import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
-import { shuffleQueue } from '/imports/api/queues/methods.js';
-import { deleteTicket } from '/imports/api/tickets/methods.js';
+import { shuffleQueue } from '/imports/api/queues/methods';
+import { deleteTicket } from '/imports/api/tickets/methods';
 
 import './queue-more-dropdown.html';
 

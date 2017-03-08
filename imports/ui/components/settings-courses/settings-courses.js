@@ -3,12 +3,12 @@ import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { $ } from 'meteor/jquery';
 
-import { Courses } from '/imports/api/courses/courses.js';
+import { Courses } from '/imports/api/courses/courses';
 
-import '/imports/ui/components/settings-courses/courses-general/courses-general.js';
-import '/imports/ui/components/settings-courses/courses-people/courses-people.js';
-import '/imports/ui/components/settings-courses/courses-analytics/courses-analytics.js';
-import '/imports/ui/components/modals/modal-course-create/modal-course-create.js';
+import '/imports/ui/components/settings-courses/courses-general/courses-general';
+import '/imports/ui/components/settings-courses/courses-people/courses-people';
+import '/imports/ui/components/settings-courses/courses-analytics/courses-analytics';
+import '/imports/ui/components/modals/modal-course-create/modal-course-create';
 
 import './settings-courses.html';
 

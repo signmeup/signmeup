@@ -4,10 +4,10 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { deleteTicket } from '/imports/api/tickets/methods.js';
+import { deleteTicket } from '/imports/api/tickets/methods';
 
-import '/imports/ui/components/ticket/ticket-drawer/ticket-drawer.js';
-import '/imports/ui/components/ticket/ticket-ta-actions/ticket-ta-actions.js';
+import '/imports/ui/components/ticket/ticket-drawer/ticket-drawer';
+import '/imports/ui/components/ticket/ticket-ta-actions/ticket-ta-actions';
 
 import './ticket.html';
 
