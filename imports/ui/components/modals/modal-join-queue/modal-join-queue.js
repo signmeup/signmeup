@@ -6,10 +6,10 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { _ } from 'meteor/underscore';
 import { $ } from 'meteor/jquery';
 
-import { createTicket } from '/imports/api/tickets/methods.js';
+import { createTicket } from '/imports/api/tickets/methods';
 
-import { carriers } from '/imports/lib/both/carriers.js';
-import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
+import { carriers } from '/imports/lib/both/carriers';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
 import './modal-join-queue.html';
 

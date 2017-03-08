@@ -2,7 +2,7 @@ import { Session } from 'meteor/session';
 import { Random } from 'meteor/random';
 import { _ } from 'meteor/underscore';
 
-import { restrictToSession } from '/imports/api/queues/methods.js';
+import { restrictToSession } from '/imports/api/queues/methods';
 
 export class RestrictedSessions {
   static getCurrentSession(queue) {

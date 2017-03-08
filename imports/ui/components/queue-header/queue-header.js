@@ -6,9 +6,9 @@ import {
   svgPatternUrl,
   ticketCount,
   scheduledEndTime }
-from '/imports/ui/components/queue-card/queue-card.js';
+from '/imports/ui/components/queue-card/queue-card';
 
-import '/imports/ui/components/profile-pic/profile-pic.js';
+import '/imports/ui/components/profile-pic/profile-pic';
 
 import './queue-header.html';
 

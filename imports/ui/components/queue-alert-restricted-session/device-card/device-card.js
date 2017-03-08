@@ -2,11 +2,11 @@ import { Template } from 'meteor/templating';
 
 import uaParser from 'ua-parser-js';
 
-import { Queues } from '/imports/api/queues/queues.js';
+import { Queues } from '/imports/api/queues/queues';
 
-import { releaseFromSession } from '/imports/api/queues/methods.js';
+import { releaseFromSession } from '/imports/api/queues/methods';
 
-import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
 import './device-card.html';
 
