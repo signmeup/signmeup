@@ -269,8 +269,8 @@ export const reopenQueue = new ValidatedMethod({
       throw new Meteor.Error('queues.doesNotExist',
         `No queue exists with id ${queueId}`);
     } else if (queue.status !== 'ended') {
-      throw new Meteor.Error('queues.reopenQueue.notClosed',
-        `Queue with id ${queueId} is not closed so can not be reopened`);
+      throw new Meteor.Error('queues.reopenQueue.notEnded',
+        `Only ended queues can be reopened`);
     }
 
     if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
@@ -278,17 +278,16 @@ export const reopenQueue = new ValidatedMethod({
         'Only TAs and above can reopen queues.');
     }
 
-    let restoredStatus = 'cutoff';
-    if (queue.cutoffAt == null) {
-      restoredStatus = 'open';
+    let restoredStatus = 'open';
+    if (queue.cutoffAt !== null) {
+      restoredStatus = 'cutoff';
     }
 
-    let newTime = moment().add(1, 'hour').startOf('hour');
+    let newTime = moment().add(1, 'hour').startOf('hour').toDate();
     // Use old end time if hasn't passed yet
     if (queue.scheduledEndTime > new Date()) {
       newTime = queue.scheduledEndTime;
     }
-
 
     Queues.update({
       _id: queueId,
@@ -298,8 +297,8 @@ export const reopenQueue = new ValidatedMethod({
         scheduledEndTime: newTime,
       },
       $unset: {
-        endedAt: 1,
-        endedBy: 1,
+        endedAt: '',
+        endedBy: '',
       },
     });
   },
