@@ -13,12 +13,13 @@
     {{/if}}
 
     {{#if queue.isEnded}}
-      <button type="button" class="btn btn-danger">
+      <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="material-icons">do_not_disturb_alt</i> Ended
       </button>
-    {{/if}}
-
-    {{#unless queue.isEnded}}
+      <div class="dropdown-menu">
+        <a class="dropdown-item text-success js-reopen-queue" href="#"><i class="material-icons">replay</i>Reopen Queue</a>
+      </div>
+    {{else}}
       <div class="dropdown-menu">
         {{#if queue.isOpen}}
           <a class="dropdown-item text-warning js-cutoff-queue" href="#"><i class="material-icons">warning</i>Cutoff</a>
@@ -29,6 +30,6 @@
         <div class="dropdown-divider"></div>
         <a class="dropdown-item text-danger js-end-queue" href="#"><i class="material-icons">do_not_disturb_alt</i>End Queue</a>
       </div>
-    {{/unless}}
+    {{/if}}
   </div>
 </template>
