@@ -190,6 +190,19 @@ If fixing a bug in production:
 3. Once approved, merge the pull request. Then merge `production` into `master`
    so both branches are up to date.
 
+### Writing Quality Commit Messages
+
+When committing changes, there are a few important points to remember:
+
+1. Use the imperative form. Instead of writing `fixed bug`, write `fix bug`. This convention is helpful as it describes what will happen after your commit is applied.
+
+2. Write concise, descriptive messages about what changes were made and why. For example, prefer `Fix failing server call in createTicket` over `got createTicket to work!`.
+
+3. Reference issue numbers correctly. For example, `Fix #178: Add section about commit messages to CONTRIBUTING.md`.
+
+To learn more about writing great commit messages, see this [article](https://chris.beams.io/posts/git-commit/). 
+
+
 ### Debugging Meteor
 
 In addition to the various [Meteor debugging

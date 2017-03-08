@@ -2,25 +2,25 @@
 
 import { Meteor } from 'meteor/meteor';
 
-import '/imports/api/announcements/methods.js';
+import '/imports/api/announcements/methods';
 
-import '/imports/api/courses/methods.js';
-import '/imports/api/courses/helpers.js';
+import '/imports/api/courses/methods';
+import '/imports/api/courses/helpers';
 
-import '/imports/api/locations/methods.js';
+import '/imports/api/locations/methods';
 
-import '/imports/api/queues/methods.js';
-import '/imports/api/queues/helpers.js';
+import '/imports/api/queues/methods';
+import '/imports/api/queues/helpers';
 
-import '/imports/api/sessions/methods.js';
-import '/imports/api/sessions/helpers.js';
+import '/imports/api/sessions/methods';
+import '/imports/api/sessions/helpers';
 
-import '/imports/api/tickets/methods.js';
-import '/imports/api/tickets/helpers.js';
+import '/imports/api/tickets/methods';
+import '/imports/api/tickets/helpers';
 
-import '/imports/api/users/users.js';
-import '/imports/api/users/helpers.js';
-import '/imports/api/users/methods.js';
+import '/imports/api/users/users';
+import '/imports/api/users/helpers';
+import '/imports/api/users/methods';
 
 if (Meteor.isServer) {
   /* eslint-disable global-require */

@@ -3,12 +3,12 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { Locations } from '/imports/api/locations/locations.js';
-import { Queues } from '/imports/api/queues/queues.js';
+import { Locations } from '/imports/api/locations/locations';
+import { Queues } from '/imports/api/queues/queues';
 
-import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
-import { createQueue } from '/imports/api/queues/methods.js';
+import { createQueue } from '/imports/api/queues/methods';
 
 import './modal-queue-create.html';
 

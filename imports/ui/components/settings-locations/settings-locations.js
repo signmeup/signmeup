@@ -1,9 +1,9 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { Locations } from '/imports/api/locations/locations.js';
+import { Locations } from '/imports/api/locations/locations';
 
-import { createLocation, deleteLocation } from '/imports/api/locations/methods.js';
+import { createLocation, deleteLocation } from '/imports/api/locations/methods';
 
 import './settings-locations.html';
 

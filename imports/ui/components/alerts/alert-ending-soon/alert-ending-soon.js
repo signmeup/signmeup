@@ -5,7 +5,7 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { endQueue } from '/imports/api/queues/methods.js';
+import { endQueue } from '/imports/api/queues/methods';
 
 import './alert-ending-soon.html';
 
