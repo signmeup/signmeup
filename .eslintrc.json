@@ -29,7 +29,6 @@
     ],
     "import/no-absolute-path": 0,
     "import/no-extraneous-dependencies": 0,
-    "import/no-unresolved": 1,
     "import/prefer-default-export": 0,
     "meteor/audit-argument-checks": 0,
     "meteor/no-session": 0,
