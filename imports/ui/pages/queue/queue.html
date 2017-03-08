@@ -12,9 +12,20 @@
       {{> QueueActions queue=queue taView=taView}}
       {{> QueueTable queue=queue taView=taView}}
     {{else}}
-      <div class="row flex-items-xs-center mt-3" style="text-align: center;">
-        <p>Loading...</p>
-      </div>
+      {{#if error}}
+        <div class="row flex-items-xs-center mt-3" style="text-align: center;">
+          <div>
+            <h2 class="display-5">Bad Queue</h2>
+            <p class="text-muted">
+              No queue could be found for that id.
+            </p>
+          </div>
+        </div>
+      {{else}}
+        <div class="row flex-items-xs-center mt-3" style="text-align: center;">
+          <p>Loading...</p>
+        </div> 
+      {{/if}} 
     {{/if}}
   </div>
 

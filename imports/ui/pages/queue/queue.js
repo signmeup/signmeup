@@ -25,9 +25,12 @@ Template.Queue.onCreated(function onCreated() {
     this.subscribe('queues.byId', this.getQueueId());
 
     const queue = this.getQueue();
+    this.error = false;
     if (queue) {
       this.subscribe('courses.byId', queue.courseId);
       this.subscribe('tickets.byQueueId', queue._id);
+    } else {
+      this.error = true;
     }
   });
 });
@@ -42,6 +45,10 @@ Template.Queue.onRendered(function onRendered() {
 });
 
 Template.Queue.helpers({
+  error() {
+    return this.getQueue == null;
+  },
+
   queue() {
     return Template.instance().getQueue();
   },
