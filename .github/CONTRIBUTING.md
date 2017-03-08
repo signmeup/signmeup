@@ -194,13 +194,13 @@ If fixing a bug in production:
 
 When committing changes, there are a few important points to remember:
 
-1. First of all, please use the imperative form. Instead of writing `fixed bug`, please write `fix bug`. This convention is helpful as it describes what will happen after your commit is applied.
+1. Use the imperative form. Instead of writing `fixed bug`, write `fix bug`. This convention is helpful as it describes what will happen after your commit is applied.
 
-2. Please write descriptive messages so others can understand what changes were made. Please don't write vague things like `got it to work!`. Remember to keep these somewhat concise.
+2. Write concise, descriptive messages about what changes were made and why. For example, prefer `Fix failing server call in createTicket` over `got createTicket to work!`.
 
-3. Finally, please reference issue numbers correctly. For example, `Fix #178: Add section about commit messages to CONTRIBUTING.md`.
+3. Reference issue numbers correctly. For example, `Fix #178: Add section about commit messages to CONTRIBUTING.md`.
 
-If you're still interested in learning how to write great commit messages, take a look at this [article](https://chris.beams.io/posts/git-commit/). 
+To learn more about writing great commit messages, see this [article](https://chris.beams.io/posts/git-commit/). 
 
 
 ### Debugging Meteor
