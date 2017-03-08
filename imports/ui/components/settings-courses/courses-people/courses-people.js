@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { addRoleGivenEmail, removeRole } from '/imports/api/users/methods.js';
+import { addRoleGivenEmail, removeRole } from '/imports/api/users/methods';
 
 import './courses-people.html';
 

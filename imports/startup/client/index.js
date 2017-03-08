@@ -1,14 +1,14 @@
 // Set config
-import '../both/config.js';
+import '../both/config';
 
 // Initialize global vendors
-import './vendor.js';
+import './vendor';
 
 // Register API
-import '../both/register-api.js';
+import '../both/register-api';
 
 // Initialize routing
-import './routes.js';
+import './routes';
 
 // Initialize idle tracking
-import './tracking.js';
+import './tracking';

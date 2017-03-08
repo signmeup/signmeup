@@ -5,7 +5,7 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { notifyTicketByEmail, notifyTicketByText } from '/imports/api/tickets/methods.js';
+import { notifyTicketByEmail, notifyTicketByText } from '/imports/api/tickets/methods';
 
 import './ticket-drawer.html';
 

@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import '/imports/ui/components/ticket/ticket.js';
+import '/imports/ui/components/ticket/ticket';
 
 import './queue-table.html';
 
