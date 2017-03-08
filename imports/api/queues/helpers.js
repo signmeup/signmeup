@@ -63,12 +63,12 @@ Queues.helpers({
   },
 
   tickets() {
-    return Tickets.find({ _id: { $in: this.ticketIds } });
+    return Tickets.find({ queueId: this._id });
   },
 
   activeTickets() {
     return Tickets.find({
-      _id: { $in: this.ticketIds },
+      queueId: this._id,
       status: { $in: ['open', 'claimed', 'markedAsMissing'] },
     });
   },

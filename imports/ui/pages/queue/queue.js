@@ -41,6 +41,27 @@ Template.Queue.onRendered(function onRendered() {
         return;
       }
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
+
+      // setup notifications
+      if (!Template.Queue.__helpers.get('taView')()) return;
+      if (!('Notification' in window)) return;
+      const notify = () => {
+        var initial = true;
+        queue.activeTickets().observe({
+          added: (ticket) => {
+            if (initial) return;
+            new Notification('Someone has joined the queue');
+          },
+        });
+        initial = false;
+      };
+      if (Notification.permission === 'default') {
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') notify();
+        });
+      } else if (Notification.permission === 'granted') {
+        notify();
+      }
     }
   });
 });
