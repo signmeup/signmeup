@@ -3,6 +3,8 @@ import { $ } from 'meteor/jquery';
 
 import { Queues } from '/imports/api/queues/queues';
 
+import moment from 'moment';
+
 import '/imports/ui/components/queue-card/queue-card';
 import '/imports/ui/components/modals/modal-queue-create/modal-queue-create';
 
@@ -13,6 +15,7 @@ Template.Index.onCreated(function onCreated() {
     this.subscribe('courses.all');
     this.subscribe('locations.active');
     this.subscribe('queues.active');
+    this.subscribe('queues.recentlyEnded');
   });
 });
 
@@ -23,6 +26,11 @@ Template.Index.onRendered(() => {
 Template.Index.helpers({
   activeQueues() {
     return Queues.find({ status: { $in: ['open', 'cutoff'] } });
+  },
+
+  recentlyEndedQueues() {
+    const cutoff = moment().subtract(5, 'minutes').toDate();
+    return Queues.find({ status: 'ended', endedAt : { $gt : cutoff } });
   },
 
   isTA(user) {
