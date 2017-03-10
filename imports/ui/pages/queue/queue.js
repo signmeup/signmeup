@@ -28,6 +28,8 @@ Template.Queue.onCreated(function onCreated() {
     if (queue) {
       this.subscribe('courses.byId', queue.courseId);
       this.subscribe('tickets.byQueueId', queue._id);
+    } else {
+      FlowRouter.go('/404');
     }
   });
 });
