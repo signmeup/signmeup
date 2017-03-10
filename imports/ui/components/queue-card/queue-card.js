@@ -12,7 +12,12 @@ Template.QueueCard.onCreated(function onCreated() {
 });
 
 export function svgPatternUrl(queue) {
-  const svgPattern = GeoPattern.generate(queue.course().name);
+  let svgPattern = null;
+  if (!queue.isEnded()) {
+    svgPattern = GeoPattern.generate(queue.course().name);
+  } else {
+    svgPattern = GeoPattern.generate(queue.course().name, {color : '#d3d3d3' });
+  }
   return svgPattern.toDataUrl();
 }
 
