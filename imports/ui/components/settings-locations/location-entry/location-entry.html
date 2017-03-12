@@ -1,38 +1,38 @@
 <template name="LocationEntry">
   <div class="card-block location-entry">
     <div class="row mb-0">
-      {{#if isNormal}}
-        <p class="location-name col-xs-9 mb-0">
-          {{location.name}}
-        </p>
-        <div class="col-xs-3 text-right">
-          <button
-            class="btn btn-outline-secondary js-edit-location">
-            Edit
-          </button>
-          <button
-            class="btn btn-outline-danger js-remove-location">
-            Remove
-          </button>
-        </div>
-      {{else}}
+      {{#if isEditing}}
         <form class="location-name-edit-form js-location-name-edit-form">
           <div class="col-xs-9 mb-0">
             <input type="text" class="form-control" name="name" placeholder="CIT 123" value="{{location.name}}">
           </div>
           <div class="col-xs-3 text-right">
             <button
-              class="btn btn-outline-secondary js-cancel-edit-location"
+              class="btn btn-secondary js-cancel-edit-location"
               type="button">
               Cancel
             </button>
             <button
-              class="btn btn-outline-success"
+              class="btn btn-success"
               type="submit">
               Save
             </button>
           </div>
         </form>
+      {{else}}
+        <p class="location-name col-xs-9 mb-0">
+          {{location.name}}
+        </p>
+        <div class="col-xs-3 text-right">
+          <button
+            class="btn btn-secondary js-edit-location">
+            Edit
+          </button>
+          <button
+            class="btn btn-danger js-remove-location">
+            Remove
+          </button>
+        </div>
       {{/if}}
     </div>
   </div>

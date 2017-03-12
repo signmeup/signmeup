@@ -1,8 +1,7 @@
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
-import { updateLocation, deleteLocation } from '/imports/api/locations/methods.js';
+import { updateLocation, deleteLocation } from '/imports/api/locations/methods';
 
 import './location-entry.html';
 
@@ -12,16 +11,13 @@ Template.LocationEntry.onCreated(function onCreated() {
 });
 
 Template.LocationEntry.helpers({
-  isNormal() {
-    return !Template.instance().state.get('isEditing');
-  },
   isEditing() {
     return Template.instance().state.get('isEditing');
   },
 });
 
 Template.LocationEntry.events({
-  'click .js-remove-location'(event) {
+  'click .js-remove-location'() {
     const locationId = this.location._id;
     const locationName = this.location.name;
 
@@ -35,15 +31,15 @@ Template.LocationEntry.events({
     }
   },
 
-  'click .js-edit-location'(event, instance) {
-    instance.state.set('isEditing', true);
+  'click .js-edit-location'(event, templateInstance) {
+    templateInstance.state.set('isEditing', true);
   },
 
-  'click .js-cancel-edit-location'(event, instance) {
-    instance.state.set('isEditing', false);
+  'click .js-cancel-edit-location'(event, templateInstance) {
+    templateInstance.state.set('isEditing', false);
   },
 
-  'submit .js-location-name-edit-form'(event, instance) {
+  'submit .js-location-name-edit-form'(event, templateInstance) {
     event.preventDefault();
     const locationId = this.location._id;
     const name = event.target.name.value;
@@ -52,6 +48,6 @@ Template.LocationEntry.events({
         console.error(err);
       }
     });
-    instance.state.set('isEditing', false);
+    templateInstance.state.set('isEditing', false);
   },
 });
