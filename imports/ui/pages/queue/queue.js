@@ -43,24 +43,24 @@ Template.Queue.onRendered(function onRendered() {
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
 
       // setup notifications
-      if (!Template.Queue.__helpers.get('taView')()) return;
       if (!('Notification' in window)) return;
-      const notify = () => {
+      if (Template.Queue.__helpers.get('taView')()) {
         var initial = true;
         queue.activeTickets().observe({
           added: (ticket) => {
             if (initial) return;
-            new Notification('Someone has joined the queue');
+            queue.sendNotification('Someone has joined the queue2');
           },
         });
         initial = false;
-      };
-      if (Notification.permission === 'default') {
-        Notification.requestPermission().then((permission) => {
-          if (permission === 'granted') notify();
-        });
-      } else if (Notification.permission === 'granted') {
-        notify();
+      } else {
+        // TODO student notifications
+        /*console.log('student');
+        queue.activeTickets().observe({
+          movedTo: (doc, from, to, before) => {
+            console.log('moved', doc, from, to, before);
+          }
+        });*/
       }
     }
   });
