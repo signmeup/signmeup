@@ -1,11 +1,11 @@
 <template name="Nav">
   <div class="app-nav">
     <div class="container">
-      <nav class="navbar navbar-light flex-row pt-3 pb-3">
+      <nav class="navbar navbar-light flex-row px-0 py-3">
         <a class="navbar-brand mr-auto" href="/">SignMeUp</a>
 
         {{#if currentUser}}
-          <span class="navbar-text mr-3 py-2">Welcome, {{currentUser.firstName}}</span>
+          <span class="navbar-text mr-3 py-2 hidden-xs-down">Welcome, {{currentUser.firstName}}</span>
         {{/if}}
 
         {{#if showSettings}}
