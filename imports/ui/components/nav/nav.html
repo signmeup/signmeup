@@ -1,27 +1,29 @@
 <template name="Nav">
-  <nav class="app-nav navbar navbar-light pt-1 pb-1">
+  <div class="app-nav">
     <div class="container">
-      <a class="navbar-brand" href="/">SignMeUp</a>
+      <nav class="navbar navbar-light flex-row pt-3 pb-3">
+        <a class="navbar-brand mr-auto" href="/">SignMeUp</a>
 
-      {{#if currentUser}}
-        <span class="navbar-text">Welcome, {{currentUser.firstName}}</span>
-      {{/if}}
-
-      <ul class="navbar-nav">
-        {{#if showSettings}}
-          <li class="nav-item">
-            <a class="nav-link" href="/settings">Settings</a>
-          </li>
-        {{/if}}
-      </ul>
-
-      <form class="form-inline">
         {{#if currentUser}}
-          <button type="button" class="btn btn-secondary js-sign-out">Sign Out</button>
-        {{else}}
-          <button type="button" class="btn btn-primary js-sign-in">Sign In</button>
+          <span class="navbar-text mr-3 py-2">Welcome, {{currentUser.firstName}}</span>
         {{/if}}
-      </form>
+
+        {{#if showSettings}}
+          <ul class="navbar-nav mr-3">
+              <li class="nav-item">
+                <a class="nav-link" href="/settings">Settings</a>
+              </li>
+          </ul>
+        {{/if}}
+
+        <form class="form-inline">
+          {{#if currentUser}}
+            <button type="button" class="btn btn-secondary js-sign-out">Sign Out</button>
+          {{else}}
+            <button type="button" class="btn btn-primary js-sign-in">Sign In</button>
+          {{/if}}
+        </form>
+      </nav>
     </div>
-  </nav>
+  </div>
 </template>
