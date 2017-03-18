@@ -279,13 +279,13 @@ export const reopenQueue = new ValidatedMethod({
     }
 
     let restoredStatus = 'open';
-    if (queue.cutoffAt !== null) {
+    if (queue.cutoffAt) {
       restoredStatus = 'cutoff';
     }
 
     let newTime = moment().add(1, 'hour').startOf('hour').toDate();
-    // Use old end time if hasn't passed yet
     if (queue.scheduledEndTime > new Date()) {
+      // If original end time hasn't passed yet, use it as the end time again
       newTime = queue.scheduledEndTime;
     }
 
