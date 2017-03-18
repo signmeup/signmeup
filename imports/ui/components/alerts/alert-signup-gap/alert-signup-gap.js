@@ -4,7 +4,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 import moment from 'moment';
 
-import { SignupGap } from '/imports/lib/both/signup-gap.js';
+import { SignupGap } from '/imports/lib/both/signup-gap';
 
 import './alert-signup-gap.html';
 

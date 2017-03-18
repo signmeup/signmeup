@@ -3,7 +3,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 
-import { Queues } from '/imports/api/queues/queues.js';
+import { Queues } from '/imports/api/queues/queues';
 
 Meteor.publish('queues.byId', function byId(queueId) {
   return Queues.find({ _id: queueId });

@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { updateCourse, updateSettings } from '/imports/api/courses/methods.js';
+import { updateCourse, updateSettings } from '/imports/api/courses/methods';
 
 import './courses-general.html';
 

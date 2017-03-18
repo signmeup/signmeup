@@ -3,13 +3,7 @@ engines:
     enabled: true
     channel: "eslint-3"
     config:
-      config: ".eslintrc.json"
-
-  duplication:
-    enabled: true
-    config:
-      languages:
-        - javascript:
+      config: ".eslintrc.codeclimate.json"
 
   stylelint:
     enabled: true

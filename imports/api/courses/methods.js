@@ -3,7 +3,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 
-import { Courses, SettingsSchema } from '/imports/api/courses/courses.js';
+import { Courses, SettingsSchema } from '/imports/api/courses/courses';
 
 export const createCourse = new ValidatedMethod({
   name: 'courses.createCourse',
