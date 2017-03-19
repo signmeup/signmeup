@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { $ } from 'meteor/jquery';
 
 import { claimTicket, releaseTicket, markTicketAsMissing, markTicketAsDone }
   from '/imports/api/tickets/methods';
@@ -39,10 +40,13 @@ Template.TicketTAActions.events({
   'click .js-mark-as-done'(event) {
     event.preventDefault();
 
-    markTicketAsDone.call({
-      ticketId: this.ticket._id,
-    }, (err) => {
-      if (err) console.log(err);
+    const ticket = $(event.target).parents('.js-ticket-holder');
+    ticket.slideUp(400, () => {
+      markTicketAsDone.call({
+        ticketId: this.ticket._id,
+      }, (err) => {
+        if (err) console.log(err);
+      });
     });
   },
 });
