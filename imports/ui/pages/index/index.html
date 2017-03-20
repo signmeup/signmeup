@@ -2,32 +2,12 @@
   <div class="index container my-5">
     {{#if Template.subscriptionsReady}}
       {{#if activeQueues.count}}
-        <!-- <div class="row">
-          {{#each queue in activeQueues}}
-            <div class="col-lg-4 col-md-6 mb-2">
-              {{> QueueCard queue=queue}}
-            </div>
-          {{/each}}
-
-          {{#if isTA currentUser}}
-            <div class="create-queue-card-container col-lg-4 col-md-6 mb-2">
-              <a class="card dashed-card js-show-modal-queue-create" href="#">
-                <i class="material-icons">add</i> New Queue
-              </a>
-            </div>
-          {{/if}}
-        </div> -->
         <div class="card-deck">
           {{#each queue in activeQueues}}
             {{> QueueCard queue=queue}}
           {{/each}}
 
           {{#if isTA currentUser}}
-            <!-- <div class="create-queue-card-container col-lg-4 col-md-6 mb-2">
-              <a class="card dashed-card js-show-modal-queue-create" href="#">
-                <i class="material-icons">add</i> New Queue
-              </a>
-            </div> -->
             <div class="create-queue-card card w-50">
               <a class="js-show-modal-queue-create" href="#">
                 <i class="material-icons">add</i> New Queue
