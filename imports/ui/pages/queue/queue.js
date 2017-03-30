@@ -44,10 +44,6 @@ Template.Queue.onRendered(function onRendered() {
 });
 
 Template.Queue.helpers({
-  error() {
-    return this.getQueue == null;
-  },
-
   queue() {
     return Template.instance().getQueue();
   },
