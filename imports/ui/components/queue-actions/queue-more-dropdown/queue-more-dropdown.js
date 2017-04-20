@@ -49,11 +49,4 @@ Template.QueueMoreDropdown.events({
       });
     }
   },
-
-  'click .js-enable-notifications'(event) {
-  },
-
-  'click .js-disable-notifications'(event) {
-    // TODO
-  },
 });

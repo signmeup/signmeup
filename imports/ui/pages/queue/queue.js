@@ -2,9 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Roles } from 'meteor/alanning:roles';
-import { _ } from 'meteor/underscore';
 
 import { Queues } from '/imports/api/queues/queues';
+
+import { WebNotifications } from '/imports/lib/client/web-notifications';
 
 import '/imports/ui/components/queue-header/queue-header';
 import '/imports/ui/components/alerts/alert-ending-soon/alert-ending-soon';
@@ -33,18 +34,8 @@ Template.Queue.onCreated(function onCreated() {
   });
 });
 
-const canNotify = () => {
-  return _.every({
-    'serviceWorker': navigator,
-    'Notification': window,
-    'showNotification': ServiceWorkerRegistration.prototype,
-    'PushManager': window,
-  }, (value, key) => {
-    return key in value;
-  }) && Notification.permission !== 'denied';
-};
-
 Template.Queue.onRendered(function onRendered() {
+  WebNotifications.requestPermission();
   this.autorun(() => {
     if (this.subscriptionsReady()) {
       const queue = this.getQueue();
@@ -55,25 +46,17 @@ Template.Queue.onRendered(function onRendered() {
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
 
       // setup notifications
-      if (!canNotify) return;
-      navigator.serviceWorker.ready.then(registration => {
-        registration.pushManager.getSubscription()
-          .then(subscription => {
-            if (!subscription) return;
-        }).catch(err => {
-          console.error(err);
-        });
-      });
-      /*if (Template.Queue.__helpers.get('taView')()) {
+      if (!WebNotifications.canNotify()) return;
+      if (Template.Queue.__helpers.get('taView')()) {
         var initial = true;
         queue.activeTickets().observe({
           added: (ticket) => {
             if (initial) return;
-            queue.sendNotification('Someone has joined the queue2');
+            WebNotifications.send('Someone has joined the queue2');
           },
         });
         initial = false;
-      }*/
+      }
     }
   });
 });
@@ -95,13 +78,5 @@ Template.Queue.helpers({
     }
 
     return false;
-  },
-
-  canNotify() {
-    canNotify();
-  },
-
-  notificationsEnabled() {
-    return canNotify() && Notification.permission === 'granted';
   },
 });
