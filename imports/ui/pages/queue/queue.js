@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Roles } from 'meteor/alanning:roles';
+import { _ } from 'meteor/underscore';
 
 import { Queues } from '/imports/api/queues/queues';
 
@@ -32,6 +33,17 @@ Template.Queue.onCreated(function onCreated() {
   });
 });
 
+const canNotify = () => {
+  return _.every({
+    'serviceWorker': navigator,
+    'Notification': window,
+    'showNotification': ServiceWorkerRegistration.prototype,
+    'PushManager': window,
+  }, (value, key) => {
+    return key in value;
+  }) && Notification.permission !== 'denied';
+};
+
 Template.Queue.onRendered(function onRendered() {
   this.autorun(() => {
     if (this.subscriptionsReady()) {
@@ -43,8 +55,16 @@ Template.Queue.onRendered(function onRendered() {
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
 
       // setup notifications
-      if (!('Notification' in window)) return;
-      if (Template.Queue.__helpers.get('taView')()) {
+      if (!canNotify) return;
+      navigator.serviceWorker.ready.then(registration => {
+        registration.pushManager.getSubscription()
+          .then(subscription => {
+            if (!subscription) return;
+        }).catch(err => {
+          console.error(err);
+        });
+      });
+      /*if (Template.Queue.__helpers.get('taView')()) {
         var initial = true;
         queue.activeTickets().observe({
           added: (ticket) => {
@@ -53,15 +73,7 @@ Template.Queue.onRendered(function onRendered() {
           },
         });
         initial = false;
-      } else {
-        // TODO student notifications
-        /*console.log('student');
-        queue.activeTickets().observe({
-          movedTo: (doc, from, to, before) => {
-            console.log('moved', doc, from, to, before);
-          }
-        });*/
-      }
+      }*/
     }
   });
 });
@@ -83,5 +95,13 @@ Template.Queue.helpers({
     }
 
     return false;
+  },
+
+  canNotify() {
+    canNotify();
+  },
+
+  notificationsEnabled() {
+    return canNotify() && Notification.permission === 'granted';
   },
 });
