@@ -71,7 +71,10 @@ Template.Queue.onRendered(function onRendered() {
               const students = ticket.students().fetch();
               const names = students.map(student => student.fullName());
               const verb = names.length === 1 ? 'has' : 'have';
-              WebNotifications.send(`${names.join(', ')} ${verb} joined the queue`);
+              WebNotifications.send(`${names.join(', ')} ${verb} joined the queue`, {
+                body: ticket.question,
+                timeout: 5000
+              });
               subscription.stop();
             });
           },

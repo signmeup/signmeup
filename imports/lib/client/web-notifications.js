@@ -11,9 +11,12 @@ export class WebNotifications {
     }
   }
 
-  static send(message) {
+  static send(message, options) {
     if (!WebNotifications.canNotify()) return;
     // TODO ask for permission if not granted?
-    new Notification(message);
+    const notification = new Notification(message, options);
+    if (options.timeout) {
+      setTimeout(() => notification.close(), options.timeout);
+    }
   }
 }
