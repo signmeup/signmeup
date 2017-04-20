@@ -34,6 +34,21 @@ Template.Queue.onCreated(function onCreated() {
   });
 });
 
+// is the current user a TA (or above)?
+const isTA = () => {
+  if (Template.instance().getView() === 'student') {
+    return false;
+  }
+
+  const queue = Template.instance().getQueue();
+  const courseId = queue && queue.courseId;
+  if (Roles.userIsInRole(Meteor.user(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
+    return true;
+  }
+
+  return false;
+};
+
 Template.Queue.onRendered(function onRendered() {
   WebNotifications.requestPermission();
   this.autorun(() => {
@@ -47,12 +62,18 @@ Template.Queue.onRendered(function onRendered() {
 
       // setup notifications
       if (!WebNotifications.canNotify()) return;
-      if (Template.Queue.__helpers.get('taView')()) {
-        var initial = true;
+      if (isTA()) {
+        let initial = true;
         queue.activeTickets().observe({
           added: (ticket) => {
             if (initial) return;
-            WebNotifications.send('Someone has joined the queue2');
+            const subscription = this.subscribe('users.byIds', ticket.studentIds, () => {
+              const students = ticket.students().fetch();
+              const names = students.map(student => student.fullName());
+              const verb = names.length === 1 ? 'has' : 'have';
+              WebNotifications.send(`${names.join(', ')} ${verb} joined the queue`);
+              subscription.stop();
+            });
           },
         });
         initial = false;
@@ -67,16 +88,6 @@ Template.Queue.helpers({
   },
 
   taView() {
-    if (Template.instance().getView() === 'student') {
-      return false;
-    }
-
-    const queue = Template.instance().getQueue();
-    const courseId = queue && queue.courseId;
-    if (Roles.userIsInRole(Meteor.user(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
-      return true;
-    }
-
-    return false;
+    return isTA();
   },
 });
