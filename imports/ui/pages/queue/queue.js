@@ -69,11 +69,11 @@ Template.Queue.onRendered(function onRendered() {
             if (initial) return;
             const subscription = this.subscribe('users.byIds', ticket.studentIds, () => {
               const students = ticket.students().fetch();
-              const names = students.map(student => student.fullName());
+              const names = students.map((student) => { return student.fullName(); });
               const verb = names.length === 1 ? 'has' : 'have';
               WebNotifications.send(`${names.join(', ')} ${verb} joined the queue`, {
                 body: ticket.question,
-                timeout: 5000
+                timeout: 5000,
               });
               subscription.stop();
             });

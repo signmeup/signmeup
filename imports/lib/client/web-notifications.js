@@ -16,7 +16,7 @@ export class WebNotifications {
     // TODO ask for permission if not granted?
     const notification = new Notification(message, options);
     if (options.timeout) {
-      setTimeout(() => notification.close(), options.timeout);
+      setTimeout(() => { notification.close(); }, options.timeout);
     }
   }
 }
