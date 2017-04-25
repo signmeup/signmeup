@@ -1,16 +1,18 @@
 <template name="Index">
-  <div class="index container my-5">
+  <div class="index container my-3">
     {{#if Template.subscriptionsReady}}
       {{#if activeQueues.count}}
-        <div class="card-deck">
+        <div class="queue-card-deck row">
           {{#each queue in activeQueues}}
-            {{> QueueCard queue=queue}}
+            <div class="col-lg-4 my-md-3 my-2">
+              {{> QueueCard queue=queue}}
+            </div>
           {{/each}}
 
           {{#if isTA currentUser}}
-            <div class="create-queue-card card w-50">
-              <a class="js-show-modal-queue-create" href="#">
-                <i class="material-icons">add</i> New Queue
+            <div class="col-lg-4 my-md-3 my-2">
+              <a class="create-queue-card card card-outline-secondary d-flex align-items-center justify-content-center js-show-modal-queue-create" href="#">
+                <span><i class="material-icons">add</i> New Queue</span>
               </a>
             </div>
           {{/if}}

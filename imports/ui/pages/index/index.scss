@@ -1,28 +1,16 @@
-.create-queue-card-container {
-  min-height: 199px;
+.queue-card-deck .card {
+  height: 200px;
 }
 
-.dashed-card {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  height: 100%;
-
+.create-queue-card {
   color: $navbar-light-color;
-  border: 2px dashed $navbar-light-color;
+  border-width: 2px;
+  border-style: dashed;
   transition: all 0.2s ease;
 
-  &:hover, &:focus, &:active {
+  @include hover-focus-active {
     color: $navbar-light-hover-color;
     text-decoration: none !important;
     border-color: $navbar-light-hover-color;
-  }
-}
-
-.create-queue-link {
-
-  &:hover {
-    text-decoration: none;
   }
 }
