@@ -48,7 +48,7 @@
                 <label for="endTime">End Time</label>
                 <select name="endTime" class="form-control">
                   <option value="" disabled selected>Select end time...</option>
-                  {{#each time in endTimes}}
+                  {{#each time in queueEndTimes}}
                     <option value="{{time.ISOString}}">{{time.formattedString}}</option>
                   {{/each}}
                 </select>

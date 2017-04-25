@@ -1,4 +1,4 @@
-import '/imports/ui/components/nav/nav.js';
-import '/imports/ui/components/footer/footer.js';
+import '/imports/ui/components/nav/nav';
+import '/imports/ui/components/footer/footer';
 
 import './app-body.html';

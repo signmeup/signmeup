@@ -5,10 +5,10 @@ import { Roles } from 'meteor/alanning:roles';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import { _ } from 'meteor/underscore';
 
-import { Courses } from '/imports/api/courses/courses.js';
-import { Locations } from '/imports/api/locations/locations.js';
-import { Queues } from '/imports/api/queues/queues.js';
-import { Sessions } from '/imports/api/sessions/sessions.js';
+import { Courses } from '/imports/api/courses/courses';
+import { Locations } from '/imports/api/locations/locations';
+import { Queues } from '/imports/api/queues/queues';
+import { Sessions } from '/imports/api/sessions/sessions';
 
 export const createQueue = new ValidatedMethod({
   name: 'queues.createQueue',

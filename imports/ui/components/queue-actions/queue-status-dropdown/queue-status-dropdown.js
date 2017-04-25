@@ -1,6 +1,6 @@
 import { Template } from 'meteor/templating';
 
-import { openQueue, cutoffQueue, endQueue } from '/imports/api/queues/methods.js';
+import { openQueue, cutoffQueue, endQueue } from '/imports/api/queues/methods';
 
 import './queue-status-dropdown.html';
 

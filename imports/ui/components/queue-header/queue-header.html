@@ -1,7 +1,7 @@
 <template name="QueueHeader">
   <div class="queue-header">
     {{#if Template.subscriptionsReady}}
-      <div class="queue-header-background" style="background-image: {{svgPatternUrl queue}}"></div>
+      <div class="queue-header-background" style="background-image: {{queue.svgPatternUrl}}"></div>
       <div class="container pt-3 pb-2">
         <div class="name-and-staff">
           <h1 class="queue-name display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
@@ -13,8 +13,8 @@
         </div>
         <div class="info text-muted mb-1">
           <span class="mr-1"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
-          <span class="mr-1"><i class="material-icons">people</i>{{ticketCount queue}}</span>
-          <span class="mr-1"><i class="material-icons">access_time</i>Ends at {{scheduledEndTime queue.scheduledEndTime}}</span>
+          <span class="mr-1"><i class="material-icons">people</i>{{queue.formatTicketCount}}</span>
+          <span class="mr-1"><i class="material-icons">access_time</i>Ends at {{queue.formatScheduledEndTime}}</span>
 
           {{#if taView}}
             <a href="#" role="button" class="btn-black-link float-xs-right js-show-modal-queue-edit">

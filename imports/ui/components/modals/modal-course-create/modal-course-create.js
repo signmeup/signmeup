@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { createCourse } from '/imports/api/courses/methods.js';
+import { createCourse } from '/imports/api/courses/methods';
 
 import './modal-course-create.html';
 

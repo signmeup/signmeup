@@ -2,10 +2,10 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Roles } from 'meteor/alanning:roles';
 
-import '/imports/ui/components/settings-courses/settings-courses.js';
-import '/imports/ui/components/settings-locations/settings-locations.js';
-import '/imports/ui/components/settings-people/settings-people.js';
-import '/imports/ui/components/settings-profile/settings-profile.js';
+import '/imports/ui/components/settings-courses/settings-courses';
+import '/imports/ui/components/settings-locations/settings-locations';
+import '/imports/ui/components/settings-people/settings-people';
+import '/imports/ui/components/settings-profile/settings-profile';
 
 import './settings.html';
 

@@ -4,9 +4,9 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
-import { Courses } from '/imports/api/courses/courses.js';
+import { Courses } from '/imports/api/courses/courses';
 
-import { createUser, findUserByEmail } from '/imports/lib/both/users.js';
+import { createUser, findUserByEmail } from '/imports/lib/both/users';
 
 export const addRoleGivenEmail = new ValidatedMethod({
   name: 'users.addRoleGivenEmail',

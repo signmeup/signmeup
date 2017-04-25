@@ -3,9 +3,10 @@ import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 
-import { updateQueue } from '/imports/api/queues/methods.js';
-import { locations, endTimes } from
-  '/imports/ui/components/modals/modal-queue-create/modal-queue-create.js';
+import { updateQueue } from '/imports/api/queues/methods';
+
+import { locations } from '/imports/api/locations/helpers';
+import { queueEndTimes } from '/imports/api/queues/helpers';
 
 import './modal-queue-edit.html';
 
@@ -17,7 +18,7 @@ Template.ModalQueueEdit.onCreated(function onCreated() {
 
 Template.ModalQueueEdit.helpers({
   locations,
-  endTimes,
+  queueEndTimes,
 
   isCurrentLocation(queue, location) {
     if (location && queue) {

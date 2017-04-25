@@ -1,9 +1,9 @@
 import { Meteor } from 'meteor/meteor';
 import { _ } from 'meteor/underscore';
 
-import { Courses } from '/imports/api/courses/courses.js';
-import { Queues } from '/imports/api/queues/queues.js';
-import { Tickets } from '/imports/api/tickets/tickets.js';
+import { Courses } from '/imports/api/courses/courses';
+import { Queues } from '/imports/api/queues/queues';
+import { Tickets } from '/imports/api/tickets/tickets';
 
 Tickets.helpers({
   course() {

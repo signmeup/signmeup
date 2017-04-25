@@ -1,6 +1,6 @@
 import { Roles } from 'meteor/alanning:roles';
 
-import { Courses } from '/imports/api/courses/courses.js';
+import { Courses } from '/imports/api/courses/courses';
 
 Courses.helpers({
   staff() {

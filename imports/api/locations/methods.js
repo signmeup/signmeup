@@ -3,7 +3,7 @@ import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
 
-import { Locations } from '/imports/api/locations/locations.js';
+import { Locations } from '/imports/api/locations/locations';
 
 export const createLocation = new ValidatedMethod({
   name: 'locations.createLocation',

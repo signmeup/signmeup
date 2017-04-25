@@ -1,39 +1,20 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import moment from 'moment';
+import { Queues } from '/imports/api/queues/queues';
 
-import { Locations } from '/imports/api/locations/locations.js';
-import { Queues } from '/imports/api/queues/queues.js';
+import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
-import { RestrictedSessions } from '/imports/lib/client/restricted-sessions.js';
+import { createQueue } from '/imports/api/queues/methods';
 
-import { createQueue } from '/imports/api/queues/methods.js';
+import { locations } from '/imports/api/locations/helpers';
+import { queueEndTimes } from '/imports/api/queues/helpers';
 
 import './modal-queue-create.html';
 
-export function locations() {
-  return Locations.find();
-}
-
-export function endTimes() {
-  const result = [];
-
-  const time = moment().add(1, 'hour').startOf('hour');
-  while (time <= moment().add(1, 'day').startOf('day')) {
-    result.push({
-      formattedString: time.format('LT'),
-      ISOString: time.toISOString(),
-    });
-    time.add(15, 'minutes');
-  }
-
-  return result;
-}
-
 Template.ModalQueueCreate.helpers({
   locations,
-  endTimes,
+  queueEndTimes,
 });
 
 Template.ModalQueueCreate.events({

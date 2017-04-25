@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 
 import { claimTicket, releaseTicket, markTicketAsMissing, markTicketAsDone }
-  from '/imports/api/tickets/methods.js';
+  from '/imports/api/tickets/methods';
 
 import './ticket-ta-actions.html';
 

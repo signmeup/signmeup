@@ -1,10 +1,10 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { Queues } from '/imports/api/queues/queues.js';
+import { sortedActiveQueues } from '/imports/api/queues/helpers';
 
-import '/imports/ui/components/queue-card/queue-card.js';
-import '/imports/ui/components/modals/modal-queue-create/modal-queue-create.js';
+import '/imports/ui/components/queue-card/queue-card';
+import '/imports/ui/components/modals/modal-queue-create/modal-queue-create';
 
 import './index.html';
 
@@ -20,22 +20,13 @@ Template.Index.onRendered(() => {
   document.title = 'SignMeUp';
 });
 
-function activeQueues() {
-  const queues = Queues.find({ status: { $in: ['open', 'cutoff'] } }).fetch();
-  return queues.sort((a, b) => {
-    const courseA = a.course().name;
-    const courseB = b.course().name;
-    return courseA.localeCompare(courseB);
-  });
-}
-
 Template.Index.helpers({
-  activeQueues() {
-    return activeQueues();
+  sortedActiveQueues() {
+    return sortedActiveQueues();
   },
 
-  activeQueuesLength() {
-    return activeQueues().length;
+  sortedActiveQueuesLength() {
+    return sortedActiveQueues().length;
   },
 
   isTA(user) {

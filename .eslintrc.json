@@ -23,6 +23,8 @@
       2,
       "always"
     ],
+    "import/extensions": [2, "never"],
+    "import/no-absolute-path": 0,
     "import/no-extraneous-dependencies": 0,
     "import/no-unresolved": 1,
     "import/prefer-default-export": 0,
