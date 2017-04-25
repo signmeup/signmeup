@@ -23,7 +23,7 @@
   "devDependencies": {
     "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",
-    "eslint-import-resolver-meteor": "^0.3.3",
+    "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-meteor": "^4.0.1",
