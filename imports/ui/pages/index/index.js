@@ -20,9 +20,22 @@ Template.Index.onRendered(() => {
   document.title = 'SignMeUp';
 });
 
+function activeQueues() {
+  const queues = Queues.find({ status: { $in: ['open', 'cutoff'] } }).fetch();
+  return queues.sort((a, b) => {
+    const courseA = a.course().name;
+    const courseB = b.course().name;
+    return courseA.localeCompare(courseB);
+  });
+}
+
 Template.Index.helpers({
   activeQueues() {
-    return Queues.find({ status: { $in: ['open', 'cutoff'] } });
+    return activeQueues();
+  },
+
+  activeQueuesLength() {
+    return activeQueues().length;
   },
 
   isTA(user) {
