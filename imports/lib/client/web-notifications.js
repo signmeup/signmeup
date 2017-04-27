@@ -13,10 +13,18 @@ export class WebNotifications {
 
   static send(message, options) {
     if (!WebNotifications.canNotify()) return;
-    // TODO ask for permission if not granted?
-    const notification = new Notification(message, options);
-    if (options.timeout) {
-      setTimeout(() => { notification.close(); }, options.timeout);
+    const notify = () => {
+      const notification = new Notification(message, options);
+      if (options.timeout) {
+        setTimeout(() => { notification.close(); }, options.timeout);
+      }
+    };
+    if (Notification.permission === 'granted') {
+      notify();
+    } else {
+      WebNotifications.requestPermission(() => {
+        if (Notification.permission === 'granted') notify();
+      });
     }
   }
 }
