@@ -86,6 +86,16 @@ Queues.helpers({
     });
   },
 
+  topTicket() {
+    return Tickets.find({
+      queueId: this._id,
+      status: { $in: ['open', 'claimed', 'markedAsMissing'] },
+    }, {
+      sort: { createdAt: 1 },
+      limit: 1,
+    });
+  },
+
   isRestricted() {
     return this.settings.restrictedSessionIds.length > 0;
   },

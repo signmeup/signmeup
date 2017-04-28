@@ -80,6 +80,17 @@ Template.Queue.onRendered(function onRendered() {
           },
         });
         initial = false;
+      } else {
+        let initial2 = true;
+        queue.topTicket().observe({
+          addedAt: (ticket) => {
+            if (initial2) return;
+            if (ticket.belongsToUser(Meteor.userId())) {
+              WebNotifications.send('You\'re up!');
+            }
+          },
+        });
+        initial2 = false;
       }
     }
   });
