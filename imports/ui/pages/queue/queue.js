@@ -66,6 +66,8 @@ Template.Queue.onRendered(function onRendered() {
         let initial = true;
         queue.activeTickets().observe({
           added: (ticket) => {
+            // When we first call observe, this function is called for each
+            // existing ticket. This "hack" ignores this initial call.
             if (initial) return;
             const subscription = this.subscribe('users.byIds', ticket.studentIds, () => {
               const students = ticket.students().fetch();
@@ -83,10 +85,17 @@ Template.Queue.onRendered(function onRendered() {
       } else {
         let initial2 = true;
         queue.topTicket().observe({
+          // we must use addedAt instead of added otherwise changes won't appear
           addedAt: (ticket) => {
+            // When we first call observe, this function is called for each
+            // existing ticket. This "hack" ignores this initial call.
             if (initial2) return;
+            // if ticket created within the past 10 seconds, don't alert
+            if (Date.now() - ticket.createdAt < 10000) return;
             if (ticket.belongsToUser(Meteor.userId())) {
-              WebNotifications.send('You\'re up!');
+              WebNotifications.send('You\'re up!', {
+                timeout: 5000,
+              });
             }
           },
         });
