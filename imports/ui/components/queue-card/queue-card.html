@@ -11,7 +11,7 @@
     </div>
     <div class="card-footer text-muted">
       {{#if queue.isEnded}}
-        <i class="material-icons">access_time</i>Ended at {{scheduledEndTime queue.endedAt}}
+        <i class="material-icons">block</i>Ended at {{scheduledEndTime queue.endedAt}}
       {{else}}
         <i class="material-icons">access_time</i>Ends at {{scheduledEndTime queue.scheduledEndTime}}
       {{/if}}
