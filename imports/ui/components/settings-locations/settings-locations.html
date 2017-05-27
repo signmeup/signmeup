@@ -18,21 +18,7 @@
       </div>
 
       {{#each location in locations}}
-        <div class="card-block">
-          <div class="row mb-0">
-            <p class="location-name col-xs-9 mb-0">
-              {{location.name}}
-            </p>
-            <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
-              <button
-                class="btn btn-outline-danger pull-xs-right js-remove-location"
-                data-name="{{location.name}}"
-                data-id="{{location._id}}">
-                Remove
-              </button>
-            </div>
-          </div>
-        </div>
+        {{> LocationEntry location=location}}
       {{/each}}
     </div>
   </div>

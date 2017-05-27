@@ -1,25 +1,13 @@
 {
   "users": [{
-    "name": "Admin Test",
+    "name": "Admin",
     "email": "admin@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "admin"
   }, {
-    "email": "athyuttam_eleti@brown.edu",
-    "saml": true,
-    "type": "admin"
-  }, {
-    "name": "MTA Test",
+    "name": "MTA",
     "email": "mta@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
-    "type": "mta"
-  }, {
-    "email": "emma_herold@brown.edu",
-    "saml": true,
-    "type": "mta"
-  }, {
-    "email": "marley_rafson@brown.edu",
-    "saml": true,
     "type": "mta"
   }, {
     "name": "HTA Test",
