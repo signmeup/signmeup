@@ -13,4 +13,6 @@ logs
 *.log
 npm-debug.log*
 
+/.vagrant
+
 .DS_Store
