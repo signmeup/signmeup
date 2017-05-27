@@ -42,19 +42,6 @@
           </div>
         </div>
       {{/if}}
-      <p>{{recentlyEnded.count}}</p>
-      {{#if recentlyEndedQueues.count}}
-      <hr />
-      <h3>Recently ended</h3>
-      <br />
-      <div class="row">
-        {{#each queue in recentlyEndedQueues}}
-          <div class="col-lg-4 col-md-6 mb-2">
-            {{> QueueCard queue=queue}}
-          </div>
-        {{/each}}
-      </div>
-      {{/if}}
     {{else}}
       <div class="row flex-items-xs-center" style="text-align: center;">
         <p>Loading...</p>
