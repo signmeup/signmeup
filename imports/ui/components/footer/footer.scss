@@ -1,7 +1,18 @@
 .footer {
   border-top: 1px solid $gray-lighter;
 }
-
+.container {
+    text-align: center;
+}
+.nav.navbar-nav {
+    text-align: center;
+    display: inline-block;
+    float: none;
+}
+.nav.navbar-nav.nav-item {
+    display: inline-block;
+    float:none;
+}
 .github-button {
-  margin-top: 0.55rem;
+    margin-top: 0.55rem;
 }
