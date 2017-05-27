@@ -17,7 +17,7 @@ Meteor.publish('queues.active', function active() {
 
 Meteor.publish('queues.recentlyEnded', function recentlyEnded() {
   const cutoff = moment().subtract(5, 'minutes').toDate();
-  return Queues.find({ status: 'ended', endedAt : { $gt : cutoff } });
+  return Queues.find({ status: 'ended', endedAt: { $gt: cutoff } });
 });
 
 Meteor.publish('queues.inRange', function inRange(courseId, startTime, endTime) {

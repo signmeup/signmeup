@@ -30,7 +30,7 @@ Template.Index.helpers({
 
   recentlyEndedQueues() {
     const cutoff = moment().subtract(5, 'minutes').toDate();
-    return Queues.find({ status: 'ended', endedAt : { $gt : cutoff } });
+    return Queues.find({ status: 'ended', endedAt: { $gt: cutoff } });
   },
 
   isTA(user) {
