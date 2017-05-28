@@ -1,4 +1,5 @@
 import { Template } from 'meteor/templating';
+import { FlowRouter } from 'meteor/kadira:flow-router';
 import $ from 'jquery';
 
 import '/imports/ui/components/ticket/ticket';
@@ -12,32 +13,32 @@ Template.QueueTable.onCreated(function onCreated() {
 Template.QueueTable.onRendered(function onRendered() {
   let startInd = 0;
   $('.tbody').sortable({
-      handle: '.handle',
-      axis: 'y',
-      containment: '.custom-table',
-      sort: (e, ui) => {
-        if (ui.position.top < ui.originalPosition.top) {
+    handle: '.handle',
+    axis: 'y',
+    containment: '.custom-table',
+    sort: (e, ui) => {
+      if (ui.position.top < ui.originalPosition.top) {
+        return false;
+      }
+      return true;
+    },
+    start: (e, ui) => {
+      startInd = ui.item.index();
+    },
+    stop: (e, ui) => {
+      if (startInd !== ui.item.index()) {
+        if (!confirm('Are you sure you want to move down the queue?')) {
           return false;
         }
-      },
-      start: (e, ui) => {
-        startInd = ui.item.index();
-      },
-      stop: (e, ui) => {
-        if (startInd != ui.item.index()) {
-          if(confirm("Are you sure you want to move down the queue?")) {
-            let ticketId = $('.handle').parent().parent().attr('id');
-            let newInd = ui.item.index();
-            moveTicket.call({
-              queueId: this.getQueueId(),
-              ticketId: ticketId,
-              newInd: newInd});
-            return true;
-          } else {
-            return false;
-          }
-        }
+        const ticketId = $('.handle').parent().parent().attr('id');
+        const newInd = ui.item.index();
+        moveTicket.call({
+          queueId: this.getQueueId(),
+          ticketId: ticketId,
+          newInd: newInd});
+        return true;
       }
+    },
   });
 });
 

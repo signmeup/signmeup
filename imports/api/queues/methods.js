@@ -15,14 +15,14 @@ import { Sessions } from '/imports/api/sessions/sessions';
 export const moveTicket = new ValidatedMethod({
   name: 'queues.moveTicket',
   validate: new SimpleSchema({
-    queueId : { type: String, regEx: SimpleSchema.RegEx.Id },
-    ticketId : { type: String, regEx: SimpleSchema.RegEx.Id },
-    newInd : { type: Number }
+    queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    ticketId: { type: String, regEx: SimpleSchema.RegEx.Id },
+    newInd: { type: Number },
   }).validator(),
-  run({queueId, ticketId, newInd}) {
-    Queues.update({_id: queueId}, {$pull : {"ticketIds" : ticketId}});
-    Queues.update({_id: queueId}, {$push : {"ticketIds" : { $each: [ticketId], $position: newInd}}});
-  }
+  run({ queueId, ticketId, newInd }) {
+    Queues.update({ _id: queueId }, { $pull: { ticketIds: ticketId } });
+    Queues.update({ _id: queueId }, { $push: { ticketIds: { $each: [ticketId], $position: newInd } } });
+  },
 });
 
 export const createQueue = new ValidatedMethod({
