@@ -1,7 +1,12 @@
 <template name="Ticket">
-  <div class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} {{#if taView}}ta-ticket{{/if}} row">
+  <div id="{{ticket._id}}" class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} {{#if taView}}ta-ticket{{/if}} row">
+  <div class="td col-xs-1">
+    {{#if currentUserTicket ticket}}
+     <i class="material-icons handle">reorder</i>
+    {{/if}}
+  </div>
     <div class="td col-xs-1">{{ticket.index}}</div>
-    <div class="td col-xs-6">{{studentNames ticket.students}}</div>
+    <div class="td col-xs-5">{{studentNames ticket.students}}</div>
     <div class="td col-xs-2">{{formattedTimestamp ticket.createdAt}}</div>
     {{#if taView}}
       {{> TicketTAActions ticket=ticket}}
@@ -33,9 +38,8 @@
         </div>
       </div>
     {{/if}}
-  </div>
-
   {{#if showTicketDrawer ticket taView}}
     {{> TicketDrawer ticket=ticket taView=taView currentUserTicket=currentUserTicket}}
-  {{/if}}
+  {{/if}}    
+  </div>
 </template>
