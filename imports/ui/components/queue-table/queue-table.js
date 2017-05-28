@@ -15,6 +15,7 @@ Template.QueueTable.onRendered(function onRendered() {
   $('.tbody').sortable({
     handle: '.handle',
     axis: 'y',
+    cursor: 'ns-resize',
     containment: '.custom-table',
     sort: (e, ui) => {
       if (ui.position.top < ui.originalPosition.top) {
