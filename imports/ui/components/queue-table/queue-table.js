@@ -35,9 +35,9 @@ Template.QueueTable.onRendered(function onRendered() {
         moveTicket.call({
           queueId: this.getQueueId(),
           ticketId: ticketId,
-          newInd: newInd});
-        return true;
+          newInd: newInd });
       }
+      return true;      
     },
   });
 });

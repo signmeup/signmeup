@@ -21,7 +21,8 @@ export const moveTicket = new ValidatedMethod({
   }).validator(),
   run({ queueId, ticketId, newInd }) {
     Queues.update({ _id: queueId }, { $pull: { ticketIds: ticketId } });
-    Queues.update({ _id: queueId }, { $push: { ticketIds: { $each: [ticketId], $position: newInd } } });
+    Queues.update({ _id: queueId }, {
+      $push: { ticketIds: { $each: [ticketId], $position: newInd } } });
   },
 });
 
