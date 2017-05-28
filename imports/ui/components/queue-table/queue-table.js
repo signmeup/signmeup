@@ -37,7 +37,7 @@ Template.QueueTable.onRendered(function onRendered() {
           ticketId: ticketId,
           newInd: newInd });
       }
-      return true;      
+      return true;
     },
   });
 });
