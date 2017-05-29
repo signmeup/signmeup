@@ -1,6 +1,3 @@
-settings:
-  import/resolver: meteor  
-
 engines:
   eslint:
     enabled: true
