@@ -28,7 +28,7 @@ Template.QueueTable.onRendered(function onRendered() {
     },
     stop: (e, ui) => {
       if (startInd !== ui.item.index()) {
-        if (!confirm('Are you sure you want to move down the queue?')) {
+        if (!confirm('Are you sure you want to move down the queue? Once you move down, you can\'t move back up.')) {
           return false;
         }
         const ticketId = $('.handle').parent().parent().attr('id');
