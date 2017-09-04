@@ -36,6 +36,10 @@ Template.Queue.onRendered(function onRendered() {
   this.autorun(() => {
     if (this.subscriptionsReady()) {
       const queue = this.getQueue();
+      if (!queue) {
+        FlowRouter.go('/404');
+        return;
+      }
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
     }
   });

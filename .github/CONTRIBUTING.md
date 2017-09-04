@@ -28,10 +28,10 @@ Both begin by setting up the repo and running SignMeUp locally.
 
 1. Install [Meteor](https://www.meteor.com/install). This installs the Node runtime and the npm package manager too.
 
-2. Clone this repository, and install dependencies:
+2. If you're a maintainer, clone this repository. Otherwise fork it, and install dependencies:
 
    ```shell
-   git clone https://github.com/signmeup/signmeup.git
+   git clone https://github.com/<username>/signmeup.git
    cd signmeup
    meteor npm install -g yarn
    meteor yarn
@@ -39,7 +39,7 @@ Both begin by setting up the repo and running SignMeUp locally.
 3. Set up `settings.json`. To do so, start by copying the template:
 
    ```shell
-   cp app/settings.template.json app/settings.json
+   cp settings.template.json settings.json
    ```
 
    Now we need to fill in various values inside `settings.json`.
@@ -51,11 +51,13 @@ Both begin by setting up the repo and running SignMeUp locally.
 4. Run the app:
 
    ```shell
-   cd app
    meteor --settings settings.json
    ```
 
 5. Navigate to `localhost:3000` in your web browser to see SignMeUp running!
+
+Note that to log into the test accounts you'll need to navigate to
+`localhost:3000/login-password` rather than clicking on the "Sign In" button.
 
 #### SAML Authentication
 
@@ -150,7 +152,6 @@ To do so, we will run an nginx reverse proxy on our machine.
 7. Finally, run SignMeUp as usual, but this time on port 8000:
 
    ```shell
-   cd app
    meteor --settings settings.json --port 8000
    ```
 
@@ -188,6 +189,19 @@ If fixing a bug in production:
 
 3. Once approved, merge the pull request. Then merge `production` into `master`
    so both branches are up to date.
+
+### Writing Quality Commit Messages
+
+When committing changes, there are a few important points to remember:
+
+1. Use the imperative form. Instead of writing `fixed bug`, write `fix bug`. This convention is helpful as it describes what will happen after your commit is applied.
+
+2. Write concise, descriptive messages about what changes were made and why. For example, prefer `Fix failing server call in createTicket` over `got createTicket to work!`.
+
+3. Reference issue numbers correctly. For example, `Fix #178: Add section about commit messages to CONTRIBUTING.md`.
+
+To learn more about writing great commit messages, see this [article](https://chris.beams.io/posts/git-commit/). 
+
 
 ### Debugging Meteor
 

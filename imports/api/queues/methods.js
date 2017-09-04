@@ -5,6 +5,8 @@ import { Roles } from 'meteor/alanning:roles';
 import { SyncedCron } from 'meteor/percolate:synced-cron';
 import { _ } from 'meteor/underscore';
 
+import moment from 'moment';
+
 import { Courses } from '/imports/api/courses/courses';
 import { Locations } from '/imports/api/locations/locations';
 import { Queues } from '/imports/api/queues/queues';
@@ -253,6 +255,52 @@ export const endQueue = new ValidatedMethod({
     if (Meteor.isServer) {
       SyncedCron.remove(`queues.endQueue.${queueId}`);
     }
+  },
+});
+
+export const reopenQueue = new ValidatedMethod({
+  name: 'queues.reopenQueue',
+  validate: new SimpleSchema({
+    queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  }).validator(),
+  run({ queueId }) {
+    const queue = Queues.findOne(queueId);
+    if (!queue) {
+      throw new Meteor.Error('queues.doesNotExist',
+        `No queue exists with id ${queueId}`);
+    } else if (queue.status !== 'ended') {
+      throw new Meteor.Error('queues.reopenQueue.notEnded',
+        'Only ended queues can be reopened');
+    }
+
+    if (this.connection && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], queue.courseId)) { // eslint-disable-line max-len
+      throw new Meteor.Error('queues.endQueue.unauthorized',
+        'Only TAs and above can reopen queues.');
+    }
+
+    let restoredStatus = 'open';
+    if (queue.cutoffAt) {
+      restoredStatus = 'cutoff';
+    }
+
+    let newTime = moment().add(1, 'hour').startOf('hour').toDate();
+    if (queue.scheduledEndTime > new Date()) {
+      // If original end time hasn't passed yet, use it as the end time again
+      newTime = queue.scheduledEndTime;
+    }
+
+    Queues.update({
+      _id: queueId,
+    }, {
+      $set: {
+        status: restoredStatus,
+        scheduledEndTime: newTime,
+      },
+      $unset: {
+        endedAt: '',
+        endedBy: '',
+      },
+    });
   },
 });
 

@@ -6,7 +6,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "autoprefixer": "^6.4.1",
+    "autoprefixer": "^6.7.6",
     "babel-runtime": "^6.18.0",
     "bcrypt": "^1.0.3",
     "bootstrap": "4.0.0-beta",
@@ -22,21 +22,21 @@
     "ua-parser-js": "^0.7.10"
   },
   "devDependencies": {
-    "eslint": "^3.0.1",
+    "eslint": "^3.17.1",
     "eslint-config-airbnb": "^14.1.0",
-    "eslint-import-resolver-meteor": "^0.3.3",
+    "eslint-import-resolver-meteor": "^0.4.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-meteor": "^4.0.1",
     "eslint-plugin-react": "^6.3.0",
-    "stylelint": "^7.8.0",
+    "stylelint": "^7.9.0",
     "stylelint-config-standard": "^16.0.0"
   },
   "postcss": {
     "plugins": {
       "autoprefixer": {
         "browsers": [
-          "last 2 versions"
+          "last 3 versions"
         ]
       }
     }

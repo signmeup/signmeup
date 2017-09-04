@@ -47,8 +47,8 @@ export const updateLocation = new ValidatedMethod({
 
     const user = Meteor.users.findOne(this.userId);
     if (!user.isTAOrAbove()) {
-      throw new Meteor.Error('locations.createLocation.unauthorized',
-      'Only TAs and above can create locations.');
+      throw new Meteor.Error('locations.updateLocation.unauthorized',
+      'Only TAs and above can update locations.');
     }
 
     Locations.update({
@@ -75,8 +75,8 @@ export const deleteLocation = new ValidatedMethod({
 
     const user = Meteor.users.findOne(this.userId);
     if (!user.isTAOrAbove()) {
-      throw new Meteor.Error('locations.createLocation.unauthorized',
-      'Only TAs and above can create locations.');
+      throw new Meteor.Error('locations.deleteLocation.unauthorized',
+      'Only TAs and above can delete locations.');
     }
 
     Locations.update({
