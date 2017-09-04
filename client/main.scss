@@ -1,6 +1,27 @@
 /* Vendor */
 @import "{}/node_modules/bootstrap/scss/bootstrap.scss";
-@import "{}/imports/ui/stylesheets/animate.forked.scss";
+
+/* Animations (original from animate.css) */
+.animated {
+  animation-duration: 1s;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 15%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fadeInUp {
+  animation-name: fadeInUp;
+}
 
 /* Material Icons */
 i.material-icons {
