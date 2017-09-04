@@ -1,7 +1,7 @@
 .custom-table {
   min-height: 400px;
 
-  border: 1px solid $gray-lighter;
+  border: 1px solid $gray-200;
   border-radius: 4px;
 }
 
@@ -10,7 +10,7 @@
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
 
-  border-bottom: 1px solid $gray-lighter;
+  border-bottom: 1px solid $gray-200;
 
   > .td {
     display: flex;

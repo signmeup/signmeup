@@ -1,17 +1,17 @@
 .device-card {
   position: relative;
 
-  margin-top: $spacer-y;
-  margin-right: $spacer-x;
+  margin-top: $spacer;
+  margin-right: $spacer;
 
   padding: $spacer;
 
-  border: 1px solid $gray-lighter;
+  border: 1px solid $gray-200;
   border-radius: 4px;
 }
 
 .current-device-card {
-  box-shadow: inset 0 -2px $brand-warning;
+  box-shadow: inset 0 -2px theme-color("warning");
 }
 
 .device-icon.material-icons {
