@@ -1,7 +1,7 @@
 <template name="QueueCard">
   <a class="queue-card card" href="/queue/{{queue._id}}">
     <div class="queue-card-pattern card-img-top" style="background: {{queue.svgPatternUrl}}"></div>
-    <div class="card-block">
+    <div class="card-body">
       <h4 class="card-title text-truncate">{{queue.course.name}} &middot; {{queue.name}}</h4>
       <p class="card-subtitle text-truncate">{{queue.course.description}}</p>
       <p class="card-text text-muted mt-3">
