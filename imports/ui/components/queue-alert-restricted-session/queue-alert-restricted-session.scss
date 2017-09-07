@@ -2,10 +2,8 @@
   border-top: 1px solid $gray-200;
 }
 
-.device-cards {
-  display: flex;
-}
-
 .add-device-card {
+  position: relative;
   min-height: 80px;
+  border-radius: 4px;
 }

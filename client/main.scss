@@ -46,6 +46,21 @@ i.material-icons {
   transition: none;
 }
 
+/* Other shared component CSS */
+
+.dashed-card {
+  color: $navbar-light-color;
+  border-width: 2px;
+  border-style: dashed;
+  transition: all 0.2s ease;
+
+  @include hover-focus-active {
+    color: $navbar-light-hover-color;
+    text-decoration: none !important;
+    border-color: $navbar-light-hover-color;
+  }
+}
+
 /* Layouts */
 @import "{}/imports/ui/layouts/app-body/app-body.scss";
 

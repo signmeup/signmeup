@@ -1,16 +1,3 @@
 .queue-card-deck .card {
   height: 200px;
 }
-
-.create-queue-card {
-  color: $navbar-light-color;
-  border-width: 2px;
-  border-style: dashed;
-  transition: all 0.2s ease;
-
-  @include hover-focus-active {
-    color: $navbar-light-hover-color;
-    text-decoration: none !important;
-    border-color: $navbar-light-hover-color;
-  }
-}
