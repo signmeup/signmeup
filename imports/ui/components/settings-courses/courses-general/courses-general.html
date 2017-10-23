@@ -2,7 +2,7 @@
   <div class="tab-pane fade in active" id="courses-general" role="tab-panel">
     <div class="card">
       <div class="card-header">Info</div>
-      <div class="card-block">
+      <div class="card-body">
         <form id="update-course-form">
           <div class="row">
             <div class="form-group col-md-4">
@@ -27,7 +27,7 @@
       <div class="card-header">Settings</div>
 
       <form id="update-course-settings-form">
-        <div class="card-block">
+        <div class="card-body">
           <div class="form-check mb-0">
             <label class="form-check-label">
               <input type="checkbox" class="form-check-input" name="restrictSessionsByDefault" checked="{{course.settings.restrictSessionsByDefault}}">
@@ -39,13 +39,13 @@
           </div>
         </div>
 
-        <div class="card-block">
+        <div class="card-body">
           <div class="form-group row mb-0">
-            <label for="signup-gap" class="col-xs-9 col-form-label">
+            <label for="signup-gap" class="col-9 col-form-label">
               <span>Signup Gap</span><br>
               <span>Minimum time a student must wait after resolution to sign up again.</span>
             </label>
-            <div class="col-xs-3">
+            <div class="col-3">
               <select class="form-control mt-1" name="signupGap">
                 <option value="0" selected="{{isCurrentSignupGap course 0}}">No gap</option>
                 <option value="15" selected="{{isCurrentSignupGap course 15}}">15 minutes</option>
@@ -57,7 +57,7 @@
           </div>
         </div>
 
-        <div class="card-block">
+        <div class="card-body">
           <div class="form-group">
             <label for="signup-gap" class="col-form-label">
               <span class="text-muted">Notifications</span><br>
