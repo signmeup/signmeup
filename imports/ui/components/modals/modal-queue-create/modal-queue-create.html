@@ -4,10 +4,10 @@
       <div class="modal-content">
         <!-- Modal Header -->
         <div class="modal-header">
+          <h4 class="modal-title">New Queue</h4>
           <button type="button" class="close" data-dismiss="modal">
             <i class="material-icons">close</i>
           </button>
-          <h4 class="modal-title">New Queue</h4>
         </div>
 
         <!-- Modal Body -->
@@ -48,7 +48,7 @@
                 <label for="endTime">End Time</label>
                 <select name="endTime" class="form-control">
                   <option value="" disabled selected>Select end time...</option>
-                  {{#each time in endTimes}}
+                  {{#each time in queueEndTimes}}
                     <option value="{{time.ISOString}}">{{time.formattedString}}</option>
                   {{/each}}
                 </select>
