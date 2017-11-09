@@ -84,16 +84,15 @@ Template.Queue.onRendered(function onRendered() {
         initial = false;
       } else {
         let initial2 = true;
-        queue.topTicket().observe({
-          // we must use addedAt instead of added otherwise changes won't appear
-          addedAt: (ticket) => {
+        queue.claimedTickets().observe({
+          added: (ticket) => {
             // When we first call observe, this function is called for each
             // existing ticket. This "hack" ignores this initial call.
             if (initial2) return;
             // if ticket created within the past 10 seconds, don't alert
             if (Date.now() - ticket.createdAt < 10000) return;
             if (ticket.belongsToUser(Meteor.userId())) {
-              WebNotifications.send('You\'re up!', {
+              WebNotifications.send('Your ticket has been claimed!', {
                 timeout: 5000,
               });
             }

@@ -86,6 +86,13 @@ Queues.helpers({
     });
   },
 
+  claimedTickets() {
+    return Tickets.find({
+      queueId: this._id,
+      status: 'claimed',
+    });
+  },
+
   topTicket() {
     return Tickets.find({
       queueId: this._id,
@@ -122,16 +129,5 @@ Queues.helpers({
 
   formatScheduledEndTime() {
     return moment(this.scheduledEndTime).format('LT');
-  },
-
-  // sends a notification to the current client
-  sendNotification(message) {
-    if (!('Notification' in window)) return; // no notification support
-    if (Notification.permission === 'denied') return; // user blocked us
-    Notification.requestPermission().then((permission) => {
-      if (permission === 'granted') {
-        new Notification(message);
-      }
-    });
   },
 });
