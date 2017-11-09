@@ -40,7 +40,7 @@ Template.TicketTAActions.events({
   'click .js-mark-as-done'(event) {
     event.preventDefault();
 
-    const ticket = $(event.target).parents('.js-ticket-holder');
+    const ticket = $(event.target).parents('.js-ticket-holder').children();
     ticket.slideUp(400, () => {
       markTicketAsDone.call({
         ticketId: this.ticket._id,
