@@ -1,7 +1,6 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
-
-import { sortedActiveQueues } from '/imports/api/queues/helpers';
+import { sortedActiveQueues, recentlyEndedQueues } from '/imports/api/queues/helpers';
 
 import moment from 'moment';
 
@@ -21,6 +20,7 @@ Template.Index.onCreated(function onCreated() {
 
 Template.Index.onRendered(() => {
   document.title = 'SignMeUp';
+
 });
 
 Template.Index.helpers({
@@ -28,13 +28,12 @@ Template.Index.helpers({
     return sortedActiveQueues();
   },
 
-  sortedActiveQueuesLength() {
-    return sortedActiveQueues().length;
+  recentlyEndedQueues() {
+    return recentlyEndedQueues();
   },
 
-  recentlyEndedQueues() {
-    const cutoff = moment().subtract(5, 'minutes').toDate();
-    return Queues.find({ status: 'ended', endedAt: { $gt: cutoff } });
+  queuesLength() {
+    return sortedActiveQueues().length + recentlyEndedQueues().length;
   },
 
   isTA(user) {

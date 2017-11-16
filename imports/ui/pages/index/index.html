@@ -1,7 +1,7 @@
 <template name="Index">
   <div class="index container my-3">
     {{#if Template.subscriptionsReady}}
-      {{#if sortedActiveQueuesLength}}
+      {{#if queuesLength}}
         <div class="queue-card-deck row">
           {{#each queue in sortedActiveQueues}}
             <div class="col-lg-4 my-md-3 my-2">
@@ -10,7 +10,7 @@
           {{/each}}
 
           {{#each queue in recentlyEndedQueues}}
-            <div class="col-lg-4 col-md-6 mb-2">
+            <div class="col-lg-4 my-md-3 my-2">
               {{> QueueCard queue=queue}}
             </div>
           {{/each}}
