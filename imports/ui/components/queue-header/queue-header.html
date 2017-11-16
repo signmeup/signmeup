@@ -1,25 +1,29 @@
 <template name="QueueHeader">
   <div class="queue-header">
     {{#if Template.subscriptionsReady}}
-      <div class="queue-header-background" style="background-image: {{svgPatternUrl queue}}"></div>
-      <div class="container pt-3 pb-2">
+      <div class="queue-header-background" style="background-image: {{queue.svgPatternUrl}}"></div>
+      <div class="container pt-sm-6 pb-sm-5">
         <div class="name-and-staff">
-          <h1 class="queue-name display-5 mb-1">{{queue.course.name}} &middot; {{queue.name}}</h1>
+          <h1 class="queue-name display-5 mb-3">{{queue.course.name}} &middot; {{queue.name}}</h1>
           <div class="staff float-xs-right">
             {{#each ta in (onlineStaff queue)}}
               {{> ProfilePic user=ta}}
             {{/each}}
           </div>
         </div>
-        <div class="info text-muted mb-1">
-          <span class="mr-1"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
-          <span class="mr-1"><i class="material-icons">people</i>{{ticketCount queue}}</span>
-          <span class="mr-1"><i class="material-icons">access_time</i>Ends at {{scheduledEndTime queue.scheduledEndTime}}</span>
+        <div class="row info text-muted justify-content-between">
+          <div class="col-6">
+            <span class="mr-3"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
+            <span class="mr-3"><i class="material-icons">people</i>{{queue.formatTicketCount}}</span>
+            <span class="mr-3"><i class="material-icons">access_time</i>Ends at {{queue.formatScheduledEndTime}}</span>
+          </div>
 
           {{#if taView}}
-            <a href="#" role="button" class="btn-black-link float-xs-right js-show-modal-queue-edit">
-              <i class="material-icons">mode_edit</i> Edit Queue
-            </a>
+            <div class="col-6 text-right">
+              <button class="btn btn-link btn-black-link js-show-modal-queue-edit">
+                <i class="material-icons">mode_edit</i> Edit Queue
+              </button>
+            </div>
           {{/if}}
         </div>
       </div>

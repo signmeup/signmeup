@@ -1,8 +1,5 @@
 import { Template } from 'meteor/templating';
 
-import GeoPattern from 'geopattern';
-import moment from 'moment';
-
 import './queue-card.html';
 
 Template.QueueCard.onCreated(function onCreated() {
@@ -34,8 +31,4 @@ Template.QueueCard.helpers({
   hyphenate(name) {
     return name.toLowerCase().replace(' ', '-');
   },
-
-  svgPatternUrl,
-  ticketCount,
-  scheduledEndTime,
 });

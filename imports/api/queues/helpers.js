@@ -1,10 +1,45 @@
 import { _ } from 'meteor/underscore';
 
+import GeoPattern from 'geopattern';
+import moment from 'moment';
+
 import { Courses } from '/imports/api/courses/courses';
 import { Locations } from '/imports/api/locations/locations';
 import { Queues } from '/imports/api/queues/queues';
 import { Sessions } from '/imports/api/sessions/sessions';
 import { Tickets } from '/imports/api/tickets/tickets';
+
+// Static helpers
+
+export function activeQueues() {
+  return Queues.find({ status: { $in: ['open', 'cutoff'] } });
+}
+
+export function sortedActiveQueues() {
+  const queues = activeQueues().fetch();
+  return queues.sort((a, b) => {
+    const courseA = a.course().name;
+    const courseB = b.course().name;
+    return courseA.localeCompare(courseB);
+  });
+}
+
+export function queueEndTimes() {
+  const result = [];
+
+  const time = moment().add(1, 'hour').startOf('hour');
+  while (time <= moment().add(1, 'day').startOf('day')) {
+    result.push({
+      formattedString: time.format('LT'),
+      ISOString: time.toISOString(),
+    });
+    time.add(15, 'minutes');
+  }
+
+  return result;
+}
+
+// Collection helpers
 
 Queues.helpers({
   course() {
@@ -63,5 +98,19 @@ Queues.helpers({
 
   requireLogin() {
     return !this.isRestricted();
+  },
+
+  svgPatternUrl() {
+    const svgPattern = GeoPattern.generate(this.course().name);
+    return svgPattern.toDataUrl();
+  },
+
+  formatTicketCount() {
+    const activeTicketsCount = this.activeTickets().count();
+    return `${activeTicketsCount} ticket${activeTicketsCount !== 1 ? 's' : ''}`;
+  },
+
+  formatScheduledEndTime() {
+    return moment(this.scheduledEndTime).format('LT');
   },
 });

@@ -1,17 +1,17 @@
 <template name="TicketTAActions">
-  <div class="ta-actions td col-xs-3 actions js-ta-actions">
-    <div class="btn-group">
+  <div class="ta-actions td col-4 actions js-ta-actions">
+    <div class="btn-group float-right">
       {{#if ticket.isOpen}}
-        <button type="button" class="btn btn-secondary js-claim-ticket">Claim ticket</button>
+        <button type="button" class="btn btn-outline-secondary js-claim-ticket">Claim ticket</button>
       {{/if}}
 
       {{#if ticket.isClaimed}}
         {{#if ticket.isClaimedByUser currentUser._id}}
-          <button type="button" class="btn btn-outline-success js-mark-as-done">Mark as Done</button>
+          <button type="button" class="btn btn-outline-success js-mark-as-done">Mark as done</button>
         {{else}}
           <button
             type="button"
-            class="btn btn-secondary text-truncate" style="max-width: 200px;"
+            class="btn btn-outline-secondary text-truncate" style="max-width: 200px;"
             title="Claimed by {{ticket.claimedByUser.fullName}}" disabled>
             Claimed by {{ticket.claimedByUser.fullName}}
           </button>
@@ -19,21 +19,24 @@
       {{/if}}
 
       {{#if ticket.isMarkedAsMissing}}
-        <button type="button" class="btn btn-secondary" disabled>Missing</button>
+        <button type="button" class="btn btn-outline-secondary" disabled>Missing</button>
       {{/if}}
 
       <button
         type="button"
-        class="btn btn-secondary dropdown-toggle dropdown-toggle-split"
+        class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       </button>
 
       <div class="dropdown-menu dropdown-menu-right">
         {{#if ticket.isClaimedByUser currentUser._id}}
           <a class="dropdown-item js-release-ticket" href="#">Release ticket</a>
+          <div class="dropdown-divider"></div>
         {{/if}}
 
         {{#if ticket.isMarkedAsMissing}}
+          <a class="dropdown-item js-release-ticket" href="#">Release ticket</a>
+          <div class="dropdown-divider"></div>
           <a class="dropdown-item js-claim-ticket" href="#">Claim ticket</a>
         {{else}}
           <a class="dropdown-item js-mark-as-missing" href="#">Mark as missing</a>

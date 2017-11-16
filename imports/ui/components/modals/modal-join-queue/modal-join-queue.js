@@ -46,8 +46,8 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
   };
 
   this.showNotifications = new ReactiveDict({
-    email: 'false',
-    text: 'false',
+    email: false,
+    text: false,
   });
 
   this.autorun(() => {

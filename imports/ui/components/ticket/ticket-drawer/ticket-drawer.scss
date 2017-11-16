@@ -1,0 +1,18 @@
+.tbody > .drawer {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  box-shadow: inset 0px 6px 10px -6px rgba(0, 0, 0, 0.1);
+  background-color: #fafafa;
+
+  > .td {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  h5 {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.25rem;
+  }
+}
