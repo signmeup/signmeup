@@ -3,9 +3,9 @@ import { $ } from 'meteor/jquery';
 
 import { Locations } from '/imports/api/locations/locations';
 
-import { createLocation } from '/imports/api/locations/methods.js';
+import { createLocation } from '/imports/api/locations/methods';
 
-import '/imports/ui/components/settings-locations/location-entry/location-entry.js';
+import '/imports/ui/components/settings-locations/location-entry/location-entry';
 
 import './settings-locations.html';
 
@@ -40,4 +40,3 @@ Template.SettingsLocations.events({
     }
   },
 });
-

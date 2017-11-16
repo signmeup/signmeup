@@ -2,12 +2,6 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import {
-  svgPatternUrl,
-  ticketCount,
-  scheduledEndTime }
-from '/imports/ui/components/queue-card/queue-card';
-
 import '/imports/ui/components/profile-pic/profile-pic';
 
 import './queue-header.html';
@@ -21,10 +15,6 @@ Template.QueueHeader.onCreated(function onCreated() {
 });
 
 Template.QueueHeader.helpers({
-  svgPatternUrl,
-  ticketCount,
-  scheduledEndTime,
-
   onlineStaff(queue) {
     const staff = queue.course().staff().fetch();
     const onlineStaff = Meteor.users.find({

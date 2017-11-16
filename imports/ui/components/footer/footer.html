@@ -1,36 +1,32 @@
 <template name="Footer">
-  <footer class="footer navbar navbar-light pt-2 pb-2">
+  <footer class="footer">
     <div class="container">
+      <div class="navbar navbar-light flex-sm-row px-0 py-4">
+        <div class="d-flex justify-content-center align-items-center mx-sm-0 mr-sm-auto">
+          <span class="navbar-text mr-2 py-2">SignMeUp {{version}}</span>
 
-      <ul class="nav navbar-nav float-xs-left">
-        <li class="nav-item">
-          <span class="nav-link nav-link-static disabled">
-            SignMeUp {{version}}
-          </span>
-        </li>
-        <li class="nav-item">
           <iframe
-            class="github-button"
             src="https://ghbtns.com/github-btn.html?user=signmeup&repo=signmeup&type=star&count=true"
             frameborder="0"
             scrolling="0"
-            width="160px"
-            height="20px">
+            height="20px"
+            width="80px"
+          >
           </iframe>
-        </li>
-      </ul>
+        </div>
 
-      <ul class="nav navbar-nav float-xs-right">
-        <li class="nav-item">
-          <a class="nav-link" href="https://github.com/signmeup/signmeup/wiki">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="https://github.com/signmeup/signmeup/issues/new">Report an Issue</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="mailto:signmeup-dev@lists.cs.brown.edu">Contact</a>
-        </li>
-      </ul>
+        <ul class="navbar-nav flex-row justify-content-center mx-sm-0">
+          <li class="nav-item">
+            <a class="nav-link mr-2" href="https://github.com/signmeup/signmeup">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link mx-2" href="https://github.com/signmeup/signmeup/issues/new">Report an Issue</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link ml-2" href="mailto:signmeup-dev@lists.cs.brown.edu">Contact</a>
+          </li>
+        </ul>
+      </div>
     </div>
   </footer>
 </template>

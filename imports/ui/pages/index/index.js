@@ -1,7 +1,7 @@
 import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 
-import { Queues } from '/imports/api/queues/queues';
+import { sortedActiveQueues } from '/imports/api/queues/helpers';
 
 import '/imports/ui/components/queue-card/queue-card';
 import '/imports/ui/components/modals/modal-queue-create/modal-queue-create';
@@ -21,8 +21,12 @@ Template.Index.onRendered(() => {
 });
 
 Template.Index.helpers({
-  activeQueues() {
-    return Queues.find({ status: { $in: ['open', 'cutoff'] } });
+  sortedActiveQueues() {
+    return sortedActiveQueues();
+  },
+
+  sortedActiveQueuesLength() {
+    return sortedActiveQueues().length;
   },
 
   isTA(user) {

@@ -2,7 +2,7 @@
   <div class="tab-pane fade" id="courses-people" role="tab-panel">
     <div class="card">
       <div class="card-header">HTAs</div>
-      <div class="card-block">
+      <div class="card-body">
         <form id="add-hta-form">
           <div class="input-group">
             <input type="text" class="form-control js-hta-email" name="htaEmail" placeholder="hta_email@brown.edu">
@@ -14,14 +14,14 @@
       </div>
 
       {{#each hta in (htas course)}}
-        <div class="card-block">
+        <div class="card-body">
           <div class="row mb-0">
-            <p class="col-xs-9 mb-0">
+            <p class="col-9 mb-0">
               {{hta.fullName}}<br>
               <span class="text-muted">{{hta.emailAddress}}</span>
             </p>
-            <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
-              <button class="btn btn-outline-danger float-xs-right js-remove-hta" data-id="{{hta._id}}">
+            <div class="col-3">
+              <button class="btn btn-outline-danger float-right js-remove-hta" data-id="{{hta._id}}">
                 Remove
               </button>
             </div>
@@ -32,7 +32,7 @@
 
     <div class="card">
       <div class="card-header">TAs</div>
-      <div class="card-block">
+      <div class="card-body">
         <form id="add-ta-form">
           <div class="input-group">
             <input type="text" class="form-control js-ta-email" name="taEmail" placeholder="ta_email@brown.edu">
@@ -44,14 +44,14 @@
       </div>
 
       {{#each ta in (tas course)}}
-        <div class="card-block">
+        <div class="card-body">
           <div class="row mb-0">
-            <p class="col-xs-9 mb-0">
+            <p class="col-9 mb-0">
               {{ta.fullName}}<br>
               <span class="text-muted">{{ta.emailAddress}}</span>
             </p>
-            <div class="col-xs-3 flex flex-items-xs-middle flex-items-xs-right">
-              <button class="btn btn-outline-danger float-xs-right js-remove-ta" data-id="{{ta._id}}">
+            <div class="col-3">
+              <button class="btn btn-outline-danger float-right js-remove-ta" data-id="{{ta._id}}">
                 Remove
               </button>
             </div>
