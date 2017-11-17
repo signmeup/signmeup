@@ -5,6 +5,10 @@
   border-radius: 4px;
 }
 
+.handle {
+  cursor: s-resize;
+}
+
 .thead > .row,
 .tbody > .row {
   padding-top: 0.75rem;
