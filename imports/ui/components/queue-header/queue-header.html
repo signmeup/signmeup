@@ -5,7 +5,7 @@
       <div class="container pt-sm-6 pb-sm-5">
         <div class="name-and-staff">
           <h1 class="queue-name display-5 mb-3">{{queue.course.name}} &middot; {{queue.name}}</h1>
-          <div class="staff float-xs-right">
+          <div class="staff float-right">
             {{#each ta in (onlineStaff queue)}}
               {{> ProfilePic user=ta}}
             {{/each}}
