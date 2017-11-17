@@ -63,12 +63,12 @@ Queues.helpers({
   },
 
   tickets() {
-    return Tickets.find({ _id: { $in: this.ticketIds } });
+    return Tickets.find({ queueId: this._id });
   },
 
   activeTickets() {
     return Tickets.find({
-      _id: { $in: this.ticketIds },
+      queueId: this._id,
       status: { $in: ['open', 'claimed', 'markedAsMissing'] },
     });
   },
@@ -83,6 +83,23 @@ Queues.helpers({
     const activeTickets = this.activeTickets().fetch();
     return activeTickets.some((ticket) => {
       return _.intersection(ticket.studentIds, userIds).length > 0;
+    });
+  },
+
+  claimedTickets() {
+    return Tickets.find({
+      queueId: this._id,
+      status: 'claimed',
+    });
+  },
+
+  topTicket() {
+    return Tickets.find({
+      queueId: this._id,
+      status: { $in: ['open', 'claimed', 'markedAsMissing'] },
+    }, {
+      sort: { createdAt: 1 },
+      limit: 1,
     });
   },
 

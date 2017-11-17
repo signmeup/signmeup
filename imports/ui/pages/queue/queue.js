@@ -5,6 +5,8 @@ import { Roles } from 'meteor/alanning:roles';
 
 import { Queues } from '/imports/api/queues/queues';
 
+import { WebNotifications } from '/imports/lib/client/web-notifications';
+
 import '/imports/ui/components/queue-header/queue-header';
 import '/imports/ui/components/alerts/alert-ending-soon/alert-ending-soon';
 import '/imports/ui/components/alerts/alert-signup-gap/alert-signup-gap';
@@ -32,7 +34,23 @@ Template.Queue.onCreated(function onCreated() {
   });
 });
 
+// is the current user a TA (or above)?
+const isTA = () => {
+  if (Template.instance().getView() === 'student') {
+    return false;
+  }
+
+  const queue = Template.instance().getQueue();
+  const courseId = queue && queue.courseId;
+  if (Roles.userIsInRole(Meteor.user(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
+    return true;
+  }
+
+  return false;
+};
+
 Template.Queue.onRendered(function onRendered() {
+  WebNotifications.requestPermission();
   this.autorun(() => {
     if (this.subscriptionsReady()) {
       const queue = this.getQueue();
@@ -41,6 +59,47 @@ Template.Queue.onRendered(function onRendered() {
         return;
       }
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
+
+      // setup notifications
+      if (!WebNotifications.canNotify()) return;
+      if (isTA()) {
+        let initial = true;
+        queue.activeTickets().observe({
+          added: (ticket) => {
+            // When we first call observe, this function is called for each
+            // existing ticket. This "hack" ignores this initial call.
+            if (initial) return;
+            const subscription = this.subscribe('users.byIds', ticket.studentIds, () => {
+              const students = ticket.students().fetch();
+              const names = students.map((student) => { return student.fullName(); });
+              const verb = names.length === 1 ? 'has' : 'have';
+              WebNotifications.send(`${names.join(', ')} ${verb} joined the queue`, {
+                body: ticket.question,
+                timeout: 5000,
+              });
+              subscription.stop();
+            });
+          },
+        });
+        initial = false;
+      } else {
+        let initial2 = true;
+        queue.claimedTickets().observe({
+          added: (ticket) => {
+            // When we first call observe, this function is called for each
+            // existing ticket. This "hack" ignores this initial call.
+            if (initial2) return;
+            // if ticket created within the past 10 seconds, don't alert
+            if (Date.now() - ticket.createdAt < 10000) return;
+            if (ticket.belongsToUser(Meteor.userId())) {
+              WebNotifications.send('Your ticket has been claimed!', {
+                timeout: 5000,
+              });
+            }
+          },
+        });
+        initial2 = false;
+      }
     }
   });
 });
@@ -51,16 +110,6 @@ Template.Queue.helpers({
   },
 
   taView() {
-    if (Template.instance().getView() === 'student') {
-      return false;
-    }
-
-    const queue = Template.instance().getQueue();
-    const courseId = queue && queue.courseId;
-    if (Roles.userIsInRole(Meteor.user(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
-      return true;
-    }
-
-    return false;
+    return isTA();
   },
 });
