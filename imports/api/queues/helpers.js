@@ -110,7 +110,7 @@ Queues.helpers({
     if (!queue.isEnded()) {
       svgPattern = GeoPattern.generate(queue.course().name);
     } else {
-      svgPattern = GeoPattern.generate(queue.course().name, {color : '#d3d3d3' });
+      svgPattern = GeoPattern.generate(queue.course().name, { color: '#d3d3d3' });
     }
     return svgPattern.toDataUrl();
   },

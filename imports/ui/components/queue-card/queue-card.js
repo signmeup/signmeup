@@ -13,10 +13,6 @@ export function ticketCount(queue) {
   return `${activeTicketsCount} ticket${activeTicketsCount !== 1 ? 's' : ''}`;
 }
 
-export function scheduledEndTime(endTime) {
-  return moment(endTime).format('LT');
-}
-
 Template.QueueCard.helpers({
   hyphenate(name) {
     return name.toLowerCase().replace(' ', '-');
