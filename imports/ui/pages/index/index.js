@@ -2,8 +2,6 @@ import { Template } from 'meteor/templating';
 import { $ } from 'meteor/jquery';
 import { sortedActiveQueues, recentlyEndedQueues } from '/imports/api/queues/helpers';
 
-import moment from 'moment';
-
 import '/imports/ui/components/queue-card/queue-card';
 import '/imports/ui/components/modals/modal-queue-create/modal-queue-create';
 
@@ -20,7 +18,6 @@ Template.Index.onCreated(function onCreated() {
 
 Template.Index.onRendered(() => {
   document.title = 'SignMeUp';
-
 });
 
 Template.Index.helpers({
