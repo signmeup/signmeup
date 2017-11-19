@@ -21,10 +21,13 @@ Template.Nav.helpers({
 
 Template.Nav.events({
   'click .js-sign-in'() {
-    Meteor.loginWithSaml(() => {
+    Meteor.loginWithGoogle({
+        loginUrlParameters: { hd: 'brown.edu' },
+        requestPermissions: ['email'],
+    }, () => {
       if (Meteor.user()) {
         /* eslint-disable no-console */
-        console.log(`Welcome ${Meteor.user().profile.givenName}!`);
+        console.log(`Welcome ${Meteor.user().firstName()}!`);
         /* eslint-enable no-console */
       }
     });

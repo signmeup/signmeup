@@ -1,16 +1,42 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
+import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
 
+const hasPropHelper = (obj, prop) => {
+  const elt = prop.shift();
+  if (!elt) return true; // prop is empty
+  if (!obj || !_.has(obj, elt)) return false;
+  return hasPropHelper(obj[elt], prop);
+};
+
+// does the given object have the given deep property, specified in dot notation
+const hasProp = (obj, prop) => hasPropHelper(obj, prop.split('.'));
+
+const getPropHelper = (obj, prop) => {
+  if (prop.length == 0) return obj;
+  if (!obj) return undefined;
+  const elt = prop.shift();
+  return getPropHelper(obj[elt], prop);
+};
+
+// safely get the given deep property, specified in dot notation
+const getProp = (obj, prop) => getPropHelper(obj, prop.split('.'));
+
+// return the first existing property, or undefined if none exist
+const getFirstProp = (obj, ...props) => {
+    return _.find(_.map(props, (prop) => getProp(obj, prop)), _.identity);
+};
+
 Meteor.users.helpers({
   isSamlUser() {
-    return this.profile && this.profile.brownUUID;
+    return hasProp(this, 'profile.brownUUID');
   },
 
   fullName() {
-    if (!this.emailAddress()) return null;
-    let name = this.emailAddress().split('@')[0];
+    const email = this.emailAddress();
+    let name = getProp(this, 'services.google.name') || (email && email.split('@')[0]);
 
     if (this.profile) {
       name = this.profile.displayName || this.profile.name || name;
@@ -20,11 +46,9 @@ Meteor.users.helpers({
   },
 
   firstName() {
-    if (this.profile && this.profile.givenName) {
-      return this.profile.givenName;
-    }
-
-    return this.fullName().split(' ')[0];
+    const name = getFirstProp(this,
+                    'profile.givenName', 'services.google.given_name');
+    return name || this.fullName().split(' ')[0];
   },
 
   initials() {
@@ -48,12 +72,13 @@ Meteor.users.helpers({
   },
 
   emailAddress() {
-    if (this.email) {
-      return this.email;
+    const email = getFirstProp(this,
+                    'email', 'profile.email', 'services.google.email');
+
+    if (email) {
+      return email;
     } else if (this.emails) {
       return this.emails[0].address;
-    } else if (this.profile.email) {
-      return this.profile.email;
     }
 
     return null;

@@ -11,6 +11,12 @@ export function createUser(options) {
     if (user) return user._id;
 
     userId = Meteor.users.insert({ email: options.email, profile: {} });
+  } else if (options.google) {
+    const user = Meteor.users.findOne({ 'services.google.email': options.email });
+    if (user) return user._id;
+
+    // TODO associate with google account
+    userId = Meteor.users.insert({ email: options.email, profile: {} });
   } else {
     const user = Meteor.users.findOne({ 'emails.address': options.email });
     if (user) {

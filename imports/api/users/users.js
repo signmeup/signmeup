@@ -8,6 +8,7 @@ Meteor.users.publicFields = {
   email: true,
   'emails.address': true,
   saml: true, // Adding this anticipating that we'll start storing data in `saml`
+  'services.google': true,
   'profile.name': true,
   'profile.displayName': true,
   'profile.givenName': true,

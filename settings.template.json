@@ -54,5 +54,10 @@
       "urn:oid:1.3.6.1.4.1.5923.1.5.1.1": "isMemberOf",
       "urn:oid:1.3.6.1.4.1.6537.1.63": "machineID"
     }
+  },
+
+  "google": {
+    "clientId": "INSERT-CLIENT-ID-HERE",
+    "secret": "INSERT-CLIENT-SECRET-HERE"
   }
 }

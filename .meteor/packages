@@ -41,3 +41,5 @@ shell-server@0.2.4
 mizzao:user-status
 athyuttamre:accounts-saml2
 dynamic-import
+accounts-google
+service-configuration
