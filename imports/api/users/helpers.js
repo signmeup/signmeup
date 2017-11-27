@@ -4,18 +4,6 @@ import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
 
-const hasPropHelper = (obj, prop) => {
-  const elt = prop.shift();
-  if (!elt) return true; // prop is empty
-  if (!obj || !_.has(obj, elt)) return false;
-  return hasPropHelper(obj[elt], prop);
-};
-
-// does the given object have the given deep property, specified in dot notation
-const hasProp = (obj, prop) => {
-  return hasPropHelper(obj, prop.split('.'));
-};
-
 const getPropHelper = (obj, prop) => {
   if (prop.length === 0) return obj;
   if (!obj) return undefined;
@@ -30,7 +18,9 @@ const getProp = (obj, prop) => {
 
 // return the first existing property, or undefined if none exist
 const getFirstProp = (obj, ...props) => {
-  return _.find(_.map(props, prop => getProp(obj, prop)), _.identity);
+  return _.find(_.map(props, (prop) => {
+      return getProp(obj, prop);
+  }), _.identity);
 };
 
 Meteor.users.helpers({

@@ -5,7 +5,7 @@ import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
 ServiceConfiguration.configurations.upsert({
-  service: 'google'
+  service: 'google',
 }, {
   $set: {
     clientId: Meteor.settings.google.clientId,
