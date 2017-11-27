@@ -24,8 +24,8 @@ Accounts.onLogin((sess) => {
       const newId = user._id;
 
       // copy global roles
-      const globalRoles = Roles.getRolesForUser(oldId);
-      Roles.addUsersToRoles(newId, globalRoles);
+      const globalRoles = Roles.getRolesForUser(oldId, Roles.GLOBAL_GROUP);
+      Roles.addUsersToRoles(newId, globalRoles, Roles.GLOBAL_GROUP);
 
       // copy per-group roles
       _.each(Roles.getGroupsForUser(oldId), (group) => {
