@@ -14,11 +14,14 @@ ServiceConfiguration.configurations.upsert({
   }
 });
 
-// When users login via Google, ensure that they are given the proper roles
+// When users login via Google migrate their roles
 Accounts.onLogin((sess) => {
   const user = sess.user;
   if (user.services && user.services.google) {
-    const oldUser = Meteor.users.findOne({ email: user.services.google.email });
+    const oldUser = Meteor.users.findOne({
+        email: user.services.google.email,
+        'services.google': { $exists: false },
+    });
     if (oldUser) {
       const oldId = oldUser._id;
       const newId = user._id;
@@ -32,6 +35,8 @@ Accounts.onLogin((sess) => {
           const roles = Roles.getRolesForUser(oldId, group);
           Roles.addUsersToRoles(newId, roles, group);
       });
+
+      Meteor.users.remove({ _id: oldId });
     }
   }
 });
