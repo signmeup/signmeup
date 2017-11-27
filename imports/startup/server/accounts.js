@@ -1,4 +1,8 @@
+import { Meteor } from 'meteor/meteor';
 import { ServiceConfiguration } from 'meteor/service-configuration';
+import { Accounts } from 'meteor/accounts-base';
+import { Roles } from 'meteor/alanning:roles';
+import { _ } from 'meteor/underscore';
 
 ServiceConfiguration.configurations.upsert({
   service: 'google'
@@ -7,5 +11,27 @@ ServiceConfiguration.configurations.upsert({
     clientId: Meteor.settings.google.clientId,
     secret: Meteor.settings.google.secret,
     loginStyle: 'popup'
+  }
+});
+
+// When users login via Google, ensure that they are given the proper roles
+Accounts.onLogin((sess) => {
+  const user = sess.user;
+  if (user.services && user.services.google) {
+    const oldUser = Meteor.users.findOne({ email: user.services.google.email });
+    if (oldUser) {
+      const oldId = oldUser._id;
+      const newId = user._id;
+
+      // copy global roles
+      const globalRoles = Roles.getRolesForUser(oldId);
+      Roles.addUsersToRoles(newId, globalRoles);
+
+      // copy per-group roles
+      _.each(Roles.getGroupsForUser(oldId), (group) => {
+          const roles = Roles.getRolesForUser(oldId, group);
+          Roles.addUsersToRoles(newId, roles, group);
+      });
+    }
   }
 });

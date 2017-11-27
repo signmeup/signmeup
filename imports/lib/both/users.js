@@ -6,16 +6,10 @@ export function createUser(options) {
   let userId = null;
   options.email = options.email.toLowerCase(); // eslint-disable-line no-param-reassign
 
-  if (options.saml) {
+  if (options.saml || options.google) {
     const user = Meteor.users.findOne({ email: options.email });
     if (user) return user._id;
 
-    userId = Meteor.users.insert({ email: options.email, profile: {} });
-  } else if (options.google) {
-    const user = Meteor.users.findOne({ 'services.google.email': options.email });
-    if (user) return user._id;
-
-    // TODO associate with google account
     userId = Meteor.users.insert({ email: options.email, profile: {} });
   } else {
     const user = Meteor.users.findOne({ 'emails.address': options.email });

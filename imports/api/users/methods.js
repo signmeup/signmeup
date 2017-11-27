@@ -24,7 +24,9 @@ export const addRoleGivenEmail = new ValidatedMethod({
     }
 
     // Check current user is authorized to create role
-    if (course && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta'], courseId)) {
+    if (course &&
+        !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta'], courseId) &&
+        !Roles.userIsInRole(this.userId, 'admin')) {
       throw new Meteor.Error('users.addRoleGivenEmail.unauthorized',
         'Only HTAs and above can add roles to the course');
     }
