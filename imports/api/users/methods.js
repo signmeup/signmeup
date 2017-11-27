@@ -33,7 +33,7 @@ export const addRoleGivenEmail = new ValidatedMethod({
     // Fetch or create new user
     email = email.toLowerCase(); // eslint-disable-line no-param-reassign
     const user = findUserByEmail(email);
-    const userId = user ? user._id : createUser({ email, saml: true });
+    const userId = user ? user._id : createUser({ email, google: true });
 
     // If adding TA or HTA role, make sure user isn't already a TA or HTA
     if (Roles.userIsInRole(userId, ['hta', 'ta'], courseId)) {

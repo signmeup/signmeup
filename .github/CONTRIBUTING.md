@@ -46,7 +46,7 @@ Both begin by setting up the repo and running SignMeUp locally.
 
    - Replace `INSERT-PASSWORD-HERE` with a good password. Feel free to add any extra user accounts
      if you want.
-   - **Optional:** fill in the `saml` settings to set up Shibboleth login. See instructions below.
+   - **Optional:** fill in the `google` settings to set up Google login. See instructions below.
 
 4. Run the app:
 
@@ -59,104 +59,9 @@ Both begin by setting up the repo and running SignMeUp locally.
 Note that to log into the test accounts you'll need to navigate to
 `localhost:3000/login-password` rather than clicking on the "Sign In" button.
 
-#### SAML Authentication
+#### Google Authentication
 
-In order to enable Shibboleth login locally, we need to run SignMeUp with SSL.
-To do so, we will run an nginx reverse proxy on our machine.
-
-1. Install [nginx](https://www.nginx.com/resources/wiki/start/topics/tutorials/install/). On macOS,
-   this can be done with [Homebrew](http://brew.sh), a popular package manager:
-
-   ```shell
-   # Install Homebrew
-   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-   # Install nginx
-   brew install nginx
-   ```
-
-2. Shibboleth identity providers (in our case Brown University) whitelist domains from
-   which they accept requests. For Brown, the testing domain is `local.cis-dev.brown.edu:3000`; this means
-   we need to run SignMeUp locally on this domain.
-
-   In your terminal, run:
-
-   ```shell
-   sudo printf "127.0.0.1\tlocal.cis-dev.brown.edu\n" | sudo tee -a /etc/hosts > /dev/null
-   ```
-
-   This adds an entry matching `local.cis-dev.brown.edu` to `localhost` in your hosts file. This way
-   when a browser tries to reach `local.cis-dev.brown.edu`, it actually reaches `localhost`.
-
-   To check if the append worked, run `cat /etc/hosts` and make sure the line was added to the end.
-
-3. To run the app on SSL, we need a cryptographic key pair. Generate self-signed certificates for `local.cis-dev.brown.edu`
-   using [this website](http://selfsignedcertificate.com). Then copy the files into the nginx folder:
-
-   ```shell
-   cd /usr/local/etc/nginx
-   mkdir ssl && cd ssl
-   cp /path/to/cert local.cis-dev.brown.edu.cert
-   cp /path/to/key local.cis-dev.brown.edu.key
-   ```
-
-4. Next, update your nginx configuration to serve as an HTTPS proxy to our Meteor app.
-   Edit the file `nginx.conf`, uncomment the HTTPS section at the bottom, and update it to match the following:
-
-   ```
-   # HTTPS server
-
-   server {
-       listen       3000 ssl;
-       server_name  local.cis-dev.brown.edu;
-
-       ssl_certificate      ./ssl/local.cis-dev.brown.edu.cert;
-       ssl_certificate_key  ./ssl/local.cis-dev.brown.edu.key;
-
-       ssl_session_cache    shared:SSL:1m;
-       ssl_session_timeout  5m;
-
-       ssl_ciphers  HIGH:!aNULL:!MD5;
-       ssl_prefer_server_ciphers  on;
-
-       location / {
-           proxy_pass          http://localhost:8000;
-           proxy_set_header    Host             $host;
-           proxy_set_header    X-Real-IP        $remote_addr;
-           proxy_set_header    X-Forwarded-For  $proxy_add_x_forwarded_for;
-           proxy_set_header    X-Client-Verify  SUCCESS;
-           proxy_set_header    X-Client-DN      $ssl_client_s_dn;
-           proxy_set_header    X-SSL-Subject    $ssl_client_s_dn;
-           proxy_set_header    X-SSL-Issuer     $ssl_client_i_dn;
-           proxy_read_timeout 1800;
-           proxy_connect_timeout 1800;
-       }
-   }
-   ```
-
-5. Reload the nginx configuration, and run nginx locally:
-
-   ```shell
-   nginx -s reload
-   ```
-
-6. Back to the app. Update `settings.json` to include SAML settings.
-
-   - Replace `saml.cert` with the identity provider's cert. You can get this by talking to the
-     project coordinator. They will have to notify CIS before giving it to you so CIS knows who has this cert.
-   - Replace `saml.serviceProviderCert` and `saml.decryptionPvk` with a *new*
-     certificate/key pair from http://selfsignedcertificate.com. Skip the header
-     and footer (The `---BEGIN...` and `---END...` parts). Also remove any newlines
-     to make sure the values are in a single line.
-
-7. Finally, run SignMeUp as usual, but this time on port 8000:
-
-   ```shell
-   meteor --settings settings.json --port 8000
-   ```
-
-   Navigate to `https://local.cis-dev.brown.edu:3000` in your web browser to see SignMeUp running on
-   HTTPS. Try logging in with your Brown account to make sure it works.
+TODO describe Google Authentication
 
 ## Development
 

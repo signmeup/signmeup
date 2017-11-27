@@ -34,10 +34,6 @@ const getFirstProp = (obj, ...props) => {
 };
 
 Meteor.users.helpers({
-  isSamlUser() {
-    return hasProp(this, 'profile.brownUUID');
-  },
-
   fullName() {
     const email = this.emailAddress();
     let name = getProp(this, 'services.google.name') || (email && email.split('@')[0]);

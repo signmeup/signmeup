@@ -6,7 +6,7 @@ export function createUser(options) {
   let userId = null;
   options.email = options.email.toLowerCase(); // eslint-disable-line no-param-reassign
 
-  if (options.saml || options.google) {
+  if (options.google) {
     const user = Meteor.users.findOne({ email: options.email });
     if (user) return user._id;
 
