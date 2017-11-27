@@ -12,21 +12,25 @@ const hasPropHelper = (obj, prop) => {
 };
 
 // does the given object have the given deep property, specified in dot notation
-const hasProp = (obj, prop) => hasPropHelper(obj, prop.split('.'));
+const hasProp = (obj, prop) => {
+  return hasPropHelper(obj, prop.split('.'));
+};
 
 const getPropHelper = (obj, prop) => {
-  if (prop.length == 0) return obj;
+  if (prop.length === 0) return obj;
   if (!obj) return undefined;
   const elt = prop.shift();
   return getPropHelper(obj[elt], prop);
 };
 
 // safely get the given deep property, specified in dot notation
-const getProp = (obj, prop) => getPropHelper(obj, prop.split('.'));
+const getProp = (obj, prop) => {
+  return getPropHelper(obj, prop.split('.'));
+};
 
 // return the first existing property, or undefined if none exist
 const getFirstProp = (obj, ...props) => {
-    return _.find(_.map(props, (prop) => getProp(obj, prop)), _.identity);
+  return _.find(_.map(props, prop => getProp(obj, prop)), _.identity);
 };
 
 Meteor.users.helpers({

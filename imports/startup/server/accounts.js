@@ -10,8 +10,8 @@ ServiceConfiguration.configurations.upsert({
   $set: {
     clientId: Meteor.settings.google.clientId,
     secret: Meteor.settings.google.secret,
-    loginStyle: 'popup'
-  }
+    loginStyle: 'popup',
+  },
 });
 
 // When users login via Google migrate their roles
@@ -19,8 +19,8 @@ Accounts.onLogin((sess) => {
   const user = sess.user;
   if (user.services && user.services.google) {
     const oldUser = Meteor.users.findOne({
-        email: user.services.google.email,
-        'services.google': { $exists: false },
+      email: user.services.google.email,
+      'services.google': { $exists: false },
     });
     if (oldUser) {
       const oldId = oldUser._id;
@@ -32,8 +32,8 @@ Accounts.onLogin((sess) => {
 
       // copy per-group roles
       _.each(Roles.getGroupsForUser(oldId), (group) => {
-          const roles = Roles.getRolesForUser(oldId, group);
-          Roles.addUsersToRoles(newId, roles, group);
+        const roles = Roles.getRolesForUser(oldId, group);
+        Roles.addUsersToRoles(newId, roles, group);
       });
 
       Meteor.users.remove({ _id: oldId });
