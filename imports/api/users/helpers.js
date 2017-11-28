@@ -19,7 +19,7 @@ const getProp = (obj, prop) => {
 // return the first existing property, or undefined if none exist
 const getFirstProp = (obj, ...props) => {
   return _.find(_.map(props, (prop) => {
-      return getProp(obj, prop);
+    return getProp(obj, prop);
   }), _.identity);
 };
 
