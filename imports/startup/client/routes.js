@@ -10,6 +10,7 @@ import '/imports/ui/pages/login-password/login-password';
 import '/imports/ui/pages/queue/queue';
 import '/imports/ui/pages/settings/settings';
 import '/imports/ui/pages/404/404';
+import '/imports/ui/pages/privacy/privacy';
 
 // BlazeLayout normally renders layouts into a new div.
 // This setting makes it render directly into body.
@@ -39,6 +40,13 @@ FlowRouter.route('/settings', {
   name: 'settings',
   action() {
     BlazeLayout.render('AppBody', { content: 'Settings' });
+  },
+});
+
+FlowRouter.route('/privacy', {
+  name: 'privacy',
+  action() {
+    BlazeLayout.render('AppBody', { content: 'Privacy' });
   },
 });
 
