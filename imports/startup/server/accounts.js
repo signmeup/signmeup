@@ -18,6 +18,12 @@ ServiceConfiguration.configurations.upsert({
 Accounts.onLogin((sess) => {
   const user = sess.user;
   if (user.services && user.services.google) {
+    if (!user.email) {
+        Meteor.users.update({ _id: user._id }, {
+            $set: { email: user.services.google.email }
+        });
+    }
+
     const oldUser = Meteor.users.findOne({
       email: user.services.google.email,
       'services.google': { $exists: false },

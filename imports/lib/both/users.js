@@ -8,9 +8,7 @@ export function createUser(options) {
 
   if (options.google) {
     const user = Meteor.users.findOne({ email: options.email });
-    if (user) return user._id;
-
-    userId = Meteor.users.insert({ email: options.email, profile: {} });
+    userId = user ? user._id : Meteor.users.insert({ email: options.email, profile: {} });
   } else {
     const user = Meteor.users.findOne({ 'emails.address': options.email });
     if (user) {
