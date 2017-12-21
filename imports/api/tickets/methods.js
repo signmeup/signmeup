@@ -90,12 +90,27 @@ export const createTicket = new ValidatedMethod({
       }
     }
 
+    let anonName = 'You should never see this';
+    if (Meteor.isServer) {
+      const read = (f) => {
+        const lines = Assets.getText(f + '.txt').split('\n');
+        return _.filter(lines, (t) => t.trim() != '');
+      };
+      const adjectives = read('adjectives');
+      const nouns = read('nouns');
+
+      const a = adjectives[parseInt(Math.random() * adjectives.length)];
+      const n = nouns[parseInt(Math.random() * nouns.length)];
+      anonName = a + ' ' + n;
+    }
+
     // Create ticket
     const ticketId = Tickets.insert({
       courseId: queue.courseId,
       queueId,
 
       studentIds,
+      anonName,
       question,
 
       notifications,
