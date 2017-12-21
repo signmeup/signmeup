@@ -9,5 +9,5 @@ AccountsTemplates.configure({
 });
 
 Accounts.config({
-    restrictCreationByEmailDomain: 'brown.edu'
+  restrictCreationByEmailDomain: 'brown.edu',
 });
