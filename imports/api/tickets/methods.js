@@ -99,9 +99,14 @@ export const createTicket = new ValidatedMethod({
       const adjectives = read('adjectives');
       const nouns = read('nouns');
 
-      const a = adjectives[parseInt(Math.random() * adjectives.length)];
-      const n = nouns[parseInt(Math.random() * nouns.length)];
-      anonName = a + ' ' + n;
+      const existing = queue.activeTickets().fetch().map((t) => t.anonName);
+      const combos = _.flatten(adjectives.map((a) => {
+        return nouns.map((n) => a + ' ' + n);
+      }));
+      let available = combos.filter((c) => !_.contains(existing, c));
+      // if there are no available combos, just re-use
+      if (available.length == 0) available = combos;
+      anonName = _.sample(available);
     }
 
     // Create ticket
