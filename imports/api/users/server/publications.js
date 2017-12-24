@@ -11,11 +11,14 @@ Meteor.publish('users.self', function self() {
   });
 });
 
-Meteor.publish('users.byIds', function byIds(userIds) {
+Meteor.publish('users.byIds', function byIds(ids) {
+  const userIds = ids.userIds;
+  const courseId = ids.courseId;
+  const ta = Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], courseId);
   return Meteor.users.find({
     _id: { $in: userIds },
   }, {
-    fields: Meteor.users.publicFields,
+    fields: ta ? Meteor.users.hiddenFields : Meteor.users.publicFields,
   });
 });
 
@@ -31,7 +34,7 @@ Meteor.publish('users.byEmails', function byEmails(emails) {
 
 Meteor.publish('users.staffByCourseId', function staffByCourseId(courseId) {
   return Roles.getUsersInRole(['hta', 'ta'], courseId, {
-    fields: Meteor.users.publicFields,
+    fields: Meteor.users.hiddenFields,
   });
 });
 
@@ -43,7 +46,7 @@ Meteor.publish('users.onlineStaffByCourseId', function onlineStaffByCourseId(cou
     _id: { $in: ids },
     'status.online': true,
   }, {
-    fields: Object.assign(Meteor.users.publicFields, {
+    fields: Object.assign(Meteor.users.hiddenFields, {
       'status.online': true,
       'status.idle': true,
     }),

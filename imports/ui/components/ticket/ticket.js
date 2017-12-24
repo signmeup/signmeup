@@ -16,8 +16,11 @@ Template.Ticket.onCreated(function onCreated() {
   this.autorun(() => {
     const ticket = Template.currentData().ticket;
     this.subscribe('tickets.byId', ticket._id);
-    this.subscribe('users.byIds', ticket.studentIds);
-    if (ticket.isClaimed()) this.subscribe('users.byIds', [ticket.claimedBy]);
+    this.subscribe('users.byIds', {
+      userIds: ticket.studentIds,
+      courseId: ticket.courseId,
+    });
+    this.subscribe('users.staffByCourseId', ticket.courseId);
   });
 });
 

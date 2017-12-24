@@ -12,7 +12,12 @@ import './device-card.html';
 
 Template.DeviceCard.onCreated(function onCreated() {
   this.autorun(() => {
-    this.subscribe('users.byIds', [Template.currentData().session.userId]);
+    const session = Template.currentData().session;
+    const queue = Queues.findOne(session.queueId);
+    this.subscribe('users.byIds', {
+      userIds: session.userId,
+      courseId: queue.courseId,
+    });
   });
 });
 
