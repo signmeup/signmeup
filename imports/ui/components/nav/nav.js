@@ -22,7 +22,7 @@ Template.Nav.helpers({
 Template.Nav.events({
   'click .js-sign-in'() {
     Meteor.loginWithGoogle({
-      requestPermissions: ['email'],
+      requestPermissions: ['profile', 'email'],
     }, () => {
       if (Meteor.user()) {
         /* eslint-disable no-console */

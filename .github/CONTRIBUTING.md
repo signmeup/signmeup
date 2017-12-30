@@ -61,14 +61,14 @@ Note that to log into the test accounts you'll need to navigate to
 
 #### Google Authentication
 
-In order to enable Google authentication locally, you must generate a client ID and secret using Google's cloud console.
-As of November 28th, 2017, here is how you can do this:
+The example `settings.template.json` contains a test client ID and secret that should work locally for Google authentication.
+If you want to use your own client ID and secret you can generate and install it using these instructions:
 
 1. Visit the [Google cloud console](https://console.cloud.google.com) and sign into your account if you're not already signed in (note: an account managed by a third party such as Brown may not work).
 
 2. Create a new project with any name and ID. If you already have a current project open you can select its name in the top bar and create a new project from the window that pops up.
 
-3. Once the project has been created, go to its dashboard and select "Go to APIs Overview". Then go to the "Credentials" pane using the left navigation bar.
+3. Once the project has been created, go to its dashboard and select "APIs & Services". Then go to the "Credentials" pane using the left navigation bar.
 
 4. Click "Create credentials" and select "OAuth client ID". You may be asked to configure a consent screen, which can be configured with any values of your choosing.
 

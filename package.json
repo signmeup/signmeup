@@ -2,7 +2,7 @@
   "name": "signmeup",
   "private": true,
   "scripts": {
-    "start": "",
+    "start": "meteor --settings settings.json",
     "lint": "eslint ."
   },
   "dependencies": {
