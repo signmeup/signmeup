@@ -96,6 +96,7 @@ Template.ModalJoinQueue.helpers({
         $or: [
           { email: email }, // eslint-disable-line object-shorthand
           { 'emails.address': email },
+          { 'services.google.email': email },
         ],
       });
 

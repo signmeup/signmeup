@@ -22,6 +22,7 @@ Template.Nav.helpers({
 Template.Nav.events({
   'click .js-sign-in'() {
     Meteor.loginWithGoogle({
+      loginUrlParameters: { hd: 'brown.edu' },
       requestPermissions: ['profile', 'email'],
     }, () => {
       if (Meteor.user()) {
