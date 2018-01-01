@@ -59,8 +59,7 @@ Meteor.users.helpers({
   },
 
   emailAddress() {
-    const email = getFirstProp(this,
-                    'email', 'profile.email', 'services.google.email');
+    const email = getProp(this, 'services.google.email');
 
     if (email) {
       return email;

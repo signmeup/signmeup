@@ -35,7 +35,7 @@ Template.QueueActions.events({
     if (this.queue.requireLogin() && !Meteor.user()) {
       Meteor.loginWithGoogle({
         loginUrlParameters: { hd: 'brown.edu' },
-        requestPermissions: ['email'],
+        requestPermissions: ['profile', 'email'],
       }, () => {
         if (Meteor.user()) {
           $('.modal-join-queue').modal();

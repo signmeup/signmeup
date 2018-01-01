@@ -5,7 +5,6 @@ import { Meteor } from 'meteor/meteor';
 // as we add more packages or as Meteor changes. Best to stay away for now.
 
 Meteor.users.publicFields = {
-  email: true,
   'emails.address': true,
   'services.google': true,
   'profile.name': true,
