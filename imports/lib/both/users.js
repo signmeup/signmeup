@@ -24,7 +24,8 @@ export function createUser(options) {
     userId = Accounts.createUser({
       email: options.email,
       password: options.password,
-      profile: { name: options.name },
+      name: options.name,
+      profile: {},
     });
   }
 

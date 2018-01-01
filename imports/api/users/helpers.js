@@ -26,25 +26,21 @@ const getFirstProp = (obj, ...props) => {
 Meteor.users.helpers({
   fullName() {
     const email = this.emailAddress();
-    let name = getProp(this, 'services.google.name') || (email && email.split('@')[0]);
-
-    if (this.profile) {
-      name = this.profile.displayName || this.profile.name || name;
-    }
+    const name = getFirstProp(this, 'name', 'services.google.name') ||
+      (email && email.split('@')[0]);
 
     return name;
   },
 
   firstName() {
-    const name = getFirstProp(this,
-                    'profile.givenName', 'services.google.given_name');
-    return name || this.fullName().split(' ')[0];
+    const name = getProp(this, 'services.google.given_name');
+    const fullName = this.fullName();
+    return name || (fullName && fullName.split(' ')[0]);
   },
 
   initials() {
     let initials = '';
     let fullName = this.fullName();
-    if (!fullName && this.profile) fullName = this.profile.name;
 
     let parts = fullName.split(' ');
     if (parts.length < 2) parts = fullName.split('_');

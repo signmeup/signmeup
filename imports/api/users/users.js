@@ -7,9 +7,7 @@ import { Meteor } from 'meteor/meteor';
 Meteor.users.publicFields = {
   'emails.address': true,
   'services.google': true,
-  'profile.name': true,
-  'profile.displayName': true,
-  'profile.givenName': true,
+  name: true,
   roles: true,
 };
 
