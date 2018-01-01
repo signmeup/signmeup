@@ -16,8 +16,9 @@ ServiceConfiguration.configurations.upsert({
 
 // Allow custom fields to be set on user creation
 Accounts.onCreateUser((options, user) => {
-  user.name = options.name;
-  return user;
+  const newUser = _.extend({}, user);
+  newUser.name = options.name;
+  return newUser;
 });
 
 // When users login via Google migrate their roles

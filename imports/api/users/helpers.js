@@ -40,7 +40,7 @@ Meteor.users.helpers({
 
   initials() {
     let initials = '';
-    let fullName = this.fullName();
+    const fullName = this.fullName();
 
     let parts = fullName.split(' ');
     if (parts.length < 2) parts = fullName.split('_');
