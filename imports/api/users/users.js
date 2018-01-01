@@ -12,12 +12,9 @@ Meteor.users.publicFields = {
 
 // Visible to everyone for TAs, visible to TAs for everyone
 Meteor.users.hiddenFields = _.extend(_.clone(Meteor.users.publicFields), {
-  email: true,
+  name: true,
   'emails.address': true,
   'services.google': true,
-  'profile.name': true,
-  'profile.displayName': true,
-  'profile.givenName': true,
 });
 
 Meteor.users.allow({

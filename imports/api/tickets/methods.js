@@ -93,19 +93,27 @@ export const createTicket = new ValidatedMethod({
     let anonName = 'You should never see this';
     if (Meteor.isServer) {
       const read = (f) => {
-        const lines = Assets.getText(f + '.txt').split('\n');
-        return _.filter(lines, (t) => t.trim() != '');
+        const lines = Assets.getText(`${f}.txt`).split('\n');
+        return _.filter(lines, (t) => {
+          return t.trim() !== '';
+        });
       };
       const adjectives = read('adjectives');
       const nouns = read('nouns');
 
-      const existing = queue.activeTickets().fetch().map((t) => t.anonName);
+      const existing = queue.activeTickets().fetch().map((t) => {
+        return t.anonName;
+      });
       const combos = _.flatten(adjectives.map((a) => {
-        return nouns.map((n) => a + ' ' + n);
+        return nouns.map((n) => {
+          return `${a} ${n}`;
+        });
       }));
-      let available = combos.filter((c) => !_.contains(existing, c));
+      let available = combos.filter((c) => {
+        return !_.contains(existing, c);
+      });
       // if there are no available combos, just re-use
-      if (available.length == 0) available = combos;
+      if (available.length === 0) available = combos;
       anonName = _.sample(available);
     }
 
