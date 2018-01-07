@@ -29,5 +29,13 @@
   "google": {
     "clientId": "145084395054-b6tnjvmsdr9r61npn1pgscd6eftr8mel.apps.googleusercontent.com",
     "secret": "x4uBMkrh5ViyVKX-9IbiaL5I"
+  },
+
+  "galaxy.meteor.com": {
+    "env": {
+      "VERSION": "<version>",
+      "MONGO_URL": "mongodb://<database-url>",
+      "MONGO_OPLOG_URL": "mongodb://<oplog-url>"
+    }
   }
 }

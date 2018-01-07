@@ -21,7 +21,8 @@ function createUsers() {
   const users = Meteor.settings.users;
   users.forEach((user) => {
     const userId = createUser(Object.assign(user, { testCourseId }));
-    if (user.type === 'ta') {
+    if (user.type === 'ta' || user.type === 'hta' ||
+        (user.type === 'admin' && !testTAId)) {
       testTAId = userId;
     }
   });
