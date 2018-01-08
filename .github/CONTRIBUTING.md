@@ -150,27 +150,15 @@ Once you've merged a bunch of features into `master`, and are ready to deploy to
 3. Create a new release on GitHub with good release notes. Name the tag and
    release something like `v2.2.3`.
 
-3. Now, SSH into your Brown CS account. Then run `kinit`, and enter your
-   password. Then type `ssh smu` to log in into the virtual machine.
+4. On your local machine, checkout the `production` branch. Create a file
+   called `settings.prod.json` and fill in all required values from
+   `settings.template.json`.
 
-4. `cd` into `/usr/local/docker/signmeup`.
+5. Run `yarn deploy`.
 
-   Because `docker-compose` isn't packaged for Debian yet
-   (see [#2235](https://github.com/docker/compose/issues/2235)), we must run it
-   in a Python `virtualenv`. Run `source venv/bin/activate` to start the virtual
-   environment. Type `docker-compose` to make sure it's available.
-
-   To deploy, run `make prod`.
-
-   This will:
-    - Pull the latest release on `master` from GitHub
-    - Load the release version into an environment variable
-    - Load `settings.json` into an environment variable
-    - Build an image for the new codebase
-    - Run it with production settings
-
-  It will not touch the already running `db` and `proxy` containers. For more
-  deployment options, check out the `Makefile`.
+6. After the app has been deployed (this may take a few minutes even after
+   completing on your local machine) go to its settings in meteor galaxy and
+   under "Domains" ensure that all domains have "Force HTTPS" turned on.
 
 ### Managing Docker
 
