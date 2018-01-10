@@ -13,6 +13,6 @@ Accounts.config({
   restrictCreationByEmailDomain: (email) => {
     const domain = email.slice(email.lastIndexOf('@') + 1);
     const allowed = ['brown.edu', 'cs.brown.edu', 'signmeup.cs.brown.edu'];
-    return _.contains(allowed, domain.toLowerCase());
+    return _.contains(allowed, domain);
   },
 });

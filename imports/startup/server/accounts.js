@@ -17,7 +17,7 @@ ServiceConfiguration.configurations.upsert({
 // Allow custom fields to be set on user creation
 Accounts.onCreateUser((options, user) => {
   const newUser = _.extend({}, user);
-  newUser.name = options.name;
+  newUser.preferredName = options.preferredName;
   return newUser;
 });
 

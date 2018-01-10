@@ -26,7 +26,7 @@ const getFirstProp = (obj, ...props) => {
 Meteor.users.helpers({
   fullName() {
     const email = this.emailAddress();
-    const name = getFirstProp(this, 'name', 'services.google.name') ||
+    const name = getFirstProp(this, 'preferredName', 'services.google.name') ||
       (email && email.split('@')[0]);
 
     return name;
