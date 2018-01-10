@@ -7,7 +7,7 @@ Meteor.publish('users.self', function self() {
   return Meteor.users.find({
     _id: this.userId,
   }, {
-    fields: Meteor.users.hiddenFields,
+    fields: Meteor.users.privateFields,
   });
 });
 
