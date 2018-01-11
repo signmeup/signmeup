@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor --settings settings.json",
-    "lint": "eslint .",
+    "lint": "eslint . ; find . -name '*.scss' -exec stylelint {} +",
     "deploy": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.prod.json signmeup.meteorapp.com"
   },
   "dependencies": {
@@ -31,7 +31,8 @@
     "eslint-plugin-meteor": "^4.1.4",
     "eslint-plugin-react": "^6.3.0",
     "stylelint": "^8.4.0",
-    "stylelint-config-standard": "^18.0.0"
+    "stylelint-config-standard": "^18.0.0",
+    "stylelint-processor-html": "^1.0.0"
   },
   "postcss": {
     "plugins": {
