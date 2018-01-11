@@ -93,6 +93,7 @@ export const createTicket = new ValidatedMethod({
     let anonName = 'You should never see this';
     if (Meteor.isServer) {
       const read = (f) => {
+        /* global Assets */
         const lines = Assets.getText(`${f}.txt`).split('\n');
         return _.filter(lines, (t) => {
           return t.trim() !== '';
