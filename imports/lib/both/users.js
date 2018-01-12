@@ -2,6 +2,12 @@ import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 
+export function findUserByEmail(email) {
+  if (Meteor.isServer) return Accounts.findUserByEmail(email);
+
+  return Meteor.users.findOne({ 'emails.address': email });
+}
+
 export function createUser(options) {
   let userId = null;
   options.email = options.email.toLowerCase(); // eslint-disable-line no-param-reassign
@@ -43,12 +49,4 @@ export function createUser(options) {
   }
 
   return userId;
-}
-
-export function findUserByEmail(email) {
-  if (Meteor.isServer) {
-    return Accounts.findUserByEmail(email);
-  } else {
-    return Meteor.users.findOne({ 'emails.address': email });
-  }
 }
