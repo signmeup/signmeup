@@ -21,18 +21,15 @@ Accounts.onCreateUser((options, user) => {
   return newUser;
 });
 
-// When users login via Google migrate their roles
-Accounts.onLogin((sess) => {
-  const user = sess.user;
+// When new Google users are created copy their emails and migrate their roles
+Meteor.users.after.insert((inserter, user) => {
   if (user.services && user.services.google) {
-    const oldUser = Meteor.users.findOne({
-      'emails.address': user.services.google.email,
-      'services.google': { $exists: false },
-    });
+    const newId = user._id;
+    const email = user.services.google.email;
 
+    const oldUser = Accounts.findUserByEmail(email);
     if (oldUser) {
       const oldId = oldUser._id;
-      const newId = user._id;
 
       // copy global roles
       const globalRoles = Roles.getRolesForUser(oldId, Roles.GLOBAL_GROUP);
@@ -46,5 +43,7 @@ Accounts.onLogin((sess) => {
 
       Meteor.users.remove({ _id: oldId });
     }
+
+    Accounts.addEmail(newId, email, true);
   }
 });

@@ -6,17 +6,13 @@ export function createUser(options) {
   let userId = null;
   options.email = options.email.toLowerCase(); // eslint-disable-line no-param-reassign
 
+  const user = findUserByEmail(options.email);
   if (options.google) {
-    const user = Meteor.users.findOne({ 'emails.address': options.email });
-    userId = user ? user._id : Meteor.users.insert({
-      emails: [{
-        address: options.email,
-        verified: false,
-      }],
+    userId = user ? user._id : Accounts.createUser({
+      email: options.email,
       profile: {},
     });
   } else {
-    const user = Meteor.users.findOne({ 'emails.address': options.email });
     if (user) {
       return user._id;
     }
@@ -50,10 +46,9 @@ export function createUser(options) {
 }
 
 export function findUserByEmail(email) {
-  return Meteor.users.findOne({
-    $or: [
-      { 'emails.address': email },
-      { 'services.google.email': email },
-    ],
-  });
+  if (Meteor.isServer) {
+    return Accounts.findUserByEmail(email);
+  } else {
+    return Meteor.users.findOne({ 'emails.address': email });
+  }
 }

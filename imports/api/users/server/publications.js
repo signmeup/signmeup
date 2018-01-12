@@ -25,7 +25,6 @@ Meteor.publish('users.byEmails', function byEmails(emails) {
   return Meteor.users.find({
     $or: [
       { 'emails.address': { $in: emails } },
-      { 'services.google.email': { $in: emails } },
     ],
   }, {
     fields: Meteor.users.publicFields,

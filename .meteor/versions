@@ -58,6 +58,7 @@ livedata@1.0.18
 localstorage@1.1.1
 logging@1.1.17
 manuel:reactivearray@1.0.6
+matb33:collection-hooks@0.8.4
 mdg:validated-method@1.1.0
 mdg:validation-error@0.5.1
 meteor@1.7.1
