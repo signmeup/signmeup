@@ -1,26 +1,26 @@
 {
   "users": [{
-    "name": "Admin",
+    "preferredName": "Admin",
     "email": "admin@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "admin"
   }, {
-    "name": "MTA",
+    "preferredName": "MTA",
     "email": "mta@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "mta"
   }, {
-    "name": "HTA Test",
+    "preferredName": "HTA Test",
     "email": "hta@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "hta"
   }, {
-    "name": "TA Test",
+    "preferredName": "TA Test",
     "email": "ta@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "ta"
   }, {
-    "name": "Student Test",
+    "preferredName": "Student Test",
     "email": "student@signmeup.cs.brown.edu",
     "password": "INSERT-PASSWORD-HERE",
     "type": "student"

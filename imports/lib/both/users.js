@@ -12,25 +12,26 @@ export function createUser(options) {
   let userId = null;
   options.email = options.email.toLowerCase(); // eslint-disable-line no-param-reassign
 
+  // If user with email exists, return
   const user = findUserByEmail(options.email);
+  if (user) return user._id;
+
+  // Else, create user...
   if (options.google) {
-    userId = user ? user._id : Accounts.createUser({
+    userId = Accounts.createUser({
       email: options.email,
       profile: {},
     });
   } else {
-    if (user) {
-      return user._id;
-    }
-
     userId = Accounts.createUser({
       email: options.email,
       password: options.password,
-      preferredName: options.name || options.preferredName,
+      preferredName: options.preferredName,
       profile: {},
     });
   }
 
+  // Add roles to new user
   switch (options.type) {
     case 'admin':
       Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);
