@@ -7,9 +7,7 @@ Meteor.publish('users.self', function self() {
   return Meteor.users.find({
     _id: this.userId,
   }, {
-    fields: {
-      'services.google': true,
-    },
+    fields: Meteor.users.publicFields,
   });
 });
 
