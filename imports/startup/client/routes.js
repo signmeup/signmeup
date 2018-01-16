@@ -19,8 +19,8 @@ BlazeLayout.setRoot('body');
 
 // Authentication
 
-FlowRouter.route('/login-password', {
-  name: 'login-password',
+FlowRouter.route('/login', {
+  name: 'login',
   action() {
     BlazeLayout.render('AppBody', { content: 'LoginPassword' });
   },
