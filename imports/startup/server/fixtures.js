@@ -15,15 +15,14 @@ import { createUser } from '/imports/lib/both/users';
 
 let testCourseId;
 let testLocationId;
-let testTAId;
+let testQueueCreatorId;
 
 function createUsers() {
   const users = Meteor.settings.users;
   users.forEach((user) => {
     const userId = createUser(Object.assign(user, { testCourseId }));
-    if (user.type === 'ta' || user.type === 'hta' ||
-        (user.type === 'admin' && !testTAId)) {
-      testTAId = userId;
+    if (!testQueueCreatorId && user.type !== 'student') {
+      testQueueCreatorId = userId;
     }
   });
 }
@@ -48,7 +47,7 @@ function init() {
   // Queue
   const testQueue = Queues.findOne({ courseId: testCourseId });
   if (!testQueue) {
-    createQueue.run.call({ userId: testTAId }, {
+    createQueue.run.call({ userId: testQueueCreatorId }, {
       name: 'TA Hours',
       courseId: testCourseId,
       locationId: testLocationId,
