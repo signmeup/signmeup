@@ -1,6 +1,7 @@
 // Functions to initialize collections
 
 import { Meteor } from 'meteor/meteor';
+import { Roles } from 'meteor/alanning:roles';
 
 import moment from 'moment';
 
@@ -20,7 +21,27 @@ let testQueueCreatorId;
 function createUsers() {
   const users = Meteor.settings.users;
   users.forEach((user) => {
-    const userId = createUser(Object.assign(user, { testCourseId }));
+    // Create user
+    const userId = createUser(user);
+
+    // Add roles to new user
+    switch (user.type) {
+      case 'admin':
+        Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);
+        break;
+      case 'mta':
+        Roles.addUsersToRoles(userId, 'mta', Roles.GLOBAL_GROUP);
+        break;
+      case 'hta':
+        Roles.addUsersToRoles(userId, 'hta', testCourseId);
+        break;
+      case 'ta':
+        Roles.addUsersToRoles(userId, 'ta', testCourseId);
+        break;
+      default:
+        break;
+    }
+
     if (!testQueueCreatorId && user.type !== 'student') {
       testQueueCreatorId = userId;
     }

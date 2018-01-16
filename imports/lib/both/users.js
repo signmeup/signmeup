@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { Roles } from 'meteor/alanning:roles';
 
 export function findUserByEmail(email) {
   if (Meteor.isServer) return Accounts.findUserByEmail(email);
@@ -9,11 +8,11 @@ export function findUserByEmail(email) {
 }
 
 export function createUser(options) {
-  let userId = null;
-  options.email = options.email.toLowerCase(); // eslint-disable-line no-param-reassign
+  let userId;
+  const email = options.email.toLowerCase();
 
   // If user with email exists, return
-  const user = findUserByEmail(options.email);
+  const user = findUserByEmail(email);
   if (user) return user._id;
 
   // Else, create user...
@@ -29,24 +28,6 @@ export function createUser(options) {
       preferredName: options.preferredName,
       profile: {},
     });
-  }
-
-  // Add roles to new user
-  switch (options.type) {
-    case 'admin':
-      Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);
-      break;
-    case 'mta':
-      Roles.addUsersToRoles(userId, 'mta', Roles.GLOBAL_GROUP);
-      break;
-    case 'hta':
-      Roles.addUsersToRoles(userId, 'hta', options.testCourseId);
-      break;
-    case 'ta':
-      Roles.addUsersToRoles(userId, 'ta', options.testCourseId);
-      break;
-    default:
-      break;
   }
 
   return userId;
