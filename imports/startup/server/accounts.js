@@ -4,6 +4,7 @@ import { Accounts } from 'meteor/accounts-base';
 import { Roles } from 'meteor/alanning:roles';
 import { _ } from 'meteor/underscore';
 
+// Configure Google login
 ServiceConfiguration.configurations.upsert({
   service: 'google',
 }, {
@@ -14,36 +15,69 @@ ServiceConfiguration.configurations.upsert({
   },
 });
 
-// Allow custom fields to be set on user creation
-Accounts.onCreateUser((options, user) => {
-  const newUser = _.extend({}, user);
-  newUser.preferredName = options.preferredName;
-  return newUser;
-});
+// Merge users with same email on login
+Accounts.onCreateUser((options, newUser) => {
+  let service;
+  let email;
+  let verified = false;
 
-// When new Google users are created copy their emails and migrate their roles
-Meteor.users.after.insert((inserter, user) => {
-  if (user.services && user.services.google) {
-    const newId = user._id;
-    const email = user.services.google.email;
+  // Get service (if user is being created server-side, service will be undefined)
+  if (newUser.services) {
+    service = Object.keys(newUser.services)[0];
+  }
 
-    const oldUser = Accounts.findUserByEmail(email);
-    if (oldUser) {
-      const oldId = oldUser._id;
+  // Get email
+  if (service === 'google') {
+    email = newUser.services.google.email;
+    verified = true;
+  } else {
+    email = newUser.emails[0].address;
+  }
+  if (!email) {
+    // User doesn't have email?! This should not happen.
+    throw new Error('Cannot create user without email.');
+  }
 
-      // copy global roles
-      const globalRoles = Roles.getRolesForUser(oldId, Roles.GLOBAL_GROUP);
-      Roles.addUsersToRoles(newId, globalRoles, Roles.GLOBAL_GROUP);
-
-      // copy per-group roles
-      _.each(Roles.getGroupsForUser(oldId), (group) => {
-        const roles = Roles.getRolesForUser(oldId, group);
-        Roles.addUsersToRoles(newId, roles, group);
-      });
-
-      Meteor.users.remove({ _id: oldId });
+  // Check if user exists with same email...
+  const existingUser = Accounts.findUserByEmail(email);
+  if (!existingUser) {
+    // If no existing user, return the new user
+    if (!newUser.emails) {
+      // If new user does not have 'emails' field (as in the case of Google
+      // login), add the field and set verified.
+      newUser.emails = [{ address: email, verified }];
     }
 
-    Accounts.addEmail(newId, email, true);
+    // Set any additional fields
+    if (options.preferredName) newUser.preferredName = options.preferredName;
+
+    return newUser;
   }
+
+  // If user exists, merge the accounts, maintaining original ID
+
+  // 1. Initialize `services` object for existing user
+  existingUser.services = Object.assign({
+    resume: { loginTokens: [] },
+  }, existingUser.services);
+
+  if (newUser.services) {
+    // 2. Merge new service
+    existingUser.services[service] = newUser.services[service];
+
+    // 3. Merge login tokens
+    if (newUser.services.resume && newUser.services.resume.loginTokens) {
+      existingUser.services.resume.loginTokens =
+        existingUser.services.resume.loginTokens.concat(newUser.services.resume.loginTokens);
+    }
+  }
+
+  // Set any additional fields
+  if (options.preferredName) existingUser.preferredName = options.preferredName;
+
+  // Delete existing user
+  Meteor.users.remove({ _id: existingUser._id });
+
+  // Return merged user to be reinserted into the database
+  return existingUser;
 });
