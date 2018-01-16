@@ -1,41 +1,28 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
-import { _ } from 'meteor/underscore';
 
 import { Courses } from '/imports/api/courses/courses';
 
-const getPropHelper = (obj, prop) => {
-  if (prop.length === 0) return obj;
-  if (!obj) return undefined;
-  const elt = prop.shift();
-  return getPropHelper(obj[elt], prop);
-};
-
-// safely get the given deep property, specified in dot notation
-const getProp = (obj, prop) => {
-  return getPropHelper(obj, prop.split('.'));
-};
-
-// return the first existing property, or undefined if none exist
-const getFirstProp = (obj, ...props) => {
-  return _.find(_.map(props, (prop) => {
-    return getProp(obj, prop);
-  }), _.identity);
-};
-
 Meteor.users.helpers({
-  fullName() {
-    const email = this.emailAddress();
-    const name = getFirstProp(this, 'preferredName', 'services.google.name') ||
-      (email && email.split('@')[0]);
+  emailAddress() {
+    return this.emails[0].address;
+  },
 
-    return name;
+  fullName() {
+    const fullName =
+      this.preferredName ||
+      (this.services && this.services.google && this.services.google.name) ||
+      (this.emailAddress.split('@')[0]);
+
+    return fullName;
   },
 
   firstName() {
-    const name = getProp(this, 'services.google.given_name');
-    const fullName = this.fullName();
-    return name || (fullName && fullName.split(' ')[0]);
+    const firstName =
+      (this.services && this.services.google && this.services.google.given_name) ||
+      this.fullName().split(' ')[0];
+
+    return firstName;
   },
 
   initials() {
@@ -54,23 +41,6 @@ Meteor.users.helpers({
     return initials.toUpperCase();
   },
 
-  emailAddress() {
-    const email = getProp(this, 'services.google.email');
-
-    if (email) {
-      return email;
-    } else if (this.emails) {
-      return this.emails[0].address;
-    }
-
-    return null;
-  },
-
-  htaCourses() {
-    const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
-    return Courses.find({ _id: { $in: htaCourseIds }, active: true });
-  },
-
   courses() {
     if (Roles.userIsInRole(this._id, ['admin', 'mta'])) {
       return Courses.find({ active: true }, { sort: { name: 1 } });
@@ -82,6 +52,11 @@ Meteor.users.helpers({
       { _id: { $in: htaCourseIds.concat(taCourseIds) }, active: true },
       { sort: { name: 1 } },
     );
+  },
+
+  htaCourses() {
+    const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
+    return Courses.find({ _id: { $in: htaCourseIds }, active: true });
   },
 
   isTAOrAbove() {
