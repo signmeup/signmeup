@@ -1,8 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { ServiceConfiguration } from 'meteor/service-configuration';
 import { Accounts } from 'meteor/accounts-base';
-import { Roles } from 'meteor/alanning:roles';
-import { _ } from 'meteor/underscore';
 
 // Configure Google login
 ServiceConfiguration.configurations.upsert({
@@ -45,10 +43,12 @@ Accounts.onCreateUser((options, newUser) => {
     if (!newUser.emails) {
       // If new user does not have 'emails' field (as in the case of Google
       // login), add the field and set verified.
+      // eslint-disable-next-line no-param-reassign
       newUser.emails = [{ address: email, verified }];
     }
 
     // Set any additional fields
+    // eslint-disable-next-line no-param-reassign
     if (options.preferredName) newUser.preferredName = options.preferredName;
 
     return newUser;
