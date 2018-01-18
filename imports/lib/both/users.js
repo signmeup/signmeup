@@ -17,10 +17,20 @@ export function createUser(options) {
 
   // Else, create user...
   if (options.google) {
-    userId = Accounts.createUser({
-      email: options.email,
-      profile: {},
-    });
+    if (Meteor.isServer) {
+      userId = Accounts.createUser({
+        email: options.email,
+        profile: {},
+      });
+    } else {
+      userId = Meteor.users.insert({
+        emails: [{
+          address: options.email,
+          verified: false,
+        }],
+        profile: {},
+      });
+    }
   } else {
     userId = Accounts.createUser({
       email: options.email,

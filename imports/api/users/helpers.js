@@ -12,7 +12,7 @@ Meteor.users.helpers({
     const fullName =
       this.preferredName ||
       (this.services && this.services.google && this.services.google.name) ||
-      (this.emailAddress.split('@')[0]);
+      (this.emailAddress().split('@')[0]);
 
     return fullName;
   },
