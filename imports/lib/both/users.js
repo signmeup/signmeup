@@ -1,54 +1,38 @@
 import { Meteor } from 'meteor/meteor';
 import { Accounts } from 'meteor/accounts-base';
-import { Roles } from 'meteor/alanning:roles';
+
+export function findUserByEmail(email) {
+  if (Meteor.isServer) return Accounts.findUserByEmail(email);
+
+  return Meteor.users.findOne({ 'emails.address': email });
+}
 
 export function createUser(options) {
-  let userId = null;
-  options.email = options.email.toLowerCase(); // eslint-disable-line no-param-reassign
+  let userId;
+  const email = options.email.toLowerCase();
 
-  if (options.saml) {
-    const user = Meteor.users.findOne({ email: options.email });
-    if (user) return user._id;
+  // If user with email exists, return
+  const user = findUserByEmail(email);
+  if (user) return user._id;
 
-    userId = Meteor.users.insert({ email: options.email, profile: {} });
+  // Else, create user...
+  if (options.google) {
+    // We can't use Accounts.createUser as it requires a password on the client
+    userId = Meteor.users.insert({
+      emails: [{
+        address: options.email,
+        verified: false,
+      }],
+      profile: {},
+    });
   } else {
-    const user = Meteor.users.findOne({ 'emails.address': options.email });
-    if (user) {
-      return user._id;
-    }
-
     userId = Accounts.createUser({
       email: options.email,
       password: options.password,
-      profile: { name: options.name },
+      preferredName: options.preferredName,
+      profile: {},
     });
   }
 
-  switch (options.type) {
-    case 'admin':
-      Roles.addUsersToRoles(userId, 'admin', Roles.GLOBAL_GROUP);
-      break;
-    case 'mta':
-      Roles.addUsersToRoles(userId, 'mta', Roles.GLOBAL_GROUP);
-      break;
-    case 'hta':
-      Roles.addUsersToRoles(userId, 'hta', options.testCourseId);
-      break;
-    case 'ta':
-      Roles.addUsersToRoles(userId, 'ta', options.testCourseId);
-      break;
-    default:
-      break;
-  }
-
   return userId;
-}
-
-export function findUserByEmail(email) {
-  return Meteor.users.findOne({
-    $or: [
-      { email: email }, // eslint-disable-line object-shorthand
-      { 'emails.address': email },
-    ],
-  });
 }

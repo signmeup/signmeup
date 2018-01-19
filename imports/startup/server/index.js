@@ -11,6 +11,9 @@ import '../both/config';
 // Register API
 import '../both/register-api';
 
+// Set up login
+import './accounts';
+
 // Run migrations
 import './migrations/migrations';
 

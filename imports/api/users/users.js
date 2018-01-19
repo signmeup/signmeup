@@ -5,12 +5,9 @@ import { Meteor } from 'meteor/meteor';
 // as we add more packages or as Meteor changes. Best to stay away for now.
 
 Meteor.users.publicFields = {
-  email: true,
   'emails.address': true,
-  saml: true, // Adding this anticipating that we'll start storing data in `saml`
-  'profile.name': true,
-  'profile.displayName': true,
-  'profile.givenName': true,
+  preferredName: true,
+  'services.google': true,
   roles: true,
 };
 

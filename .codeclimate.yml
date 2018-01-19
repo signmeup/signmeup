@@ -1,15 +1,12 @@
-engines:
+version: "2"
+plugins:
   eslint:
     enabled: true
-    channel: "eslint-3"
+    channel: "stable"
     config:
       config: ".eslintrc.codeclimate.json"
 
   stylelint:
     enabled: true
-
-ratings:
-  paths:
-    - "client/**/*"
-    - "imports/**/*"
-    - "server/**/*"
+    config:
+      config: ".stylelintrc.json"
