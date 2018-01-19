@@ -23,9 +23,9 @@ to get set up. For questions, please email signmeup-dev@lists.cs.brown.edu.
 SignMeUp was originally created by Dhruv Rawat '14, Anamta Farook '14, and
 Mohsan Elahi '14 at Brown University. The latest version is being developed by:
 
-| [![Athyuttam Eleti](https://avatars1.githubusercontent.com/u/1485350?v=3&s=160)](http://athyuttamre.com) |<a href="http://wpovell.net"><img width=160 height=160 src="http://wpovell.net/imgs/portrait.jpg"></a> |
-|----------|----------|
-| [Atty Eleti '17](http://athyuttamre.com) | [Will Povell '20](http://wpovell.net) |
+| [![Athyuttam Eleti](https://avatars1.githubusercontent.com/u/1485350?v=3&s=160)](http://athyuttamre.com) | [![Greg Carlin](https://avatars1.githubusercontent.com/u/453896?&v=4&s=160)](http://www.gregcarl.in/) | <a title="Will Povell" href="http://wpovell.github.io"><img src="https://wpovell.github.io/imgs/head.jpg" width="160"></a> |
+|----------|----------|----------|
+| [Atty Eleti '17](http://athyuttamre.com) | [Greg Carlin '19](http://gregcarl.in) | [Will Povell '20](http://wpovell.net) |
 
 For support, please email the team at signmeup-dev@lists.cs.brown.edu.
 
