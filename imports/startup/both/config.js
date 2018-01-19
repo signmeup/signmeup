@@ -11,7 +11,7 @@ AccountsTemplates.configure({
 Accounts.config({
   restrictCreationByEmailDomain: (email) => {
     const domain = email.slice(email.lastIndexOf('@') + 1);
-    const allowed = ['brown.edu', 'cs.brown.edu', 'signmeup.cs.brown.edu'];
+    const allowed = ['brown.edu', 'alumni.brown.edu', 'signmeup.cs.brown.edu'];
     return allowed.includes(domain);
   },
 });
