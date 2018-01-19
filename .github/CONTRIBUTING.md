@@ -154,7 +154,7 @@ Once you've merged a bunch of features into `master`, and are ready to deploy to
    called `settings.prod.json` and fill in all required values from
    `settings.template.json`.
 
-5. Run `yarn deploy`.
+5. Run `yarn deploy-prod`.
 
 6. After the app has been deployed (this may take a few minutes even after
    completing on your local machine) go to its settings in meteor galaxy and

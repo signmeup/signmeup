@@ -4,7 +4,8 @@
   "scripts": {
     "start": "meteor --settings settings.json",
     "lint": "eslint . ; find . -name '*.scss' -exec stylelint {} +",
-    "deploy": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.prod.json signmeup.meteorapp.com"
+    "deploy-qa": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.qa.json signmeup-qa.meteorapp.com",
+    "deploy-prod": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.prod.json signmeup-prod.meteorapp.com"
   },
   "dependencies": {
     "autoprefixer": "^6.7.6",
