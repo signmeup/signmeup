@@ -13,6 +13,7 @@ import { Tickets, NotificationsSchema } from '/imports/api/tickets/tickets';
 import { SignupGap } from '/imports/lib/both/signup-gap';
 import { Notifications } from '/imports/lib/both/notifications';
 import { createUser, findUserByEmail } from '/imports/lib/both/users';
+import { generateAnonymousNames } from '/imports/lib/both/tickets';
 
 export const createTicket = new ValidatedMethod({
   name: 'tickets.createTicket',
@@ -90,33 +91,7 @@ export const createTicket = new ValidatedMethod({
       }
     }
 
-    let anonName = 'You should never see this';
-    if (Meteor.isServer) {
-      const read = (f) => {
-        /* global Assets */
-        const lines = Assets.getText(`${f}.txt`).split('\n');
-        return _.filter(lines, (t) => {
-          return t.trim() !== '';
-        });
-      };
-      const adjectives = read('adjectives');
-      const nouns = read('nouns');
-
-      const existing = queue.activeTickets().fetch().map((t) => {
-        return t.anonName;
-      });
-      const combos = _.flatten(adjectives.map((a) => {
-        return nouns.map((n) => {
-          return `${a} ${n}`;
-        });
-      }));
-      let available = combos.filter((c) => {
-        return !_.contains(existing, c);
-      });
-      // if there are no available combos, just re-use
-      if (available.length === 0) available = combos;
-      anonName = _.sample(available);
-    }
+    const anonymousNames = generateAnonymousNames(queue, studentIds.length);
 
     // Create ticket
     const ticketId = Tickets.insert({
@@ -124,7 +99,7 @@ export const createTicket = new ValidatedMethod({
       queueId,
 
       studentIds,
-      anonName,
+      anonymousNames,
       question,
 
       notifications,

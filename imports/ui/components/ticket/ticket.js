@@ -47,7 +47,7 @@ Template.Ticket.helpers({
   studentNames(ticket) {
     const userId = Meteor.userId();
     if (!Roles.userIsInRole(userId, ['admin', 'mta', 'hta', 'ta'], ticket.courseId) && !ticket.belongsToUser(userId)) {
-      return ticket.anonName;
+      return ticket.anonymousNames.join(', ');
     }
 
     let result = '';
