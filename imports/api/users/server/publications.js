@@ -3,22 +3,13 @@
 import { Meteor } from 'meteor/meteor';
 import { Roles } from 'meteor/alanning:roles';
 
+import { Tickets } from '/imports/api/tickets/tickets';
+
 Meteor.publish('users.self', function self() {
   return Meteor.users.find({
     _id: this.userId,
   }, {
     fields: Meteor.users.privateFields,
-  });
-});
-
-Meteor.publish('users.byIds', function byIds(ids) {
-  const userIds = ids.userIds;
-  const courseId = ids.courseId;
-  const ta = Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], courseId);
-  return Meteor.users.find({
-    _id: { $in: userIds },
-  }, {
-    fields: ta ? Meteor.users.protectedFields : Meteor.users.publicFields,
   });
 });
 
@@ -50,5 +41,18 @@ Meteor.publish('users.onlineStaffByCourseId', function onlineStaffByCourseId(cou
       'status.online': true,
       'status.idle': true,
     }),
+  });
+});
+
+Meteor.publish('users.byTicket', function byTicket(ticketId) {
+  const ticket = Tickets.findOne({ _id: ticketId });
+  if (!ticket) return [];
+  const isTa = Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], ticket.courseId);
+  if (!isTa && !ticket.studentIds.includes(this.userId)) return [];
+
+  return Meteor.users.find({
+    _id: { $in: ticket.studentIds },
+  }, {
+    fields: Meteor.users.protectedFields,
   });
 });

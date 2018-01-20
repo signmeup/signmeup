@@ -10,17 +10,6 @@ import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
 import './device-card.html';
 
-Template.DeviceCard.onCreated(function onCreated() {
-  this.autorun(() => {
-    const session = Template.currentData().session;
-    const queue = Queues.findOne(session.queueId);
-    this.subscribe('users.byIds', {
-      userIds: [session.userId],
-      courseId: queue.courseId,
-    });
-  });
-});
-
 Template.DeviceCard.helpers({
   currentDeviceClass(session) {
     const queue = Queues.findOne(session.queueId);
