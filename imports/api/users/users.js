@@ -8,6 +8,7 @@ Meteor.users.publicFields = {
   'emails.address': true,
   preferredName: true,
   'services.google': true,
+  'services.saml': true,
   roles: true,
 };
 
