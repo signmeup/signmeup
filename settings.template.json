@@ -27,17 +27,17 @@
   }],
 
   "google": {
-    "clientId": "145084395054-b6tnjvmsdr9r61npn1pgscd6eftr8mel.apps.googleusercontent.com",
-    "secret": "x4uBMkrh5ViyVKX-9IbiaL5I"
+    "clientId": "581002273625-8nq5ldiiututre57nan37sobnboci0u0.apps.googleusercontent.com",
+    "secret": "v-7EC_IxT6VAxOxn6W_sonAw"
   },
 
   "galaxy.meteor.com": {
     "env": {
-      "VERSION": "<version>",
-      "MONGO_URL": "mongodb://<database-url>",
-      "MONGO_OPLOG_URL": "mongodb://<oplog-url>",
-      "ROOT_URL": "https://signmeup.meteorapp.com",
-      "MAIL_URL": "smtp://<mail-url>"
+      "VERSION": "<VERSION>",
+      "MONGO_URL": "mongodb://<DATABASE-URL>",
+      "MONGO_OPLOG_URL": "mongodb://<OPLOG-URL>",
+      "ROOT_URL": "https://<APP-URL>.meteorapp.com",
+      "MAIL_URL": "smtp://<MAIL-URL>"
     }
   }
 }
