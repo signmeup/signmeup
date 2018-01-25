@@ -1,12 +1,12 @@
 <template name="LocationEntry">
-  <div class="card-block location-entry">
+  <div class="card-body location-entry">
     <div class="row mb-0">
       {{#if isEditing}}
         <form class="location-name-edit-form js-location-name-edit-form">
-          <div class="col-xs-9 mb-0">
+          <div class="col-9 mb-0">
             <input type="text" class="form-control" name="name" placeholder="CIT 123" value="{{location.name}}">
           </div>
-          <div class="col-xs-3 text-right">
+          <div class="col-3 text-right">
             <button
               class="btn btn-secondary js-cancel-edit-location"
               type="button">
@@ -20,10 +20,10 @@
           </div>
         </form>
       {{else}}
-        <p class="location-name col-xs-9 mb-0">
+        <p class="location-name col-9 mb-0">
           {{location.name}}
         </p>
-        <div class="col-xs-3 text-right">
+        <div class="col-3 text-right">
           <button
             class="btn btn-secondary js-edit-location">
             Edit

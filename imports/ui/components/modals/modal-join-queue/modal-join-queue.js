@@ -9,6 +9,7 @@ import { $ } from 'meteor/jquery';
 import { createTicket } from '/imports/api/tickets/methods';
 
 import { carriers } from '/imports/lib/both/carriers';
+import { findUserByEmail } from '/imports/lib/both/users';
 import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
 import './modal-join-queue.html';
@@ -46,8 +47,8 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
   };
 
   this.showNotifications = new ReactiveDict({
-    email: 'false',
-    text: 'false',
+    email: false,
+    text: false,
   });
 
   this.autorun(() => {
@@ -92,12 +93,7 @@ Template.ModalJoinQueue.helpers({
   students() {
     const emails = Template.instance().studentEmails.array();
     const students = emails.map((email) => {
-      const student = Meteor.users.findOne({
-        $or: [
-          { email: email }, // eslint-disable-line object-shorthand
-          { 'emails.address': email },
-        ],
-      });
+      const student = findUserByEmail(email);
 
       return student || {
         emailAddress: () => { return email; },

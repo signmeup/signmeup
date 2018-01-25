@@ -7,6 +7,8 @@ venv
 node_modules/
 
 settings.json
+settings.qa.json
+settings.prod.json
 .env
 
 logs

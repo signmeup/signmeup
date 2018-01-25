@@ -1,6 +1,6 @@
 .form-group.required > label:after {
   content: '*';
-  color: $brand-danger;
+  color: theme-color("danger");
 
   margin-left: 4px;
 }
@@ -23,7 +23,7 @@
   }
 
   &.current {
-    background-color: $gray-lightest;
+    background-color: $gray-100;
   }
 
   .content {

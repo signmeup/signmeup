@@ -8,8 +8,8 @@
   padding: 4px 6px 8px 6px;
 
   background-color: white;
-  border: 1px solid $gray-lighter;
-  color: $gray;
+  border: 1px solid $gray-200;
+  color: $gray-700;
 
   user-select: none;
   cursor: default;
@@ -27,14 +27,14 @@
     right: -1px;
 
     height: 6px;
-    background-color: $brand-success;
+    background-color: theme-color("success");
   }
 
   &.idle {
-    color: $gray-light;
+    color: $gray-300;
 
     &::after {
-      background-color: $brand-warning;
+      background-color: theme-color("warning");
     }
   }
 }

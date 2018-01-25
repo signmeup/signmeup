@@ -7,10 +7,7 @@ Meteor.publish('users.self', function self() {
   return Meteor.users.find({
     _id: this.userId,
   }, {
-    fields: {
-      email: true,
-      saml: true, // Adding this anticipating that we'll start storing data in `saml`
-    },
+    fields: Meteor.users.publicFields,
   });
 });
 
@@ -25,7 +22,6 @@ Meteor.publish('users.byIds', function byIds(userIds) {
 Meteor.publish('users.byEmails', function byEmails(emails) {
   return Meteor.users.find({
     $or: [
-      { email: { $in: emails } },
       { 'emails.address': { $in: emails } },
     ],
   }, {

@@ -54,7 +54,7 @@ export const createTicket = new ValidatedMethod({
 
       const student = findUserByEmail(email);
       if (student) return student._id;
-      return createUser({ email, saml: true });
+      return createUser({ email, google: true });
     });
 
     // Check: duplicate signups

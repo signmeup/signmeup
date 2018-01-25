@@ -1,41 +1,43 @@
 <template name="Ticket">
-  <div class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} {{#if taView}}ta-ticket{{/if}} row">
-    <div class="td col-xs-1">{{ticket.index}}</div>
-    <div class="td col-xs-6">{{studentNames ticket.students}}</div>
-    <div class="td col-xs-2">{{formattedTimestamp ticket.createdAt}}</div>
-    {{#if taView}}
-      {{> TicketTAActions ticket=ticket}}
-    {{else}}
-      <div class="td col-xs-3 actions">
-        <div class="btn-group">
-          {{#if ticket.isClaimed}}
-            <button
-              class="btn btn-secondary text-truncate" style="max-width: 200px;"
-              title="Claimed by {{ticket.claimedByUser.fullName}}" disabled>
-              Claimed by {{ticket.claimedByUser.fullName}}
-            </button>
-          {{/if}}
-
-          {{#if ticket.isMarkedAsMissing}}
-            <button class="btn btn-secondary" disabled>Missing</button>
-          {{/if}}
-
-          {{#if currentUserTicket ticket}}
-            {{#if isClaimedOrMissing ticket}}
-              <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
-              <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item text-danger js-delete-ticket" href="#">Delete ticket</a>
-              </div>
-            {{else}}
-              <button type="button" class="btn btn-outline-danger js-delete-ticket">Delete</button>
+  <div class="holder js-ticket-holder">
+    <div class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} {{#if taView}}ta-ticket{{/if}} row">
+        <div class="td col-1">{{ticket.index}}</div>
+        <div class="td col-5">{{studentNames ticket.students}}</div>
+        <div class="td col-2">{{formattedTimestamp ticket.createdAt}}</div>
+        {{#if taView}}
+        {{> TicketTAActions ticket=ticket}}
+        {{else}}
+        <div class="td col-4 actions">
+            <div class="btn-group float-right">
+            {{#if ticket.isClaimed}}
+                <button
+                class="btn btn-secondary text-truncate" style="max-width: 200px;"
+                title="Claimed by {{ticket.claimedByUser.fullName}}" disabled>
+                Claimed by {{ticket.claimedByUser.fullName}}
+                </button>
             {{/if}}
-          {{/if}}
+
+            {{#if ticket.isMarkedAsMissing}}
+              <button class="btn btn-secondary" disabled>Missing</button>
+            {{/if}}
+
+            {{#if currentUserTicket ticket}}
+              {{#if isClaimedOrMissing ticket}}
+                <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a class="dropdown-item text-danger js-delete-ticket" href="#">Delete ticket</a>
+                </div>
+              {{else}}
+                <button type="button" class="btn btn-outline-danger js-delete-ticket">Delete</button>
+              {{/if}}
+            {{/if}}
+          </div>
         </div>
-      </div>
+      {{/if}}
+    </div>
+
+    {{#if showTicketDrawer ticket taView}}
+      {{> TicketDrawer ticket=ticket taView=taView currentUserTicket=currentUserTicket}}
     {{/if}}
   </div>
-
-  {{#if showTicketDrawer ticket taView}}
-    {{> TicketDrawer ticket=ticket taView=taView currentUserTicket=currentUserTicket}}
-  {{/if}}
 </template>

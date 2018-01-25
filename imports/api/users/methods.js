@@ -24,7 +24,8 @@ export const addRoleGivenEmail = new ValidatedMethod({
     }
 
     // Check current user is authorized to create role
-    if (course && !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta'], courseId)) {
+    if (course &&
+        !Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta'], courseId)) {
       throw new Meteor.Error('users.addRoleGivenEmail.unauthorized',
         'Only HTAs and above can add roles to the course');
     }
@@ -32,7 +33,7 @@ export const addRoleGivenEmail = new ValidatedMethod({
     // Fetch or create new user
     email = email.toLowerCase(); // eslint-disable-line no-param-reassign
     const user = findUserByEmail(email);
-    const userId = user ? user._id : createUser({ email, saml: true });
+    const userId = user ? user._id : createUser({ email, google: true });
 
     // If adding TA or HTA role, make sure user isn't already a TA or HTA
     if (Roles.userIsInRole(userId, ['hta', 'ta'], courseId)) {

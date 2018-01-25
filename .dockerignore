@@ -1,0 +1,6 @@
+venv
+
+.backup
+
+.meteor/local
+node_modules/
