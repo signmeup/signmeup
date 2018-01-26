@@ -16,14 +16,11 @@ Meteor.users.protectedFields = Object.assign({}, Meteor.users.publicFields, {
   'services.google.name': true,
   'services.google.given_name': true,
   'services.google.family_name': true,
+  'services.saml.displayName': true,
 });
 
 // Only visible to oneself
-Meteor.users.privateFields = Object.assign({}, Meteor.users.publicFields, {
-  preferredName: true,
-  'emails.address': true,
-  'services.google': true,
-});
+Meteor.users.privateFields = Meteor.users.protectedFields;
 
 Meteor.users.allow({
   insert() { return false; },
