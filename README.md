@@ -1,7 +1,7 @@
 # SignMeUp
 
 [![GitHub release](https://img.shields.io/github/release/signmeup/signmeup.svg)](https://github.com/signmeup/signmeup/releases/latest)
-[![Meteor version](https://img.shields.io/badge/meteor-1.4.2.7-brightgreen.svg)](https://meteor.com)
+[![Meteor version](https://img.shields.io/badge/meteor-1.6.0.1-brightgreen.svg)](https://meteor.com)
 [![Dependencies](https://img.shields.io/david/signmeup/signmeup.svg)](https://david-dm.org/signmeup/signmeup)
 [![Code Climate](https://img.shields.io/codeclimate/github/signmeup/signmeup.svg)](https://codeclimate.com/github/signmeup/signmeup)
 [![License](https://img.shields.io/github/license/signmeup/signmeup.svg)](https://github.com/signmeup/signmeup/blob/master/LICENSE)
