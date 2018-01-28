@@ -9,6 +9,14 @@
       opacity: 1;
     }
   }
+
+  .card-text {
+    display: flex;
+
+    .card-ticket-count {
+      white-space: nowrap;
+    }
+  }
 }
 
 .queue-card-pattern {
