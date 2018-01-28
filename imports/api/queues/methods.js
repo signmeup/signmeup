@@ -2,7 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { ValidatedMethod } from 'meteor/mdg:validated-method';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Roles } from 'meteor/alanning:roles';
-import { SyncedCron } from 'meteor/percolate:synced-cron';
+import { Jobs } from 'meteor/msavin:sjobs';
 import { _ } from 'meteor/underscore';
 
 import moment from 'moment';
@@ -11,6 +11,15 @@ import { Courses } from '/imports/api/courses/courses';
 import { Locations } from '/imports/api/locations/locations';
 import { Queues } from '/imports/api/queues/queues';
 import { Sessions } from '/imports/api/sessions/sessions';
+
+if (Meteor.isServer) {
+  Jobs.register({
+    'queues.endQueue': function(queueId) {
+      Meteor.call('queues.endQueue', { queueId });
+      this.success();
+    }
+  });
+}
 
 export const createQueue = new ValidatedMethod({
   name: 'queues.createQueue',
@@ -44,16 +53,10 @@ export const createQueue = new ValidatedMethod({
     });
 
     if (Meteor.isServer) {
-      SyncedCron.add({
-        name: `queues.endQueue.${queueId}`,
-        schedule(parser) {
-          const date = new Date(scheduledEndTime);
-          return parser.recur().on(date).fullDate();
-        },
-        job() {
-          Meteor.call('queues.endQueue', { queueId });
-        },
+      const job = Jobs.run('queues.endQueue', queueId, {
+        date: new Date(scheduledEndTime),
       });
+      Queues.update({ _id: queueId }, { $set: { endJobId: job._id }});
     }
 
     return queueId;
@@ -98,7 +101,9 @@ export const updateQueue = new ValidatedMethod({
     if (scheduledEndTime !== queue.scheduledEndTime) {
       setFields.scheduledEndTime = scheduledEndTime;
       if (Meteor.isServer) {
-        SyncedCron.remove(`queues.endQueue.${queueId}`);
+        Jobs.reschedule(queue.endJobId, {
+          date: new Date(scheduledEndTime),
+        });
       }
     }
 
@@ -107,19 +112,6 @@ export const updateQueue = new ValidatedMethod({
     }, {
       $set: setFields,
     });
-
-    if (Meteor.isServer) {
-      SyncedCron.add({
-        name: `queues.endQueue.${queueId}`,
-        schedule(parser) {
-          const date = new Date(scheduledEndTime || queue.scheduledEndTime);
-          return parser.recur().on(date).fullDate();
-        },
-        job() {
-          Meteor.call('queues.endQueue', { queueId });
-        },
-      });
-    }
   },
 });
 
@@ -253,7 +245,7 @@ export const endQueue = new ValidatedMethod({
     });
 
     if (Meteor.isServer) {
-      SyncedCron.remove(`queues.endQueue.${queueId}`);
+      Jobs.cancel(queue.endJobId);
     }
   },
 });

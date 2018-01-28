@@ -19,6 +19,3 @@ import './migrations/migrations';
 
 // Initialize test data
 import './fixtures';
-
-// Run cron jobs
-import './cron-jobs';
