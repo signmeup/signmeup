@@ -14,10 +14,10 @@ import { Sessions } from '/imports/api/sessions/sessions';
 
 if (Meteor.isServer) {
   Jobs.register({
-    'queues.endQueue': function(queueId) {
+    'queues.endQueue': function endQueueViaJob(queueId) {
       Meteor.call('queues.endQueue', { queueId });
       this.success();
-    }
+    },
   });
 }
 
@@ -56,7 +56,7 @@ export const createQueue = new ValidatedMethod({
       const job = Jobs.run('queues.endQueue', queueId, {
         date: new Date(scheduledEndTime),
       });
-      Queues.update({ _id: queueId }, { $set: { endJobId: job._id }});
+      Queues.update({ _id: queueId }, { $set: { endJobId: job._id } });
     }
 
     return queueId;
