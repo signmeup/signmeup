@@ -4,7 +4,7 @@ export const carriers = {
   '3 River Wireless': 'sms.3rivers.net',
   'ACS Wireless': 'paging.acswireless.com',
   'Alltel': 'message.alltel.com',
-  'AT&T': 'mobile.att.net',
+  'AT&T': 'txt.att.net',
   'Bell Canada': 'bellmobility.ca',
   'Bell Mobility (Canada)': 'txt.bell.ca',
   'Bell Mobility': 'txt.bellmobility.ca',
