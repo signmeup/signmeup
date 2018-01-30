@@ -13,11 +13,12 @@ export const NotificationsSchema = new SimpleSchema({
 
 Tickets.schema = new SimpleSchema({
   courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
-  queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  queueId: { type: String, regEx: SimpleSchema.RegEx.Id, index: true },
   status: {
     type: String,
     allowedValues: ['open', 'claimed', 'markedAsMissing', 'markedAsDone', 'deleted'],
     defaultValue: 'open',
+    index: true,
   },
 
   studentIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
