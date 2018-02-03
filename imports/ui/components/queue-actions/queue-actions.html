@@ -1,7 +1,7 @@
 <template name="QueueActions">
-  <div class="queue-actions pt-4 pb-4">
-    <div class="container">
-      <div class="left-actions">
+  <div class="queue-actions container pt-4 pb-4">
+    <div class="row">
+      <div class="col-12 col-sm-6 mb-2 mb-sm-0">
         {{#if taView}}
           {{> QueueStatusDropdown queue=queue}}
         {{else}}
@@ -19,7 +19,8 @@
 
           <span class="middot text-muted">&middot;</span>
         {{/if}}
-        <span class="text-muted">
+
+        <span class="text-muted status-text">
           {{#if queue.isOpen}}
             This queue is accepting signups.
           {{/if}}
@@ -34,7 +35,7 @@
         </span>
       </div>
 
-      <div class="right-actions">
+      <div class="col-12 col-sm-6 text-sm-right">
         {{#if taView}}
           <span class="js-announcements-tooltip-wrapper mr-1" data-toggle="tooltip" data-placement="left" title="Coming soon!">
             <button type="button" class="btn btn-outline-secondary disabled">
