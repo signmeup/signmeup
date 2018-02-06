@@ -5,9 +5,14 @@ export const Queues = new Mongo.Collection('queues');
 
 Queues.schema = new SimpleSchema({
   name: { type: String },
-  courseId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  courseId: { type: String, regEx: SimpleSchema.RegEx.Id, index: true },
   locationId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
-  status: { type: String, allowedValues: ['open', 'cutoff', 'ended'], defaultValue: 'open' },
+  status: {
+    type: String,
+    allowedValues: ['open', 'cutoff', 'ended'],
+    defaultValue: 'open',
+    index: true,
+  },
 
   announcementIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
   ticketIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
@@ -21,7 +26,7 @@ Queues.schema = new SimpleSchema({
 
   scheduledEndTime: { type: Date },
 
-  createdAt: { type: Date },
+  createdAt: { type: Date, index: true },
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
 
   cutoffAt: { type: Date, optional: true },

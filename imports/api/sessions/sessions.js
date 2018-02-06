@@ -5,7 +5,7 @@ export const Sessions = new Mongo.Collection('sessions');
 
 Sessions.schema = new SimpleSchema({
   name: { type: String },
-  queueId: { type: String, regEx: SimpleSchema.RegEx.Id },
+  queueId: { type: String, regEx: SimpleSchema.RegEx.Id, index: true },
 
   userId: { type: String, regEx: SimpleSchema.RegEx.Id },
   userAgent: { type: String },
