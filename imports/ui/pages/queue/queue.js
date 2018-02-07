@@ -69,15 +69,9 @@ Template.Queue.onRendered(function onRendered() {
             // When we first call observe, this function is called for each
             // existing ticket. This "hack" ignores this initial call.
             if (initial) return;
-            const subscription = this.subscribe('users.byIds', ticket.studentIds, () => {
-              const students = ticket.students().fetch();
-              const names = students.map((student) => { return student.fullName(); });
-              const verb = names.length === 1 ? 'has' : 'have';
-              WebNotifications.send(`${names.join(', ')} ${verb} joined the queue`, {
-                body: ticket.question,
-                timeout: 5000,
-              });
-              subscription.stop();
+            WebNotifications.send('A student has joined the queue', {
+              body: ticket.question,
+              timeout: 5000,
             });
           },
         });
