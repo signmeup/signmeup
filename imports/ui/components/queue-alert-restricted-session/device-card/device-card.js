@@ -10,12 +10,6 @@ import { RestrictedSessions } from '/imports/lib/client/restricted-sessions';
 
 import './device-card.html';
 
-Template.DeviceCard.onCreated(function onCreated() {
-  this.autorun(() => {
-    this.subscribe('users.byIds', [Template.currentData().session.userId]);
-  });
-});
-
 Template.DeviceCard.helpers({
   currentDeviceClass(session) {
     const queue = Queues.findOne(session.queueId);

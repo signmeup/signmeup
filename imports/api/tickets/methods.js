@@ -13,6 +13,7 @@ import { Tickets, NotificationsSchema } from '/imports/api/tickets/tickets';
 import { SignupGap } from '/imports/lib/both/signup-gap';
 import { Notifications } from '/imports/lib/both/notifications';
 import { createUser, findUserByEmail } from '/imports/lib/both/users';
+import { generateAnonymousNames } from '/imports/lib/both/tickets';
 
 export const createTicket = new ValidatedMethod({
   name: 'tickets.createTicket',
@@ -90,12 +91,15 @@ export const createTicket = new ValidatedMethod({
       }
     }
 
+    const anonymousNames = generateAnonymousNames(queue, studentIds.length);
+
     // Create ticket
     const ticketId = Tickets.insert({
       courseId: queue.courseId,
       queueId,
 
       studentIds,
+      anonymousNames,
       question,
 
       notifications,

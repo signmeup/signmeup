@@ -4,13 +4,23 @@ import { Meteor } from 'meteor/meteor';
 // account for every possible field. This is dangerous and hard to maintain
 // as we add more packages or as Meteor changes. Best to stay away for now.
 
+// Visible to everyone
 Meteor.users.publicFields = {
-  'emails.address': true,
-  preferredName: true,
-  'services.google': true,
-  'services.saml': true,
   roles: true,
 };
+
+// Visible to everyone for TAs, visible to TAs for everyone
+Meteor.users.protectedFields = Object.assign({}, Meteor.users.publicFields, {
+  preferredName: true,
+  'emails.address': true,
+  'services.google.name': true,
+  'services.google.given_name': true,
+  'services.google.family_name': true,
+  'services.saml.displayName': true,
+});
+
+// Only visible to oneself
+Meteor.users.privateFields = Meteor.users.protectedFields;
 
 Meteor.users.allow({
   insert() { return false; },

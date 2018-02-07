@@ -22,6 +22,7 @@ Tickets.schema = new SimpleSchema({
   },
 
   studentIds: { type: [String], regEx: SimpleSchema.RegEx.Id, defaultValue: [] },
+  anonymousNames: { type: [String] },
   question: { type: String, optional: true },
 
   notifications: { type: NotificationsSchema, defaultValue: {} },
@@ -50,6 +51,7 @@ Tickets.publicFields = {
   status: true,
 
   studentIds: true,
+  anonymousNames: true,
 
   createdAt: true,
   claimedAt: true,

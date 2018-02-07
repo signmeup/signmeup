@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
+import { Roles } from 'meteor/alanning:roles';
 import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
@@ -15,8 +16,7 @@ Template.Ticket.onCreated(function onCreated() {
   this.autorun(() => {
     const ticket = Template.currentData().ticket;
     this.subscribe('tickets.byId', ticket._id);
-    this.subscribe('users.byIds', ticket.studentIds);
-    if (ticket.isClaimed()) this.subscribe('users.byIds', [ticket.claimedBy]);
+    this.subscribe('users.byTicket', ticket._id);
   });
 });
 
@@ -40,10 +40,15 @@ Template.Ticket.helpers({
     return (ticket && ticket.belongsToUser(Meteor.userId())) ? 'current-user-ticket' : '';
   },
 
-  studentNames(students) {
+  studentNames(ticket) {
+    const userId = Meteor.userId();
+    if (!Roles.userIsInRole(userId, ['admin', 'mta', 'hta', 'ta'], ticket.courseId) && !ticket.belongsToUser(userId)) {
+      return ticket.anonymousNames.join(', ');
+    }
+
     let result = '';
 
-    students.fetch().forEach((student, i) => {
+    ticket.students().fetch().forEach((student, i) => {
       if (i > 0) {
         result += ', ';
       }
