@@ -101,12 +101,9 @@ export const updateQueue = new ValidatedMethod({
     if (scheduledEndTime !== queue.scheduledEndTime) {
       setFields.scheduledEndTime = scheduledEndTime;
       if (Meteor.isServer) {
-        // Jobs.reschedule seems to be broken
-        Jobs.cancel(queue.endJobId);
-        const job = Jobs.run('queues.endQueue', queueId, {
+        Jobs.reschedule(queue.endJobId, {
           date: new Date(scheduledEndTime),
         });
-        setFields.endJobId = job._id;
       }
     }
 
@@ -247,7 +244,7 @@ export const endQueue = new ValidatedMethod({
       },
     });
 
-    if (Meteor.isServer) {
+    if (Meteor.isServer && queue.endJobId) {
       Jobs.cancel(queue.endJobId);
     }
   },
