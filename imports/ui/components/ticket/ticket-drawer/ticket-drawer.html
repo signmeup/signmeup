@@ -2,16 +2,16 @@
   <div class="ticket-drawer row drawer hidden py-3">
     <div class="container">
       <div class="row">
-        <div class="td col-2 col-sm-1 text-muted">
+        <div class="td col-2 col-md-1 text-muted">
           {{#if ticket.isClaimed}}
             {{formattedClaimDuration}}
           {{/if}}
         </div>
-        <div class="td col-10 col-sm-5">
+        <div class="td col-10 col-md-5">
           <h5 class="mb-2">Question</h5>
           <p>{{ticket.question}}</p>
         </div>
-        <div class="td col-12 col-sm-6">
+        <div class="td col-12 col-md-6">
           {{#if taView}}
             <h5 class="mb-2">Notifications</h5>
             <div class="btn-group">

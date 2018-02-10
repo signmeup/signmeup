@@ -2,7 +2,7 @@
   <div class="queue-header">
     {{#if Template.subscriptionsReady}}
       <div class="queue-header-background" style="background-image: {{queue.svgPatternUrl}}"></div>
-      <div class="container pt-3 pb-3 pt-sm-6 pb-sm-5">
+      <div class="container pt-3 pb-3 pt-md-6 pb-md-5">
         <div class="name-and-staff">
           <h1 class="queue-name display-5 mb-3">{{queue.course.name}} &middot; {{queue.name}}</h1>
           <div class="staff float-right">
@@ -12,14 +12,14 @@
           </div>
         </div>
         <div class="row info text-muted justify-content-between">
-          <div class="col-12 col-sm-6 data">
+          <div class="col-12 col-md-6 data">
             <span class="mr-3"><i class="material-icons">location_on</i>{{queue.location.name}}</span>
             <span class="mr-3"><i class="material-icons">people</i>{{queue.formatTicketCount}}</span>
             <span class="mr-3"><i class="material-icons">access_time</i>Ends at {{queue.formatScheduledEndTime}}</span>
           </div>
 
           {{#if taView}}
-            <div class="col-12 col-sm-6 text-center text-sm-right">
+            <div class="col-12 col-md-6 text-center text-md-right">
               <button class="btn btn-link btn-black-link js-show-modal-queue-edit">
                 <i class="material-icons">mode_edit</i> Edit Queue
               </button>

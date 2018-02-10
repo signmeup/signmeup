@@ -1,13 +1,13 @@
 <template name="Ticket">
   <div class="holder js-ticket-holder">
     <div class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} {{#if taView}}ta-ticket{{/if}} row">
-        <div class="td col-2 col-sm-1">{{ticket.index}}</div>
+        <div class="td col-2 col-md-1">{{ticket.index}}</div>
         <div class="td col-5">{{studentNames ticket.students}}</div>
-        <div class="td col-5 col-sm-2">{{formattedTimestamp ticket.createdAt}}</div>
+        <div class="td col-5 col-md-2">{{formattedTimestamp ticket.createdAt}}</div>
         {{#if taView}}
           {{> TicketTAActions ticket=ticket}}
         {{else}}
-        <div class="td col-12 col-sm-4 actions">
+        <div class="td col-12 col-md-4 actions">
           <div class="btn-group float-right">
             {{#if ticket.isClaimed}}
                 <button
