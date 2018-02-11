@@ -3,34 +3,38 @@
     <div class="row mb-0">
       {{#if isEditing}}
         <form class="location-name-edit-form js-location-name-edit-form">
-          <div class="col-9 mb-0">
+          <div class="col-8 mb-0">
             <input type="text" class="form-control" name="name" placeholder="CIT 123" value="{{location.name}}">
           </div>
-          <div class="col-3 text-right">
+          <div class="col-4 text-right">
             <button
               class="btn btn-secondary js-cancel-edit-location"
               type="button">
-              Cancel
+              <i class="material-icons d-md-none mr-0">cancel</i>
+              <span class="d-none d-md-inline">Cancel</span>
             </button>
             <button
               class="btn btn-success"
               type="submit">
-              Save
+              <i class="material-icons d-md-none mr-0">save</i>
+              <span class="d-none d-md-inline">Save</span>
             </button>
           </div>
         </form>
       {{else}}
-        <p class="location-name col-9 mb-0">
+        <p class="location-name col-8 mb-0">
           {{location.name}}
         </p>
-        <div class="col-3 text-right">
+        <div class="col-4 text-right">
           <button
             class="btn btn-secondary js-edit-location">
-            Edit
+            <i class="material-icons d-md-none mr-0">edit</i>
+            <span class="d-none d-md-inline">Edit</span>
           </button>
           <button
             class="btn btn-danger js-remove-location">
-            Remove
+            <i class="material-icons d-md-none mr-0">delete</i>
+            <span class="d-none d-md-inline">Remove</span>
           </button>
         </div>
       {{/if}}
