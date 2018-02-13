@@ -431,3 +431,21 @@ export const notifyTicketByText = new ValidatedMethod({
     }
   }
 });
+
+// Server-side methods
+Meteor.methods({
+  'tickets.inRange'({ courseId, startTime, endTime }) {
+    if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
+      throw new Meteor.Error('tickets.inRange.unauthorized',
+        'Only TAs and above can get tickets from a specified range.');
+    }
+
+    return Tickets.find({
+      courseId,
+      createdAt: {
+        $gte: startTime.toISOString(),
+        $lte: endTime.toISOString(),
+      },
+    });
+  },
+});

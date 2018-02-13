@@ -21,6 +21,8 @@ if (Meteor.isServer) {
   });
 }
 
+import { jsonToCsv } from '/imports/lib/both/csv';
+
 export const createQueue = new ValidatedMethod({
   name: "queues.createQueue",
   validate: Queues.simpleSchema()
@@ -483,4 +485,64 @@ export const releaseFromSession = new ValidatedMethod({
       }
     );
   }
+});
+
+// Server-side methods
+Meteor.methods({
+  'queues.inRange'({ courseId, startTime, endTime }) {
+    if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
+      throw new Meteor.Error('queues.inRange.unauthorized',
+        'Only TAs and above can get queues from a specified range.');
+    }
+
+    const queues = Queues.find({
+      courseId,
+      createdAt: {
+        $gte: startTime,
+        $lte: endTime,
+      },
+    }, {
+      fields: {
+        courseId: false,
+        announcementIds: false,
+        settings: false,
+        endJobId: false,
+      },
+    }).fetch();
+
+    const locations = Locations.find({
+      _id: {
+        $in: _.uniq(queues.map(q => q.locationId)),
+      },
+    }).fetch();
+    const locationMap = {};
+    _.each(locations, (loc) => {
+      locationMap[loc._id] = loc.name;
+    });
+
+    const users = Meteor.users.find({
+      _id: {
+        $in: _.uniq(queues.map(q => q.endedBy).concat(queues.map(q => q.createdBy))),
+      },
+    }).fetch();
+    const userMap = {};
+    _.each(users, (user) => {
+      userMap[user._id] = user.fullName();
+    });
+
+    _.each(queues, (queue) => {
+      delete queue._id;
+
+      queue.location = locationMap[queue.locationId];
+      delete queue.locationId;
+
+      queue.endedBy = userMap[queue.endedBy];
+      queue.createdBy = userMap[queue.createdBy];
+
+      queue.tickets = queue.ticketIds.length;
+      delete queue.ticketIds;
+    });
+
+    return jsonToCsv(queues);
+  },
 });
