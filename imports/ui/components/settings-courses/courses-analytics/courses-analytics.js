@@ -2,6 +2,8 @@ import { Template } from "meteor/templating";
 import { ReactiveVar } from "meteor/reactive-var";
 import { $ } from "meteor/jquery";
 
+import moment from 'moment';
+
 import { LocalFiles } from '/imports/lib/client/local-files';
 
 import "./courses-analytics.html";
@@ -46,8 +48,9 @@ Template.CoursesAnalytics.events({
 
     const courseId = this.course._id;
     const type = event.target.type.value;
-    const startTime = $('.js-logs-datepicker-start').datepicker('getUTCDate');
-    const endTime = $('.js-logs-datepicker-end').datepicker('getUTCDate');
+    const startTime = $('.js-logs-datepicker-start').datepicker('getDate');
+    const endTime = $('.js-logs-datepicker-end').datepicker('getDate');
+    endTime.setHours(23, 59, 59);
 
     Meteor.call('queues.inRange', {
       courseId,
@@ -59,7 +62,9 @@ Template.CoursesAnalytics.events({
         return;
       }
 
-      templateInstance.fileName.set(this.course.name + '_' + startTime + '_' + endTime);
+      const start = moment(startTime).format('YYYY-MM-DD');
+      const end = moment(endTime).format('YYYY-MM-DD');
+      templateInstance.fileName.set(this.course.name + '_' + start + '_' + end);
       templateInstance.downloadUrl.set(LocalFiles.getURL(result));
     });
   },
