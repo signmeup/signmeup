@@ -47,12 +47,12 @@ Template.CoursesAnalytics.events({
     templateInstance.downloadUrl.set('Preparing');
 
     const courseId = this.course._id;
-    const type = event.target.type.value;
+    const type = $('#js-log-type').val();
     const startTime = $('.js-logs-datepicker-start').datepicker('getDate');
     const endTime = $('.js-logs-datepicker-end').datepicker('getDate');
     endTime.setHours(23, 59, 59);
 
-    Meteor.call('queues.inRange', {
+    Meteor.call(type + '.inRange', {
       courseId,
       startTime,
       endTime,
@@ -64,7 +64,7 @@ Template.CoursesAnalytics.events({
 
       const start = moment(startTime).format('YYYY-MM-DD');
       const end = moment(endTime).format('YYYY-MM-DD');
-      templateInstance.fileName.set(this.course.name + '_' + start + '_' + end);
+      templateInstance.fileName.set([this.course.name, type, start, end].join('_'));
       templateInstance.downloadUrl.set(LocalFiles.getURL(result));
     });
   },

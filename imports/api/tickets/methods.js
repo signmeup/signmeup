@@ -13,6 +13,7 @@ import { Tickets, NotificationsSchema } from "/imports/api/tickets/tickets";
 import { SignupGap } from "/imports/lib/both/signup-gap";
 import { Notifications } from "/imports/lib/both/notifications";
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
+import { jsonToCsv } from "/imports/lib/both/csv";
 
 export const createTicket = new ValidatedMethod({
   name: "tickets.createTicket",
@@ -440,12 +441,42 @@ Meteor.methods({
         'Only TAs and above can get tickets from a specified range.');
     }
 
-    return Tickets.find({
+    const tickets = Tickets.find({
       courseId,
       createdAt: {
-        $gte: startTime.toISOString(),
-        $lte: endTime.toISOString(),
+        $gte: startTime,
+        $lte: endTime,
       },
+    }, {
+      fields: {
+        courseId: false,
+        notifications: false,
+      },
+      sort: { createdAt: 1 },
+    }).fetch();
+
+    const userFields = [
+      'studentIds', 'createdBy', 'claimedBy',
+      'markedAsMissingBy', 'markedAsDoneBy', 'deletedBy'
+    ];
+    const users = Meteor.users.find({
+      _id: {
+        $in: _.uniq(_.flatten(userFields.map(f => tickets.map(t => t[f])))),
+      },
+    }).fetch();
+    const userMap = {};
+    _.each(users, (user) => {
+      userMap[user._id] = user.fullName();
     });
+
+    _.each(tickets, (ticket) => {
+      delete ticket._id;
+
+      _.each(userFields, (uf) => {
+        ticket[uf] = userMap[ticket[uf]];
+      });
+    });
+
+    return jsonToCsv(tickets);
   },
 });

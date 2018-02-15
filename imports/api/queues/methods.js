@@ -508,6 +508,7 @@ Meteor.methods({
         settings: false,
         endJobId: false,
       },
+      sort: { createdAt: 1 },
     }).fetch();
 
     const locations = Locations.find({
