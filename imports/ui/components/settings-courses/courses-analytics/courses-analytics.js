@@ -10,6 +10,7 @@ import { LocalFiles } from '/imports/lib/client/local-files';
 import "./courses-analytics.html";
 
 Template.CoursesAnalytics.onCreated(function onCreated() {
+  this.status = new ReactiveVar('Empty');
   this.downloadUrl = new ReactiveVar('');
   this.fileName = new ReactiveVar('');
 });
@@ -20,12 +21,11 @@ Template.CoursesAnalytics.onRendered(() => {
 
 Template.CoursesAnalytics.helpers({
   isDownloadReady() {
-    const dUrl = Template.instance().downloadUrl.get();
-    return dUrl !== '' && dUrl !== 'Preparing';
+    return Template.instance().status.get() === 'Downloadable';
   },
 
-  isPreparing() {
-    return Template.instance().downloadUrl.get() === 'Preparing';
+  cantPrepare() {
+    return Template.instance().status.get() !== 'Preparable';
   },
 
   downloadUrl() {
@@ -38,14 +38,16 @@ Template.CoursesAnalytics.helpers({
 });
 
 Template.CoursesAnalytics.events({
-  'focus #js-log-type, focus .js-logs-datepicker-start, focus .js-logs-datepicker-end'(event, templateInstance) {
-    templateInstance.downloadUrl.set('');
+  'blur .js-logs-form-element'(event, templateInstance) {
+    const startTime = $('.js-logs-datepicker-start').datepicker('getDate');
+    const endTime = $('.js-logs-datepicker-end').datepicker('getDate');
+    templateInstance.status.set(startTime && endTime ? 'Preparable' : 'Empty');
   },
 
   'click .js-logs-prepare'(event, templateInstance) {
     event.preventDefault();
 
-    templateInstance.downloadUrl.set('Preparing');
+    templateInstance.status.set('Preparing');
 
     const courseId = this.course._id;
     const type = $('#js-log-type').val();
@@ -65,6 +67,7 @@ Template.CoursesAnalytics.events({
 
       const start = moment(startTime).format('YYYY-MM-DD');
       const end = moment(endTime).format('YYYY-MM-DD');
+      templateInstance.status.set('Downloadable');
       templateInstance.fileName.set([this.course.name, type, start, end].join('_'));
       templateInstance.downloadUrl.set(LocalFiles.getURL(result));
     });
