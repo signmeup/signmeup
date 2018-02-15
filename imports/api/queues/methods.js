@@ -21,6 +21,7 @@ if (Meteor.isServer) {
   });
 }
 
+import { join } from '/imports/lib/both/join';
 import { jsonToCsv } from '/imports/lib/both/csv';
 
 export const createQueue = new ValidatedMethod({
@@ -489,13 +490,13 @@ export const releaseFromSession = new ValidatedMethod({
 
 // Server-side methods
 Meteor.methods({
-  'queues.inRange'({ courseId, startTime, endTime }) {
+  'queues.export.inRange'({ courseId, startTime, endTime }) {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
       throw new Meteor.Error('queues.inRange.unauthorized',
         'Only TAs and above can get queues from a specified range.');
     }
 
-    const queues = Queues.find({
+    let queues = Queues.find({
       courseId,
       createdAt: {
         $gte: startTime,
@@ -511,34 +512,20 @@ Meteor.methods({
       sort: { createdAt: 1 },
     }).fetch();
 
-    const locations = Locations.find({
-      _id: {
-        $in: _.uniq(queues.map(q => q.locationId)),
-      },
-    }).fetch();
-    const locationMap = {};
-    _.each(locations, (loc) => {
-      locationMap[loc._id] = loc.name;
-    });
+    queues = join(queues, {
+      localField: 'locationId',
+      newField: 'location',
+      getter: l => l.name,
+    }, Locations);
 
-    const users = Meteor.users.find({
-      _id: {
-        $in: _.uniq(queues.map(q => q.endedBy).concat(queues.map(q => q.createdBy))),
-      },
-    }).fetch();
-    const userMap = {};
-    _.each(users, (user) => {
-      userMap[user._id] = user.fullName();
-    });
+    const getFullName = user => user.fullName();
+    queues = join(queues, [
+      { localField: 'endedBy', getter: getFullName },
+      { localField: 'createdBy', getter: getFullName },
+    ], Meteor.users);
 
     _.each(queues, (queue) => {
       delete queue._id;
-
-      queue.location = locationMap[queue.locationId];
-      delete queue.locationId;
-
-      queue.endedBy = userMap[queue.endedBy];
-      queue.createdBy = userMap[queue.createdBy];
 
       queue.tickets = queue.ticketIds.length;
       delete queue.ticketIds;

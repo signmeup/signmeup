@@ -13,6 +13,7 @@ import { Tickets, NotificationsSchema } from "/imports/api/tickets/tickets";
 import { SignupGap } from "/imports/lib/both/signup-gap";
 import { Notifications } from "/imports/lib/both/notifications";
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
+import { join } from "/imports/lib/both/join";
 import { jsonToCsv } from "/imports/lib/both/csv";
 
 export const createTicket = new ValidatedMethod({
@@ -435,13 +436,13 @@ export const notifyTicketByText = new ValidatedMethod({
 
 // Server-side methods
 Meteor.methods({
-  'tickets.inRange'({ courseId, startTime, endTime }) {
+  'tickets.export.inRange'({ courseId, startTime, endTime }) {
     if (!Roles.userIsInRole(Meteor.userId(), ['admin', 'mta', 'hta', 'ta'], courseId)) {
       throw new Meteor.Error('tickets.inRange.unauthorized',
         'Only TAs and above can get tickets from a specified range.');
     }
 
-    const tickets = Tickets.find({
+    let tickets = Tickets.find({
       courseId,
       createdAt: {
         $gte: startTime,
@@ -458,26 +459,14 @@ Meteor.methods({
     const userFields = [
       'studentIds', 'createdBy', 'claimedBy',
       'markedAsMissingBy', 'markedAsDoneBy', 'deletedBy'
-    ];
-    const users = Meteor.users.find({
-      _id: {
-        $in: _.uniq(_.flatten(userFields.map(f => tickets.map(t => t[f])))),
-      },
-    }).fetch();
-    const userMap = {};
-    _.each(users, (user) => {
-      userMap[user._id] = user.fullName();
-    });
+    ].map(uf => ({ localField: uf, getter: u => u.fullName() }));
+    userFields[0].newField = 'students';
+    tickets = join(tickets, userFields, Meteor.users);
 
     _.each(tickets, (ticket) => {
       delete ticket._id;
 
-      _.each(userFields.slice(1), (uf) => {
-        ticket[uf] = userMap[ticket[uf]];
-      });
-
-      ticket.students = _.map(ticket.studentIds, (id) => userMap[id]).join(',');
-      delete ticket.studentIds;
+      ticket.students = ticket.students.join(',');
     });
 
     return jsonToCsv(tickets);

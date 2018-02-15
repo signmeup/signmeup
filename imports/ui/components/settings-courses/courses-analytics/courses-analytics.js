@@ -1,3 +1,4 @@
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { ReactiveVar } from "meteor/reactive-var";
 import { $ } from "meteor/jquery";
@@ -37,7 +38,7 @@ Template.CoursesAnalytics.helpers({
 });
 
 Template.CoursesAnalytics.events({
-  'focus .js-logs-datepicker-start, focus .js-logs-datepicker-end'(event, templateInstance) {
+  'focus #js-log-type, focus .js-logs-datepicker-start, focus .js-logs-datepicker-end'(event, templateInstance) {
     templateInstance.downloadUrl.set('');
   },
 
@@ -52,13 +53,13 @@ Template.CoursesAnalytics.events({
     const endTime = $('.js-logs-datepicker-end').datepicker('getDate');
     endTime.setHours(23, 59, 59);
 
-    Meteor.call(type + '.inRange', {
+    Meteor.call(type + '.export.inRange', {
       courseId,
       startTime,
       endTime,
     }, (err, result) => {
       if (err) {
-        console.log('err', err);
+        console.error('err', err);
         return;
       }
 
