@@ -472,9 +472,12 @@ Meteor.methods({
     _.each(tickets, (ticket) => {
       delete ticket._id;
 
-      _.each(userFields, (uf) => {
+      _.each(userFields.slice(1), (uf) => {
         ticket[uf] = userMap[ticket[uf]];
       });
+
+      ticket.students = _.map(ticket.studentIds, (id) => userMap[id]).join(',');
+      delete ticket.studentIds;
     });
 
     return jsonToCsv(tickets);
