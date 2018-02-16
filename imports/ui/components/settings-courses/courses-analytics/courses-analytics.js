@@ -38,7 +38,7 @@ Template.CoursesAnalytics.helpers({
 });
 
 Template.CoursesAnalytics.events({
-  'blur .js-logs-form-element'(event, templateInstance) {
+  'change .js-logs-form-element'(event, templateInstance) {
     const startTime = $('.js-logs-datepicker-start').datepicker('getDate');
     const endTime = $('.js-logs-datepicker-end').datepicker('getDate');
     templateInstance.status.set(startTime && endTime ? 'Preparable' : 'Empty');
