@@ -35,3 +35,18 @@ Meteor.publish("queues.inRange", function inRange(
     }
   });
 });
+
+Meteor.publish('queues.inRange', function inRange(courseId, startTime, endTime) {
+  if (!Roles.userIsInRole(this.userId, ['admin', 'mta', 'hta', 'ta'], courseId)) {
+    throw new Meteor.Error('queues.inRange.unauthorized',
+      'Only TAs and above can get queues from a specified range.');
+  }
+ 
+  return Queues.find({
+    courseId,
+    createdAt: {
+      $gte: startTime,
+      $lte: endTime,
+    },
+  });
+});
