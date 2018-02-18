@@ -48,15 +48,48 @@ Template.AnalyticsGraphs.onRendered(function onRendered() {
     const xScale = new Plottable.Scales.Category();
     const yScale = new Plottable.Scales.Category();
     const colorScale = new Plottable.Scales.InterpolatedColor();
-    colorScale.range(["#BDCEF0", "#5279C7"]);
+    colorScale.range(['#eee', '#5279C7']);
     const data = _.flatten(groupedTickets);
 
     const plot = new Plottable.Plots.Rectangle()
       .addDataset(new Plottable.Dataset(data))
-      .x(function(d) { return d.x; }, xScale)
-      .y(function(d) { return d.y; }, yScale)
-      .attr("fill", function(d) { return d.val; }, colorScale)
-      .renderTo("#week");
+      .x((d) => d.x, xScale)
+      .y((d) => d.y, yScale)
+      .attr('fill', (d) => d.val, colorScale)
+      .attr('stroke', '#fff')
+      .attr('stroke-width', 2)
+      .renderTo('#week');
+
+    // Initializing tooltip anchor
+    const tooltipAnchorSelection = plot.foreground().append('circle');
+    tooltipAnchorSelection.attr({
+      r: 3,
+      opacity: 0,
+    });
+    const tooltipAnchor = $(tooltipAnchorSelection.node());
+    tooltipAnchor.tooltip({
+      animation: false,
+      container: 'body',
+      placement: 'auto',
+      trigger: 'manual',
+    });
+    // Setup Interaction.Pointer
+    const pointer = new Plottable.Interactions.Pointer();
+    pointer.onPointerMove((p) => {
+      const closest = plot.entityNearest(p);
+      if (closest) {
+        tooltipAnchor.tooltip('show');
+        tooltipAnchor.attr('cx', closest.position.x);
+        tooltipAnchor.attr('cy', closest.position.y);
+        tooltipAnchor.attr('data-original-title', closest.datum.val + ' tickets');
+      }
+    });
+
+    pointer.onPointerExit(() => {
+      tooltipAnchor.tooltip('hide');
+    });
+
+    pointer.attachTo(plot);
 
     // The plottable library sets fixed sizes via JavaScript, so we must
     // manually tell it whenever the graph needs to be re-drawn
