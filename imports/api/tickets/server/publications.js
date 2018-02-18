@@ -66,7 +66,7 @@ Meteor.publish('tickets.inRange', function inRange(courseId, startTime, endTime)
     throw new Meteor.Error('tickets.inRange.unauthorized',
       'Only TAs and above can get tickets from a specified range.');
   }
- 
+
   return Tickets.find({
     courseId,
     createdAt: {

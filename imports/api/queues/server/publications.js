@@ -41,7 +41,7 @@ Meteor.publish('queues.inRange', function inRange(courseId, startTime, endTime) 
     throw new Meteor.Error('queues.inRange.unauthorized',
       'Only TAs and above can get queues from a specified range.');
   }
- 
+
   return Queues.find({
     courseId,
     createdAt: {

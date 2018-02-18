@@ -1,4 +1,7 @@
 import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+import { _ } from 'meteor/underscore';
+import { $ } from 'meteor/jquery';
 
 import moment from 'moment';
 import Plottable from 'plottable';
@@ -53,9 +56,9 @@ Template.AnalyticsGraphs.onRendered(function onRendered() {
 
     const plot = new Plottable.Plots.Rectangle()
       .addDataset(new Plottable.Dataset(data))
-      .x((d) => d.x, xScale)
-      .y((d) => d.y, yScale)
-      .attr('fill', (d) => d.val, colorScale)
+      .x(d => d.x, xScale)
+      .y(d => d.y, yScale)
+      .attr('fill', d => d.val, colorScale)
       .attr('stroke', '#fff')
       .attr('stroke-width', 2)
       .renderTo('#week');
