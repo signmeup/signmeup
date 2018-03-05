@@ -63,4 +63,8 @@ Meteor.users.helpers({
   isTAOrAbove() {
     return this.courses().count() > 0;
   },
+
+  profilePictureUrl() {
+    return this.services && this.services.google && this.services.google.picture;
+  },
 });
