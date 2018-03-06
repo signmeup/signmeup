@@ -5,7 +5,8 @@
   vertical-align: text-bottom;
 
   margin-left: 4px;
-  padding: 4px 6px 8px 6px;
+  width: 42px;
+  height: 42px;
 
   background-color: white;
   border: 1px solid $gray-200;
@@ -36,5 +37,16 @@
     &::after {
       background-color: theme-color("warning");
     }
+  }
+
+  img {
+    width: 100%;
+  }
+
+  .initials {
+    display: inline-block;
+    width: 100%;
+    line-height: 32px;
+    text-align: center;
   }
 }
