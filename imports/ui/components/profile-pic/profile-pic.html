@@ -2,6 +2,10 @@
   <div
     class="profile-pic {{#if user.status.online}}online{{/if}} {{#if user.status.idle}}idle{{/if}}"
     data-toggle="tooltip" data-placement="bottom" title="{{user.fullName}}">
-    {{user.initials}}
+    {{#if user.profilePictureUrl}}
+      <img src={{user.profilePictureUrl}} />
+    {{else}}
+      <span class="initials">{{user.initials}}</span>
+    {{/if}}
   </div>
 </template>
