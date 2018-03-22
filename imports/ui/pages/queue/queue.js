@@ -4,8 +4,10 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Roles } from 'meteor/alanning:roles';
 
 import { Queues } from '/imports/api/queues/queues';
+import { notifyTicketByEmail, notifyTicketByText } from '/imports/api/tickets/methods';
 
 import { WebNotifications } from '/imports/lib/client/web-notifications';
+import { Notifications } from '/imports/lib/both/notifications';
 import { Observer } from '/imports/lib/both/observer';
 
 import '/imports/ui/components/queue-header/queue-header';
@@ -77,6 +79,19 @@ Template.Queue.onRendered(function onRendered() {
             WebNotifications.send('Your ticket has been claimed!', {
               timeout: 5000,
             });
+            if (ticket.notifications) {
+              if (ticket.notifications.email) {
+                notifyTicketByEmail.call({
+                  ticketId: ticket._id,
+                }, console.error);
+              }
+              const phone = ticket.notifications.phone;
+              if (phone && phone.number && phone.carrier) {
+                notifyTicketByText.call({
+                  ticketId: ticket._id,
+                }, console.error);
+              }
+            }
           }
         });
       }
