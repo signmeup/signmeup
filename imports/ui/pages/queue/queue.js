@@ -7,7 +7,6 @@ import { Queues } from '/imports/api/queues/queues';
 import { notifyTicketByEmail, notifyTicketByText } from '/imports/api/tickets/methods';
 
 import { WebNotifications } from '/imports/lib/client/web-notifications';
-import { Notifications } from '/imports/lib/both/notifications';
 import { Observer } from '/imports/lib/both/observer';
 
 import '/imports/ui/components/queue-header/queue-header';
