@@ -25,6 +25,7 @@ Queues.schema = new SimpleSchema({
   },
 
   scheduledEndTime: { type: Date },
+  endJobId: { type: String, optional: true },
 
   createdAt: { type: Date, index: true },
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
