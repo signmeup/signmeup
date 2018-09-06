@@ -55,7 +55,7 @@
                 </span>
               </div>
               {{#if errors "student"}}
-                <div class="form-control-feedback">{{errors "student"}}</div>
+                <div class="form-control-feedback text-danger">{{errors "student"}}</div>
               {{/if}}
             </div>
 
@@ -64,7 +64,7 @@
               <label for="question">Question</label>
               <textarea name="question" class="form-control js-question {{#if errors 'question'}}form-control-warning{{/if}}" rows="3" placeholder="What would you like help on?"></textarea>
               {{#if errors "question"}}
-                <div class="form-control-feedback">{{errors "question"}}</div>
+                <div class="form-control-feedback text-danger">{{errors "question"}}</div>
               {{/if}}
             </div>
 
@@ -104,7 +104,7 @@
                 autocorrect="off"
                 autocapitalize="off">
               {{#if errors "email"}}
-                <div class="form-control-feedback">{{errors "email"}}</div>
+                <div class="form-control-feedback text-danger">{{errors "email"}}</div>
               {{/if}}
             </div>
 
@@ -119,7 +119,7 @@
                   {{/each}}
                 </select>
                 {{#if errors "carrier"}}
-                  <div class="form-control-feedback">{{errors "carrier"}}</div>
+                  <div class="form-control-feedback text-danger">{{errors "carrier"}}</div>
                 {{/if}}
               </div>
               <div class="form-group col-md-6 {{#if errors 'number'}}has-danger{{/if}}">
@@ -133,7 +133,7 @@
                   autocorrect="off"
                   autocapitalize="off">
                 {{#if errors "number"}}
-                  <div class="form-control-feedback">{{errors "number"}}</div>
+                  <div class="form-control-feedback text-danger">{{errors "number"}}</div>
                 {{/if}}
               </div>
             </div>

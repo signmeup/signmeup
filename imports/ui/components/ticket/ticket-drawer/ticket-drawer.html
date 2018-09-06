@@ -7,27 +7,9 @@
             {{formattedClaimDuration}}
           {{/if}}
         </div>
-        <div class="td col-10 col-md-5">
+        <div class="td col-10 col-md-11">
           <h5 class="mb-2">Question</h5>
           <p>{{ticket.question}}</p>
-        </div>
-        <div class="td col-12 col-md-6">
-          {{#if taView}}
-            <h5 class="mb-2">Notifications</h5>
-            <div class="btn-group">
-              <button type="button" class="btn btn-outline-secondary" disabled>Announce name</button>
-
-              {{#if showEmailNotificationButton ticket}}
-                <button type="button" class="btn btn-outline-secondary js-notify-email">Send email</button>
-              {{/if}}
-
-              {{#if showTextNotificationButton ticket}}
-                <button type="button" class="btn btn-outline-secondary js-notify-text">Send text</button>
-              {{/if}}
-            </div>
-          {{/if}}
-
-          <div class="js-notification-result mt-1"></div>
         </div>
       </div>
     </div>

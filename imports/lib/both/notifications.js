@@ -23,8 +23,8 @@ export class Notifications {
         Email.send({
           to: ticket.notifications.email,
           from: 'signmeup-dev@lists.cs.brown.edu',
-          subject: `[SignMeUp] You're up next for ${course.name} ${queue.name}`,
-          text: 'A TA notified you about your spot. Head over to hours now.',
+          subject: `[SignMeUp] You're up for ${course.name} ${queue.name}`,
+          text: 'A TA is looking for you. Head over to hours now.',
         });
       } catch (err) {
         throw new Meteor.Error(err);
@@ -54,7 +54,7 @@ export class Notifications {
           to: `${ticket.notifications.phone.number}@${ticket.notifications.phone.carrier}`,
           from: 'signmeup-dev@lists.cs.brown.edu',
           subject: `${course.name} ${queue.name}`,
-          text: 'A TA notified you about your spot. Head over to hours now.',
+          text: 'A TA is looking for you. Head over to hours now.',
         });
       } catch (err) {
         throw new Meteor.Error(err);

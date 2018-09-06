@@ -4,8 +4,10 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 import { Roles } from 'meteor/alanning:roles';
 
 import { Queues } from '/imports/api/queues/queues';
+import { notifyTicketByEmail, notifyTicketByText } from '/imports/api/tickets/methods';
 
 import { WebNotifications } from '/imports/lib/client/web-notifications';
+import { Observer } from '/imports/lib/both/observer';
 
 import '/imports/ui/components/queue-header/queue-header';
 import '/imports/ui/components/alerts/alert-ending-soon/alert-ending-soon';
@@ -61,38 +63,40 @@ Template.Queue.onRendered(function onRendered() {
       document.title = `(${queue.activeTickets().count()}) ${queue.course().name} · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
 
       // setup notifications
-      if (!WebNotifications.canNotify()) return;
       if (isTA()) {
-        let initial = true;
-        queue.activeTickets().observe({
-          added: (ticket) => {
-            // When we first call observe, this function is called for each
-            // existing ticket. This "hack" ignores this initial call.
-            if (initial) return;
-            WebNotifications.send('A student has joined the queue', {
-              body: ticket.question,
-              timeout: 5000,
-            });
-          },
+        Observer.observeAdded(queue.activeTickets(), (ticket) => {
+          WebNotifications.send('A student has joined the queue', {
+            body: ticket.question,
+            timeout: 5000,
+          });
         });
-        initial = false;
       } else {
-        let initial2 = true;
-        queue.claimedTickets().observe({
-          added: (ticket) => {
-            // When we first call observe, this function is called for each
-            // existing ticket. This "hack" ignores this initial call.
-            if (initial2) return;
-            // if ticket created within the past 10 seconds, don't alert
-            if (Date.now() - ticket.createdAt < 10000) return;
-            if (ticket.belongsToUser(Meteor.userId())) {
-              WebNotifications.send('Your ticket has been claimed!', {
-                timeout: 5000,
-              });
-            }
-          },
+        Observer.observeAdded(queue.claimedTickets(), (ticket) => {
+          // if ticket created within the past 10 seconds, don't alert
+          if (Date.now() - ticket.createdAt < 10000) return;
+          if (!ticket.belongsToUser(Meteor.userId())) return;
+
+          WebNotifications.send('Your ticket has been claimed!', {
+            timeout: 5000,
+          });
+
+          if (!ticket.notifications) return;
+          if (ticket.notifications.email) {
+            notifyTicketByEmail.call({
+              ticketId: ticket._id,
+            }, (err) => {
+              if (err) console.error(err);
+            });
+          }
+          const phone = ticket.notifications.phone;
+          if (phone && phone.number && phone.carrier) {
+            notifyTicketByText.call({
+              ticketId: ticket._id,
+            }, (err) => {
+              if (err) console.error(err);
+            });
+          }
         });
-        initial2 = false;
       }
     }
   });
