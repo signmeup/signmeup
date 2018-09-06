@@ -17,7 +17,7 @@
               <!-- Course -->
               <div class="form-group col-md-4">
                 <label for="courseId">Course</label>
-                <select name="courseId" class="form-control">
+                <select name="courseId" class="form-control" required>
                   {{#each course in currentUser.courses}}
                     <option value="{{course._id}}">{{course.name}}</option>
                   {{/each}}
@@ -27,7 +27,7 @@
               <!-- Name -->
               <div class="form-group col-md-8 pl-md-0">
                 <label for="name">Name</label>
-                <input type="text" name="name" value="TA Hours" class="form-control">
+                <input type="text" name="name" value="TA Hours" class="form-control" required>
               </div>
             </div>
 
@@ -35,7 +35,7 @@
               <!-- Location -->
               <div class="form-group col-md-7">
                 <label for="locationId">Location</label>
-                <select name="locationId" class="form-control">
+                <select name="locationId" class="form-control" required>
                   <option value="" disabled selected>Select location...</option>
                   {{#each location in locations}}
                     <option value="{{location._id}}">{{location.name}}</option>
@@ -46,7 +46,7 @@
               <!-- End Time -->
               <div class="form-group col-md-5 pl-md-0">
                 <label for="endTime">End Time</label>
-                <select name="endTime" class="form-control">
+                <select name="endTime" class="form-control" required>
                   <option value="" disabled selected>Select end time...</option>
                   {{#each time in queueEndTimes}}
                     <option value="{{time.ISOString}}">{{time.formattedString}}</option>
