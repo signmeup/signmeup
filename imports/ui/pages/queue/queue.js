@@ -74,22 +74,26 @@ Template.Queue.onRendered(function onRendered() {
         Observer.observeAdded(queue.claimedTickets(), (ticket) => {
           // if ticket created within the past 10 seconds, don't alert
           if (Date.now() - ticket.createdAt < 10000) return;
-          if (ticket.belongsToUser(Meteor.userId())) {
-            WebNotifications.send('Your ticket has been claimed!', {
-              timeout: 5000,
-            });
-            if (ticket.notifications) {
-              if (ticket.notifications.email) {
-                notifyTicketByEmail.call({
-                  ticketId: ticket._id,
-                }, console.error);
-              }
-              const phone = ticket.notifications.phone;
-              if (phone && phone.number && phone.carrier) {
-                notifyTicketByText.call({
-                  ticketId: ticket._id,
-                }, console.error);
-              }
+          if (!ticket.belongsToUser(Meteor.userId())) return;
+
+          WebNotifications.send('Your ticket has been claimed!', {
+            timeout: 5000,
+          });
+          if (ticket.notifications) {
+            if (ticket.notifications.email) {
+              notifyTicketByEmail.call({
+                ticketId: ticket._id,
+              }, (err) => {
+                if (err) console.error(err);
+              });
+            }
+            const phone = ticket.notifications.phone;
+            if (phone && phone.number && phone.carrier) {
+              notifyTicketByText.call({
+                ticketId: ticket._id,
+              }, (err) => {
+                if (err) console.error(err);
+              });
             }
           }
         });
