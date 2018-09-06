@@ -54,6 +54,10 @@ Template.Ticket.helpers({
     return result;
   },
 
+  studentLegalNames(students) {
+    return students.fetch().map((student) => student.legalName()).join(', ');
+  },
+
   formattedTimestamp(createdAt) {
     return moment(createdAt).fromNow();
   },

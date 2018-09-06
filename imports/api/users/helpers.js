@@ -9,13 +9,13 @@ Meteor.users.helpers({
   },
 
   fullName() {
-    const fullName =
-      this.preferredName ||
-      (this.services && this.services.google && this.services.google.name) ||
+    return this.preferredName || this.legalName();
+  },
+
+  legalName() {
+    return (this.services && this.services.google && this.services.google.name) ||
       (this.services && this.services.saml && this.services.saml.displayName) ||
       (this.emailAddress().split('@')[0]);
-
-    return fullName;
   },
 
   firstName() {

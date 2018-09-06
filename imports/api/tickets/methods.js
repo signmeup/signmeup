@@ -23,8 +23,9 @@ export const createTicket = new ValidatedMethod({
     notifications: { type: NotificationsSchema },
     sessionId: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
     secret: { type: String, regEx: SimpleSchema.RegEx.Id, optional: true },
+    preferredName: { type: String, optional: true },
   }).validator(),
-  run({ queueId, studentEmails, question, notifications, sessionId, secret }) {
+  run({ queueId, studentEmails, question, notifications, sessionId, secret, preferredName }) {
     const queue = Queues.findOne(queueId);
     if (!queue) {
       throw new Meteor.Error('queues.doesNotExist',
@@ -88,6 +89,19 @@ export const createTicket = new ValidatedMethod({
         throw new Meteor.Error('tickets.createTicket.invalidSecret',
           `Cannot signup with invalid secret ${secret}`);
       }
+    }
+
+    if (!queue.isRestricted()) {
+      // Update preferred information of primary student
+      const primaryEmail = _.find(studentEmails, (email) => email === Meteor.user().emailAddress());
+      const primaryStudent = findUserByEmail(primaryEmail);
+      Meteor.users.update({
+        _id: primaryStudent._id,
+      }, {
+        $set: {
+          preferredName,
+        },
+      });
     }
 
     // Create ticket
