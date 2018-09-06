@@ -20,23 +20,41 @@
               </div>
             {{/if}}
 
-            <!-- Students -->
-            <div class="form-group required {{#if errors 'student'}}has-danger{{/if}}">
-              <label for="student">Student(s)</label>
+            <!-- Current Student -->
+            {{#if currentStudent}}
+              <div class="form-group required {{#if errors 'current-student'}}has-danger{{/if}}">
+                <label for="currentstudent">Primary Student</label>
+                {{#with currentStudent}}
+                  <div>
+                    <input
+                      type="text"
+                      class="form-control js-name-input {{#if errors 'current-student'}}form-control-warning{{/if}}"
+                      name="currentstudent"
+                      value="{{fullName}}" />
+                    <small class="text-muted">{{emailAddress}}</small>
+                  </div>
+                {{/with}}
+                {{#if errors "current-student"}}
+                  <div class="form-control-feedback text-danger">{{errors "current-student"}}</div>
+                {{/if}}
+              </div>
+            {{/if}}
+
+            <!-- Other Students -->
+            <div class="form-group {{#unless currentStudent}}required{{/unless}} {{#if errors 'student'}}has-danger{{/if}}">
+              <label for="student">{{#if currentStudent}}Other {{/if}}Students</label>
               {{#if showStudents}}
                 <ul class="student-list list-unstyled mb-0">
-                  {{#each student in students}}
-                    <li class="student-item {{#if currentStudent student}}current{{/if}}" data-email="{{student.emailAddress}}">
+                  {{#each student in otherStudents}}
+                    <li class="student-item" data-email="{{student.emailAddress}}">
                       <div class="content">
                         <p class="student-name">{{student.fullName}}</p>
                         <small class="text-muted">{{student.emailAddress}}</small>
                       </div>
 
-                      {{#unless currentStudent student}}
-                        <button type="button" class="close js-remove-student">
-                          <i class="material-icons">close</i>
-                        </button>
-                      {{/unless}}
+                      <button type="button" class="close js-remove-student">
+                        <i class="material-icons">close</i>
+                      </button>
                     </li>
                   {{/each}}
                 </ul>
@@ -62,7 +80,11 @@
             <!-- Question -->
             <div class="form-group required {{#if errors 'question'}}has-danger{{/if}}">
               <label for="question">Question</label>
-              <textarea name="question" class="form-control js-question {{#if errors 'question'}}form-control-warning{{/if}}" rows="3" placeholder="What would you like help on?"></textarea>
+              <textarea
+                name="question"
+                class="form-control js-question {{#if errors 'question'}}form-control-warning{{/if}}"
+                rows="3"
+                placeholder="What would you like help on?"></textarea>
               {{#if errors "question"}}
                 <div class="form-control-feedback text-danger">{{errors "question"}}</div>
               {{/if}}

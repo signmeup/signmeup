@@ -81,31 +81,42 @@ Template.ModalJoinQueue.onRendered(function onRendered() {
   $('input[name=number]').mask('(000) 000-0000');
 });
 
+const emailToStudent = (email) => {
+  const student = findUserByEmail(email);
+
+  return student || {
+    emailAddress: () => { return email; },
+    fullName: () => { return email.split('@')[0]; },
+  };
+}
+
 Template.ModalJoinQueue.helpers({
   errors(target) {
     return Template.instance().errors.get(target);
   },
 
   showStudents() {
-    return Template.instance().studentEmails.array().length > 0;
+    const user = Meteor.user();
+    return Template.instance().studentEmails.array()
+      .filter(email => !user || user.emailAddress() !== email)
+      .length > 0;
   },
 
-  students() {
-    const emails = Template.instance().studentEmails.array();
-    const students = emails.map((email) => {
-      const student = findUserByEmail(email);
-
-      return student || {
-        emailAddress: () => { return email; },
-        fullName: () => { return email.split('@')[0]; },
-      };
-    });
+  otherStudents() {
+    const user = Meteor.user();
+    const students = Template.instance().studentEmails.array()
+      .filter(email => !user || user.emailAddress() !== email)
+      .map(emailToStudent);
 
     return students;
   },
 
-  currentStudent(student) {
-    return Meteor.user() && (Meteor.user().emailAddress() === student.emailAddress());
+  currentStudent() {
+    const user = Meteor.user();
+    const students = Template.instance().studentEmails.array()
+      .filter(email => user && user.emailAddress() === email)
+      .map(emailToStudent);
+    return students.length > 0 && students[0];
   },
 
   studentPlaceholder() {
@@ -137,6 +148,10 @@ Template.ModalJoinQueue.helpers({
 });
 
 Template.ModalJoinQueue.events({
+  'input .js-name-input'() {
+    Template.instance().errors.delete('current-student');
+  },
+
   'input .js-email-input'() {
     Template.instance().errors.delete('student');
   },
@@ -209,6 +224,16 @@ Template.ModalJoinQueue.events({
       queueId: this.queue._id,
       notifications: {},
     };
+
+    if (!this.queue.isRestricted()) {
+      const preferredName = event.target.currentstudent.value;
+      if (!$.trim(preferredName)) {
+        Template.instance().errors.set('current-student', 'Please enter your name.');
+        errors = true;
+      } else {
+        data.preferredName = preferredName;
+      }
+    }
 
     const studentEmails = Template.instance().studentEmails.array();
     if (studentEmails.length === 0) {
