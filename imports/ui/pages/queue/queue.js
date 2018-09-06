@@ -79,22 +79,22 @@ Template.Queue.onRendered(function onRendered() {
           WebNotifications.send('Your ticket has been claimed!', {
             timeout: 5000,
           });
-          if (ticket.notifications) {
-            if (ticket.notifications.email) {
-              notifyTicketByEmail.call({
-                ticketId: ticket._id,
-              }, (err) => {
-                if (err) console.error(err);
-              });
-            }
-            const phone = ticket.notifications.phone;
-            if (phone && phone.number && phone.carrier) {
-              notifyTicketByText.call({
-                ticketId: ticket._id,
-              }, (err) => {
-                if (err) console.error(err);
-              });
-            }
+
+          if (!ticket.notifications) return;
+          if (ticket.notifications.email) {
+            notifyTicketByEmail.call({
+              ticketId: ticket._id,
+            }, (err) => {
+              if (err) console.error(err);
+            });
+          }
+          const phone = ticket.notifications.phone;
+          if (phone && phone.number && phone.carrier) {
+            notifyTicketByText.call({
+              ticketId: ticket._id,
+            }, (err) => {
+              if (err) console.error(err);
+            });
           }
         });
       }
