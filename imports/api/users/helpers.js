@@ -19,6 +19,8 @@ Meteor.users.helpers({
   },
 
   firstName() {
+    if (this.preferredName) return this.preferredName.split(' ')[0];
+
     const firstName =
       (this.services && this.services.google && this.services.google.given_name) ||
       this.fullName().split(' ')[0];
