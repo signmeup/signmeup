@@ -11,14 +11,6 @@ Template.Nav.onCreated(function onCreated() {
   });
 });
 
-Template.Nav.helpers({
-  showSettings() {
-    return Meteor.user() &&
-           (Roles.userIsInRole(Meteor.userId(), ['admin', 'mta']) ||
-            Meteor.user().htaCourses().fetch().length > 0);
-  },
-});
-
 Template.Nav.events({
   'click .js-sign-in'() {
     Meteor.loginWithGoogle({
