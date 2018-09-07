@@ -88,7 +88,7 @@ const emailToStudent = (email) => {
     emailAddress: () => { return email; },
     fullName: () => { return email.split('@')[0]; },
   };
-}
+};
 
 Template.ModalJoinQueue.helpers({
   errors(target) {

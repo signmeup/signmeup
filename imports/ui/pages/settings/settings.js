@@ -20,9 +20,9 @@ Template.Settings.helpers({
   availableSettings() {
     let settings = [
       {
-        id: "profile",
-        name: "Profile",
-        template: "SettingsProfile",
+        id: 'profile',
+        name: 'Profile',
+        template: 'SettingsProfile',
       },
     ];
 
@@ -31,14 +31,14 @@ Template.Settings.helpers({
           Meteor.user().htaCourses().count() > 0)) {
       const superSettings = [
         {
-          id: "courses",
-          name: "Courses",
-          template: "SettingsCourses",
+          id: 'courses',
+          name: 'Courses',
+          template: 'SettingsCourses',
         },
         {
-          id: "locations",
-          name: "Locations",
-          template: "SettingsLocations",
+          id: 'locations',
+          name: 'Locations',
+          template: 'SettingsLocations',
         },
       ];
       settings = superSettings.concat(settings);

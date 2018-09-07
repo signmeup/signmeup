@@ -1,4 +1,3 @@
-import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveVar } from 'meteor/reactive-var';
 
@@ -7,7 +6,7 @@ import { updateProfile } from '/imports/api/users/methods';
 import './settings-profile.html';
 
 Template.SettingsProfile.onCreated(function onCreated() {
-  this.successMessage = new ReactiveVar("");
+  this.successMessage = new ReactiveVar('');
 
   this.autorun(() => {
     this.subscribe('users.self');
@@ -26,11 +25,11 @@ Template.SettingsProfile.events({
 
     const preferredName = event.target.preferredName.value;
     updateProfile.call({
-      preferredName
+      preferredName,
     }, (err) => {
       if (err) console.error(err);
     });
 
-    Template.instance().successMessage.set("Preferred name saved.");
+    Template.instance().successMessage.set('Preferred name saved.');
   },
 });

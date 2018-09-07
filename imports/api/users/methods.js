@@ -93,7 +93,7 @@ export const updateProfile = new ValidatedMethod({
       _id: this.userId,
     }, {
       $set: {
-        preferredName
+        preferredName,
       },
     });
   },
