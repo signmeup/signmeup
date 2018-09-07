@@ -77,3 +77,24 @@ export const removeRole = new ValidatedMethod({
     }
   },
 });
+
+export const updateProfile = new ValidatedMethod({
+  name: 'users.updateProfile',
+  validate: new SimpleSchema({
+    preferredName: { type: String },
+  }).validator(),
+  run({ preferredName }) {
+    if (!preferredName) {
+      throw new Meteor.Error('users.invalidName',
+        `${preferredName} is an invalid name`);
+    }
+
+    Meteor.users.update({
+      _id: this.userId,
+    }, {
+      $set: {
+        preferredName
+      },
+    });
+  },
+});
