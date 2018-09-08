@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-import { Roles } from 'meteor/alanning:roles';
 
 import './nav.html';
 
@@ -9,14 +8,6 @@ Template.Nav.onCreated(function onCreated() {
     this.subscribe('users.self');
     this.subscribe('courses.all');
   });
-});
-
-Template.Nav.helpers({
-  showSettings() {
-    return Meteor.user() &&
-           (Roles.userIsInRole(Meteor.userId(), ['admin', 'mta']) ||
-            Meteor.user().htaCourses().fetch().length > 0);
-  },
 });
 
 Template.Nav.events({

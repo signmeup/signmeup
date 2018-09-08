@@ -2,7 +2,7 @@
   <div class="holder js-ticket-holder">
     <div class="ticket {{ticket.status}}-ticket {{currentUserClass ticket}} {{#if taView}}ta-ticket{{/if}} row">
         <div class="td col-2 col-md-1">{{ticket.index}}</div>
-        <div class="td col-5">{{studentNames ticket.students}}</div>
+        <div class="td col-5" title="{{studentLegalNames ticket.students}}">{{studentNames ticket.students}}</div>
         <div class="td col-5 col-md-2">{{formattedTimestamp ticket.createdAt}}</div>
         {{#if taView}}
           {{> TicketTAActions ticket=ticket}}

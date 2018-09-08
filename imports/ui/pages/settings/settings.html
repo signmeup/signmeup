@@ -1,7 +1,7 @@
 <template name="Settings">
   <div class="settings">
     {{#if Template.subscriptionsReady}}
-      {{#if showSettings}}
+      {{#if availableSettings}}
         <div class="settings-header">
           <div class="container">
             <h1 class="display-5 mt-3 mb-3">Settings</h1>
@@ -11,18 +11,11 @@
         <div class="settings-nav">
           <div class="container">
             <ul class="nav nav-tabs" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#courses" role="tab">Courses</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#locations" role="tab">Locations</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#people" role="tab">People</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#profile" role="tab">Profile</a>
-              </li>
+              {{#each setting in availableSettings}}
+                <li class="nav-item">
+                  <a class="nav-link {{#if setting.active}}active{{/if}}" data-toggle="tab" href="#{{setting.id}}" role="tab">{{setting.name}}</a>
+                </li>
+              {{/each}}
             </ul>
           </div>
         </div>
@@ -30,18 +23,11 @@
         <div class="settings-body">
           <div class="container pt-3 pb-3">
             <div class="tab-content">
-              <div class="tab-pane fade show active" id="courses" role="tabpanel">
-                {{> SettingsCourses}}
-              </div>
-              <div class="tab-pane fade" id="locations" role="tabpanel">
-                {{> SettingsLocations}}
-              </div>
-              <div class="tab-pane fade" id="people" role="tabpanel">
-                {{> SettingsPeople}}
-              </div>
-              <div class="tab-pane fade" id="profile" role="tabpanel">
-                {{> SettingsProfile}}
-              </div>
+              {{#each setting in availableSettings}}
+                <div class="tab-pane fade {{#if setting.active}}show active{{/if}}" id="{{setting.id}}" role="tabpanel">
+                  {{> Template.dynamic template=setting.template}}
+                </div>
+              {{/each}}
             </div>
           </div>
         </div>
@@ -49,7 +35,7 @@
         <div class="settings-unauthorized container">
           <div class="row flex-items-xs-center">
             <p class="mt-3 text-muted" style="text-align: center;">
-              Sorry, only HTAs and above can access settings.
+              Sorry, you must be signed in to access settings.
             </p>
           </div>
         </div>
