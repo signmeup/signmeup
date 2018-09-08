@@ -4,6 +4,8 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 export const Tickets = new Mongo.Collection('tickets');
 
 export const NotificationsSchema = new SimpleSchema({
+  // Note: announce is only present for backwards compatibility.
+  // New tickets should not contain this field.
   announce: { type: Boolean, optional: true },
   email: { type: String, regEx: SimpleSchema.RegEx.Email, optional: true },
   phone: { type: Object, optional: true },

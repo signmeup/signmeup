@@ -251,10 +251,6 @@ Template.ModalJoinQueue.events({
       data.question = question;
     }
 
-    if (event.target.announceCheckbox.checked) {
-      data.notifications.announce = true;
-    }
-
     if (event.target.emailCheckbox.checked) {
       const email = event.target.email.value.toLowerCase();
       if (!email) {
