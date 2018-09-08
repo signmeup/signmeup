@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "start": "meteor --settings settings.json",
-    "lint": "eslint . ; find . -name '*.scss' -exec stylelint {} +",
+    "lint": "eslint . ; find . -path ./node_modules -prune -o -name '*.scss' -exec stylelint {} +",
     "deploy-qa": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.qa.json signmeup-qa.meteorapp.com",
     "deploy-prod": "DEPLOY_HOSTNAME=us-east-1.galaxy-deploy.meteor.com meteor deploy --settings settings.prod.json signmeup-prod.meteorapp.com"
   },
