@@ -1,12 +1,12 @@
-import { Meteor } from 'meteor/meteor';
-import { Tracker } from 'meteor/tracker';
-import { UserStatus } from 'meteor/mizzao:user-status';
+import { Meteor } from "meteor/meteor";
+import { Tracker } from "meteor/tracker";
+import { UserStatus } from "meteor/mizzao:user-status";
 
 Tracker.autorun(() => {
   if (Meteor.userId()) {
     try {
       UserStatus.startMonitor({
-        idleOnBlur: true,
+        idleOnBlur: true
       });
     } catch (err) {
       // Swallow errors. It takes some time for TimeSync to

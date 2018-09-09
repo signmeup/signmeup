@@ -4,11 +4,11 @@ export class Observer {
   static observeAdded(dataSource, callback) {
     let initial = true;
     dataSource.observe({
-      added: (datum) => {
+      added: datum => {
         // When we first call observe, this function is synchronously called
         // for each existing datum. This hack ignores this initial call.
         if (!initial) callback(datum);
-      },
+      }
     });
     initial = false;
   }

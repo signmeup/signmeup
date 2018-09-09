@@ -1,7 +1,7 @@
-import { Meteor } from 'meteor/meteor';
+import { Meteor } from "meteor/meteor";
 
-import { Queues } from '/imports/api/queues/queues';
-import { Sessions } from '/imports/api/sessions/sessions';
+import { Queues } from "/imports/api/queues/queues";
+import { Sessions } from "/imports/api/sessions/sessions";
 
 Sessions.helpers({
   user() {
@@ -10,5 +10,5 @@ Sessions.helpers({
 
   queue() {
     return Queues.findOne(this.queueId);
-  },
+  }
 });

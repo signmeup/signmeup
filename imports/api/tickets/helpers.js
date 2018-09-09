@@ -1,41 +1,41 @@
-import { Meteor } from 'meteor/meteor';
-import { _ } from 'meteor/underscore';
+import { Meteor } from "meteor/meteor";
+import { _ } from "meteor/underscore";
 
-import { Courses } from '/imports/api/courses/courses';
-import { Queues } from '/imports/api/queues/queues';
-import { Tickets } from '/imports/api/tickets/tickets';
+import { Courses } from "/imports/api/courses/courses";
+import { Queues } from "/imports/api/queues/queues";
+import { Tickets } from "/imports/api/tickets/tickets";
 
 Tickets.helpers({
   course() {
     return Courses.find({
-      _id: this.courseId,
+      _id: this.courseId
     });
   },
 
   queue() {
     return Queues.find({
-      _id: this.queueId,
+      _id: this.queueId
     });
   },
 
   isOpen() {
-    return this.status === 'open';
+    return this.status === "open";
   },
 
   isClaimed() {
-    return this.status === 'claimed';
+    return this.status === "claimed";
   },
 
   isMarkedAsMissing() {
-    return this.status === 'markedAsMissing';
+    return this.status === "markedAsMissing";
   },
 
   isMarkedAsDone() {
-    return this.status === 'markedAsDone';
+    return this.status === "markedAsDone";
   },
 
   isDeleted() {
-    return this.status === 'deleted';
+    return this.status === "deleted";
   },
 
   isActive() {
@@ -44,7 +44,7 @@ Tickets.helpers({
 
   students() {
     return Meteor.users.find({
-      _id: { $in: this.studentIds },
+      _id: { $in: this.studentIds }
     });
   },
 
@@ -57,6 +57,6 @@ Tickets.helpers({
   },
 
   isClaimedByUser(userId) {
-    return (this.status === 'claimed') && (userId === this.claimedBy);
-  },
+    return this.status === "claimed" && userId === this.claimedBy;
+  }
 });

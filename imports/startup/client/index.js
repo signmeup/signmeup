@@ -1,14 +1,14 @@
 // Set config
-import '../both/config';
+import "../both/config";
 
 // Initialize global vendors
-import './vendor';
+import "./vendor";
 
 // Register API
-import '../both/register-api';
+import "../both/register-api";
 
 // Initialize routing
-import './routes';
+import "./routes";
 
 // Initialize idle tracking
-import './tracking';
+import "./tracking";

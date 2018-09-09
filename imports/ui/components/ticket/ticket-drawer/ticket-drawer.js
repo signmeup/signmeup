@@ -1,10 +1,10 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { Meteor } from "meteor/meteor";
+import { Template } from "meteor/templating";
+import { ReactiveVar } from "meteor/reactive-var";
 
-import moment from 'moment';
+import moment from "moment";
 
-import './ticket-drawer.html';
+import "./ticket-drawer.html";
 
 Template.TicketDrawer.onCreated(function onCreated() {
   const self = this;
@@ -13,7 +13,8 @@ Template.TicketDrawer.onCreated(function onCreated() {
   self.autorun(() => {
     const ticket = Template.currentData().ticket;
 
-    if (self.claimDurationInterval) Meteor.clearInterval(self.claimDurationInterval);
+    if (self.claimDurationInterval)
+      Meteor.clearInterval(self.claimDurationInterval);
 
     if (ticket && ticket.isClaimed()) {
       self.claimDurationInterval = Meteor.setInterval(() => {
@@ -30,9 +31,9 @@ Template.TicketDrawer.helpers({
     const minutes = duration.minutes();
 
     function prefixZero(num) {
-      return (num < 10) ? `0${num}` : `${num}`;
+      return num < 10 ? `0${num}` : `${num}`;
     }
 
     return `${prefixZero(minutes)}:${prefixZero(seconds)}`;
-  },
+  }
 });

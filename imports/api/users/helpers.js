@@ -1,7 +1,7 @@
-import { Meteor } from 'meteor/meteor';
-import { Roles } from 'meteor/alanning:roles';
+import { Meteor } from "meteor/meteor";
+import { Roles } from "meteor/alanning:roles";
 
-import { Courses } from '/imports/api/courses/courses';
+import { Courses } from "/imports/api/courses/courses";
 
 Meteor.users.helpers({
   emailAddress() {
@@ -13,27 +13,31 @@ Meteor.users.helpers({
   },
 
   legalName() {
-    return (this.services && this.services.google && this.services.google.name) ||
+    return (
+      (this.services && this.services.google && this.services.google.name) ||
       (this.services && this.services.saml && this.services.saml.displayName) ||
-      (this.emailAddress().split('@')[0]);
+      this.emailAddress().split("@")[0]
+    );
   },
 
   firstName() {
-    if (this.preferredName) return this.preferredName.split(' ')[0];
+    if (this.preferredName) return this.preferredName.split(" ")[0];
 
     const firstName =
-      (this.services && this.services.google && this.services.google.given_name) ||
-      this.fullName().split(' ')[0];
+      (this.services &&
+        this.services.google &&
+        this.services.google.given_name) ||
+      this.fullName().split(" ")[0];
 
     return firstName;
   },
 
   initials() {
-    let initials = '';
+    let initials = "";
     const fullName = this.fullName();
 
-    let parts = fullName.split(' ');
-    if (parts.length < 2) parts = fullName.split('_');
+    let parts = fullName.split(" ");
+    if (parts.length < 2) parts = fullName.split("_");
 
     if (parts.length >= 2) {
       initials = parts[0][0] + parts[parts.length - 1][0];
@@ -45,20 +49,20 @@ Meteor.users.helpers({
   },
 
   courses() {
-    if (Roles.userIsInRole(this._id, ['admin', 'mta'])) {
+    if (Roles.userIsInRole(this._id, ["admin", "mta"])) {
       return Courses.find({ active: true }, { sort: { name: 1 } });
     }
 
-    const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
-    const taCourseIds = Roles.getGroupsForUser(this._id, 'ta');
+    const htaCourseIds = Roles.getGroupsForUser(this._id, "hta");
+    const taCourseIds = Roles.getGroupsForUser(this._id, "ta");
     return Courses.find(
       { _id: { $in: htaCourseIds.concat(taCourseIds) }, active: true },
-      { sort: { name: 1 } },
+      { sort: { name: 1 } }
     );
   },
 
   htaCourses() {
-    const htaCourseIds = Roles.getGroupsForUser(this._id, 'hta');
+    const htaCourseIds = Roles.getGroupsForUser(this._id, "hta");
     return Courses.find({ _id: { $in: htaCourseIds }, active: true });
   },
 
@@ -67,6 +71,8 @@ Meteor.users.helpers({
   },
 
   profilePictureUrl() {
-    return this.services && this.services.google && this.services.google.picture;
-  },
+    return (
+      this.services && this.services.google && this.services.google.picture
+    );
+  }
 });

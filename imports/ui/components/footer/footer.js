@@ -1,10 +1,10 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
+import { Meteor } from "meteor/meteor";
+import { Template } from "meteor/templating";
 
-import './footer.html';
+import "./footer.html";
 
 Template.Footer.helpers({
   version() {
-    return Meteor.settings.public.version || 'Dev';
-  },
+    return Meteor.settings.public.version || "Dev";
+  }
 });

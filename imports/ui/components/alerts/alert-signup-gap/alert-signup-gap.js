@@ -1,12 +1,12 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { ReactiveVar } from 'meteor/reactive-var';
+import { Meteor } from "meteor/meteor";
+import { Template } from "meteor/templating";
+import { ReactiveVar } from "meteor/reactive-var";
 
-import moment from 'moment';
+import moment from "moment";
 
-import { SignupGap } from '/imports/lib/both/signup-gap';
+import { SignupGap } from "/imports/lib/both/signup-gap";
 
-import './alert-signup-gap.html';
+import "./alert-signup-gap.html";
 
 Template.AlertSignupGap.onCreated(function onCreated() {
   const self = this;
@@ -22,7 +22,8 @@ Template.AlertSignupGap.onCreated(function onCreated() {
       return;
     }
 
-    if (self.timeRemainingInterval) Meteor.clearInterval(self.timeRemainingInterval);
+    if (self.timeRemainingInterval)
+      Meteor.clearInterval(self.timeRemainingInterval);
 
     self.timeRemainingInterval = Meteor.setInterval(() => {
       self.timeRemaining.set(moment(nextSignupTime).diff(moment()));
@@ -37,7 +38,7 @@ Template.AlertSignupGap.helpers({
 
   timeRemaining() {
     return moment.duration(Template.instance().timeRemaining.get()).humanize();
-  },
+  }
 });
 
 Template.AlertSignupGap.onDestroyed(() => {

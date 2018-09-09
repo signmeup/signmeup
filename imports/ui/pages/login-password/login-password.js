@@ -1,7 +1,7 @@
-import { Template } from 'meteor/templating';
+import { Template } from "meteor/templating";
 
-import './login-password.html';
+import "./login-password.html";
 
 Template.LoginPassword.onRendered(() => {
-  document.title = 'Login · SignMeUp';
+  document.title = "Login · SignMeUp";
 });
