@@ -57,7 +57,7 @@ Both begin by setting up the repo and running SignMeUp locally.
 5. Navigate to `localhost:3000` in your web browser to see SignMeUp running!
 
 Note that to log into the test accounts you'll need to navigate to
-`localhost:3000/login-password` rather than clicking on the "Sign In" button.
+`localhost:3000/login` rather than clicking on the "Sign In" button.
 
 #### Google Authentication
 
@@ -131,6 +131,12 @@ we also have the free version of [Meteor Toys](http://meteor.toys/)
 package enabled. Once the app is running, type <kbd>Ctrl</kbd>+<kbd>m</kbd> to
 enable Mongol.
 
+### Formatting Your Code
+
+You can run `meteor npm run prettier` to autoformat your JavaScript.
+You can also run `meteor npm run lint` to check your JavaScript and Stylesheets for any potential issues.
+We recommend running these commands (and fixing any lingering issues) before committing your code.
+
 ## Deployment
 
 Once you've merged a bunch of features into `master`, and are ready to deploy to production, follow these steps:
@@ -159,12 +165,3 @@ Once you've merged a bunch of features into `master`, and are ready to deploy to
 6. After the app has been deployed (this may take a few minutes even after
    completing on your local machine) go to its settings in meteor galaxy and
    under "Domains" ensure that all domains have "Force HTTPS" turned on.
-
-### Managing Docker
-
-- If you accumulate a bunch of containers or images, clean-up with the
-instructions in [this article](http://blog.yohanliyanage.com/2015/05/docker-clean-up-after-yourself/).
-
-- If you would like to run scripts within a container, run `bash` first:
-
-  `docker exec -it <container_name> bash`
