@@ -1,12 +1,12 @@
-import { Meteor } from 'meteor/meteor';
-import { Migrations } from 'meteor/percolate:migrations';
-import { Roles } from 'meteor/alanning:roles';
-import { _ } from 'meteor/underscore';
+import { Meteor } from "meteor/meteor";
+import { Migrations } from "meteor/percolate:migrations";
+import { Roles } from "meteor/alanning:roles";
+import { _ } from "meteor/underscore";
 
-import { Courses } from '/imports/api/courses/courses';
-import { Locations } from '/imports/api/locations/locations';
-import { Queues } from '/imports/api/queues/queues';
-import { Tickets } from '/imports/api/tickets/tickets';
+import { Courses } from "/imports/api/courses/courses";
+import { Locations } from "/imports/api/locations/locations";
+import { Queues } from "/imports/api/queues/queues";
+import { Tickets } from "/imports/api/tickets/tickets";
 
 Migrations.add({
   version: 2,
@@ -19,39 +19,43 @@ Migrations.add({
     // - Remove listserv
     // - Remove tas, htas; add roles instead
     // - Add settings, settings.restrictSessionsByDefault, settings.notifications
-    Courses.find().forEach((course) => {
+    Courses.find().forEach(course => {
       const htas = course.htas || [];
       const tas = course.tas || [];
 
-      Courses.update(course._id, {
-        $unset: {
-          listserv: '',
-          htas: '',
-          tas: '',
-        },
-
-        $set: {
-          createdAt: new Date(course.createdAt || Date.now()),
-          settings: {
-            signupGap: course.signupGap || 0,
-            restrictSessionsByDefault: false,
-            notifications: {
-              allowEmail: true,
-              allowText: true,
-            },
+      Courses.update(
+        course._id,
+        {
+          $unset: {
+            listserv: "",
+            htas: "",
+            tas: ""
           },
-        },
-      }, {
-        validate: false,
-      });
 
-      Roles.addUsersToRoles(htas, 'hta', course._id);
-      Roles.addUsersToRoles(tas, 'ta', course._id);
+          $set: {
+            createdAt: new Date(course.createdAt || Date.now()),
+            settings: {
+              signupGap: course.signupGap || 0,
+              restrictSessionsByDefault: false,
+              notifications: {
+                allowEmail: true,
+                allowText: true
+              }
+            }
+          }
+        },
+        {
+          validate: false
+        }
+      );
+
+      Roles.addUsersToRoles(htas, "hta", course._id);
+      Roles.addUsersToRoles(tas, "ta", course._id);
     });
 
     // Locations
     // - Schema has not changed. We're removing locations with empty names.
-    Locations.remove({ name: '' });
+    Locations.remove({ name: "" });
 
     // Queues
     // - Replace course with courseId
@@ -64,7 +68,7 @@ Migrations.add({
     // - Remove averageWaitTime
     // - Rename announcements to announcementIds
     // - Rename tickets to ticketIds
-    Queues.find().forEach((queue) => {
+    Queues.find().forEach(queue => {
       const course = Courses.findOne({ name: queue.course });
 
       const set = {
@@ -78,41 +82,45 @@ Migrations.add({
         ticketIds: queue.tickets,
 
         settings: {
-          restrictedSessionIds: [],
+          restrictedSessionIds: []
         },
 
         scheduledEndTime: queue.endTime,
-        endedAt: queue.endTime,
+        endedAt: queue.endTime
       };
 
-      if (queue.status === 'active') {
-        set.status = 'open';
+      if (queue.status === "active") {
+        set.status = "open";
       }
 
       if (queue.cutoffTime) {
         set.cutoffAt = new Date(queue.cutoffTime);
       }
 
-      Queues.update(queue._id, {
-        $unset: {
-          course: '',
-          location: '',
+      Queues.update(
+        queue._id,
+        {
+          $unset: {
+            course: "",
+            location: "",
 
-          owner: '',
+            owner: "",
 
-          announcements: '',
-          tickets: '',
+            announcements: "",
+            tickets: "",
 
-          startTime: '',
-          cutoffTime: '',
-          endTime: '',
-          averageWaitTime: '',
+            startTime: "",
+            cutoffTime: "",
+            endTime: "",
+            averageWaitTime: ""
+          },
+
+          $set: set
         },
-
-        $set: set,
-      }, {
-        validate: false,
-      });
+        {
+          validate: false
+        }
+      );
     });
 
     // Sessions
@@ -131,26 +139,26 @@ Migrations.add({
     // - Modify createdAt to Date
     // - Replace doneAt with markedAsDoneAt, modify to Date
     // - Replace cancelledAt with deletedAt, modify to Date
-    Tickets.find().forEach((ticket) => {
+    Tickets.find().forEach(ticket => {
       const course = Courses.findOne({ name: ticket.course });
 
       const set = {
         courseId: course._id,
         studentIds: [ticket.owner.id],
         createdBy: ticket.owner.id,
-        createdAt: new Date(ticket.createdAt),
+        createdAt: new Date(ticket.createdAt)
       };
 
-      if (ticket.status === 'done') {
-        set.status = 'markedAsDone';
+      if (ticket.status === "done") {
+        set.status = "markedAsDone";
 
         if (ticket.doneAt) {
           set.markedAsDoneAt = new Date(ticket.doneAt);
         }
       }
 
-      if (ticket.status === 'cancelled') {
-        set.status = 'deleted';
+      if (ticket.status === "cancelled") {
+        set.status = "deleted";
 
         if (ticket.cancelledAt) {
           set.deletedAt = new Date(ticket.cancelledAt);
@@ -161,15 +169,15 @@ Migrations.add({
         set.notifications = {};
         const types = ticket.notify.types || [];
 
-        if (_.contains(types, 'announce')) {
+        if (_.contains(types, "announce")) {
           set.notifications.announce = true;
         }
 
-        if (_.contains(types, 'email') && ticket.notify.email) {
+        if (_.contains(types, "email") && ticket.notify.email) {
           set.notifications.email = ticket.notify.email;
         }
 
-        if (_.contains(types, 'text')) {
+        if (_.contains(types, "text")) {
           set.notifications.phone = {};
           set.notifications.phone.number = ticket.notify.phone;
           set.notifications.phone.carrier = ticket.notify.carrier;
@@ -177,54 +185,62 @@ Migrations.add({
       }
 
       if (ticket.ta) {
-        if (ticket.status === 'done') {
+        if (ticket.status === "done") {
           set.markedAsDoneBy = ticket.ta.id;
         }
 
-        if (ticket.status === 'cancelled') {
+        if (ticket.status === "cancelled") {
           set.deletedBy = ticket.ta.id;
         }
       }
 
-      Tickets.update(ticket._id, {
-        $unset: {
-          course: '',
-          owner: '',
+      Tickets.update(
+        ticket._id,
+        {
+          $unset: {
+            course: "",
+            owner: "",
 
-          notify: '',
-          ta: '',
+            notify: "",
+            ta: "",
 
-          doneAt: '',
-          cancelledAt: '',
+            doneAt: "",
+            cancelledAt: ""
+          },
+
+          $set: set
         },
-
-        $set: set,
-      }, {
-        validate: false,
-      });
+        {
+          validate: false
+        }
+      );
     });
 
     // Users
     // - Remove admin, taCourses, htaCourses; add roles instead
-    Meteor.users.find().forEach((user) => {
+    Meteor.users.find().forEach(user => {
       if (user.admin) {
-        Roles.addUsersToRoles(user._id, 'admin', Roles.GLOBAL_GROUP);
+        Roles.addUsersToRoles(user._id, "admin", Roles.GLOBAL_GROUP);
       }
 
-      Meteor.users.update(user._id, {
-        $unset: {
-          admin: '',
-          htaCourses: '',
-          taCourses: '',
+      Meteor.users.update(
+        user._id,
+        {
+          $unset: {
+            admin: "",
+            htaCourses: "",
+            taCourses: ""
+          }
         },
-      }, {
-        validate: false,
-      });
+        {
+          validate: false
+        }
+      );
     });
   },
 
   down() {
     // Skipping because the migration is extremely complex.
     // The data has been backed up in case we need to go back.
-  },
+  }
 });

@@ -1,4 +1,4 @@
-import { Locations } from '/imports/api/locations/locations';
+import { Locations } from "/imports/api/locations/locations";
 
 // Static helpers
 

@@ -1,17 +1,20 @@
-import { Meteor } from 'meteor/meteor';
-import { ServiceConfiguration } from 'meteor/service-configuration';
-import { Accounts } from 'meteor/accounts-base';
+import { Meteor } from "meteor/meteor";
+import { ServiceConfiguration } from "meteor/service-configuration";
+import { Accounts } from "meteor/accounts-base";
 
 // Configure Google login
-ServiceConfiguration.configurations.upsert({
-  service: 'google',
-}, {
-  $set: {
-    clientId: Meteor.settings.google.clientId,
-    secret: Meteor.settings.google.secret,
-    loginStyle: 'popup',
+ServiceConfiguration.configurations.upsert(
+  {
+    service: "google"
   },
-});
+  {
+    $set: {
+      clientId: Meteor.settings.google.clientId,
+      secret: Meteor.settings.google.secret,
+      loginStyle: "popup"
+    }
+  }
+);
 
 // Merge users with same email on login
 Accounts.onCreateUser((options, newUser) => {
@@ -25,7 +28,7 @@ Accounts.onCreateUser((options, newUser) => {
   }
 
   // Get email
-  if (service === 'google') {
+  if (service === "google") {
     email = newUser.services.google.email;
     verified = true;
   } else {
@@ -33,7 +36,7 @@ Accounts.onCreateUser((options, newUser) => {
   }
   if (!email) {
     // User doesn't have email?! This should not happen.
-    throw new Error('Cannot create user without email.');
+    throw new Error("Cannot create user without email.");
   }
 
   // Check if user exists with same email...
@@ -57,9 +60,12 @@ Accounts.onCreateUser((options, newUser) => {
   // If user exists, merge the accounts, maintaining original ID
 
   // 1. Initialize `services` object for existing user
-  existingUser.services = Object.assign({
-    resume: { loginTokens: [] },
-  }, existingUser.services);
+  existingUser.services = Object.assign(
+    {
+      resume: { loginTokens: [] }
+    },
+    existingUser.services
+  );
 
   if (newUser.services) {
     // 2. Merge new service
@@ -67,8 +73,9 @@ Accounts.onCreateUser((options, newUser) => {
 
     // 3. Merge login tokens
     if (newUser.services.resume && newUser.services.resume.loginTokens) {
-      existingUser.services.resume.loginTokens =
-        existingUser.services.resume.loginTokens.concat(newUser.services.resume.loginTokens);
+      existingUser.services.resume.loginTokens = existingUser.services.resume.loginTokens.concat(
+        newUser.services.resume.loginTokens
+      );
     }
   }
 

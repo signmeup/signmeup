@@ -1,26 +1,26 @@
-import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import { Template } from "meteor/templating";
+import { $ } from "meteor/jquery";
 
-import { createCourse } from '/imports/api/courses/methods';
+import { createCourse } from "/imports/api/courses/methods";
 
-import './modal-course-create.html';
+import "./modal-course-create.html";
 
 Template.ModalCourseCreate.events({
-  'submit #js-modal-course-create-form'(event) {
+  "submit #js-modal-course-create-form"(event) {
     event.preventDefault();
 
     const data = {
       name: event.target.name.value,
-      description: event.target.description.value,
+      description: event.target.description.value
     };
 
     createCourse.call(data, (err, courseId) => {
       if (err) {
         console.error(err);
       } else {
-        $('.modal-course-create').modal('hide');
+        $(".modal-course-create").modal("hide");
         this.setSelectedCourseId(courseId);
       }
     });
-  },
+  }
 });

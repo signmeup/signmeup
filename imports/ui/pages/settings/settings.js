@@ -1,26 +1,54 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { Roles } from 'meteor/alanning:roles';
+import { Meteor } from "meteor/meteor";
+import { Template } from "meteor/templating";
+import { Roles } from "meteor/alanning:roles";
 
-import '/imports/ui/components/settings-courses/settings-courses';
-import '/imports/ui/components/settings-locations/settings-locations';
-import '/imports/ui/components/settings-people/settings-people';
-import '/imports/ui/components/settings-profile/settings-profile';
+import "/imports/ui/components/settings-courses/settings-courses";
+import "/imports/ui/components/settings-locations/settings-locations";
+import "/imports/ui/components/settings-profile/settings-profile";
 
-import './settings.html';
+import "./settings.html";
 
 Template.Settings.onRendered(function onRendered() {
   this.autorun(() => {
     if (this.subscriptionsReady()) {
-      document.title = 'Settings · SignMeUp';
+      document.title = "Settings · SignMeUp";
     }
   });
 });
 
 Template.Settings.helpers({
-  showSettings() {
-    return Meteor.user() &&
-           (Roles.userIsInRole(Meteor.userId(), ['admin', 'mta']) ||
-            Meteor.user().htaCourses().count() > 0);
-  },
+  availableSettings() {
+    let settings = [
+      {
+        id: "profile",
+        name: "Profile",
+        template: "SettingsProfile"
+      }
+    ];
+
+    if (
+      Meteor.user() &&
+      (Roles.userIsInRole(Meteor.userId(), ["admin", "mta"]) ||
+        Meteor.user()
+          .htaCourses()
+          .count() > 0)
+    ) {
+      const superSettings = [
+        {
+          id: "courses",
+          name: "Courses",
+          template: "SettingsCourses"
+        },
+        {
+          id: "locations",
+          name: "Locations",
+          template: "SettingsLocations"
+        }
+      ];
+      settings = superSettings.concat(settings);
+    }
+
+    settings[0].active = true;
+    return settings;
+  }
 });

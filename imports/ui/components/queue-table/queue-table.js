@@ -1,8 +1,8 @@
-import { Template } from 'meteor/templating';
+import { Template } from "meteor/templating";
 
-import '/imports/ui/components/ticket/ticket';
+import "/imports/ui/components/ticket/ticket";
 
-import './queue-table.html';
+import "./queue-table.html";
 
 Template.QueueTable.helpers({
   noActiveTickets(queue) {
@@ -14,12 +14,12 @@ Template.QueueTable.helpers({
 
     const tickets = queue.tickets().fetch();
     const ticketsById = {};
-    tickets.forEach((ticket) => {
+    tickets.forEach(ticket => {
       ticketsById[ticket._id] = ticket;
     });
 
     let index = 1;
-    queue.ticketIds.forEach((ticketId) => {
+    queue.ticketIds.forEach(ticketId => {
       const ticket = ticketsById[ticketId];
 
       if (ticket && ticket.isActive()) {
@@ -28,13 +28,13 @@ Template.QueueTable.helpers({
         index += 1;
       }
 
-      if (queue.isCutoff() && (ticketId === queue.cutoffAfter)) {
+      if (queue.isCutoff() && ticketId === queue.cutoffAfter) {
         rows.push({
-          isCutoffMarker: true,
+          isCutoffMarker: true
         });
       }
     });
 
     return rows;
-  },
+  }
 });

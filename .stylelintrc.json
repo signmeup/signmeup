@@ -2,6 +2,12 @@
   "extends": "stylelint-config-standard",
   "processors": ["stylelint-processor-html"],
   "rules": {
-    "no-empty-source": null
+    "no-empty-source": null,
+    "declaration-empty-line-before": null,
+    "at-rule-empty-line-before": null,
+    "at-rule-no-unknown": [true, {
+      "ignoreAtRules": ["include", "extend"]
+    }],
+    "selector-list-comma-newline-after": null
   }
 }

@@ -1,7 +1,7 @@
-import { Template } from 'meteor/templating';
+import { Template } from "meteor/templating";
 
-import './privacy.html';
+import "./privacy.html";
 
 Template.Privacy.onRendered(() => {
-  document.title = 'Privacy Policy · SignMeUp';
+  document.title = "Privacy Policy · SignMeUp";
 });

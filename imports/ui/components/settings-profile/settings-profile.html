@@ -1,3 +1,30 @@
 <template name="SettingsProfile">
-  Coming soon!
+  <div class="settings-profile">
+    <h3 class="mb-2">
+      Profile
+    </h3>
+
+    <div class="card">
+      <div class="card-body">
+        <form id="edit-profile-form">
+          {{#with currentUser}}
+            <label for="preferredName">Preferred Name</label>
+            <input
+              type="text"
+              class="form-control js-preferred-name"
+              name="preferredName"
+              required
+              value="{{fullName}}" />
+
+            {{#if successMessage}}
+              <div class="text-success">
+                {{successMessage}}
+              </div>
+            {{/if}}
+            <button class="btn btn-primary mt-3" type="submit">Save</button>
+          {{/with}}
+        </form>
+      </div>
+    </div>
+  </div>
 </template>

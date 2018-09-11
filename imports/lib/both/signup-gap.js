@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from "moment";
 
 export class SignupGap {
   static nextSignupTime(queue, userId) {
@@ -7,9 +7,15 @@ export class SignupGap {
     }
 
     // Get user's last ticket that was marked as done
-    const userTickets = queue.tickets().fetch().filter((ticket) => {
-      return ticket.status === 'markedAsDone' && ticket.studentIds.indexOf(userId) !== -1;
-    });
+    const userTickets = queue
+      .tickets()
+      .fetch()
+      .filter(ticket => {
+        return (
+          ticket.status === "markedAsDone" &&
+          ticket.studentIds.indexOf(userId) !== -1
+        );
+      });
 
     if (userTickets.length === 0) {
       return new Date();
@@ -18,7 +24,10 @@ export class SignupGap {
     const lastTicket = userTickets[userTickets.length - 1];
 
     // Compare to signup gap
-    const nextSignupTime = moment(lastTicket.markedAsDoneAt).add(queue.course().settings.signupGap, 'minutes');
+    const nextSignupTime = moment(lastTicket.markedAsDoneAt).add(
+      queue.course().settings.signupGap,
+      "minutes"
+    );
 
     return nextSignupTime.toDate();
   }

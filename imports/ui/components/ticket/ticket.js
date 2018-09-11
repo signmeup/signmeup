@@ -1,29 +1,29 @@
-import { Meteor } from 'meteor/meteor';
-import { Template } from 'meteor/templating';
-import { $ } from 'meteor/jquery';
+import { Meteor } from "meteor/meteor";
+import { Template } from "meteor/templating";
+import { $ } from "meteor/jquery";
 
-import moment from 'moment';
+import moment from "moment";
 
-import { deleteTicket } from '/imports/api/tickets/methods';
+import { deleteTicket } from "/imports/api/tickets/methods";
 
-import '/imports/ui/components/ticket/ticket-drawer/ticket-drawer';
-import '/imports/ui/components/ticket/ticket-ta-actions/ticket-ta-actions';
+import "/imports/ui/components/ticket/ticket-drawer/ticket-drawer";
+import "/imports/ui/components/ticket/ticket-ta-actions/ticket-ta-actions";
 
-import './ticket.html';
+import "./ticket.html";
 
 Template.Ticket.onCreated(function onCreated() {
   this.autorun(() => {
     const ticket = Template.currentData().ticket;
-    this.subscribe('tickets.byId', ticket._id);
-    this.subscribe('users.byIds', ticket.studentIds);
-    if (ticket.isClaimed()) this.subscribe('users.byIds', [ticket.claimedBy]);
+    this.subscribe("tickets.byId", ticket._id);
+    this.subscribe("users.byIds", ticket.studentIds);
+    if (ticket.isClaimed()) this.subscribe("users.byIds", [ticket.claimedBy]);
   });
 });
 
 Template.Ticket.onRendered(function onRendered() {
   this.autorun(() => {
-    const ticketDrawer = $(Template.instance().find('.ticket-drawer'));
-    if (Template.currentData().ticket.status === 'claimed') {
+    const ticketDrawer = $(Template.instance().find(".ticket-drawer"));
+    if (Template.currentData().ticket.status === "claimed") {
       ticketDrawer.slideDown(150);
     } else {
       ticketDrawer.slideUp(150);
@@ -37,21 +37,30 @@ Template.Ticket.helpers({
   },
 
   currentUserClass(ticket) {
-    return (ticket && ticket.belongsToUser(Meteor.userId())) ? 'current-user-ticket' : '';
+    return ticket && ticket.belongsToUser(Meteor.userId())
+      ? "current-user-ticket"
+      : "";
   },
 
   studentNames(students) {
-    let result = '';
+    let result = "";
 
     students.fetch().forEach((student, i) => {
       if (i > 0) {
-        result += ', ';
+        result += ", ";
       }
 
       result += student.fullName();
     });
 
     return result;
+  },
+
+  studentLegalNames(students) {
+    return students
+      .fetch()
+      .map(student => student.legalName())
+      .join(", ");
   },
 
   formattedTimestamp(createdAt) {
@@ -64,28 +73,33 @@ Template.Ticket.helpers({
 
   showTicketDrawer(ticket, taView) {
     return taView || (ticket && ticket.belongsToUser(Meteor.userId()));
-  },
+  }
 });
 
 Template.Ticket.events({
-  'click .ticket'(event) {
+  "click .ticket"(event) {
     const target = $(event.target);
-    if (target.hasClass('td') || target.hasClass('ticket')) {
-      const ticketDrawer = $(Template.instance().find('.ticket-drawer'));
+    if (target.hasClass("td") || target.hasClass("ticket")) {
+      const ticketDrawer = $(Template.instance().find(".ticket-drawer"));
       ticketDrawer.slideToggle(150);
     }
   },
 
-  'click .js-delete-ticket'(event) {
+  "click .js-delete-ticket"(event) {
     event.preventDefault();
 
-    const sure = prompt('Are you sure you want to delete this ticket? If yes, type \'DELETE\' in the input below.'); // eslint-disable-line max-len
-    if (sure === 'DELETE') {
-      deleteTicket.call({
-        ticketId: this.ticket._id,
-      }, (err) => {
-        if (err) console.log(err);
-      });
+    const sure = prompt(
+      "Are you sure you want to delete this ticket? If yes, type 'DELETE' in the input below."
+    ); // eslint-disable-line max-len
+    if (sure === "DELETE") {
+      deleteTicket.call(
+        {
+          ticketId: this.ticket._id
+        },
+        err => {
+          if (err) console.log(err);
+        }
+      );
     }
-  },
+  }
 });

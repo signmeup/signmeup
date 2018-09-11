@@ -10,23 +10,18 @@
   ],
 
   "extends": [
-    "airbnb",
-    "plugin:meteor/recommended"
+    "prettier"
   ],
+
+  "parserOptions": {
+    "sourceType": "module"
+  },
 
   "settings": {
     "import/resolver": "meteor"
   },
 
   "rules": {
-    "arrow-body-style": [
-      2,
-      "always"
-    ],
-    "import/extensions": [
-      2,
-      "never"
-    ],
     "import/no-absolute-path": 0,
     "import/no-extraneous-dependencies": 0,
     "import/prefer-default-export": 0,

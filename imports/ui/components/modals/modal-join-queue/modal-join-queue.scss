@@ -1,4 +1,4 @@
-.form-group.required > label:after {
+.form-group.required > label::after {
   content: '*';
   color: theme-color("danger");
 
@@ -20,10 +20,6 @@
   &:not(:first-child) {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-  }
-
-  &.current {
-    background-color: $gray-100;
   }
 
   .content {
