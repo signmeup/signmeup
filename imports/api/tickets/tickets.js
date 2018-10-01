@@ -38,7 +38,7 @@ Tickets.schema = new SimpleSchema({
 
   notifications: { type: NotificationsSchema, defaultValue: {} },
 
-  createdAt: { type: Date },
+  createdAt: { type: Date, index: true },
   createdBy: { type: String, regEx: SimpleSchema.RegEx.Id },
 
   claimedAt: { type: Date, optional: true },

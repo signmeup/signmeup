@@ -13,6 +13,8 @@ import { Tickets, NotificationsSchema } from "/imports/api/tickets/tickets";
 import { SignupGap } from "/imports/lib/both/signup-gap";
 import { Notifications } from "/imports/lib/both/notifications";
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
+import { join } from "/imports/lib/both/join";
+import { jsonToCsv } from "/imports/lib/both/csv";
 
 export const createTicket = new ValidatedMethod({
   name: "tickets.createTicket",
@@ -429,5 +431,59 @@ export const notifyTicketByText = new ValidatedMethod({
     if (Meteor.isServer) {
       Notifications.sendTextNotification(ticket);
     }
+  }
+});
+
+// Server-side methods
+Meteor.methods({
+  "tickets.export.inRange"({ courseId, startTime, endTime }) {
+    if (
+      !Roles.userIsInRole(
+        Meteor.userId(),
+        ["admin", "mta", "hta", "ta"],
+        courseId
+      )
+    ) {
+      throw new Meteor.Error(
+        "tickets.inRange.unauthorized",
+        "Only TAs and above can get tickets from a specified range."
+      );
+    }
+
+    let tickets = Tickets.find(
+      {
+        courseId,
+        createdAt: {
+          $gte: startTime,
+          $lte: endTime
+        }
+      },
+      {
+        fields: {
+          courseId: false,
+          notifications: false
+        },
+        sort: { createdAt: 1 }
+      }
+    ).fetch();
+
+    const userFields = [
+      "studentIds",
+      "createdBy",
+      "claimedBy",
+      "markedAsMissingBy",
+      "markedAsDoneBy",
+      "deletedBy"
+    ].map(uf => ({ localField: uf, getter: u => u.fullName() }));
+    userFields[0].newField = "students";
+    tickets = join(tickets, userFields, Meteor.users);
+
+    _.each(tickets, ticket => {
+      delete ticket._id;
+
+      ticket.students = ticket.students.join(",");
+    });
+
+    return jsonToCsv(tickets);
   }
 });

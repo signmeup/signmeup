@@ -21,6 +21,9 @@ if (Meteor.isServer) {
   });
 }
 
+import { join } from "/imports/lib/both/join";
+import { jsonToCsv } from "/imports/lib/both/csv";
+
 export const createQueue = new ValidatedMethod({
   name: "queues.createQueue",
   validate: Queues.simpleSchema()
@@ -482,5 +485,71 @@ export const releaseFromSession = new ValidatedMethod({
         $pull: { "settings.restrictedSessionIds": sessionId }
       }
     );
+  }
+});
+
+// Server-side methods
+Meteor.methods({
+  "queues.export.inRange"({ courseId, startTime, endTime }) {
+    if (
+      !Roles.userIsInRole(
+        Meteor.userId(),
+        ["admin", "mta", "hta", "ta"],
+        courseId
+      )
+    ) {
+      throw new Meteor.Error(
+        "queues.inRange.unauthorized",
+        "Only TAs and above can get queues from a specified range."
+      );
+    }
+
+    let queues = Queues.find(
+      {
+        courseId,
+        createdAt: {
+          $gte: startTime,
+          $lte: endTime
+        }
+      },
+      {
+        fields: {
+          courseId: false,
+          announcementIds: false,
+          settings: false,
+          endJobId: false
+        },
+        sort: { createdAt: 1 }
+      }
+    ).fetch();
+
+    queues = join(
+      queues,
+      {
+        localField: "locationId",
+        newField: "location",
+        getter: l => l.name
+      },
+      Locations
+    );
+
+    const getFullName = user => user.fullName();
+    queues = join(
+      queues,
+      [
+        { localField: "endedBy", getter: getFullName },
+        { localField: "createdBy", getter: getFullName }
+      ],
+      Meteor.users
+    );
+
+    _.each(queues, queue => {
+      delete queue._id;
+
+      queue.tickets = queue.ticketIds.length;
+      delete queue.ticketIds;
+    });
+
+    return jsonToCsv(queues);
   }
 });

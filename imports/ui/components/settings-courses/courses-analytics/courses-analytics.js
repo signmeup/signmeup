@@ -1,8 +1,9 @@
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
+import { ReactiveVar } from "meteor/reactive-var";
 import { $ } from "meteor/jquery";
 
-import "./courses-analytics.html";
+import "/imports/ui/components/settings-courses/courses-analytics/analytics-logs/analytics-logs";
+import "/imports/ui/components/settings-courses/courses-analytics/analytics-graphs/analytics-graphs";
 
-Template.CoursesAnalytics.onRendered(() => {
-  $(".js-logs-datepicker").datepicker();
-});
+import "./courses-analytics.html";

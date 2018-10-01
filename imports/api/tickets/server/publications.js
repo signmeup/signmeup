@@ -60,3 +60,26 @@ Meteor.publish("tickets.byQueueId", function byQueueId(queueId) {
     }
   );
 });
+
+Meteor.publish("tickets.inRange", function inRange(
+  courseId,
+  startTime,
+  endTime
+) {
+  if (
+    !Roles.userIsInRole(this.userId, ["admin", "mta", "hta", "ta"], courseId)
+  ) {
+    throw new Meteor.Error(
+      "tickets.inRange.unauthorized",
+      "Only TAs and above can get tickets from a specified range."
+    );
+  }
+
+  return Tickets.find({
+    courseId,
+    createdAt: {
+      $gte: startTime,
+      $lte: endTime
+    }
+  });
+});
