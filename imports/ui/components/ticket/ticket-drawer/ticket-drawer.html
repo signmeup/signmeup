@@ -6,6 +6,9 @@
           {{#if ticket.isClaimed}}
             {{formattedClaimDuration}}
           {{/if}}
+          {{#if ticket.isMarkedAsMissing}}
+            {{formattedMissingDuration}}
+          {{/if}}
         </div>
         <div class="td col-10 col-md-11">
           <h5 class="mb-2">Question</h5>
