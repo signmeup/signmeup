@@ -18,6 +18,8 @@ Template.Settings.onRendered(function onRendered() {
 
 Template.Settings.helpers({
   availableSettings() {
+    if (!Meteor.user()) return [];
+
     let settings = [
       {
         id: "profile",
@@ -27,11 +29,10 @@ Template.Settings.helpers({
     ];
 
     if (
-      Meteor.user() &&
-      (Roles.userIsInRole(Meteor.userId(), ["admin", "mta"]) ||
-        Meteor.user()
-          .htaCourses()
-          .count() > 0)
+      Roles.userIsInRole(Meteor.userId(), ["admin", "mta"]) ||
+      Meteor.user()
+        .htaCourses()
+        .count() > 0
     ) {
       const superSettings = [
         {
