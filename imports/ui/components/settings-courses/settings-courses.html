@@ -28,17 +28,19 @@
           </ul>
         </div>
 
-        <div class="settings-courses-body col-md-9">
-          <h3 class="mb-2">
-            {{selectedCourse.name}}
-            <small class="text-muted">{{selectedCourse.description}}</small>
-          </h3>
-          <div class="tab-content">
-            {{> CoursesGeneral course=selectedCourse}}
-            {{> CoursesPeople course=selectedCourse}}
-            {{> CoursesAnalytics course=selectedCourse}}
+        {{#if selectedCourse}}
+          <div class="settings-courses-body col-md-9">
+            <h3 class="mb-2">
+              {{selectedCourse.name}}
+              <small class="text-muted">{{selectedCourse.description}}</small>
+            </h3>
+            <div class="tab-content">
+              {{> CoursesGeneral course=selectedCourse}}
+              {{> CoursesPeople course=selectedCourse}}
+              {{> CoursesAnalytics course=selectedCourse}}
+            </div>
           </div>
-        </div>
+        {{/if}}
       </div>
     {{/if}}
   </div>
