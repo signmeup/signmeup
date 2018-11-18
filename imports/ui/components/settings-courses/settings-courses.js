@@ -25,11 +25,14 @@ Template.SettingsCourses.onRendered(function onRendered() {
   this.autorun(() => {
     const courseId = FlowRouter.getQueryParam("course");
     if (!courseId && Meteor.user()) {
-      const selectedCourseId = Meteor.user()
+      const courses = Meteor.user()
         .courses()
-        .fetch()[0]._id;
-      this.selectedCourseId.set(selectedCourseId);
-      FlowRouter.setQueryParams({ course: selectedCourseId });
+        .fetch();
+      if (courses.length > 0) {
+        const selectedCourseId = courses[0]._id;
+        this.selectedCourseId.set(selectedCourseId);
+        FlowRouter.setQueryParams({ course: selectedCourseId });
+      }
     }
   });
 });
@@ -63,5 +66,11 @@ Template.SettingsCourses.events({
       Template.instance().selectedCourseId.set(event.target.value);
       FlowRouter.setQueryParams({ course: event.target.value });
     }
+  },
+
+  "show.bs.tab"(event) {
+    const href = event.target.href;
+    const tab = href.substring(href.indexOf("#") + 1);
+    FlowRouter.setQueryParams({ tab });
   }
 });
