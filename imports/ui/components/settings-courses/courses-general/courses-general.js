@@ -16,6 +16,9 @@ Template.CoursesGeneral.onRendered(() => {
 Template.CoursesGeneral.helpers({
   isCurrentSignupGap(course, signupGap) {
     return course.settings.signupGap === signupGap;
+  },
+  isCurrentMissingWindow(course, missingWindow) {
+    return course.settings.missingWindow === missingWindow;
   }
 });
 
@@ -45,6 +48,7 @@ Template.CoursesGeneral.events({
       courseId: this.course._id,
       settings: {
         signupGap: parseInt(event.target.signupGap.value),
+        missingWindow: parseInt(event.target.missingWindow.value),
         restrictSessionsByDefault:
           event.target.restrictSessionsByDefault.checked,
         notifications: {
