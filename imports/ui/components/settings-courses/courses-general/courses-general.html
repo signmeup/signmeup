@@ -58,6 +58,24 @@
         </div>
 
         <div class="card-body">
+          <div class="form-group row mb-0">
+            <label for="missing-window" class="col-9 col-form-label">
+              <span>Missing Window</span><br>
+              <span>Time after which a ticket marked as missing is automatically deleted.</span>
+            </label>
+            <div class="col-3">
+              <select class="form-control mt-1" name="missingWindow" id="missing-window">
+                <option value="-1" selected="{{isCurrentMissingWindow course 0}}">No window</option>
+                <option value="15" selected="{{isCurrentMissingWindow course 15}}">15 minutes</option>
+                <option value="30" selected="{{isCurrentMissingWindow course 30}}">30 minutes</option>
+                <option value="45" selected="{{isCurrentMissingWindow course 45}}">45 minutes</option>
+                <option value="60" selected="{{isCurrentMissingWindow course 60}}">1 hour</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body">
           <div class="form-group">
             <label for="signup-gap" class="col-form-label">
               <span class="text-muted">Notifications</span><br>

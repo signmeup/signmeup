@@ -6,6 +6,7 @@ import { _ } from "meteor/underscore";
 
 import moment from "moment";
 
+import { Courses } from "/imports/api/courses/courses";
 import { Queues } from "/imports/api/queues/queues";
 import { Sessions } from "/imports/api/sessions/sessions";
 import { Tickets, NotificationsSchema } from "/imports/api/tickets/tickets";
@@ -308,6 +309,29 @@ export const markTicketAsMissing = new ValidatedMethod({
         }
       }
     );
+
+    if (Meteor.isServer) {
+      const course = Courses.findOne(ticket.courseId);
+      if (course.settings.missingWindow > 0) {
+        Meteor.setTimeout(() => {
+          const ticket = Tickets.findOne(ticketId);
+          if (ticket && ticket.status === "markedAsMissing") {
+            Tickets.update(
+              {
+                _id: ticketId
+              },
+              {
+                $set: {
+                  status: "deleted",
+                  deletedAt: new Date(),
+                  deletedBy: this.userId
+                }
+              }
+            );
+          }
+        }, course.settings.missingWindow * 60000);
+      }
+    }
   }
 });
 
