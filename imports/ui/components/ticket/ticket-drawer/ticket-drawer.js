@@ -29,7 +29,9 @@ Template.TicketDrawer.onCreated(function onCreated() {
 
     if (ticket && ticket.isMarkedAsMissing()) {
       self.missingDurationInterval = Meteor.setInterval(() => {
-        self.missingDuration.set(moment().diff(moment(ticket.markedAsMissingAt)));
+        self.missingDuration.set(
+          moment().diff(moment(ticket.markedAsMissingAt))
+        );
       }, 1000);
     }
   });
