@@ -1,6 +1,7 @@
 import { Meteor } from "meteor/meteor";
 import { ValidatedMethod } from "meteor/mdg:validated-method";
 import { SimpleSchema } from "meteor/aldeed:simple-schema";
+import { Jobs } from "meteor/msavin:sjobs";
 import { Roles } from "meteor/alanning:roles";
 import { _ } from "meteor/underscore";
 
@@ -14,6 +15,29 @@ import { Tickets, NotificationsSchema } from "/imports/api/tickets/tickets";
 import { SignupGap } from "/imports/lib/both/signup-gap";
 import { Notifications } from "/imports/lib/both/notifications";
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
+
+if (Meteor.isServer) {
+  Jobs.register({
+    "tickets.missingTicketExpired": function deleteTicketViaJob(ticketId) {
+      Tickets.update(
+        {
+          _id: ticketId
+        },
+        {
+          $set: {
+            status: "deleted",
+            deletedAt: new Date(),
+            deletedBy: this.userId
+          },
+          $unset: {
+            missingJobId: ""
+          }
+        }
+      );
+      this.success();
+    }
+  });
+}
 
 export const createTicket = new ValidatedMethod({
   name: "tickets.createTicket",
@@ -207,6 +231,10 @@ export const claimTicket = new ValidatedMethod({
       );
     }
 
+    if (Meteor.isServer && ticket.missingJobId) {
+      Jobs.cancel(ticket.missingJobId);
+    }
+
     Tickets.update(
       {
         _id: ticketId
@@ -216,6 +244,9 @@ export const claimTicket = new ValidatedMethod({
           status: "claimed",
           claimedAt: new Date(),
           claimedBy: this.userId
+        },
+        $unset: {
+          missingJobId: ""
         }
       }
     );
@@ -248,6 +279,10 @@ export const releaseTicket = new ValidatedMethod({
       );
     }
 
+    if (Meteor.isServer && ticket.missingJobId) {
+      Jobs.cancel(ticket.missingJobId);
+    }
+
     Tickets.update(
       {
         _id: ticketId
@@ -259,7 +294,8 @@ export const releaseTicket = new ValidatedMethod({
 
         $unset: {
           claimedAt: "",
-          claimedBy: ""
+          claimedBy: "",
+          missingJobId: ""
         }
       }
     );
@@ -292,6 +328,21 @@ export const markTicketAsMissing = new ValidatedMethod({
       );
     }
 
+    if (Meteor.isServer) {
+      const course = Courses.findOne(ticket.courseId);
+      if (course.settings.missingWindow > 0) {
+        const deletionDate = new Date(
+          new Date().getTime() + course.settings.missingWindow * 60000
+        );
+
+        const job = Jobs.run("tickets.missingTicketExpired", ticketId, {
+          date: deletionDate
+        });
+
+        Tickets.update({ _id: ticketId }, { $set: { missingJobId: job._id } });
+      }
+    }
+
     Tickets.update(
       {
         _id: ticketId
@@ -309,29 +360,6 @@ export const markTicketAsMissing = new ValidatedMethod({
         }
       }
     );
-
-    if (Meteor.isServer) {
-      const course = Courses.findOne(ticket.courseId);
-      if (course.settings.missingWindow > 0) {
-        Meteor.setTimeout(() => {
-          const ticket = Tickets.findOne(ticketId);
-          if (ticket && ticket.status === "markedAsMissing") {
-            Tickets.update(
-              {
-                _id: ticketId
-              },
-              {
-                $set: {
-                  status: "deleted",
-                  deletedAt: new Date(),
-                  deletedBy: this.userId
-                }
-              }
-            );
-          }
-        }, course.settings.missingWindow * 60000);
-      }
-    }
   }
 });
 
@@ -361,6 +389,10 @@ export const markTicketAsDone = new ValidatedMethod({
       );
     }
 
+    if (Meteor.isServer && ticket.missingJobId) {
+      Jobs.cancel(ticket.missingJobId);
+    }
+
     Tickets.update(
       {
         _id: ticketId
@@ -370,6 +402,9 @@ export const markTicketAsDone = new ValidatedMethod({
           status: "markedAsDone",
           markedAsDoneAt: new Date(),
           markedAsDoneBy: this.userId
+        },
+        $unset: {
+          missingJobId: ""
         }
       }
     );
@@ -401,6 +436,10 @@ export const deleteTicket = new ValidatedMethod({
       );
     }
 
+    if (Meteor.isServer && ticket.missingJobId) {
+      Jobs.cancel(ticket.missingJobId);
+    }
+
     Tickets.update(
       {
         _id: ticketId
@@ -410,6 +449,9 @@ export const deleteTicket = new ValidatedMethod({
           status: "deleted",
           deletedAt: new Date(),
           deletedBy: this.userId
+        },
+        $unset: {
+          missingJobId: ""
         }
       }
     );
