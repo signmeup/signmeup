@@ -50,6 +50,7 @@ Tickets.schema = new SimpleSchema({
     regEx: SimpleSchema.RegEx.Id,
     optional: true
   },
+  missingJobId: { type: String, optional: true },
 
   markedAsDoneAt: { type: Date, optional: true },
   markedAsDoneBy: {

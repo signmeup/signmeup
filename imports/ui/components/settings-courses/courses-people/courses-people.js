@@ -1,9 +1,17 @@
 import { Template } from "meteor/templating";
+import { FlowRouter } from "meteor/kadira:flow-router";
 import { $ } from "meteor/jquery";
 
 import { addRoleGivenEmail, removeRole } from "/imports/api/users/methods";
 
 import "./courses-people.html";
+
+Template.CoursesPeople.onRendered(() => {
+  const tabId = FlowRouter.getQueryParam("tab");
+  if (tabId) {
+    $('a[href="#' + tabId + '"]').tab("show");
+  }
+});
 
 Template.CoursesPeople.onCreated(function onCreated() {
   this.autorun(() => {

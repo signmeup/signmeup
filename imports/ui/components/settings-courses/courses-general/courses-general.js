@@ -1,13 +1,24 @@
 import { Template } from "meteor/templating";
+import { FlowRouter } from "meteor/kadira:flow-router";
 import { $ } from "meteor/jquery";
 
 import { updateCourse, updateSettings } from "/imports/api/courses/methods";
 
 import "./courses-general.html";
 
+Template.CoursesGeneral.onRendered(() => {
+  const tabId = FlowRouter.getQueryParam("tab");
+  if (tabId) {
+    $('a[href="#' + tabId + '"]').tab("show");
+  }
+});
+
 Template.CoursesGeneral.helpers({
   isCurrentSignupGap(course, signupGap) {
     return course.settings.signupGap === signupGap;
+  },
+  isCurrentMissingWindow(course, missingWindow) {
+    return course.settings.missingWindow === missingWindow;
   }
 });
 
@@ -37,6 +48,7 @@ Template.CoursesGeneral.events({
       courseId: this.course._id,
       settings: {
         signupGap: parseInt(event.target.signupGap.value),
+        missingWindow: parseInt(event.target.missingWindow.value),
         restrictSessionsByDefault:
           event.target.restrictSessionsByDefault.checked,
         notifications: {
