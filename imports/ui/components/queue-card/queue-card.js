@@ -10,7 +10,7 @@ Template.QueueCard.onCreated(function onCreated() {
 
 export function ticketCount(queue) {
   const activeTicketsCount = queue.activeTickets().count();
-  return `${activeTicketsCount} ticket${activeTicketsCount !== 1 ? 's' : ''}`;
+  return `${activeTicketsCount} ticket${activeTicketsCount !== 1 ? "s" : ""}`;
 }
 
 Template.QueueCard.helpers({

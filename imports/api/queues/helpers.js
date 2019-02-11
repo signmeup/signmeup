@@ -25,8 +25,10 @@ export function sortedActiveQueues() {
 }
 
 export function recentlyEndedQueues() {
-  const cutoff = moment().subtract(5, 'minutes').toDate();
-  return Queues.find({ status: 'ended', endedAt: { $gt: cutoff } }).fetch();
+  const cutoff = moment()
+    .subtract(5, "minutes")
+    .toDate();
+  return Queues.find({ status: "ended", endedAt: { $gt: cutoff } }).fetch();
 }
 
 export function queueEndTimes() {
@@ -137,7 +139,9 @@ Queues.helpers({
     if (!this.isEnded()) {
       svgPattern = GeoPattern.generate(this.course().name);
     } else {
-      svgPattern = GeoPattern.generate(this.course().name, { color: '#d3d3d3' });
+      svgPattern = GeoPattern.generate(this.course().name, {
+        color: "#d3d3d3"
+      });
     }
     return svgPattern.toDataUrl();
   },
