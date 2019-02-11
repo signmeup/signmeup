@@ -1,6 +1,6 @@
 <template name="QueueCard">
   <a class="queue-card card" href="/queue/{{queue._id}}">
-    <div class="queue-card-pattern card-img-top" style="background: {{queue.svgPatternUrl}}"></div>
+    <div class="queue-card-pattern card-img-top" style="background: {{queue.svgPatternUrl(queue)}}"></div>
     <div class="card-body">
       <h4 class="card-title text-truncate">{{queue.course.name}} &middot; {{queue.name}}</h4>
       <p class="card-subtitle text-truncate">{{queue.course.description}}</p>
@@ -10,7 +10,11 @@
       </p>
     </div>
     <div class="card-footer text-muted">
-      <i class="material-icons">access_time</i>Ends at {{queue.formatScheduledEndTime}}
+      {{#if queue.isEnded}}
+        <i class="material-icons">block</i>Ended at {{queue.formatScheduledEndTime}}
+      {{else}}
+        <i class="material-icons">access_time</i>Ends at {{queue.formatScheduledEndTime}}
+      {{/if}}
     </div>
   </a>
 </template>

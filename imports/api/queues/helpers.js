@@ -24,6 +24,11 @@ export function sortedActiveQueues() {
   });
 }
 
+export function recentlyEndedQueues() {
+  const cutoff = moment().subtract(5, 'minutes').toDate();
+  return Queues.find({ status: 'ended', endedAt: { $gt: cutoff } }).fetch();
+}
+
 export function queueEndTimes() {
   const result = [];
 
@@ -127,8 +132,13 @@ Queues.helpers({
     return !this.isRestricted();
   },
 
-  svgPatternUrl() {
-    const svgPattern = GeoPattern.generate(this.course().name);
+  svgPatternUrl(queue) {
+    let svgPattern = null;
+    if (!queue.isEnded()) {
+      svgPattern = GeoPattern.generate(queue.course().name);
+    } else {
+      svgPattern = GeoPattern.generate(queue.course().name, { color: '#d3d3d3' });
+    }
     return svgPattern.toDataUrl();
   },
 
