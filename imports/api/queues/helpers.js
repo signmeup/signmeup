@@ -132,12 +132,12 @@ Queues.helpers({
     return !this.isRestricted();
   },
 
-  svgPatternUrl(queue) {
+  svgPatternUrl() {
     let svgPattern = null;
-    if (!queue.isEnded()) {
-      svgPattern = GeoPattern.generate(queue.course().name);
+    if (!this.isEnded()) {
+      svgPattern = GeoPattern.generate(this.course().name);
     } else {
-      svgPattern = GeoPattern.generate(queue.course().name, { color: '#d3d3d3' });
+      svgPattern = GeoPattern.generate(this.course().name, { color: '#d3d3d3' });
     }
     return svgPattern.toDataUrl();
   },
