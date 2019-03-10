@@ -97,12 +97,13 @@ export const createTicket = new ValidatedMethod({
       if (
         !(
           email.endsWith("@brown.edu") ||
+          email.endsWith("@alumni.brown.edu") ||
           email.endsWith("@signmeup.cs.brown.edu")
         )
       ) {
         throw new Meteor.Error(
           "tickets.createTicket.NonBrownEmail",
-          `Email ${email} does not end with @brown.edu`
+          `Email ${email} does not end with @brown.edu or @alumni.brown.edu`
         );
       }
 

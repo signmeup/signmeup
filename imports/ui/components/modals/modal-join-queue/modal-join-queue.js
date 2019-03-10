@@ -39,10 +39,10 @@ Template.ModalJoinQueue.onCreated(function onCreated() {
 
     if (
       !(
-        email.endsWith("@brown.edu") || email.endsWith("@signmeup.cs.brown.edu")
+        email.endsWith("@brown.edu") || email.endsWith("@alumni.brown.edu") || email.endsWith("@signmeup.cs.brown.edu")
       )
     ) {
-      this.errors.set("student", "Email must end with @brown.edu.");
+      this.errors.set("student", "Email must end with @brown.edu or @alumni.brown.edu.");
       return;
     }
 
