@@ -1,9 +1,12 @@
 import moment from "moment";
 
+import { Courses } from "/imports/api/courses/courses";
+import { Tickets } from "/imports/api/tickets/tickets";
+
 export class SignupLimitations {
   static nextSignupTime(queue, userId) {
     const gapTime = SignupLimitations.nextSignupTimeFromGap(queue, userId);
-    const limitTime = SignupLimitations.nextSignupTimeFromLimit(queue.course());
+    const limitTime = SignupLimitations.nextSignupTimeFromLimit(queue.courseId, userId);
     return gapTime >= limitTime ? gapTime : limitTime;
   }
 
@@ -38,7 +41,26 @@ export class SignupLimitations {
     return nextSignupTime.toDate();
   }
 
-  static nextSignupTimeFromLimit(course, userId) {
+  static nextSignupTimeFromLimit(courseId, userId) {
+    if (!userId) return null;
+
+    const signupLimit = Courses.findOne(courseId).settings.signupLimit;
+    // No limit set
+    if (signupLimit <= 0) return new Date();
+
+    const recentTickets = Tickets.find({
+      courseId: courseId,
+      studentIds: {$in: [userId]},
+      markedAsDoneAt: {$exists: true, $ne: null},
+      createdAt: {$gt: moment().subtract(7, "days").toDate()}
+    }, {sort: {createdAt: 1}}).fetch();
+
+    // Student still under limit
+    if (recentTickets.length < signupLimit) {
+      return new Date();
+    }
+
+    return moment(recentTickets[recentTickets.length - 1].createdAt).add(7, "days").toDate();
     return new Date();
   }
 }
