@@ -46,7 +46,7 @@
               <span>Minimum time a student must wait after resolution to sign up again.</span>
             </label>
             <div class="col-3">
-              <select class="form-control mt-1" name="signupGap">
+              <select class="form-control mt-1" name="signupGap" id="signup-gap">
                 <option value="0" selected="{{isCurrentSignupGap course 0}}">No gap</option>
                 <option value="15" selected="{{isCurrentSignupGap course 15}}">15 minutes</option>
                 <option value="30" selected="{{isCurrentSignupGap course 30}}">30 minutes</option>
@@ -54,6 +54,21 @@
                 <option value="60" selected="{{isCurrentSignupGap course 60}}">1 hour</option>
               </select>
             </div>
+          </div>
+        </div>
+
+        <div class="card-body">
+          <div class="form-check mb-0">
+            <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" name="hasSignupLimit" id="jsHasSignupLimit" checked="{{hasSignupLimit course}}">
+              <span>Limit Signups per Week</span>
+            </label>
+            <label class="row" style="display: {{#if hasSignupLimit course}}flex{{else}}none{{/if}}" id="jsSignupLimit">
+              <span class="col-9">Maximum number of times a student can be seen in a week (calculated on a rolling basis).</span>
+              <div class="col-3">
+                <input type="number" class="form-control" name="signupLimit" min="1" value="{{course.settings.signupLimit}}" />
+              </div>
+            </label>
           </div>
         </div>
 

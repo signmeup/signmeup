@@ -17,6 +17,9 @@ Template.CoursesGeneral.helpers({
   isCurrentSignupGap(course, signupGap) {
     return course.settings.signupGap === signupGap;
   },
+  hasSignupLimit(course) {
+    return course.settings.signupLimit > 0;
+  },
   isCurrentMissingWindow(course, missingWindow) {
     return course.settings.missingWindow === missingWindow;
   }
@@ -37,6 +40,11 @@ Template.CoursesGeneral.events({
     });
   },
 
+  "change #jsHasSignupLimit"(event) {
+    $('#jsSignupLimit')[event.target.checked ? 'show' : 'hide']();
+    $('#jsSignupLimit input').val(event.target.checked ? 1 : 0);
+  },
+
   "change #update-course-settings-form input, change #update-course-settings-form select"() {
     $("#update-course-settings-form").submit();
   },
@@ -48,6 +56,7 @@ Template.CoursesGeneral.events({
       courseId: this.course._id,
       settings: {
         signupGap: parseInt(event.target.signupGap.value),
+        signupLimit: parseInt(event.target.signupLimit.value),
         missingWindow: parseInt(event.target.missingWindow.value),
         restrictSessionsByDefault:
           event.target.restrictSessionsByDefault.checked,
