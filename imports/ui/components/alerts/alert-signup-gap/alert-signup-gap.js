@@ -4,7 +4,7 @@ import { ReactiveVar } from "meteor/reactive-var";
 
 import moment from "moment";
 
-import { SignupGap } from "/imports/lib/both/signup-gap";
+import { SignupLimitations } from "/imports/lib/both/signup-limitations";
 
 import "./alert-signup-gap.html";
 
@@ -14,7 +14,7 @@ Template.AlertSignupGap.onCreated(function onCreated() {
 
   self.autorun(() => {
     const queue = Template.currentData().queue;
-    const nextSignupTime = SignupGap.nextSignupTime(queue, Meteor.userId());
+    const nextSignupTime = SignupLimitations.nextSignupTime(queue, Meteor.userId());
 
     // If nextSignupTime is null, the user cannot signup. In this case, we avoid
     // showing the alert message.

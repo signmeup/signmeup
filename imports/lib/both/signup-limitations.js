@@ -1,7 +1,13 @@
 import moment from "moment";
 
-export class SignupGap {
+export class SignupLimitations {
   static nextSignupTime(queue, userId) {
+    const gapTime = SignupLimitations.nextSignupTimeFromGap(queue, userId);
+    const limitTime = SignupLimitations.nextSignupTimeFromLimit(queue.course());
+    return gapTime >= limitTime ? gapTime : limitTime;
+  }
+
+  static nextSignupTimeFromGap(queue, userId) {
     if (!userId || queue.hasActiveTicketWithUsers([userId])) {
       return null;
     }
@@ -30,5 +36,9 @@ export class SignupGap {
     );
 
     return nextSignupTime.toDate();
+  }
+
+  static nextSignupTimeFromLimit(course, userId) {
+    return new Date();
   }
 }
