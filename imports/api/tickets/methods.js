@@ -12,7 +12,7 @@ import { Queues } from "/imports/api/queues/queues";
 import { Sessions } from "/imports/api/sessions/sessions";
 import { Tickets, NotificationsSchema } from "/imports/api/tickets/tickets";
 
-import { SignupGap } from "/imports/lib/both/signup-gap";
+import { SignupLimitations } from "/imports/lib/both/signup-limitations";
 import { Notifications } from "/imports/lib/both/notifications";
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
 
@@ -123,7 +123,7 @@ export const createTicket = new ValidatedMethod({
     // Check: signup gap
     studentIds.forEach(studentId => {
       const studentName = Meteor.users.findOne(studentId).fullName();
-      const nextSignupTime = SignupGap.nextSignupTime(queue, studentId);
+      const nextSignupTime = SignupLimitations.nextSignupTime(queue, studentId);
       const timeRemaining = moment(nextSignupTime).diff(moment());
 
       if (timeRemaining > 0) {

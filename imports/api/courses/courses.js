@@ -5,6 +5,7 @@ export const Courses = new Mongo.Collection("courses");
 
 export const SettingsSchema = new SimpleSchema({
   signupGap: { type: Number, defaultValue: 0 },
+  signupLimit: { type: Number, defaultValue: 0},
   missingWindow: { type: Number, defaultValue: 0 },
   restrictSessionsByDefault: { type: Boolean, defaultValue: false },
   notifications: { type: Object, defaultValue: {} },
