@@ -61,6 +61,5 @@ export class SignupLimitations {
     }
 
     return moment(recentTickets[recentTickets.length - 1].createdAt).add(7, "days").toDate();
-    return new Date();
   }
 }
