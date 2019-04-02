@@ -46,7 +46,7 @@ export class SignupLimitations {
 
     const signupLimit = Courses.findOne(courseId).settings.signupLimit;
     // No limit set
-    if (signupLimit <= 0) return new Date();
+    if (!signupLimit || signupLimit <= 0) return new Date();
 
     const recentTickets = Tickets.find({
       courseId: courseId,
