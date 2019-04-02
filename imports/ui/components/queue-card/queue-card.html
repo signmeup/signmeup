@@ -10,7 +10,11 @@
       </p>
     </div>
     <div class="card-footer text-muted">
-      <i class="material-icons">access_time</i>Ends at {{queue.formatScheduledEndTime}}
+      {{#if queue.isEnded}}
+        <i class="material-icons">block</i>Ended at {{queue.formatScheduledEndTime}}
+      {{else}}
+        <i class="material-icons">access_time</i>Ends at {{queue.formatScheduledEndTime}}
+      {{/if}}
     </div>
   </a>
 </template>

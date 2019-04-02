@@ -1,7 +1,10 @@
 import { Template } from "meteor/templating";
 import { $ } from "meteor/jquery";
 
-import { sortedActiveQueues } from "/imports/api/queues/helpers";
+import {
+  sortedActiveQueues,
+  recentlyEndedQueues
+} from "/imports/api/queues/helpers";
 
 import "/imports/ui/components/queue-card/queue-card";
 import "/imports/ui/components/modals/modal-queue-create/modal-queue-create";
@@ -13,6 +16,7 @@ Template.Index.onCreated(function onCreated() {
     this.subscribe("courses.all");
     this.subscribe("locations.active");
     this.subscribe("queues.active");
+    this.subscribe("queues.recentlyEnded");
   });
 });
 
@@ -25,8 +29,12 @@ Template.Index.helpers({
     return sortedActiveQueues();
   },
 
-  sortedActiveQueuesLength() {
-    return sortedActiveQueues().length;
+  recentlyEndedQueues() {
+    return recentlyEndedQueues();
+  },
+
+  queuesLength() {
+    return sortedActiveQueues().length + recentlyEndedQueues().length;
   },
 
   isTA(user) {

@@ -41,6 +41,7 @@ Template.Queue.onCreated(function onCreated() {
     if (queue) {
       this.subscribe("courses.byId", queue.courseId);
       this.subscribe("tickets.byQueueId", queue._id);
+      this.subscribe("tickets.byCourseId", queue.courseId);
     }
   });
 });

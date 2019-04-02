@@ -4,7 +4,7 @@ import { $ } from "meteor/jquery";
 
 import moment from "moment";
 
-import { SignupGap } from "/imports/lib/both/signup-gap";
+import { SignupLimitations } from "/imports/lib/both/signup-limitations";
 
 import { RestrictedSessions } from "/imports/lib/client/restricted-sessions";
 
@@ -19,7 +19,7 @@ Template.QueueActions.onRendered(() => {
 
 Template.QueueActions.helpers({
   disableJoinQueue(queue) {
-    const nextSignupTime = SignupGap.nextSignupTime(queue, Meteor.userId());
+    const nextSignupTime = SignupLimitations.nextSignupTime(queue, Meteor.userId());
     const disableSignups =
       nextSignupTime && moment(nextSignupTime).diff(moment()) > 0;
 
