@@ -21,7 +21,11 @@ to get set up. For questions, please email signmeup-dev@lists.cs.brown.edu.
 ## Team
 
 SignMeUp was originally created by Dhruv Rawat '14, Anamta Farook '14, and
-Mohsan Elahi '14 at Brown University. The latest version is being developed by:
+Mohsan Elahi '14 at Brown University as part of a CS132 project.
+
+<img src="https://github.com/anamtafarook/signmeup/blob/master/CSYearbook%20pic.jpg" width="360">
+
+The creators' intent was that over time SignMeUp would become a platform that students and TAs in the CS department own and contribute to. Several people listed below have worked on SignMeUp, bringing that vision to life:
 
 | [![Athyuttam Eleti](https://avatars1.githubusercontent.com/u/1485350?v=3&s=160)](http://athyuttamre.com) | [![Greg Carlin](https://avatars1.githubusercontent.com/u/453896?&v=4&s=160)](http://gregcarl.in/) | <a title="Will Povell" href="http://wpovell.github.io"><img src="https://wpovell.github.io/imgs/head.jpg" width="160"></a> |
 |----------|----------|----------|
