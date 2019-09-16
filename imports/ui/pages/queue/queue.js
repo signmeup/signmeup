@@ -72,9 +72,28 @@ Template.Queue.onRendered(function onRendered() {
         FlowRouter.go("/404");
         return;
       }
-      document.title = `(${queue.activeTickets().count()}) ${
-        queue.course().name
-      } · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
+
+      if (isTA()) {
+        document.title = `(${queue.activeTickets().count()}) ${
+          queue.course().name
+        } · ${queue.name} · SignMeUp`;
+      } else {
+        const studentTicketIndex = queue
+          .tickets()
+          .fetch()
+          .filter(t => t.status === "open")
+          .findIndex(t => t.belongsToUser(Meteor.userId()));
+
+        let prefix =
+          studentTicketIndex === -1
+            ? ""
+            : studentTicketIndex === 0
+              ? "(you’re next) "
+              : `(${studentTicketIndex} ahead) `;
+        document.title = `${prefix}${queue.course().name} · ${
+          queue.name
+        } · SignMeUp`;
+      }
 
       // setup notifications
       if (isTA()) {
