@@ -86,7 +86,7 @@ Template.Queue.onRendered(function onRendered() {
 
         let prefix =
           studentTicketIndex === -1
-            ? ""
+            ? `(${queue.activeTickets().count()}) `
             : studentTicketIndex === 0
               ? "(you’re next) "
               : `(${studentTicketIndex} ahead) `;
