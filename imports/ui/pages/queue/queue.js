@@ -73,27 +73,23 @@ Template.Queue.onRendered(function onRendered() {
         return;
       }
 
-      if (isTA()) {
-        document.title = `(${queue.activeTickets().count()}) ${
-          queue.course().name
-        } · ${queue.name} · SignMeUp`;
-      } else {
-        const studentTicketIndex = queue
-          .tickets()
-          .fetch()
-          .filter(t => t.status === "open")
-          .findIndex(t => t.belongsToUser(Meteor.userId()));
+      const studentTicketIndex = queue
+        .tickets()
+        .fetch()
+        .filter(t => t.status === "open")
+        .findIndex(t => t.belongsToUser(Meteor.userId()));
 
-        let prefix =
-          studentTicketIndex === -1
-            ? `(${queue.activeTickets().count()}) `
-            : studentTicketIndex === 0
-              ? "(you’re next) "
-              : `(${studentTicketIndex} ahead) `;
-        document.title = `${prefix}${queue.course().name} · ${
-          queue.name
-        } · SignMeUp`;
+      let prefix;
+      if (studentTicketIndex === -1) {
+        prefix = queue.activeTickets().count();
+      } else if (studentTicketIndex === 0) {
+        prefix = "you’re next";
+      } else {
+        prefix = `${studentTicketIndex} ahead`;
       }
+      document.title = `(${prefix}) ${queue.course().name} · ${
+        queue.name
+      } · SignMeUp`;
 
       // setup notifications
       if (isTA()) {
