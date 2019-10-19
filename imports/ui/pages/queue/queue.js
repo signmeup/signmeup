@@ -72,9 +72,24 @@ Template.Queue.onRendered(function onRendered() {
         FlowRouter.go("/404");
         return;
       }
-      document.title = `(${queue.activeTickets().count()}) ${
-        queue.course().name
-      } · ${queue.name} · SignMeUp`; // eslint-disable-line max-len
+
+      const studentTicketIndex = queue
+        .tickets()
+        .fetch()
+        .filter(t => t.status === "open")
+        .findIndex(t => t.belongsToUser(Meteor.userId()));
+
+      let prefix;
+      if (studentTicketIndex === -1) {
+        prefix = queue.activeTickets().count();
+      } else if (studentTicketIndex === 0) {
+        prefix = "you’re next";
+      } else {
+        prefix = `${studentTicketIndex} ahead`;
+      }
+      document.title = `(${prefix}) ${queue.course().name} · ${
+        queue.name
+      } · SignMeUp`;
 
       // setup notifications
       if (isTA()) {
