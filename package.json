@@ -16,7 +16,7 @@
     "bootstrap-datepicker": "^1.7.1",
     "filesaver": "^0.0.13",
     "geopattern": "^1.2.3",
-    "jquery": "^3.2.1",
+    "jquery": "^3.5.0",
     "jquery-mask-plugin": "^1.14.13",
     "meteor-node-stubs": "^0.3.2",
     "moment": "^2.20.1",
