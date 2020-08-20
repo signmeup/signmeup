@@ -11,7 +11,7 @@
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
     "autoprefixer": "^7.2.5",
-    "bcrypt": "^1.0.3",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.1.3",
     "bootstrap-datepicker": "^1.7.1",
     "filesaver": "^0.0.13",
