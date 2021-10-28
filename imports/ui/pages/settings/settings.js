@@ -5,6 +5,7 @@ import { Roles } from "meteor/alanning:roles";
 import "/imports/ui/components/settings-courses/settings-courses";
 import "/imports/ui/components/settings-locations/settings-locations";
 import "/imports/ui/components/settings-profile/settings-profile";
+import "/imports/ui/components/settings-data/settings-data";
 
 import "./settings.html";
 
@@ -25,7 +26,12 @@ Template.Settings.helpers({
         id: "profile",
         name: "Profile",
         template: "SettingsProfile"
-      }
+      },
+        {
+          id: "data",
+          name: "Personal Data",
+          template: "SettingsData"
+        }
     ];
 
     if (
