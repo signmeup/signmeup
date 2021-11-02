@@ -115,3 +115,31 @@ export const updateProfile = new ValidatedMethod({
     );
   }
 });
+
+export const getData = new ValidatedMethod({
+  name: "users.getData",
+  validate: new SimpleSchema({
+    identifier: { type: String }
+  }).validator(),
+  run({ identifier }) {
+    if (!identifier) {
+      throw new Meteor.Error(
+        "users.invalidID",
+        `${identifier} is an invalid user id`
+      );
+    }
+    return "Hi";
+
+    //TODO: get all data relating to the user; return as String (get indiv ones and concatenate together?):
+    //db.users.find(): pref name, email, roles (TA, Student, etc.), status (logged in or not), IP addr., Browser/OS, timestamp of last activity
+
+    //db.tickets.find(): all tickets submitted. Tickets include courseID, queueID, studentID, question asked, claimed/marked/deleted status(+ by who)
+
+    //If the student is a TA/HTA/MTA, would need to show queues they end/create, tickets they claim/mark/delete, etc.
+
+    //potential ones to check (time permitting):
+    //db.locations.find() (courses are associated with a location. can aggregate the courses found from the tickets and get locations of them)
+
+
+  }
+});

@@ -1,7 +1,8 @@
+import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { ReactiveVar } from "meteor/reactive-var";
 
-import { updateProfile } from "/imports/api/users/methods";
+import { getData } from "/imports/api/users/methods";
 
 import "./settings-data.html";
 
@@ -24,17 +25,25 @@ Template.SettingsData.events({
     event.preventDefault();
 
     //vvvvvvvthis region needs to be edited to trigger function to get data upon receipt of formvvvvvvv
-    const preferredName = event.target.preferredName.value;
-    updateProfile.call(
+    //const preferredName = event.target.preferredName.value;
+    const identifier = Meteor.userId()
+    
+    getData.call(
       {
-        preferredName
+        identifier
       },
-      err => {
+      (err, personalData) => {
         if (err) console.error(err);
+        else {
+
+          console.log("ok", personalData);
+          Template.instance().successMessage.set("personalData");
+
+        }
       }
     );
 
-    Template.instance().successMessage.set("Preferred name saved.");
+    
     //^^^^^^^this region needs to be edited to trigger function to get data upon receipt of form^^^^^^^
   }
   //ALSO NEED TO INCLUDE "submit #delete-data-form"(event) {... TO DELETE DATA UPON RECEIPT OF FORM (similar event format to the above one?)
