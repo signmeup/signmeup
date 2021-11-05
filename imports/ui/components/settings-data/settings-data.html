@@ -16,9 +16,9 @@
         <form id="request-data-form">
           {{#with currentUser}}
 
-            {{#if successMessage}}
+            {{#if getDataSuccessMessage}}
               <div class="text-success">
-                {{successMessage}}
+                {{getDataSuccessMessage}}
               </div>
             {{/if}}
             <button class="btn btn-primary mt-3" type="submit">Request Personal Data</button>
@@ -34,9 +34,9 @@
         <form id="delete-data-form">
           {{#with currentUser}}
 
-            {{#if successMessage1}}
+            {{#if deleteDataSuccessMessage}}
               <div class="text-success">
-                {{successMessage1}}
+                {{deleteDataSuccessMessage}}
               </div>
             {{/if}}
             <button class="btn btn-primary mt-3" type="submit">Delete Personal Data</button>

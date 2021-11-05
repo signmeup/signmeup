@@ -7,7 +7,7 @@ import { getData } from "/imports/api/users/methods";
 import "./settings-data.html";
 
 Template.SettingsData.onCreated(function onCreated() {
-  this.successMessage = new ReactiveVar("");
+  this.getDataSuccessMessage = new ReactiveVar("");
 
   this.autorun(() => {
     this.subscribe("users.self");
@@ -15,13 +15,13 @@ Template.SettingsData.onCreated(function onCreated() {
 });
 
 Template.SettingsData.helpers({
-  successMessage() {
-    return Template.instance().successMessage.get();
+  getDataSuccessMessage() {
+    return Template.instance().getDataSuccessMessage.get();
   }
 });
 
 Template.SettingsData.events({
-  "submit #request-data-form"(event) {
+  "submit #request-data-form"(event, template) {
     event.preventDefault();
 
     //vvvvvvvthis region needs to be edited to trigger function to get data upon receipt of formvvvvvvv
@@ -36,8 +36,11 @@ Template.SettingsData.events({
         if (err) console.error(err);
         else {
 
-          console.log("ok", personalData);
-          Template.instance().successMessage.set("personalData");
+          //console.log("ok", personalData);
+          console.log("ok");
+          //Template.instance().successMessage.set("personalData");
+          //template.getDataSuccessMessage.set("personalData");
+          template.getDataSuccessMessage.set(personalData);
 
         }
       }

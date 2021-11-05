@@ -5,6 +5,7 @@ import { Roles } from "meteor/alanning:roles";
 import { _ } from "meteor/underscore";
 
 import { Courses } from "/imports/api/courses/courses";
+import { Tickets } from "/imports/api/tickets/tickets";
 
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
 
@@ -128,17 +129,39 @@ export const getData = new ValidatedMethod({
         `${identifier} is an invalid user id`
       );
     }
-    return "Hi";
+
+    const user = Meteor.users.findOne(this.userId);
+    //const userID = Meteor.userId()
+
+    let userData = {} //?
+    //return "Hi";
 
     //TODO: get all data relating to the user; return as String (get indiv ones and concatenate together?):
     //db.users.find(): pref name, email, roles (TA, Student, etc.), status (logged in or not), IP addr., Browser/OS, timestamp of last activity
+    
+    for (let key in user) {
+      if (user.hasOwnProperty(key)) {
+        //*********************
+          userData[key] = user[key];
+      }
+    }
+    //userData["Name"] = user["preferredName"]
+    //userData["Email"] = user.emailAddress()
+    //Roles.userIsInRole(userID, ["admin", "mta"])
+    //userData["stuff"] = JSON.stringify(user)
 
     //db.tickets.find(): all tickets submitted. Tickets include courseID, queueID, studentID, question asked, claimed/marked/deleted status(+ by who)
+    const tickets = Tickets.findOne("S33hcuXMbvik83n7L")//find({studentIds: "heogg6ABgjjMd8fvs"});//this.userId});
+
+    userData["Tickets"] = tickets
 
     //If the student is a TA/HTA/MTA, would need to show queues they end/create, tickets they claim/mark/delete, etc.
 
     //potential ones to check (time permitting):
     //db.locations.find() (courses are associated with a location. can aggregate the courses found from the tickets and get locations of them)
+
+
+    return JSON.stringify(userData)
 
 
   }
