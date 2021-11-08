@@ -145,13 +145,15 @@ export const getData = new ValidatedMethod({
           userData[key] = user[key];
       }
     }
+    console.log("Fetched data associated with user.")
     //userData["Name"] = user["preferredName"]
     //userData["Email"] = user.emailAddress()
     //Roles.userIsInRole(userID, ["admin", "mta"])
     //userData["stuff"] = JSON.stringify(user)
 
     //db.tickets.find(): all tickets submitted. Tickets include courseID, queueID, studentID, question asked, claimed/marked/deleted status(+ by who)
-    const tickets = Tickets.findOne("S33hcuXMbvik83n7L")//find({studentIds: "heogg6ABgjjMd8fvs"});//this.userId});
+    const tickets = Tickets.find({studentIds: this.userId}).fetch();//findOne("S33hcuXMbvik83n7L")//find({studentIds: "heogg6ABgjjMd8fvs"});//this.userId});
+    console.log("Fetched tickets associated with user.")
 
     userData["Tickets"] = tickets
 
