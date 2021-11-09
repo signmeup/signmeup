@@ -6,6 +6,7 @@ import { _ } from "meteor/underscore";
 
 import { Courses } from "/imports/api/courses/courses";
 import { Tickets } from "/imports/api/tickets/tickets";
+import { Queues } from "/imports/api/queues/queues";
 
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
 
@@ -130,7 +131,6 @@ export const getData = new ValidatedMethod({
       );
     }
 
-    const user = Meteor.users.findOne(this.userId);
     //const userID = Meteor.userId()
 
     let userData = {} //?
@@ -139,25 +139,41 @@ export const getData = new ValidatedMethod({
     //TODO: get all data relating to the user; return as String (get indiv ones and concatenate together?):
     //db.users.find(): pref name, email, roles (TA, Student, etc.), status (logged in or not), IP addr., Browser/OS, timestamp of last activity
     
-    for (let key in user) {
-      if (user.hasOwnProperty(key)) {
-        //*********************
-          userData[key] = user[key];
-      }
-    }
+    // for (let key in user) {
+    //   if (user.hasOwnProperty(key)) {
+    //     //*********************
+    //     userData[key] = user[key];
+    //   }
+    // }
+    const user = Meteor.users.findOne(this.userId);
     console.log("Fetched data associated with user.")
+
+    userData["User"] = user
     //userData["Name"] = user["preferredName"]
     //userData["Email"] = user.emailAddress()
     //Roles.userIsInRole(userID, ["admin", "mta"])
     //userData["stuff"] = JSON.stringify(user)
 
     //db.tickets.find(): all tickets submitted. Tickets include courseID, queueID, studentID, question asked, claimed/marked/deleted status(+ by who)
-    const tickets = Tickets.find({studentIds: this.userId}).fetch();//findOne("S33hcuXMbvik83n7L")//find({studentIds: "heogg6ABgjjMd8fvs"});//this.userId});
+    const tickets = Tickets.find({$or: [{createdBy: this.userId},{studentIds: this.userId}]}).fetch();//{studentIds: this.userId}).fetch();//findOne("S33hcuXMbvik83n7L")//find({studentIds: "heogg6ABgjjMd8fvs"});//this.userId});
     console.log("Fetched tickets associated with user.")
 
-    userData["Tickets"] = tickets
+    userData["TicketsCreated"] = tickets
 
     //If the student is a TA/HTA/MTA, would need to show queues they end/create, tickets they claim/mark/delete, etc.
+    //this can be done for everyone, and will just be empty if they are not a ta or higher
+
+    //maybe separate each of these into their own function call (but may be duplicate tickets for each field in a lot of cases...)
+    const ticketsClaimedMarkedDeleted = Tickets.find({$or: [{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]}).fetch();
+    console.log("Fetched tickets claimed, marked, or deleted by the user.")
+
+    userData["TicketsClaimedMarkedOrDeleted"] = ticketsClaimedMarkedDeleted
+
+
+    const queuesCreatedOrEnded = Queues.find({$or: [{createdBy: this.userId},{endedBy: this.userId}]}).fetch();
+    console.log("Fetched queues created or ended by this user.")
+
+    userData["QueuesCreatedOrEnded"] = queuesCreatedOrEnded
 
     //potential ones to check (time permitting):
     //db.locations.find() (courses are associated with a location. can aggregate the courses found from the tickets and get locations of them)
