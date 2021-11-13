@@ -2,12 +2,13 @@ import { Meteor } from "meteor/meteor";
 import { Template } from "meteor/templating";
 import { ReactiveVar } from "meteor/reactive-var";
 
-import { getData } from "/imports/api/users/methods";
+import { getData, deleteData } from "/imports/api/users/methods";
 
 import "./settings-data.html";
 
 Template.SettingsData.onCreated(function onCreated() {
   this.getDataSuccessMessage = new ReactiveVar("");
+  this.deleteDataSuccessMessage = new ReactiveVar("");
 
   this.autorun(() => {
     this.subscribe("users.self");
@@ -17,6 +18,10 @@ Template.SettingsData.onCreated(function onCreated() {
 Template.SettingsData.helpers({
   getDataSuccessMessage() {
     return Template.instance().getDataSuccessMessage.get();
+  },
+
+  deleteDataSuccessMessage() {
+    return Template.instance().deleteDataSuccessMessage.get();
   }
 });
 
@@ -24,8 +29,6 @@ Template.SettingsData.events({
   "submit #request-data-form"(event, template) {
     event.preventDefault();
 
-    //vvvvvvvthis region needs to be edited to trigger function to get data upon receipt of formvvvvvvv
-    //const preferredName = event.target.preferredName.value;
     const identifier = Meteor.userId()
     
     getData.call(
@@ -37,18 +40,30 @@ Template.SettingsData.events({
         else {
 
           //console.log("ok", personalData);
-          console.log("ok");
-          //Template.instance().successMessage.set("personalData");
-          //template.getDataSuccessMessage.set("personalData");
+          console.log("Personal data retrieved.");
+
           template.getDataSuccessMessage.set(personalData);
 
         }
       }
     );
 
-    
-    //^^^^^^^this region needs to be edited to trigger function to get data upon receipt of form^^^^^^^
+  }, 
+  "submit #delete-data-form"(event, template) {
+    event.preventDefault();
+
+    const identifier = Meteor.userId()
+
+    deleteData.call(
+      {
+        identifier
+      },
+      err => {
+        if (err) console.error(err);
+      }
+    );
+
+    template.deleteDataSuccessMessage.set("Data deleted.");
   }
-  //ALSO NEED TO INCLUDE "submit #delete-data-form"(event) {... TO DELETE DATA UPON RECEIPT OF FORM (similar event format to the above one?)
+
 });
-//from settings-profile.js -> need to modify for use by settings-data.js

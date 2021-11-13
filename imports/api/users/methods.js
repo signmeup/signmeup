@@ -184,3 +184,24 @@ export const getData = new ValidatedMethod({
 
   }
 });
+
+export const deleteData = new ValidatedMethod({
+  name: "users.deleteData",
+  validate: new SimpleSchema({
+    identifier: { type: String }
+  }).validator(),
+  run({ identifier }) {
+    if (!identifier) {
+      throw new Meteor.Error(
+        "users.invalidID",
+        `${identifier} is an invalid user id`
+      );
+    }
+
+    
+
+    console.log("methods.js got delete call");
+
+
+  }
+});
