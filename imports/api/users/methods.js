@@ -9,6 +9,9 @@ import { Tickets } from "/imports/api/tickets/tickets";
 import { Queues } from "/imports/api/queues/queues";
 
 import { createUser, findUserByEmail } from "/imports/lib/both/users";
+import { endQueue } from "/imports/api/queues/methods";
+import { deleteTicket } from "/imports/api/tickets/methods";
+import { Jobs } from "meteor/msavin:sjobs";
 
 export const addRoleGivenEmail = new ValidatedMethod({
   name: "users.addRoleGivenEmail",
@@ -206,19 +209,107 @@ export const deleteData = new ValidatedMethod({
     /////Meteor.users.remove(this.userId);
     /////console.log("Deleted data associated with user.")
 
+    //const tickets = Tickets.find({$or: [{createdBy: this.userId},{studentIds: this.userId},
+      //{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]}).fetch();
+
+
+
+    //end all tickets before deleting them if they are still active (eliminates cleanup job)
+    // for(let ticket of tickets){
+    //   console.log(ticket);
+      
+    //   if(ticket.isActive()){
+    //     let ticketID = ticket["_id"];
+    //     deleteTicket(ticketID);
+    //     console.log("deleted active ticket: ", ticketID);
+    //   }
+
+    // }
+
     //delete all tickets submitted by or including a user(what happens if ticket is still live? will ticket be removed from queue? warn user if so!)
     //can a student delete a joint ticket, since the other student also has a right to this info?
-    Tickets.remove({$or: [{createdBy: this.userId},{studentIds: this.userId}]})
-    console.log("Deleted tickets associated with the user.") //this also deletes an active ticket!!! 
+    ///////////Tickets.remove({$or: [{createdBy: this.userId},{studentIds: this.userId}]})
+    ///////////console.log("Deleted tickets associated with the user.") //this also deletes an active ticket!!! 
 
     //delete tickets claimed, marked, or deleted by user(what happens if ticket is still live? will ticket be removed from queue? warn user if so!)
     //can TA delete the tickets they claim/mark/delete, since a student also has a right to this info?
-    Tickets.remove({$or: [{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]});
-    console.log("Deleted tickets claimed, marked, or deleted by the user.")
+    ///////////Tickets.remove({$or: [{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]});
+    ///////////console.log("Deleted tickets claimed, marked, or deleted by the user.")
+
+    ///////Tickets.remove({$or: [{createdBy: this.userId},{studentIds: this.userId},
+      ////////{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]})
+
+
+    Tickets.remove( {
+      $and : [
+               { 
+                 $or : [ 
+                         {createdBy: this.userId},
+                         {studentIds: this.userId},
+                         {claimedBy: this.userId},
+                         {deletedBy: this.userId},
+                         {markedAsDoneBy: this.userId}
+                       ]
+               },
+               { 
+                 $or : [ 
+                         {status: "markedAsDone"},
+                         {status: "deleted"}
+                       ]
+               }
+             ]
+    } )
+
+    console.log("Deleted tickets associated with the user.")
+    console.log("Deleted tickets claimed, marked, or deleted by the user.") //only non active tickets are deleted
+
+
+
+
+
+
+
 
     //delete queues created or ended by a user (what happens if queue is still in progress?)
-    Queues.remove({$or: [{createdBy: this.userId},{endedBy: this.userId}]})
-    console.log("Deleted queues created or ended by this user.") //this also deletes an active queue!!! 
+    ///////const queuesCreatedOrEnded = Queues.find({$or: [{createdBy: this.userId},{endedBy: this.userId}]}).fetch();
+
+    ////console.log(queuesCreatedOrEnded.length)
+
+    //end all queues before deleting them if they are still active (eliminates cleanup job)
+
+    // for (let index = 0, len = queuesCreatedOrEnded.length; index < len; ++index) {
+    //     const element = a[index];
+    //     console.log(element);
+    // }
+///////
+    // for(const q of queuesCreatedOrEnded){
+
+      
+      
+    //   if(!q.isEnded()){
+    //     let qID = q["_id"];
+    //     endQueue(qID);
+    //     console.log("deleted active queue: ", qID);
+    //   }
+    // }
+    
+    Queues.remove( {
+      $and : [
+               { 
+                 $or : [ 
+                         {createdBy: this.userId},
+                         {endedBy: this.userId}
+                       ]
+               },
+               { 
+                 status:"ended"
+               }
+             ]
+    } )
+
+    //Queues.remove({$or: [{createdBy: this.userId},{endedBy: this.userId}]})
+    console.log("Deleted queues created or ended by this user.") //11-22-21: only ended queues are deleted
+    //Old: this also deletes an active queue!!! job to end queue will complain so cancel it
 
 
   }
