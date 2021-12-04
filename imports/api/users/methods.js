@@ -134,113 +134,105 @@ export const getData = new ValidatedMethod({
       );
     }
 
-
-    let userData = {} 
+    let userData = {};
 
     //Get all personal, ticket, and queue data relating to the user, and return relevant fields
 
     const user = Meteor.users.findOne(this.userId);
-    console.log("Fetched data associated with this user.")
+    console.log("Fetched data associated with this user.");
 
-    userData["Name"] = user["preferredName"]
+    userData["Name"] = user["preferredName"];
 
-    userEmails = []
+    userEmails = [];
 
-    emailData = user["emails"]
+    emailData = user["emails"];
 
-    if(emailData != null){
-      for(let userEmail of emailData){
-        userEmails.push(userEmail["address"])
+    if (emailData != null) {
+      for (let userEmail of emailData) {
+        userEmails.push(userEmail["address"]);
       }
     }
-    
-    userData["Emails"] = userEmails
-    
-    userData["TA or Above?"] = user.isTAOrAbove()
-    
-    
 
-    const tickets = Tickets.find(
-      {$or: [{createdBy: this.userId},{studentIds: this.userId}]}).fetch();
-    console.log("Fetched tickets created by this user.")
+    userData["Emails"] = userEmails;
+
+    userData["TA or Above?"] = user.isTAOrAbove();
+
+    const tickets = Tickets.find({
+      $or: [{ createdBy: this.userId }, { studentIds: this.userId }]
+    }).fetch();
+    console.log("Fetched tickets created by this user.");
 
     ticketsCreated = [];
 
-    for(let ticket of tickets){
-      
-      let ticketObj = {}
+    for (let ticket of tickets) {
+      let ticketObj = {};
 
-      let courseOfTicket = Courses.findOne({_id : ticket["courseId"]})
-      if(courseOfTicket != null){
-        ticketObj["Course"] = courseOfTicket["name"]
+      let courseOfTicket = Courses.findOne({ _id: ticket["courseId"] });
+      if (courseOfTicket != null) {
+        ticketObj["Course"] = courseOfTicket["name"];
       }
       ticketObj["Question Asked"] = ticket["question"];
       ticketObj["Created At"] = ticket["createdAt"];
       ticketObj["Status"] = ticket["status"];
 
-      ticketsCreated.push(ticketObj); 
-
+      ticketsCreated.push(ticketObj);
     }
 
-    userData["Tickets You Created"] = ticketsCreated
+    userData["Tickets You Created"] = ticketsCreated;
 
-
-    
-    const ticketsClaimedMarkedDeleted = Tickets.find(
-      {$or: [{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]}).fetch();
-    console.log("Fetched tickets claimed, marked, or deleted by this user.")
+    const ticketsClaimedMarkedDeleted = Tickets.find({
+      $or: [
+        { claimedBy: this.userId },
+        { deletedBy: this.userId },
+        { markedAsDoneBy: this.userId }
+      ]
+    }).fetch();
+    console.log("Fetched tickets claimed, marked, or deleted by this user.");
 
     ticketsCMD = [];
 
-    for(let ticket of ticketsClaimedMarkedDeleted){
-      
-      let ticketObj = {}
+    for (let ticket of ticketsClaimedMarkedDeleted) {
+      let ticketObj = {};
 
-      let courseOfTicket = Courses.findOne({_id : ticket["courseId"]})
-      if(courseOfTicket != null){
-        ticketObj["Course"] = courseOfTicket["name"]
+      let courseOfTicket = Courses.findOne({ _id: ticket["courseId"] });
+      if (courseOfTicket != null) {
+        ticketObj["Course"] = courseOfTicket["name"];
       }
 
       ticketObj["Question Asked"] = ticket["question"];
       ticketObj["Created At"] = ticket["createdAt"];
       ticketObj["Status"] = ticket["status"];
 
-      ticketsCMD.push(ticketObj); 
-
+      ticketsCMD.push(ticketObj);
     }
 
-    userData["Tickets You Claimed, Marked, Or Deleted"] = ticketsCMD
+    userData["Tickets You Claimed, Marked, Or Deleted"] = ticketsCMD;
 
-
-    
-    const queuesCreatedOrEnded = Queues.find({$or: [{createdBy: this.userId},{endedBy: this.userId}]}).fetch();
-    console.log("Fetched queues created or ended by this user.")
+    const queuesCreatedOrEnded = Queues.find({
+      $or: [{ createdBy: this.userId }, { endedBy: this.userId }]
+    }).fetch();
+    console.log("Fetched queues created or ended by this user.");
 
     queuesCreatedOrEndedByUser = [];
 
-    for(let queue of queuesCreatedOrEnded){
-      
-      let queueObj = {}
+    for (let queue of queuesCreatedOrEnded) {
+      let queueObj = {};
 
-      let courseOfQueue = Courses.findOne({_id : queue["courseId"]})
-      if(courseOfQueue != null){
-        queueObj["Course"] = courseOfQueue["name"]
+      let courseOfQueue = Courses.findOne({ _id: queue["courseId"] });
+      if (courseOfQueue != null) {
+        queueObj["Course"] = courseOfQueue["name"];
       }
 
       queueObj["Queue Name"] = queue["name"];
       queueObj["Created At"] = queue["createdAt"];
       queueObj["Status"] = queue["status"];
 
-      queuesCreatedOrEndedByUser.push(queueObj); 
-
+      queuesCreatedOrEndedByUser.push(queueObj);
     }
 
-    userData["Queues You Created Or Ended"] = queuesCreatedOrEndedByUser
+    userData["Queues You Created Or Ended"] = queuesCreatedOrEndedByUser;
 
-
-    return "\n" + JSON.stringify(userData, null, 4)
-
-
+    return "\n" + JSON.stringify(userData, null, 4);
   }
 });
 
@@ -257,31 +249,27 @@ export const deleteData = new ValidatedMethod({
       );
     }
 
-    
-
     console.log("Delete call received");
 
     //Extra check: (safely) delete tickets whose queues have ended or been deleted (no longer exist)
     //otherwise, tickets will remain in the "open" status and no longer be deleteable
-    const tickets = Tickets.find(
-      {$or: [ 
-              {createdBy: this.userId},
-              {studentIds: this.userId},
-              {claimedBy: this.userId},
-              {deletedBy: this.userId},
-              {markedAsDoneBy: this.userId}
-             ]}).fetch();
+    const tickets = Tickets.find({
+      $or: [
+        { createdBy: this.userId },
+        { studentIds: this.userId },
+        { claimedBy: this.userId },
+        { deletedBy: this.userId },
+        { markedAsDoneBy: this.userId }
+      ]
+    }).fetch();
 
-    console.log("Fetched all existing tickets associated with this user.")
+    console.log("Fetched all existing tickets associated with this user.");
 
+    for (let ticket of tickets) {
+      let parentQueue = Queues.findOne({ _id: ticket["queueId"] });
 
-    for(let ticket of tickets){
-
-      let parentQueue = Queues.findOne({_id : ticket["queueId"]})
-
-      if(parentQueue == null || parentQueue["status"] == "ended"){
-
-        let ticketId = ticket["_id"]
+      if (parentQueue == null || parentQueue["status"] == "ended") {
+        let ticketId = ticket["_id"];
 
         deleteTicket.call(
           {
@@ -291,52 +279,40 @@ export const deleteData = new ValidatedMethod({
             if (err) console.error(err);
           }
         );
-        
       }
-
     }
 
+    Tickets.remove({
+      $and: [
+        {
+          $or: [
+            { createdBy: this.userId },
+            { studentIds: this.userId },
+            { claimedBy: this.userId },
+            { deletedBy: this.userId },
+            { markedAsDoneBy: this.userId }
+          ]
+        },
+        {
+          $or: [{ status: "markedAsDone" }, { status: "deleted" }]
+        }
+      ]
+    });
 
-    Tickets.remove( {
-      $and : [
-               { 
-                 $or : [ 
-                         {createdBy: this.userId},
-                         {studentIds: this.userId},
-                         {claimedBy: this.userId},
-                         {deletedBy: this.userId},
-                         {markedAsDoneBy: this.userId}
-                       ]
-               },
-               { 
-                 $or : [ 
-                         {status: "markedAsDone"},
-                         {status: "deleted"}
-                       ]
-               }
-             ]
-    } )
+    console.log("Deleted tickets associated with this user.");
+    console.log("Deleted tickets claimed, marked, or deleted by this user."); //only non active tickets are deleted
 
-    console.log("Deleted tickets associated with this user.")
-    console.log("Deleted tickets claimed, marked, or deleted by this user.") //only non active tickets are deleted
+    Queues.remove({
+      $and: [
+        {
+          $or: [{ createdBy: this.userId }, { endedBy: this.userId }]
+        },
+        {
+          status: "ended"
+        }
+      ]
+    });
 
-    
-    Queues.remove( {
-      $and : [
-               { 
-                 $or : [ 
-                         {createdBy: this.userId},
-                         {endedBy: this.userId}
-                       ]
-               },
-               { 
-                 status:"ended"
-               }
-             ]
-    } )
-
-    console.log("Deleted queues created or ended by this user.") //only ended queues are deleted
-
-
+    console.log("Deleted queues created or ended by this user."); //only ended queues are deleted
   }
 });

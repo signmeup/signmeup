@@ -27,11 +27,11 @@ Template.Settings.helpers({
         name: "Profile",
         template: "SettingsProfile"
       },
-        {
-          id: "data",
-          name: "Personal Data",
-          template: "SettingsData"
-        }
+      {
+        id: "data",
+        name: "Personal Data",
+        template: "SettingsData"
+      }
     ];
 
     if (

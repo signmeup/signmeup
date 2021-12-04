@@ -29,8 +29,8 @@ Template.SettingsData.events({
   "submit #request-data-form"(event, template) {
     event.preventDefault();
 
-    const identifier = Meteor.userId()
-    
+    const identifier = Meteor.userId();
+
     getData.call(
       {
         identifier
@@ -38,20 +38,17 @@ Template.SettingsData.events({
       (err, personalData) => {
         if (err) console.error(err);
         else {
-
           console.log("Personal data retrieved.");
 
           template.getDataSuccessMessage.set(personalData);
-
         }
       }
     );
-
-  }, 
+  },
   "submit #delete-data-form"(event, template) {
     event.preventDefault();
 
-    const identifier = Meteor.userId()
+    const identifier = Meteor.userId();
 
     deleteData.call(
       {
@@ -64,5 +61,4 @@ Template.SettingsData.events({
 
     template.deleteDataSuccessMessage.set("Data deleted.");
   }
-
 });
