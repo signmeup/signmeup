@@ -261,6 +261,41 @@ export const deleteData = new ValidatedMethod({
 
     console.log("Delete call received");
 
+    //Extra check: (safely) delete tickets whose queues have ended or been deleted (no longer exist)
+    //otherwise, tickets will remain in the "open" status and no longer be deleteable
+    const tickets = Tickets.find(
+      {$or: [ 
+              {createdBy: this.userId},
+              {studentIds: this.userId},
+              {claimedBy: this.userId},
+              {deletedBy: this.userId},
+              {markedAsDoneBy: this.userId}
+             ]}).fetch();
+
+    console.log("Fetched all existing tickets associated with this user.")
+
+
+    for(let ticket of tickets){
+
+      let parentQueue = Queues.findOne({_id : ticket["queueId"]})
+
+      if(parentQueue == null || parentQueue["status"] == "ended"){
+
+        let ticketId = ticket["_id"]
+
+        deleteTicket.call(
+          {
+            ticketId: ticketId
+          },
+          err => {
+            if (err) console.error(err);
+          }
+        );
+        
+      }
+
+    }
+
 
     Tickets.remove( {
       $and : [
