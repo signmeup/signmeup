@@ -16,9 +16,9 @@
           {{#with currentUser}}
 
             {{#if getDataSuccessMessage}}
-              <div class="text-success">
+                <pre id="text-success">
                 {{getDataSuccessMessage}}
-              </div>
+                </pre>
             {{/if}}
             <button class="btn btn-primary mt-3" type="submit">Request Personal Data</button>
 
@@ -27,7 +27,8 @@
       </div>
 
       <div class="card-body">
-        Press the button below to delete the information that SignMeUp has about you.
+        Press the button below to delete the information that SignMeUp has about you. 
+        At this time, only non-active tickets and queues may be deleted.
 
         <form id="delete-data-form">
           {{#with currentUser}}

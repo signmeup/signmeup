@@ -134,55 +134,111 @@ export const getData = new ValidatedMethod({
       );
     }
 
-    //const userID = Meteor.userId()
 
-    let userData = {} //?
-    //return "Hi";
+    let userData = {} 
 
-    //TODO: get all data relating to the user; return as String (get indiv ones and concatenate together?):
-    //db.users.find(): pref name, email, roles (TA, Student, etc.), status (logged in or not), IP addr., Browser/OS, timestamp of last activity
-    
-    // for (let key in user) {
-    //   if (user.hasOwnProperty(key)) {
-    //     //*********************
-    //     userData[key] = user[key];
-    //   }
-    // }
+    //Get all personal, ticket, and queue data relating to the user, and return relevant fields
+
     const user = Meteor.users.findOne(this.userId);
-    console.log("Fetched data associated with user.")
+    console.log("Fetched data associated with this user.")
 
-    userData["User"] = user
-    //userData["Name"] = user["preferredName"]
-    //userData["Email"] = user.emailAddress()
-    //Roles.userIsInRole(userID, ["admin", "mta"])
-    //userData["stuff"] = JSON.stringify(user)
+    userData["Name"] = user["preferredName"]
 
-    //db.tickets.find(): all tickets submitted. Tickets include courseID, queueID, studentID, question asked, claimed/marked/deleted status(+ by who)
-    const tickets = Tickets.find({$or: [{createdBy: this.userId},{studentIds: this.userId}]}).fetch();//{studentIds: this.userId}).fetch();//findOne("S33hcuXMbvik83n7L")//find({studentIds: "heogg6ABgjjMd8fvs"});//this.userId});
-    console.log("Fetched tickets associated with user.")
+    userEmails = []
 
-    userData["TicketsCreated"] = tickets
+    emailData = user["emails"]
 
-    //If the student is a TA/HTA/MTA, would need to show queues they end/create, tickets they claim/mark/delete, etc.
-    //this can be done for everyone, and will just be empty if they are not a ta or higher
+    if(emailData != null){
+      for(let userEmail of emailData){
+        userEmails.push(userEmail["address"])
+      }
+    }
+    
+    userData["Emails"] = userEmails
+    
+    userData["TA or Above?"] = user.isTAOrAbove()
+    
+    
 
-    //maybe separate each of these into their own function call (but may be duplicate tickets for each field in a lot of cases...)
-    const ticketsClaimedMarkedDeleted = Tickets.find({$or: [{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]}).fetch();
-    console.log("Fetched tickets claimed, marked, or deleted by the user.")
+    const tickets = Tickets.find(
+      {$or: [{createdBy: this.userId},{studentIds: this.userId}]}).fetch();
+    console.log("Fetched tickets created by this user.")
 
-    userData["TicketsClaimedMarkedOrDeleted"] = ticketsClaimedMarkedDeleted
+    ticketsCreated = [];
+
+    for(let ticket of tickets){
+      
+      let ticketObj = {}
+
+      let courseOfTicket = Courses.findOne({_id : ticket["courseId"]})
+      if(courseOfTicket != null){
+        ticketObj["Course"] = courseOfTicket["name"]
+      }
+      ticketObj["Question Asked"] = ticket["question"];
+      ticketObj["Created At"] = ticket["createdAt"];
+      ticketObj["Status"] = ticket["status"];
+
+      ticketsCreated.push(ticketObj); 
+
+    }
+
+    userData["Tickets You Created"] = ticketsCreated
 
 
+    
+    const ticketsClaimedMarkedDeleted = Tickets.find(
+      {$or: [{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]}).fetch();
+    console.log("Fetched tickets claimed, marked, or deleted by this user.")
+
+    ticketsCMD = [];
+
+    for(let ticket of ticketsClaimedMarkedDeleted){
+      
+      let ticketObj = {}
+
+      let courseOfTicket = Courses.findOne({_id : ticket["courseId"]})
+      if(courseOfTicket != null){
+        ticketObj["Course"] = courseOfTicket["name"]
+      }
+
+      ticketObj["Question Asked"] = ticket["question"];
+      ticketObj["Created At"] = ticket["createdAt"];
+      ticketObj["Status"] = ticket["status"];
+
+      ticketsCMD.push(ticketObj); 
+
+    }
+
+    userData["Tickets You Claimed, Marked, Or Deleted"] = ticketsCMD
+
+
+    
     const queuesCreatedOrEnded = Queues.find({$or: [{createdBy: this.userId},{endedBy: this.userId}]}).fetch();
     console.log("Fetched queues created or ended by this user.")
 
-    userData["QueuesCreatedOrEnded"] = queuesCreatedOrEnded
+    queuesCreatedOrEndedByUser = [];
 
-    //potential ones to check (time permitting):
-    //db.locations.find() (courses are associated with a location. can aggregate the courses found from the tickets and get locations of them)
+    for(let queue of queuesCreatedOrEnded){
+      
+      let queueObj = {}
+
+      let courseOfQueue = Courses.findOne({_id : queue["courseId"]})
+      if(courseOfQueue != null){
+        queueObj["Course"] = courseOfQueue["name"]
+      }
+
+      queueObj["Queue Name"] = queue["name"];
+      queueObj["Created At"] = queue["createdAt"];
+      queueObj["Status"] = queue["status"];
+
+      queuesCreatedOrEndedByUser.push(queueObj); 
+
+    }
+
+    userData["Queues You Created Or Ended"] = queuesCreatedOrEndedByUser
 
 
-    return JSON.stringify(userData)
+    return "\n" + JSON.stringify(userData, null, 4)
 
 
   }
@@ -203,41 +259,7 @@ export const deleteData = new ValidatedMethod({
 
     
 
-    console.log("methods.js got delete call");
-
-    //delete all of a user's data (will this prevent them from using signmeup?)(yes, they will be unable to log back in (at least for the dev accounts))
-    /////Meteor.users.remove(this.userId);
-    /////console.log("Deleted data associated with user.")
-
-    //const tickets = Tickets.find({$or: [{createdBy: this.userId},{studentIds: this.userId},
-      //{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]}).fetch();
-
-
-
-    //end all tickets before deleting them if they are still active (eliminates cleanup job)
-    // for(let ticket of tickets){
-    //   console.log(ticket);
-      
-    //   if(ticket.isActive()){
-    //     let ticketID = ticket["_id"];
-    //     deleteTicket(ticketID);
-    //     console.log("deleted active ticket: ", ticketID);
-    //   }
-
-    // }
-
-    //delete all tickets submitted by or including a user(what happens if ticket is still live? will ticket be removed from queue? warn user if so!)
-    //can a student delete a joint ticket, since the other student also has a right to this info?
-    ///////////Tickets.remove({$or: [{createdBy: this.userId},{studentIds: this.userId}]})
-    ///////////console.log("Deleted tickets associated with the user.") //this also deletes an active ticket!!! 
-
-    //delete tickets claimed, marked, or deleted by user(what happens if ticket is still live? will ticket be removed from queue? warn user if so!)
-    //can TA delete the tickets they claim/mark/delete, since a student also has a right to this info?
-    ///////////Tickets.remove({$or: [{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]});
-    ///////////console.log("Deleted tickets claimed, marked, or deleted by the user.")
-
-    ///////Tickets.remove({$or: [{createdBy: this.userId},{studentIds: this.userId},
-      ////////{claimedBy: this.userId},{deletedBy: this.userId},{markedAsDoneBy: this.userId}]})
+    console.log("Delete call received");
 
 
     Tickets.remove( {
@@ -260,38 +282,9 @@ export const deleteData = new ValidatedMethod({
              ]
     } )
 
-    console.log("Deleted tickets associated with the user.")
-    console.log("Deleted tickets claimed, marked, or deleted by the user.") //only non active tickets are deleted
+    console.log("Deleted tickets associated with this user.")
+    console.log("Deleted tickets claimed, marked, or deleted by this user.") //only non active tickets are deleted
 
-
-
-
-
-
-
-
-    //delete queues created or ended by a user (what happens if queue is still in progress?)
-    ///////const queuesCreatedOrEnded = Queues.find({$or: [{createdBy: this.userId},{endedBy: this.userId}]}).fetch();
-
-    ////console.log(queuesCreatedOrEnded.length)
-
-    //end all queues before deleting them if they are still active (eliminates cleanup job)
-
-    // for (let index = 0, len = queuesCreatedOrEnded.length; index < len; ++index) {
-    //     const element = a[index];
-    //     console.log(element);
-    // }
-///////
-    // for(const q of queuesCreatedOrEnded){
-
-      
-      
-    //   if(!q.isEnded()){
-    //     let qID = q["_id"];
-    //     endQueue(qID);
-    //     console.log("deleted active queue: ", qID);
-    //   }
-    // }
     
     Queues.remove( {
       $and : [
@@ -307,9 +300,7 @@ export const deleteData = new ValidatedMethod({
              ]
     } )
 
-    //Queues.remove({$or: [{createdBy: this.userId},{endedBy: this.userId}]})
-    console.log("Deleted queues created or ended by this user.") //11-22-21: only ended queues are deleted
-    //Old: this also deletes an active queue!!! job to end queue will complain so cancel it
+    console.log("Deleted queues created or ended by this user.") //only ended queues are deleted
 
 
   }

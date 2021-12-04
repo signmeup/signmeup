@@ -39,7 +39,6 @@ Template.SettingsData.events({
         if (err) console.error(err);
         else {
 
-          //console.log("ok", personalData);
           console.log("Personal data retrieved.");
 
           template.getDataSuccessMessage.set(personalData);
