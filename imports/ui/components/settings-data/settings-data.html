@@ -1,0 +1,49 @@
+<template name="SettingsData">
+  <div class="settings-data">
+    <h3 class="mb-2">
+      Request, View, and Delete your Personal Data
+    </h3>
+
+    See the Privacy Policy to learn about the types of personally identifiable information that SignMeUp collects.
+      
+
+    <div class="card">
+      
+      <div class="card-body">
+        Press the button below to request and view the information that SignMeUp has about you.
+
+        <form id="request-data-form">
+          {{#with currentUser}}
+
+            {{#if getDataSuccessMessage}}
+                <pre id="text-success">
+                {{getDataSuccessMessage}}
+                </pre>
+            {{/if}}
+            <button class="btn btn-primary mt-3" type="submit">Request Personal Data</button>
+
+          {{/with}}
+        </form>
+      </div>
+
+      <div class="card-body">
+        Press the button below to delete the information that SignMeUp has about you. 
+        At this time, only non-active tickets and queues may be deleted.
+
+        <form id="delete-data-form">
+          {{#with currentUser}}
+
+            {{#if deleteDataSuccessMessage}}
+              <div class="text-success">
+                {{deleteDataSuccessMessage}}
+              </div>
+            {{/if}}
+            <button class="btn btn-primary mt-3" type="submit">Delete Personal Data</button>
+
+          {{/with}}
+        </form>
+      </div>
+
+    </div>
+  </div>
+</template>
