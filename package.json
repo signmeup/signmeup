@@ -19,7 +19,7 @@
     "jquery": "^3.2.1",
     "jquery-mask-plugin": "^1.14.13",
     "meteor-node-stubs": "^0.3.2",
-    "moment": "^2.20.1",
+    "moment": "^2.29.2",
     "popper.js": "^1.12.9",
     "tether": "^1.4.3",
     "ua-parser-js": "^0.7.17"
